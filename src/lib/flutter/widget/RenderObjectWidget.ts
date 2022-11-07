@@ -5,7 +5,7 @@ import Widget from "./Widget"
 class RenderObjectWidget extends Widget {
   children: Widget[]
 
-  constructor({ children }: { children: Widget[] }) {
+  constructor({ children = [] }: { children: Widget[] }) {
     super()
     this.children = children
   }
@@ -15,7 +15,7 @@ class RenderObjectWidget extends Widget {
   }
 
   createRenderObject(): RenderObject {
-    throw { message: "not implemented" }
+    throw { message: "not implemented createRenderObject" }
   }
 }
 

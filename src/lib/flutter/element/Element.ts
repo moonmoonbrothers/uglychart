@@ -32,7 +32,7 @@ class Element {
     this.performRebuild()
   }
 
-  performRebuild() {
+  protected performRebuild() {
     throw { message: "not implemented" }
   }
 }

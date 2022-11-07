@@ -1,29 +1,43 @@
+import Constraint from "../utils/constraint"
+import Offset from "../utils/offset"
+import Size from "../utils/size"
 import type { PaintContext } from "../utils/type"
 
 class RenderObject {
   children: RenderObject[] = []
-  
+  size: Size = Size.zero()
+  constraint: Constraint = Constraint.zero()
+  offset: Offset = Offset.zero()
 
-  protected layout() {
-    this.preformLayout()
+  layout(constraint: Constraint) {
+    this.preformLayout(constraint)
   }
 
-  protected paint(context: PaintContext) {
+  paint(context: PaintContext, offset: Offset) {
     const { ctx } = context
+    const totalOffset = offset.plus(this.offset)
     ctx.save()
+    ctx.translate(totalOffset.x, totalOffset.y)
     this.performPaint(context)
     ctx.restore()
 
-    this.children.forEach((child) => child.paint(context))
+    this.children.forEach((child) => child.paint(context, totalOffset))
   }
 
-  preformLayout(): void {
-    throw { message: "not implemented" }
-  }
-
+  /*
+  * Do not call this method directly. instead call layout
+  */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  performPaint(context: PaintContext): void {
-    throw { message: "not implemented" }
+  protected preformLayout(constraint: Constraint): void {
+    throw { message: "not implemented performLayout" }
+  }
+
+  /*
+  * Do not call this method directly. instead call paint
+  */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected performPaint(context: PaintContext): void {
+    throw { message: "not implemented perfromPaint" }
   }
 }
 

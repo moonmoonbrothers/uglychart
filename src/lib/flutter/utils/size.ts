@@ -7,18 +7,16 @@ type SizeProps = {
 class Size {
   width: number
   height: number
-  constructor({width, height}: SizeProps) {
+  constructor({ width, height }: SizeProps) {
     this.width = width
     this.height = height
   }
 
-  static {
-    function zero(): Size {
-      return new Size({width: 0, height: 0})
-    }
-    function maximum(): Size {
-      return new Size({width: Infinity, height: Infinity})
-    }
+  static zero(): Size {
+    return new Size({ width: 0, height: 0 })
+  }
+  static maximum(): Size {
+    return new Size({ width: Infinity, height: Infinity })
   }
 
   get shortest() {

@@ -13,7 +13,17 @@ class RenderObjectElement extends Element {
     super(widget)
     this.children = widget.children.map((child) => child.createElement())
     this._renderObject = this.createRenderObject()
-    this._renderObject.children = this.children.map((child) => child.renderObject)
+    this._renderObject.children = this.children.map(
+      (child) => child.renderObject
+    )
+  }
+
+  performRebuild(): void {
+    this.children = (this.widget as RenderObjectWidget).children.map((child) => child.createElement())
+    this._renderObject = this.createRenderObject()
+    this._renderObject.children = this.children.map(
+      (child) => child.renderObject
+    )
   }
 
   visitChildren(visitor: (child: Element) => void): void {
