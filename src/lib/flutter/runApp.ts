@@ -20,13 +20,17 @@ class AppRunner {
     this.canvasEl = canvas
     const ctx = this.canvasEl.getContext("2d")!
     this.paintContext = { ctx }
+  }
+
+  runApp(widget: Widget) {
+    this.root = new RenderObjectToWidgetAdapter({ app: widget }).createElement()
     const resize = (child: ResizeObserverEntry) => {
       const { width, height } = child.target.getBoundingClientRect()
       this.canvasSize = new Size({ width, height })
       const dpr = window.devicePixelRatio
       this.canvasEl.width = width * dpr
       this.canvasEl.height = height * dpr
-      ctx.scale(dpr, dpr)
+      this.paintContext.ctx.scale(dpr, dpr)
     }
     const resizeObserver = new ResizeObserver((entries) => {
       const child = entries[0]
@@ -34,11 +38,6 @@ class AppRunner {
       this.draw()
     })
     resizeObserver.observe(this.canvasEl)
-  }
-
-  runApp(widget: Widget) {
-    this.root = new RenderObjectToWidgetAdapter({ app: widget }).createElement()
-    this.draw()
   }
 
   rebuild() {

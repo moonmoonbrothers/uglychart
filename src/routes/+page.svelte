@@ -2,9 +2,14 @@
   import BarChart from '$lib/chart/bar/BarChart.svelte'
 
 </script>
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome to UglyChart Library</h1>
+<p>
+  this is inspired by flutter. 
+  <br/>
+  this must be helpful for those who want to customize chart to fit their own business needs.
+  <br/>
+  you can make whatever you want with this library!
+</p>
 
 <div>
   <BarChart/>

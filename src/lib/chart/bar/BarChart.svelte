@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/environment"
+  import Container from "$lib/flutter/component/Container"
   import Text from "$lib/flutter/component/Text"
   import AppRunner from "$lib/flutter/runApp"
   import { onMount } from "svelte"
@@ -9,20 +9,35 @@
   onMount(() => {
     const runner = new AppRunner({canvas: canvalEl})
     runner.runApp(
-      new Text({text: '문대승', style: {
-      }})
+      new Container(
+        {
+          child: new Text({
+              text: 'Pasta', 
+              style: {
+                fontSize: '50px',
+              }
+            }),
+           width: Infinity, 
+           height: Infinity,
+           style: { 
+              background: { 
+                color: 'lightblue' 
+              } 
+           } 
+        }
+      )
     )
-    const ctx = canvalEl.getContext('2d')!
+    //const ctx = canvalEl.getContext('2d')!
   })
 </script>
 
 <div>
-  <canvas bind:this={canvalEl} />
+  <canvas  bind:this={canvalEl} />
 </div>
 
 <style>
   canvas {
     width: 100%;
-    height: 200px;
+    height: 200px
   }
 </style>
