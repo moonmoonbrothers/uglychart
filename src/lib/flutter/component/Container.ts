@@ -67,7 +67,6 @@ class RenderContainer extends SingleChildRenderObject {
     const size = constraint.constrain(
       new Size({ width: this.width, height: this.height })
     )
-    console.log()
     const child = this.child
     if (child != null) {
       child.layout(constraint)

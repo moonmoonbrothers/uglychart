@@ -3,30 +3,13 @@
   import Text from "$lib/flutter/component/Text"
   import AppRunner from "$lib/flutter/runApp"
   import { onMount } from "svelte"
+  import BarWidget from "./BarWidget"
 
   let canvalEl!: HTMLCanvasElement
 
   onMount(() => {
     const runner = new AppRunner({canvas: canvalEl})
-    runner.runApp(
-      new Container(
-        {
-          child: new Text({
-              text: 'Pasta', 
-              style: {
-                fontSize: '50px',
-              }
-            }),
-           width: Infinity, 
-           height: Infinity,
-           style: { 
-              background: { 
-                color: 'lightblue' 
-              } 
-           } 
-        }
-      )
-    )
+    runner.runApp(new BarWidget())
     //const ctx = canvalEl.getContext('2d')!
   })
 </script>
@@ -38,6 +21,6 @@
 <style>
   canvas {
     width: 100%;
-    height: 200px
+    height: 800px;
   }
 </style>

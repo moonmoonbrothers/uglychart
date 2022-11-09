@@ -3,7 +3,7 @@ import RenderObjectWidget from "./RenderObjectWidget"
 import type Widget from "./Widget"
 
 class SingleChildRenderObjectWidget extends RenderObjectWidget {
-  constructor({ child }: { child?: Widget }) {
+  constructor({ child }: { child?: Widget } = {}) {
     super({ children: [] })
     this.child = child
   }

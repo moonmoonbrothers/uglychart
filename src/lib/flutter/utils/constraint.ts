@@ -38,12 +38,12 @@ class Constraint {
     })
   }
 
-  static tight({width, height}: Size) {
+  static tight({ width, height }: Size) {
     return new Constraint({
       maxHeight: height,
       minHeight: height,
       maxWidth: width,
-      minWidth: width
+      minWidth: width,
     })
   }
 
@@ -52,6 +52,14 @@ class Constraint {
       width: this.clampWidth(width),
       height: this.clampHeight(height),
     })
+  }
+
+  getMax(key: "width" | "height"): number {
+    return key === "width" ? this.maxWidth : this.maxHeight
+  }
+
+  getMin(key: "width" | "height"): number {
+    return key === "width" ? this.minWidth : this.minHeight
   }
 
   get isTight(): boolean {

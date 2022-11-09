@@ -7,4 +7,4 @@ class MultiChildRenderObjectWidget extends RenderObjectWidget {
   }
 }
 
-export default MultiChildRenderObject
+export default MultiChildRenderObjectWidget
