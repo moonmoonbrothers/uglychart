@@ -40,10 +40,10 @@ export default class EdgeInsets {
     left = 0,
     right = 0,
   }: {
-    top: number
-    bottom: number
-    left: number
-    right: number
+    top?: number
+    bottom?: number
+    left?: number
+    right?: number
   }) {
     return new EdgeInsets({
       top,

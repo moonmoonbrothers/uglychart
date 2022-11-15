@@ -1,12 +1,18 @@
-import Container from "./base/Container"
 import FlexItem from "./base/FlexItem"
+import type Widget from "../widget/Widget"
 
-export default function Expanded({ flex = 1 }: { flex?: number }) {
+export default function Expanded({
+  flex = 1,
+  child,
+}: {
+  flex?: number
+  child?: Widget
+}) {
   return new FlexItem({
     flex,
-    child: new Container({
-      width: Infinity,
-      height: Infinity,
+    child: new FlexItem({
+      fit: "tight",
+      child,
     }),
   })
 }

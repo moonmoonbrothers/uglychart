@@ -4,7 +4,9 @@ import _Text from "./Text";
 import _Expanded from "./Expanded";
 import _SizeBox from "./SizedBox";
 import _Container from "./Container";
+import _Padding from './Padding'
 
+export const Padding = _Padding
 export const Column = _Column
 export const Row = _Row
 export const Text = _Text

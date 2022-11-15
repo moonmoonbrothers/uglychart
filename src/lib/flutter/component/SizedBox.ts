@@ -1,4 +1,4 @@
-import Container from "./base/Container"
+import LimitedBox from "./base/LimitedBox"
 
 export default function SizeBox({
   width = 0,
@@ -7,5 +7,5 @@ export default function SizeBox({
   width?: number
   height?: number
 }) {
-  return new Container({ width, height })
+  return new LimitedBox({ width, height })
 }

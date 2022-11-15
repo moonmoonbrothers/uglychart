@@ -38,7 +38,7 @@ class Constraint {
     })
   }
 
-  static tight({ width, height }: Size) {
+  static tight({ width, height }: {width: number, height: number}) {
     return new Constraint({
       maxHeight: height,
       minHeight: height,
@@ -69,6 +69,15 @@ class Constraint {
     return new Size({
       width: this.clampWidth(width),
       height: this.clampHeight(height),
+    })
+  }
+
+  normalize(): Constraint {
+    return new Constraint({
+      maxWidth: Math.max(this.minWidth, this.maxWidth),
+      maxHeight: Math.max(this.maxHeight, this.minHeight),
+      minWidth: Math.min(this.minWidth, this.maxWidth),
+      minHeight: Math.min(this.minHeight, this.maxHeight),
     })
   }
 

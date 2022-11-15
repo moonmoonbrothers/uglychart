@@ -1,11 +1,10 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import type Constraint from "../../utils/constraint"
 import Size from "../../utils/size"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
-export type ContainerProps = {
+export type LimitedBoxProps = {
   width?: number
   height?: number
   child?: Widget
@@ -21,7 +20,7 @@ type Style = {
   }
 }
 
-class Container extends SingleChildRenderObjectWidget {
+class LimitedBox extends SingleChildRenderObjectWidget {
   width: number
   height: number
   style: Style
@@ -33,7 +32,7 @@ class Container extends SingleChildRenderObjectWidget {
       border: { color: borderColor = "black" } = {},
       background: { color: backgroundColor = "transparent" } = {},
     } = {},
-  }: ContainerProps) {
+  }: LimitedBoxProps) {
     super({ child })
     this.width = width
     this.height = height
@@ -48,7 +47,7 @@ class Container extends SingleChildRenderObjectWidget {
   }
 
   createRenderObject(): SingleChildRenderObject {
-    return new RenderContainer({
+    return new RenderLimitedBox({
       width: this.width,
       height: this.height,
       style: this.style,
@@ -56,7 +55,7 @@ class Container extends SingleChildRenderObjectWidget {
   }
 }
 
-class RenderContainer extends SingleChildRenderObject {
+class RenderLimitedBox extends SingleChildRenderObject {
   private width: number
   private height: number
   private style?: Style
@@ -104,4 +103,4 @@ class RenderContainer extends SingleChildRenderObject {
   }
 }
 
-export default Container
+export default LimitedBox

@@ -1,7 +1,8 @@
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
-import type Constraint from "$lib/flutter/utils/constraint"
+import Constraint from "$lib/flutter/utils/constraint"
 import EdgeInsets from "$lib/flutter/utils/edgeInsets"
 import Offset from "$lib/flutter/utils/offset"
+import Size from "$lib/flutter/utils/size"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 
@@ -35,6 +36,21 @@ class RenderPadding extends SingleChildRenderObject {
     if (this.child == null)
       throw { message: "RenderPadding doesn't have a child render object" }
     const { top, left, right, bottom } = this.padding
+    const childContraint = new Constraint({
+      ...this.constraint,
+      maxHeight: this.constraint.maxHeight - (top + bottom),
+      maxWidth: this.constraint.maxWidth - (left + right),
+    }).normalize()
+
+    this.child.layout(childContraint)
+    const { size: childSize } = this.child
+
+    this.size = this.constraint.constrain(
+      new Size({
+        width: childSize.width + left + right,
+        height: childSize.height + top + bottom,
+      })
+    )
 
     this.child.offset = new Offset({ x: left, y: top })
   }

@@ -1,30 +1,52 @@
+import Constraint from "$lib/flutter/utils/constraint"
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import type Constraint from "../../utils/constraint"
 import Size from "../../utils/size"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
 class FlexItem extends SingleChildRenderObjectWidget {
-  flex
-  constructor({ flex = 1, child }: { flex?: number; child?: Widget } = {}) {
+  flex: number
+  fit: "tight" | "loose"
+  constructor({
+    flex = 1,
+    child,
+    fit = "loose",
+  }: { flex?: number; child?: Widget; fit?: "tight" | "loose" } = {}) {
     super({ child })
     if (flex <= 0) throw { message: "flex must be over zero" }
     this.flex = flex
+    this.fit = fit
   }
   createRenderObject(): RenderFlexItem {
-    return new RenderFlexItem({ flex: this.flex })
+    return new RenderFlexItem({ flex: this.flex, fit: this.fit })
   }
 }
 
 export class RenderFlexItem extends SingleChildRenderObject {
   flex: number
-  constructor({ flex }: { flex: number }) {
+  fit: "tight" | "loose"
+  constructor({
+    flex,
+    fit,
+  }: {
+    flex: number
+
+    fit: "tight" | "loose"
+  }) {
     super()
     this.flex = flex
+    this.fit = fit
   }
 
-  protected preformLayout(constraint: Constraint): void {
+  protected preformLayout(): void {
+    const constraint =
+      this.fit === "tight"
+        ? Constraint.tight({
+            width: this.constraint.maxWidth,
+            height: this.constraint.maxHeight,
+          })
+        : this.constraint
     let size = Size.zero()
     if (this.child != null) {
       this.child.layout(constraint)
