@@ -47,6 +47,24 @@ class Constraint {
     })
   }
 
+  static tightOnly({ width, height }: { width?: number; height?: number }) {
+    return new Constraint({
+      maxHeight: height ?? Infinity,
+      minHeight: height ?? 0,
+      maxWidth: width ?? Infinity,
+      minWidth: width ?? 0,
+    })
+  }
+
+  restrict(child: Constraint): Constraint {
+    return new Constraint({
+      maxHeight: Math.min(this.maxHeight, child.maxHeight),
+      minHeight: Math.max(this.minHeight, child.minHeight),
+      maxWidth: Math.min(this.maxWidth, child.maxWidth),
+      minWidth: Math.max(this.minWidth, child.minWidth),
+    })
+  }
+
   constrain({ width, height }: Size): Size {
     return new Size({
       width: this.clampWidth(width),

@@ -1,14 +1,15 @@
-import SingleChildRenderObject from "../renderobject/SingleChildRenderObject"
-import type Constraint from "../utils/constraint"
-import Size from "../utils/size"
-import type { PaintContext } from "../utils/type"
-import SingleChildRenderObjectWidget from "../widget/SingleChildRenderObjectWidget"
-import type Widget from "../widget/Widget"
+import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
+import type Constraint from "../../utils/constraint"
+import Size from "../../utils/size"
+import type { PaintContext } from "../../utils/type"
+import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
+import type Widget from "../../widget/Widget"
 
 class FlexItem extends SingleChildRenderObjectWidget {
-  flex = 0
-  constructor({ flex = 0, child }: { flex?: number; child?: Widget } = {}) {
+  flex
+  constructor({ flex = 1, child }: { flex?: number; child?: Widget } = {}) {
     super({ child })
+    if (flex <= 0) throw { message: "flex must be over zero" }
     this.flex = flex
   }
   createRenderObject(): RenderFlexItem {
