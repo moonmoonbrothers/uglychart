@@ -35,7 +35,11 @@ class Text extends RenderObjectWidget {
   }
 
   createRenderObject(): RenderObject {
-    return new RenderText({ text: this.text, font: this.font, fillStyle: this.fontColor })
+    return new RenderText({
+      text: this.text,
+      font: this.font,
+      fillStyle: this.fontColor,
+    })
   }
 }
 
@@ -43,7 +47,15 @@ class RenderText extends RenderObject {
   text: string
   font: string
   fillStyle: string
-  constructor({ text, font, fillStyle }: { text: string; font: string, fillStyle: string }) {
+  constructor({
+    text,
+    font,
+    fillStyle,
+  }: {
+    text: string
+    font: string
+    fillStyle: string
+  }) {
     super()
     this.text = text
     this.font = font
@@ -59,13 +71,13 @@ class RenderText extends RenderObject {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected preformLayout(constraint: Constraint): void {
+  protected preformLayout(): void {
     const size = new Size({
       width: getTextWidth({ text: this.text, font: this.font }),
       height: getTextHeight({ text: this.text, font: this.font }),
     })
 
-    this.size = constraint.constrain(size)
+    this.size = this.constraint.constrain(size)
   }
 }
 

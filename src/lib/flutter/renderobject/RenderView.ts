@@ -5,7 +5,8 @@ import type { PaintContext } from "../utils/type"
 import RenderObject from "./RenderObject"
 
 class RenderView extends RenderObject {
-  preformLayout(constraint: Constraint): void {
+  preformLayout(): void {
+    const constraint = this.constraint
     if (!constraint.isTight)
       throw { message: "constraint must be tight on render view" }
     this.size = new Size({

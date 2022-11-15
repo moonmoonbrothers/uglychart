@@ -10,7 +10,8 @@ class RenderObject {
   offset: Offset = Offset.zero()
 
   layout(constraint: Constraint) {
-    this.preformLayout(constraint)
+    this.constraint = constraint
+    this.preformLayout()
   }
 
   paint(context: PaintContext, offset: Offset) {
@@ -25,20 +26,18 @@ class RenderObject {
   }
 
   /*
-  * Do not call this method directly. instead call layout
-  */
+   * Do not call this method directly. instead call layout
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected preformLayout(constraint: Constraint): void {
+  protected preformLayout(): void {
     throw { message: "not implemented performLayout" }
   }
 
   /*
-  * Do not call this method directly. instead call paint
-  */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected performPaint(context: PaintContext): void {
-    throw { message: "not implemented perfromPaint" }
-  }
+   * Do not call this method directly. instead call paint
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+  protected performPaint(context: PaintContext): void {}
 }
 
 export default RenderObject

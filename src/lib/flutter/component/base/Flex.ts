@@ -57,8 +57,7 @@ class RenderFlex extends MultiChildRenderObject {
     this.mainAxis = this.flexDirection === "row" ? "width" : "height"
     this.crossAxis = this.flexDirection === "row" ? "height" : "width"
   }
-  protected preformLayout(constraint: Constraint): void {
-    this.constraint = constraint
+  protected preformLayout(): void {
     let totalFlex = 0
     let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0]
     const mainAxisValue = this.constraint.getMax(this.mainAxis)

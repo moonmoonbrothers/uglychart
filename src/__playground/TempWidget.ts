@@ -6,7 +6,6 @@ import type Widget from "$lib/flutter/widget/Widget"
 class TempWidget extends ComponentWidget {
   build(): Widget {
     return Container({
-      margin: EdgeInsets.all(0),
       width: Infinity,
       height: Infinity,
       style: {
@@ -15,12 +14,11 @@ class TempWidget extends ComponentWidget {
         },
       },
       child: Container({
-      margin: EdgeInsets.all(30),
-      style: {
-        background: {
-          color: "yellow",
+        style: {
+          background: {
+            color: "yellow",
+          },
         },
-      },
         child: Text({
           text: "TEXT",
           style: {

@@ -75,7 +75,8 @@ class RenderContainer extends SingleChildRenderObject {
     this.style = style
   }
 
-  protected preformLayout(constraint: Constraint): void {
+  protected preformLayout(): void {
+    const constraint = this.constraint
     const size = constraint.constrain(
       new Size({ width: this.width, height: this.height })
     )
