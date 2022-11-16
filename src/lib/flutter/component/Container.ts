@@ -1,5 +1,6 @@
 import type EdgeInsets from "../utils/edgeInsets"
 import type Widget from "../widget/Widget"
+import DecoratedBox from "./base/DecoratedBox"
 import LimitedBox from "./base/LimitedBox"
 import Padding from "./Padding"
 
@@ -20,14 +21,24 @@ export default function Container({
   ...props
 }: ContainerProps) {
   let child = _child
+
   if (child != null && padding != null) {
     child = Padding({ child, padding })
   }
+
   let current: Widget = new LimitedBox({
-    style: { background: { color } },
     child,
     ...props,
   })
+
+  if (color != null) {
+    current = new DecoratedBox({
+      decoraiton: {
+        color,
+      },
+      child: current,
+    })
+  }
 
   if (margin != null) {
     current = Padding({
