@@ -1,29 +1,38 @@
-import Column from "$lib/flutter/component/Column"
 import Expanded from "$lib/flutter/component/Expanded"
-import { Container, Padding, Text } from "$lib/flutter/component/index"
+import { Container } from "$lib/flutter/component"
 import EdgeInsets from "$lib/flutter/utils/edgeInsets"
 import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
+import Row from "$lib/flutter/component/Row"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
+    const result = true
+    console.log(result)
     return Container({
       width: Infinity,
       height: Infinity,
       padding: EdgeInsets.all(10),
-      margin: EdgeInsets.symmetric({ horizontal: 100 }),
       style: {
         background: {
-          color: "lightblue",
+          color: "black",
         },
       },
-      child: Column({
+      child: Row({
         children: [
           Expanded({
             flex: 1,
             child: Container({
-              child: Text({ text: "asdf" }),
-              padding: EdgeInsets.all(10),
+              style: {
+                background: {
+                  color: "blue",
+                },
+              },
+            }),
+          }),
+          Expanded({
+            flex: 1,
+            child: Container({
               style: {
                 background: {
                   color: "red",
@@ -31,15 +40,11 @@ class TempWidget extends ComponentWidget {
               },
             }),
           }),
-          Container({
-            child: Text({ text: "aldnkf" }),
-            margin: EdgeInsets.only({left: 60, top: 10, bottom: 10})
-          }),
           Expanded({
             child: Container({
               style: {
                 background: {
-                  color: "black",
+                  color: "yellow",
                 },
               },
             }),

@@ -4,6 +4,7 @@ import RenderObjectElement from "./RenderObjectElement"
 
 class Element {
   widget: Widget
+  parent?: Element
   constructor(widget: Widget) {
     this.widget = widget
   }

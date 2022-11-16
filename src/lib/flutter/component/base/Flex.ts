@@ -91,7 +91,6 @@ class RenderFlex extends MultiChildRenderObject {
       } else {
         const flex = child.flex
         const childMainAxisValue = flex * flexUnitSize
-        console.log(childMainAxisValue)
         childConstraint = this.getFlexItemConstraint(childMainAxisValue)
       }
 

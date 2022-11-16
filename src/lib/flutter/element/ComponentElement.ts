@@ -3,17 +3,36 @@ import type Widget from "../widget/Widget"
 import Element from "./Element"
 
 class ComponentElement extends Element {
-  child: Element = this.build().createElement()
-
-  build(): Widget {
-    return (this.widget as ComponentWidget).build()
+  _child!: Element
+  get child(): Element {
+    return this._child
+  }
+  set child(value: Element) {
+    this._child = value
+    this._child.parent = this
   }
 
-  performRebuild(): void {
+  override widget: ComponentWidget
+  constructor(widget: ComponentWidget) {
+    super(widget)
+    this.widget = widget
+    this.initState()
     this.child = this.build().createElement()
   }
 
-  visitChildren(visitor: (child: Element) => void): void {
+  initState(): void {
+    this.widget.initState(this)
+  }
+
+  build(): Widget {
+    return this.widget.build(this)
+  }
+
+  override performRebuild(): void {
+    this.child = this.build().createElement()
+  }
+
+  override visitChildren(visitor: (child: Element) => void): void {
     visitor(this.child)
   }
 }
