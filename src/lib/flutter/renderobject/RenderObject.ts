@@ -1,10 +1,15 @@
+import type Element from "../element/Element"
+import type RenderObjectElement from "../element/RenderObjectElement"
 import Constraint from "../utils/constraint"
 import Offset from "../utils/offset"
 import Size from "../utils/size"
 import type { PaintContext } from "../utils/type"
 
 class RenderObject {
-  children: RenderObject[] = []
+  ownerElement!: RenderObjectElement
+  get children(): RenderObject[] {
+    return this.ownerElement.children.map((child) => child.renderObject)
+  }
   size: Size = Size.zero()
   constraint: Constraint = Constraint.zero()
   offset: Offset = Offset.zero()
@@ -23,6 +28,10 @@ class RenderObject {
     ctx.restore()
 
     this.children.forEach((child) => child.paint(context, totalOffset))
+  }
+
+  attach(ownerElement: RenderObjectElement) {
+    this.ownerElement = ownerElement
   }
 
   /*

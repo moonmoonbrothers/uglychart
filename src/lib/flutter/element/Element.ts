@@ -1,3 +1,4 @@
+import { children } from "svelte/internal"
 import type RenderObject from "../renderobject/RenderObject"
 import type Widget from "../widget/Widget"
 import RenderObjectElement from "./RenderObjectElement"
@@ -30,11 +31,15 @@ class Element {
   }
 
   rebuild() {
-    this.performRebuild()
+    const visitor = (child: Element) => {
+      child.performRebuild()
+      child.visitChildren(visitor)
+    }
+    visitor(this)
   }
 
   protected performRebuild() {
-    throw { message: "not implemented" }
+    throw { message: "not implemented rebuild" }
   }
 }
 

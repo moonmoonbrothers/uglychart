@@ -61,10 +61,13 @@ class ProviderElement extends Element {
     visitor(this.child)
   }
 
+  protected override performRebuild(): void {
+    this.child = this.widget.child.createElement()
+  }
+
   constructor(widget: ProviderWidget<unknown, unknown>) {
     super(widget)
     this.widget = widget
-    this.child = widget.child.createElement()
   }
 }
 

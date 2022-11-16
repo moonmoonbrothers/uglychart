@@ -16,8 +16,6 @@ class ComponentElement extends Element {
   constructor(widget: ComponentWidget) {
     super(widget)
     this.widget = widget
-    this.initState()
-    this.child = this.build().createElement()
   }
 
   initState(): void {

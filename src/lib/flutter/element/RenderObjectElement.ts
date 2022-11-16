@@ -12,18 +12,15 @@ class RenderObjectElement extends Element {
     this._children = value
   }
 
-  _renderObject: RenderObject
+  _renderObject!: RenderObject
   createRenderObject() {
-    return (this.widget as RenderObjectWidget).createRenderObject()
+    const renderObject =(this.widget as RenderObjectWidget).createRenderObject()
+    renderObject.attach(this)
+    return renderObject
   }
 
   constructor(widget: RenderObjectWidget) {
     super(widget)
-    this.children = widget.children.map((child) => child.createElement())
-    this._renderObject = this.createRenderObject()
-    this._renderObject.children = this.children.map(
-      (child) => child.renderObject
-    )
   }
 
   performRebuild(): void {
@@ -31,9 +28,6 @@ class RenderObjectElement extends Element {
       child.createElement()
     )
     this._renderObject = this.createRenderObject()
-    this._renderObject.children = this.children.map(
-      (child) => child.renderObject
-    )
   }
 
   visitChildren(visitor: (child: Element) => void): void {
