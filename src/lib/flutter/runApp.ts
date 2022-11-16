@@ -24,6 +24,7 @@ class AppRunner {
 
   runApp(widget: Widget) {
     this.root = new RenderObjectToWidgetAdapter({ app: widget }).createElement()
+    console.log(this.root)
     const resize = (child: ResizeObserverEntry) => {
       const { width, height } = child.target.getBoundingClientRect()
       this.canvasSize = new Size({ width, height })

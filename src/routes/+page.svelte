@@ -1,5 +1,7 @@
-<script>
-  import BarChart from '$lib/chart/bar/BarChart.svelte'
+<script lang="ts">
+  import Temp from "../__playground/TempTemp.svelte"
+
+
 
 </script>
 
@@ -13,6 +15,6 @@
     you can make whatever you want with this library!
   </p>
 
-  <BarChart/>
+  <Temp/>
 
 </div>

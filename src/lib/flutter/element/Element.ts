@@ -20,7 +20,7 @@ class Element {
       if (child instanceof RenderObjectElement) {
         result = child._renderObject
       } else {
-        this.visitChildren(visitor)
+        child.visitChildren(visitor)
       }
     }
     visitor(this)

@@ -3,13 +3,13 @@ import type RenderObjectWidget from "../widget/RenderObjectWidget"
 import Element from "./Element"
 
 class RenderObjectElement extends Element {
-  _children!: Element[]
+  private _children!: Element[]
   get children() {
     return this._children
   }
   set children(value: Element[]) {
+    value.forEach((child) => (child.parent = this))
     this._children = value
-    this._children.forEach((child) => (child.parent = this))
   }
 
   _renderObject: RenderObject

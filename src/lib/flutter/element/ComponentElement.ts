@@ -3,13 +3,13 @@ import type Widget from "../widget/Widget"
 import Element from "./Element"
 
 class ComponentElement extends Element {
-  _child!: Element
+  private _child!: Element
   get child(): Element {
     return this._child
   }
   set child(value: Element) {
+    value.parent = this
     this._child = value
-    this._child.parent = this
   }
 
   override widget: ComponentWidget
@@ -29,6 +29,7 @@ class ComponentElement extends Element {
   }
 
   override performRebuild(): void {
+    this.initState()
     this.child = this.build().createElement()
   }
 
