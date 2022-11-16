@@ -1,5 +1,7 @@
+import type Alignment from "../utils/alignment"
 import type EdgeInsets from "../utils/edgeInsets"
 import type Widget from "../widget/Widget"
+import Align from "./Align"
 import DecoratedBox from "./base/DecoratedBox"
 import LimitedBox from "./base/LimitedBox"
 import Padding from "./Padding"
@@ -11,24 +13,32 @@ type ContainerProps = {
   height?: number
   color?: string
   child?: Widget
+  alignment?: Alignment
 }
 
 export default function Container({
   padding,
   margin,
-  child: _child,
+  child,
   color,
-  ...props
+  width,
+  height,
+  alignment,
 }: ContainerProps) {
-  let child = _child
+  let current = child
 
-  if (child != null && padding != null) {
-    child = Padding({ child, padding })
+  if (padding != null) {
+    current = Padding({ child: current, padding })
   }
 
-  let current: Widget = new LimitedBox({
+  if (alignment != null) {
+    current = Align({ child: current, alignment })
+  }
+
+  current = new LimitedBox({
     child,
-    ...props,
+    width,
+    height,
   })
 
   if (color != null) {

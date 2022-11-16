@@ -25,7 +25,6 @@ class AppRunner {
   runApp(widget: Widget) {
     this.root = new RenderObjectToWidgetAdapter({ app: widget }).createElement()
     this.rebuild()
-    console.log(this.root)
     this.observeCanvasSize()
   }
 

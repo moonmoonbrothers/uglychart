@@ -1,5 +1,5 @@
 import Expanded from "$lib/flutter/component/Expanded"
-import { Builder, Container } from "$lib/flutter/component"
+import { Builder, Center, Container } from "$lib/flutter/component"
 import EdgeInsets from "$lib/flutter/utils/edgeInsets"
 import ComponentWidget, {
   BuildContext,
@@ -39,7 +39,9 @@ class TempWidget extends ComponentWidget {
             child: Container({
               padding: EdgeInsets.only({ top: 10 }),
               color: "blue",
-              child: new LeafWidget(),
+              child: Center({
+                child: new LeafWidget(),
+              }),
             }),
           }),
         ],

@@ -13,7 +13,7 @@ export default class Padding extends SingleChildRenderObjectWidget {
     child,
   }: {
     padding?: EdgeInsets
-    child: Widget
+    child?: Widget
   }) {
     super({ child })
     this.padding = padding
@@ -33,8 +33,7 @@ class RenderPadding extends SingleChildRenderObject {
     this.padding = padding
   }
   protected preformLayout(): void {
-    if (this.child == null)
-      throw { message: "RenderPadding doesn't have a child render object" }
+    if (this.child == null) return
     const { top, left, right, bottom } = this.padding
     const childContraint = new Constraint({
       ...this.constraint,

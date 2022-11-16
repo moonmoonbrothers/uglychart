@@ -77,7 +77,7 @@ class RenderText extends RenderObject {
       height: getTextHeight({ text: this.text, font: this.font }),
     })
 
-    this.size = this.constraint.constrain(size)
+    this.size = size
   }
 }
 

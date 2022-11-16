@@ -7,7 +7,7 @@ export default function Padding({
   padding = EdgeInsets.all(0),
   child,
 }: {
-  child: Widget
+  child?: Widget
   padding?: EdgeInsets
 }) {
   if (child instanceof Expanded) throw { message: "Padding must not have a Expanded Widget" }
