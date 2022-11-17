@@ -93,6 +93,10 @@ class Constraint {
     return this.maxHeight === this.minHeight && this.maxWidth === this.minWidth
   }
 
+  get isUnbounded(): boolean {
+    return this.maxWidth === Infinity && this.maxHeight === Infinity
+  }
+
   private clampWidth(width: number) {
     return Math.min(this.maxWidth, Math.max(this.minWidth, width))
   }

@@ -58,8 +58,14 @@ class RenderAlign extends SingleChildRenderObject {
     this.size = this.constraint.constrain(
       new Size({ width: this.width, height: this.height })
     )
+
     if (this.child == null) return
+
     this.child.layout(this.constraint)
+
+    if (this.constraint.isUnbounded) {
+      this.size = this.child.size
+    }
 
     this.child.offset = this.alignment.getOffset({
       target: this.child.size,

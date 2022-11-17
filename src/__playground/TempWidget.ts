@@ -1,68 +1,93 @@
-import Expanded from "$lib/flutter/component/Expanded"
-import { Builder, Center, Container } from "$lib/flutter/component"
+import { Container } from "$lib/flutter/component"
 import EdgeInsets from "$lib/flutter/utils/edgeInsets"
-import ComponentWidget, {
-  BuildContext,
-} from "$lib/flutter/widget/ComponentWidget"
+import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
-import TempProvider from "./provider/TempProvider"
-import Column from "$lib/flutter/component/Column"
+import Grid from "$lib/flutter/component/Grid"
+import Alignment from "$lib/flutter/utils/alignment"
+import Gap from "$lib/flutter/utils/gap"
 import Text from "$lib/flutter/component/Text"
-import TempProvider2 from "./provider/TempProvider2"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
-    const a = Container({
+    return Container({
       width: Infinity,
       height: Infinity,
-      child: Column({
-        children: [
-          TempProvider2({
-            value: { temp: "문대승" },
-            child: Expanded({
-              child: Container({
-                padding: EdgeInsets.only({ top: 10 }),
-                color: "red",
-                child: Builder((context) => {
-                  return Text({
-                    text: TempProvider2.of(context).temp,
-                    style: {
-                      fontWeight: "700",
-                      fontSize: "50px",
-                    },
-                  })
-                }),
-              }),
+      color: "lightblue",
+      padding: EdgeInsets.all(10),
+      child: Grid({
+        gap: Gap.only({ x: 10, y: 10 }),
+        alignment: Alignment.topRight,
+        templateColumns: [
+          ...Grid.ContentFit().repeat(2),
+          Grid.Fr(1),
+          Grid.Fr(2),
+        ],
+        templateRows: Grid.ContentFit().repeat(2),
+        childrenByRow: [
+          [
+            Container({
+              width: 50,
+              height: 50,
+              color: "black",
             }),
-          }),
-          Expanded({
-            child: Container({
-              padding: EdgeInsets.only({ top: 10 }),
+            Text({
+              text: "Hel",
+              style: {
+                fontSize: "100px",
+              },
+            }),
+            Container({
+              width: 100,
+              height: 50,
+              color: "red",
+            }),
+            Container({
+              width: 50,
+              height: 50,
+              color: "black",
+            }),
+            Container({
+              width: 50,
+              height: 50,
+              color: "black",
+            }),
+          ],
+          [
+            Container({
+              width: 50,
+              height: 50,
               color: "blue",
-              child: Center({
-                child: new LeafWidget(),
-              }),
             }),
-          }),
+            Container({
+              width: 150,
+              height: 50,
+              color: "purple",
+            }),
+            Container({
+              width: Infinity,
+              height: 50,
+              color: "yellow",
+            }),
+          ],
+          [
+            Container({
+              width: 50,
+              height: 50,
+              color: "blue",
+            }),
+            Container({
+              width: 50,
+              height: 70,
+              color: "black",
+            }),
+            Container({
+              width: Infinity,
+              height: Infinity,
+              color: "white",
+            }),
+          ],
         ],
       }),
-    })
-
-    return TempProvider({
-      value: { temp: "조문기" },
-      child: a,
-    })
-  }
-}
-
-class LeafWidget extends ComponentWidget {
-  build(context: BuildContext): Widget {
-    return Text({
-      text: TempProvider.of(context).temp,
-      style: {
-        fontColor: "white",
-        fontSize: "50px",
-      },
     })
   }
 }
