@@ -1,4 +1,3 @@
-import type Element from "../element/Element"
 import type RenderObjectElement from "../element/RenderObjectElement"
 import Constraint from "../utils/constraint"
 import Offset from "../utils/offset"

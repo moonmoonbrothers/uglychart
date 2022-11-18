@@ -4,8 +4,8 @@ import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 import Grid from "$lib/flutter/component/Grid"
 import Alignment from "$lib/flutter/utils/alignment"
-import Gap from "$lib/flutter/utils/gap"
-import Text from "$lib/flutter/component/Text"
+import BorderStyle from "$lib/flutter/utils/borderstyle"
+import Radius from "$lib/flutter/utils/radius"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
@@ -15,7 +15,6 @@ class TempWidget extends ComponentWidget {
       color: "lightblue",
       padding: EdgeInsets.all(10),
       child: Grid({
-        gap: Gap.only({ x: 10, y: 10 }),
         alignment: Alignment.topRight,
         templateColumns: [
           ...Grid.ContentFit().repeat(2),
@@ -29,12 +28,6 @@ class TempWidget extends ComponentWidget {
               width: 50,
               height: 50,
               color: "black",
-            }),
-            Text({
-              text: "Hel",
-              style: {
-                fontSize: "100px",
-              },
             }),
             Container({
               width: 100,
@@ -62,28 +55,11 @@ class TempWidget extends ComponentWidget {
               width: 150,
               height: 50,
               color: "purple",
-            }),
-            Container({
-              width: Infinity,
-              height: 50,
-              color: "yellow",
-            }),
-          ],
-          [
-            Container({
-              width: 50,
-              height: 50,
-              color: "blue",
-            }),
-            Container({
-              width: 50,
-              height: 70,
-              color: "black",
-            }),
-            Container({
-              width: Infinity,
-              height: Infinity,
-              color: "white",
+              radius: Radius.all(10),
+              border: BorderStyle.all({
+                thickness: 5,
+                color: "black",
+              }),
             }),
           ],
         ],

@@ -1,5 +1,7 @@
 import type Alignment from "../utils/alignment"
+import type BorderStyle from "../utils/borderstyle"
 import type EdgeInsets from "../utils/edgeInsets"
+import type Radius from "../utils/radius"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
 import DecoratedBox from "./base/DecoratedBox"
@@ -12,6 +14,8 @@ type ContainerProps = {
   width?: number
   height?: number
   color?: string
+  border?: BorderStyle
+  radius?: Radius
   child?: Widget
   alignment?: Alignment
 }
@@ -24,6 +28,8 @@ export default function Container({
   width,
   height,
   alignment,
+  radius,
+  border
 }: ContainerProps) {
   let current = child
 
@@ -41,10 +47,12 @@ export default function Container({
     height,
   })
 
-  if (color != null) {
+  if (color != null || border != null || radius != null ) {
     current = new DecoratedBox({
       decoraiton: {
         color,
+        border,
+        radius
       },
       child: current,
     })
