@@ -153,6 +153,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
         return result
       }
     )
+
     const fixedRowHeights: number[] = this.rows.map(({ type, value }, i) => {
       let result = 0
       if (type === "content-fit") {
@@ -199,7 +200,6 @@ class RenderBaseGrid extends MultiChildRenderObject {
       }
       return result
     })
-  
 
     this.childrenByRow.forEach((columnChildren, rowIndex) => {
       columnChildren.forEach((child, columnIndex) => {
@@ -218,6 +218,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
       })
     })
 
+    console.log(this.constraint)
   }
 }
 

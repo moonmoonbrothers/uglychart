@@ -5,7 +5,7 @@ import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
-class FlexItem extends SingleChildRenderObjectWidget {
+class Flexible extends SingleChildRenderObjectWidget {
   flex: number
   fit: "tight" | "loose"
   constructor({
@@ -18,12 +18,12 @@ class FlexItem extends SingleChildRenderObjectWidget {
     this.flex = flex
     this.fit = fit
   }
-  createRenderObject(): RenderFlexItem {
-    return new RenderFlexItem({ flex: this.flex, fit: this.fit })
+  createRenderObject(): RenderFlexible {
+    return new RenderFlexible({ flex: this.flex, fit: this.fit })
   }
 }
 
-export class RenderFlexItem extends SingleChildRenderObject {
+export class RenderFlexible extends SingleChildRenderObject {
   flex: number
   fit: "tight" | "loose"
   constructor({
@@ -46,7 +46,10 @@ export class RenderFlexItem extends SingleChildRenderObject {
             width: this.constraint.maxWidth,
             height: this.constraint.maxHeight,
           })
-        : this.constraint
+        : Constraint.loose({
+            width: this.constraint.maxWidth,
+            height: this.constraint.maxHeight,
+          })
     let size = Size.zero()
     if (this.child != null) {
       this.child.layout(constraint)
@@ -59,4 +62,4 @@ export class RenderFlexItem extends SingleChildRenderObject {
   protected performPaint(context: PaintContext): void {}
 }
 
-export default FlexItem
+export default Flexible

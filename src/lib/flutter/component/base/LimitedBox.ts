@@ -52,6 +52,20 @@ class RenderLimitedBox extends SingleChildRenderObject {
       this.size = size
     }
   }
+
+  override getIntrinsicHeight(): number {
+    const childInstrinsicHeight = this.child?.getIntrinsicHeight() || 0
+    return this.height === Infinity
+      ? childInstrinsicHeight
+      : Math.max(this.height, childInstrinsicHeight)
+  }
+
+  override getIntrinsicWidth(): number {
+    const childInstrinsicWidth = this.child?.getIntrinsicWidth() || 0
+    return this.width === Infinity
+      ? childInstrinsicWidth
+      : Math.max(this.height, childInstrinsicWidth)
+  }
 }
 
 export default LimitedBox

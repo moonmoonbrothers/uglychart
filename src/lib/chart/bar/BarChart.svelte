@@ -1,12 +1,13 @@
 <script lang="ts">
   import AppRunner from "$lib/flutter/runApp"
   import { onMount } from "svelte"
-  import TempWidget from "../../../__playground/TempWidget"
+  import BarCharWidget from "./BarChartWidget"
 
   let canvalEl!: HTMLCanvasElement
 
   onMount(() => {
-   // const runner = new AppRunner({canvas: canvalEl})
+    const runner = new AppRunner({canvas: canvalEl})
+    runner.runApp(new BarCharWidget())
   })
 </script>
 

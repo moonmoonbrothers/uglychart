@@ -10,32 +10,47 @@ import Radius from "$lib/flutter/utils/radius"
 import Column from "$lib/flutter/component/Column"
 import Expanded from "$lib/flutter/component/Expanded"
 import SizeBox from "$lib/flutter/component/SizedBox"
+import Gap from "$lib/flutter/utils/gap"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
     return Container({
-      radius: Radius.all(5),
-      border: BorderStyle.all({ color: "black", thickness: 2 }),
-      width: Infinity,
-      height: 0,
-      color: "lightblue",
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
-      child: Column({
-        crossAxisAlignment: "stretch",
-        mainAxisAlignment: "end",
-        children: [
-          Container({
-            width: 50,
-            height: 50,
-            color: "blue",
-          }),
-          Container({
-            width: 50,
-            height: 50,
-            color: "yellow",
-          }),
-        ],
+      color: "lightgrey",
+      child: Container({
+        color: "lightgrey",
+        width: Infinity,
+        height: Infinity,
+        child: Grid({
+          templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
+          templateRows: [Grid.Fr(1), Grid.ContentFit()],
+          gap: Gap.all(5),
+          childrenByRow: [
+            [
+              Container({
+                width: 50,
+                height: Infinity,
+                color: "red",
+              }),
+              Container({
+                width: Infinity,
+                height: Infinity,
+                color: "blue",
+              }),
+            ],
+            [
+              Container({
+                color: "lightblue",
+                width: 30,
+                child: Text({ text: "AAA" }),
+              }),
+              Container({
+                height: 30,
+                width: Infinity,
+                color: "black",
+              }),
+            ],
+          ],
+        }),
       }),
     })
   }

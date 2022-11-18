@@ -8,6 +8,8 @@ import _Padding from "./Padding"
 import _Builder from "./Builder"
 import _Align from "./Align"
 import _Center from "./Center"
+import _Grid from './Grid'
+import _Flexible from './Flextible'
 
 export const Padding = _Padding
 export const Column = _Column
@@ -19,3 +21,5 @@ export const Container = _Container
 export const Builder = _Builder
 export const Align = _Align
 export const Center = _Center
+export const Grid = _Grid
+export const Flexible = _Flexible

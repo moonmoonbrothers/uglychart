@@ -1,4 +1,4 @@
-import FlexItem from "./base/FlexItem"
+import Flexible from "./base/Flexible"
 import type Widget from "../widget/Widget"
 
 export default function Expanded({
@@ -8,9 +8,9 @@ export default function Expanded({
   flex?: number
   child?: Widget
 }) {
-  return new FlexItem({
+  return new Flexible({
     flex,
-    child: new FlexItem({
+    child: new Flexible({
       fit: "tight",
       child,
     }),

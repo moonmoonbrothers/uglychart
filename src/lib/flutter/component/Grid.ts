@@ -18,7 +18,6 @@ function Grid({
 }): BaseGrid {
   const childrenByRow = _childrenByRow.map((children, rowIndex) => {
     return children
-      .map((child) => Align({ child: child, alignment }))
       .map((child, columnIndex) =>
         Padding({
           padding: EdgeInsets.only({
@@ -28,6 +27,7 @@ function Grid({
           child,
         })
       )
+      .map((child) => Align({ child: child, alignment }))
   })
   return new BaseGrid({ childrenByRow, ...props })
 }

@@ -3,7 +3,7 @@ import Constraint from "../../utils/constraint"
 import type { PaintContext } from "../../utils/type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidget"
 import type Widget from "../../widget/Widget"
-import { RenderFlexItem } from "./FlexItem"
+import { RenderFlexible } from "./Flexible"
 
 class Flex extends MultiChildRenderObjectWidget {
   flexDirection: "row" | "column"
@@ -65,7 +65,7 @@ class RenderFlex extends MultiChildRenderObject {
     // 공통
     this.children.forEach((child) => {
       child.layout(this.constraint)
-      const flex = child instanceof RenderFlexItem ? child.flex : 0
+      const flex = child instanceof RenderFlexible ? child.flex : 0
       totalFlex += flex
       if (flex === 0) {
         childIntrinsicMainAxisValue += child.size[this.mainAxis]
@@ -86,7 +86,7 @@ class RenderFlex extends MultiChildRenderObject {
     this.children.forEach((child) => {
       let childConstraint: Constraint
 
-      if (!(child instanceof RenderFlexItem)) {
+      if (!(child instanceof RenderFlexible)) {
         childConstraint = this.getNonFlexItemConstraint()
       } else {
         const flex = child.flex
@@ -192,6 +192,28 @@ class RenderFlex extends MultiChildRenderObject {
         break
     }
     return offsetOnCrossAxis
+  }
+
+  override getIntrinsicHeight(): number {
+    const sum = (acc: number, value: number) => acc + value
+    const max = (acc: number, value: number) => Math.max(acc, value)
+    const childInstrinsicHeights = this.children.map((child) =>
+      child.getIntrinsicHeight()
+    )
+    return this.flexDirection === "row"
+      ? childInstrinsicHeights.reduce(max, 0)
+      : childInstrinsicHeights.reduce(sum, 0)
+  }
+
+  override getIntrinsicWidth(): number {
+    const sum = (acc: number, value: number) => acc + value
+    const max = (acc: number, value: number) => Math.max(acc, value)
+    const childInstrinsicWidths = this.children.map((child) =>
+      child.getIntrinsicWidth()
+    )
+    return this.flexDirection === "column"
+      ? childInstrinsicWidths.reduce(max, 0)
+      : childInstrinsicWidths.reduce(sum, 0)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars

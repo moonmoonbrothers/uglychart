@@ -29,7 +29,7 @@ class Constraint {
     })
   }
 
-  static loose(size: Size) {
+  static loose(size: { width: number; height: number }) {
     return new Constraint({
       minHeight: 0,
       maxHeight: size.height,
@@ -38,7 +38,7 @@ class Constraint {
     })
   }
 
-  static tight({ width, height }: {width: number, height: number}) {
+  static tight({ width, height }: { width: number; height: number }) {
     return new Constraint({
       maxHeight: height,
       minHeight: height,

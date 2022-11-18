@@ -33,6 +33,14 @@ class RenderObject {
     this.ownerElement = ownerElement
   }
 
+  getIntrinsicWidth() {
+    return 0
+  }
+
+  getIntrinsicHeight() {
+    return 0
+  }
+
   /*
    * Do not call this method directly. instead call layout
    */

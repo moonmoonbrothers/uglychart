@@ -79,6 +79,14 @@ class RenderText extends RenderObject {
 
     this.size = size
   }
+
+  override getIntrinsicHeight(): number {
+    return getTextHeight({ text: this.text, font: this.font })
+  }
+
+  override getIntrinsicWidth(): number {
+    return getTextWidth({ text: this.text, font: this.font })
+  }
 }
 
 export default Text
