@@ -7,56 +7,34 @@ import Alignment from "$lib/flutter/utils/alignment"
 import BorderStyle from "$lib/flutter/utils/borderstyle"
 import Center from "$lib/flutter/component/Center"
 import Radius from "$lib/flutter/utils/radius"
+import Column from "$lib/flutter/component/Column"
+import Expanded from "$lib/flutter/component/Expanded"
+import SizeBox from "$lib/flutter/component/SizedBox"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
     return Container({
+      radius: Radius.all(5),
+      border: BorderStyle.all({ color: "black", thickness: 2 }),
       width: Infinity,
-      height: Infinity,
+      height: 0,
       color: "lightblue",
+      margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(10),
-      child: Grid({
-        alignment: Alignment.topRight,
-        templateColumns: [
-          ...Grid.ContentFit().repeat(2),
-          Grid.Fr(1),
-          Grid.Fr(2),
-        ],
-        templateRows: Grid.ContentFit().repeat(2),
-        childrenByRow: [
-          [
-            Container({
-              width: 150,
-              height: 150,
-              color: "white",
-              radius: Radius.only({
-                bttomRight: 10,
-              }),
-              border: BorderStyle.only({
-                top: {
-                  color: "black",
-                  thickness: 10,
-                },
-                left: {
-                  color: "black",
-                  thickness: 2,
-                },
-                right: {
-                  color: "blue",
-                  thickness: 20,
-                },
-                bottom: {
-                  color: "yellow",
-                  thickness: 20,
-                },
-              }),
-              child: Center({
-                child: Text({
-                  text: "asdf",
-                }),
-              }),
-            }),
-          ],
+      child: Column({
+        crossAxisAlignment: "stretch",
+        mainAxisAlignment: "end",
+        children: [
+          Container({
+            width: 50,
+            height: 50,
+            color: "blue",
+          }),
+          Container({
+            width: 50,
+            height: 50,
+            color: "yellow",
+          }),
         ],
       }),
     })

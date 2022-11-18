@@ -29,30 +29,29 @@ export default function Container({
   height,
   alignment,
   radius,
-  border
+  border,
 }: ContainerProps) {
   let current = child
-
-  if (padding != null) {
-    current = Padding({ child: current, padding })
-  }
-
   if (alignment != null) {
     current = Align({ child: current, alignment })
   }
 
   current = new LimitedBox({
-    child,
+    child: current,
     width,
     height,
   })
 
-  if (color != null || border != null || radius != null ) {
+  if (padding != null) {
+    current = Padding({ child: current, padding })
+  }
+
+  if (color != null || border != null || radius != null) {
     current = new DecoratedBox({
       decoraiton: {
         color,
         border,
-        radius
+        radius,
       },
       child: current,
     })
