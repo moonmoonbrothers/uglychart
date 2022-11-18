@@ -95,8 +95,8 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     ctx.fillStyle = color
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(ctx as any).roundRect(
-      borderTop.thickness,
       borderLeft.thickness,
+      borderTop.thickness,
       this.size.width - (borderLeft.thickness + borderRight.thickness),
       this.size.height - (borderTop.thickness + borderBottom.thickness),
       [topLeftRadius, topRightRadius, bottomRightRadius, bottomLeftRadius]
@@ -104,134 +104,139 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     ctx.fill()
     //draw background end
 
-    const configs: {
-      type: "left" | "right" | "top" | "bottom"
-      getEdgeRaidusCenterOffset: (radius: number) => {
-        x: number
-        y: number
-      }
-      edges: {
-        type: "topLeft" | "topRight" | "bottomLeft" | "bottomRight"
-        position: {
-          x: number
-          y: number
-        }
-        startAngle: number
-      }[]
-    }[] = [
-      {
-        type: "top",
-        getEdgeRaidusCenterOffset(radius) {
-          return {
-            x: 0,
-            y: radius,
-          }
-        },
-        edges: [
-          {
-            type: "topLeft",
-            position: {
-              x: borderLeft.thickness + topLeftRadius,
-              y: borderTop.thickness / 2
-            },
-            startAngle: Math.PI * ( 5 / 4),
-          },
-          {
-            type: "topRight",
-            startAngle: - Math.PI / 2,
-            position: {
-              x: this.size.width - (borderRight.thickness + topRightRadius),
-              y: borderTop.thickness / 2
-            },
-          },
-        ],
+    this.drawBorders(ctx)
+  }
+
+  private drawBorders(ctx: CanvasRenderingContext2D) {
+    const edgesPos = {
+      topLeft: {
+        x: 0,
+        y: 0,
+        angle: Math.PI * (5 / 4),
       },
-      {
-        type: "right",
-        getEdgeRaidusCenterOffset(radius) {
-          return {
-            x: -radius,
-            y: 0,
-          }
-        },
-        edges: [
-          {
-            type: "topRight",
-            position: {
-              x: this.size.width - borderRight.thickness / 2,
-              y: borderTop.thickness + topRightRadius,
-            },
-            startAngle: -Math.PI / 4,
-          },
-          {
-            type: "bottomRight",
-            startAngle: 0,
-            position: {
-              x: this.size.width - borderRight.thickness / 2,
-              y:
-                this.size.height - (borderBottom.thickness + bottomRightRadius),
-            },
-          },
-        ],
+      topRight: {
+        x: this.size.width,
+        y: 0,
+        angle: (-1 * Math.PI) / 4,
       },
-      {
-        type: "left",
-        getEdgeRaidusCenterOffset(radius) {
-          return {
-            x: radius,
-            y: 0,
-          }
-        },
-        edges: [
-          {
-            type: "topLeft",
-            position: {
-              x: borderLeft.thickness / 2,
-              y: borderTop.thickness + topLeftRadius,
-            },
-            startAngle: Math.PI,
-          },
-          {
-            type: "bottomLeft",
-            startAngle: Math.PI / 2 + Math.PI / 4,
-            position: {
-              x: borderLeft.thickness / 2,
-              y: this.size.height - (borderBottom.thickness + bottomLeftRadius),
-            },
-          },
-        ],
+      bottomLeft: {
+        x: 0,
+        y: this.size.height,
+        angle: Math.PI * (3 / 4),
       },
+      bottomRight: {
+        x: this.size.width,
+        y: this.size.height,
+        angle: Math.PI / 4,
+      },
+    }
+    const signs = {
+      top: 1,
+      left: 1,
+      bottom: -1,
+      right: -1,
+    }
+
+    const configs: ("left" | "right" | "top" | "bottom")[] = [
+      "left",
+      "right",
+      "bottom",
+      "top",
     ]
 
-    configs.forEach(({ type, edges, getEdgeRaidusCenterOffset }) => {
-      const { color, thickness } = this.decoration.border[type]
+    configs.forEach((main) => {
+      const mainBorder = this.decoration.border[main]
+      let adjacencies: ("left" | "right" | "top" | "bottom")[]
+      let mainPosKey: "x" | "y"
+      let subPosKey: "x" | "y"
+
+      if (["bottom", "top"].includes(main)) {
+        adjacencies = ["left", "right"]
+        mainPosKey = "y"
+        subPosKey = "x"
+      } else {
+        adjacencies = ["top", "bottom"]
+        mainPosKey = "x"
+        subPosKey = "y"
+      }
+
+      const [moveTo, lineTo] = adjacencies.map((sub) => {
+        const edgeKey = this.getEdgeKey(main, sub)
+        const subBorder = this.decoration.border[sub]
+        const radius = this.decoration.radius[edgeKey]
+        const edgePos = edgesPos[edgeKey]
+        return {
+          [mainPosKey]:
+            edgePos[mainPosKey] + (signs[main] * mainBorder.thickness) / 2,
+          [subPosKey]:
+            edgePos[subPosKey] + signs[sub] * (subBorder.thickness + radius),
+        }
+      })
+
       ctx.beginPath()
-      ctx.lineWidth = thickness
-      ctx.strokeStyle = color
-      const moveTo = edges[0].position
-      const lineTo = edges[1].position
+      ctx.lineWidth = mainBorder.thickness
+      ctx.strokeStyle = mainBorder.color
       ctx.moveTo(moveTo.x, moveTo.y)
       ctx.lineTo(lineTo.x, lineTo.y)
       ctx.stroke()
-      edges.forEach((edge) => {
-        const configRadius = this.decoration.radius[edge.type]
-        ctx.beginPath()
-        if (configRadius !== 0) {
-          const radius = configRadius + thickness / 2
-          const offset = getEdgeRaidusCenterOffset(radius)
-          ctx.arc(
-            edge.position.x + offset.x,
-            edge.position.y + offset.y,
-            radius,
-            edge.startAngle,
-            edge.startAngle + Math.PI / 4
-          )
-        } else {
-          //
+
+      adjacencies.forEach((sub) => {
+        const edgeKey = this.getEdgeKey(main, sub)
+        const subBorder = this.decoration.border[sub]
+        const radius = this.decoration.radius[edgeKey]
+        const edgePos = edgesPos[edgeKey]
+
+        if (subBorder.thickness === 0) return
+
+        const [xKey, yKey] = mainPosKey === "x" ? [main, sub] : [sub, main]
+        const innerEdgePos = {
+          x: edgePos.x + signs[xKey] * this.decoration.border[xKey].thickness,
+          y: edgePos.y + signs[yKey] * this.decoration.border[yKey].thickness,
         }
-        ctx.stroke()
+        const isAntiClockWise =
+          (mainPosKey === "x" ? 1 : -1) * signs[main] * signs[sub] > 0
+
+        if (radius !== 0) {
+          ctx.beginPath()
+          ctx.arc(
+            innerEdgePos.x + signs[xKey] * radius,
+            innerEdgePos.y + signs[yKey] * radius,
+            radius + mainBorder.thickness / 2,
+            edgePos.angle,
+            edgePos.angle + ((isAntiClockWise ? -1 : 1) * Math.PI) / 4,
+            isAntiClockWise
+          )
+          ctx.stroke()
+        } else {
+          ctx.beginPath()
+          ctx.moveTo(edgePos.x, edgePos.y)
+          ctx.lineTo(innerEdgePos.x, innerEdgePos.y)
+          const [x, y] =
+            mainPosKey !== "x"
+              ? [innerEdgePos.x, edgePos.y]
+              : [edgePos.x, innerEdgePos.y]
+          ctx.lineTo(x, y)
+          ctx.fillStyle = mainBorder.color
+          ctx.fill()
+        }
       })
     })
+  }
+
+  private getEdgeKey(
+    type1: "left" | "right" | "top" | "bottom",
+    type2: "left" | "right" | "top" | "bottom"
+  ): "topLeft" | "topRight" | "bottomLeft" | "bottomRight" {
+    const [vertical, horizon] = ["top", "bottom"].includes(type1)
+      ? [type1, type2]
+      : [type2, type1]
+
+    return (vertical +
+      horizon.replace(/^[a-z]/, (char) => char.toUpperCase())) as
+      | "topLeft"
+      | "topRight"
+      | "bottomLeft"
+      | "bottomRight"
   }
 }
 

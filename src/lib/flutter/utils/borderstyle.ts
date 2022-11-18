@@ -55,10 +55,10 @@ class BorderStyle {
       thickness: 0,
     },
   }: {
-    top?: Border
-    left?: Border
-    bottom?: Border
-    right?: Border
+    top?: Partial<Border>
+    left?: Partial<Border>
+    bottom?: Partial<Border>
+    right?: Partial<Border>
   }) {
     return new BorderStyle({
       bottom: {

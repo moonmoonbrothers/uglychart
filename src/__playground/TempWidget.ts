@@ -1,10 +1,11 @@
-import { Container } from "$lib/flutter/component"
+import { Container, Text } from "$lib/flutter/component"
 import EdgeInsets from "$lib/flutter/utils/edgeInsets"
 import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 import Grid from "$lib/flutter/component/Grid"
 import Alignment from "$lib/flutter/utils/alignment"
 import BorderStyle from "$lib/flutter/utils/borderstyle"
+import Center from "$lib/flutter/component/Center"
 import Radius from "$lib/flutter/utils/radius"
 
 class TempWidget extends ComponentWidget {
@@ -25,40 +26,34 @@ class TempWidget extends ComponentWidget {
         childrenByRow: [
           [
             Container({
-              width: 50,
-              height: 50,
-              color: "black",
-            }),
-            Container({
-              width: 100,
-              height: 50,
-              color: "red",
-            }),
-            Container({
-              width: 50,
-              height: 50,
-              color: "black",
-            }),
-            Container({
-              width: 50,
-              height: 50,
-              color: "black",
-            }),
-          ],
-          [
-            Container({
-              width: 50,
-              height: 50,
-              color: "blue",
-            }),
-            Container({
               width: 150,
-              height: 50,
-              color: "purple",
-              radius: Radius.all(10),
-              border: BorderStyle.all({
-                thickness: 5,
-                color: "black",
+              height: 150,
+              color: "white",
+              radius: Radius.only({
+                bttomRight: 10,
+              }),
+              border: BorderStyle.only({
+                top: {
+                  color: "black",
+                  thickness: 10,
+                },
+                left: {
+                  color: "black",
+                  thickness: 2,
+                },
+                right: {
+                  color: "blue",
+                  thickness: 20,
+                },
+                bottom: {
+                  color: "yellow",
+                  thickness: 20,
+                },
+              }),
+              child: Center({
+                child: Text({
+                  text: "asdf",
+                }),
               }),
             }),
           ],
