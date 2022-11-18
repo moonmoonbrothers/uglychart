@@ -112,27 +112,15 @@ class RenderBaseGrid extends MultiChildRenderObject {
     this.childrenByRow.forEach((columnChildren, rowIndex) => {
       columnChildren.forEach((child, columnIndex) => {
         if (this.columns[columnIndex].type === "content-fit") {
-          //RenderAlign과 같은 RenderObject의 intrinsic width 를 계산하기 위함
-          child.layout(Constraint.loose(Size.infinite))
-
-          if (child.size.width === Infinity)
-            throw { message: "can not calcuate intrinsic width on BaseGrid" }
-
           contentFitColumnWidths[columnIndex] = Math.max(
-            child.size.width,
+            child.getIntrinsicWidth(),
             contentFitColumnWidths[columnIndex]
           )
         }
 
         if (this.rows[rowIndex].type === "content-fit") {
-          //RenderAlign과 같은 RenderObject의 intrinsic hieght 를 계산하기 위함
-          child.layout(Constraint.loose(Size.infinite))
-
-          if (child.size.height === Infinity)
-            throw { message: "can not calcuate intrinsic height on BaseGrid" }
-
           contentFitRowHeights[rowIndex] = Math.max(
-            child.size.height,
+            child.getIntrinsicHeight(),
             contentFitRowHeights[rowIndex]
           )
         }
@@ -217,8 +205,6 @@ class RenderBaseGrid extends MultiChildRenderObject {
         })
       })
     })
-
-    console.log(this.constraint)
   }
 }
 

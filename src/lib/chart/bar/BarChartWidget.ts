@@ -1,4 +1,5 @@
 import { SizedBox, Text } from "$lib/flutter/component"
+import Align from "$lib/flutter/component/Align"
 import Column from "$lib/flutter/component/Column"
 import Container from "$lib/flutter/component/Container"
 import Expanded from "$lib/flutter/component/Expanded"
@@ -35,7 +36,6 @@ class BarCharWidget extends ComponentWidget {
                 templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
                 templateRows: [Grid.Fr(1), Grid.ContentFit()],
                 gap: Gap.all(0),
-                alignment: Alignment.topLeft,
                 childrenByRow: [
                   [
                     Container({
@@ -51,7 +51,8 @@ class BarCharWidget extends ComponentWidget {
                   ],
                   [
                     Container({
-                      color: "lightblue",
+                      padding: EdgeInsets.all(3),
+                      color: "white",
                       child: Text({ text: "AAA" }),
                     }),
                     Container({

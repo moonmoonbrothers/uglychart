@@ -64,7 +64,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
     const childInstrinsicWidth = this.child?.getIntrinsicWidth() || 0
     return this.width === Infinity
       ? childInstrinsicWidth
-      : Math.max(this.height, childInstrinsicWidth)
+      : Math.max(this.width, childInstrinsicWidth)
   }
 }
 
