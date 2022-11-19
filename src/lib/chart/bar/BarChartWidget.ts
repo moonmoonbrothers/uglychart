@@ -23,37 +23,44 @@ class BarCharWidget extends ComponentWidget {
       height: Infinity,
       child: Column({
         children: [
-          Text("Profile of Neuropsychological Tests", {
-            style: {
-              fontSize: "19px",
-              fontWeight: "700",
-              fontFamily: "Arial",
-            },
-          }),
+          Title(),
           SizedBox({
             height: 22,
           }),
-          Flexible({
-            flex: 1,
-            fit: "loose",
-            child: Container({
-              color: "lightgrey",
-              height: Infinity,
-              child: Grid({
-                templateColumns: [Grid.ContentFit(), Grid.ContentFit()],
-                templateRows: [Grid.ContentFit(), Grid.ContentFit()],
-                gap: Gap.all(0),
-                childrenByRow: [
-                  [YAxis(), Plot()],
-                  [null, XAxis()],
-                ],
-              }),
-            }),
-          }),
+          Chart(),
         ],
       }),
     })
   }
+}
+
+function Chart() {
+  return Flexible({
+    flex: 1,
+    child: Container({
+      color: "lightgrey",
+      height: Infinity,
+      child: Grid({
+        templateColumns: [Grid.ContentFit(), Grid.ContentFit()],
+        templateRows: [Grid.ContentFit(), Grid.ContentFit()],
+        gap: Gap.all(0),
+        childrenByRow: [
+          [YAxis(), Plot()],
+          [null, XAxis()],
+        ],
+      }),
+    }),
+  })
+}
+
+function Title() {
+  return Text("Profile of Neuropsychological Tests", {
+    style: {
+      fontSize: "19px",
+      fontWeight: "700",
+      fontFamily: "Arial",
+    },
+  })
 }
 
 function YAxis() {
@@ -115,16 +122,14 @@ function XAxis() {
 function Plot() {
   return Container({
     color: "white",
+    height: 254,
+    width: 506,
     border: BorderStyle.all({
       thickness: 1,
     }),
-    child: SizedBox({
-      height: 254,
-      width: 506,
-      child: Column({
-        mainAxisAlignment: "spaceAround",
-        children: [Bar(), Bar(), Bar(), Bar(), Bar(), Bar()],
-      }),
+    child: Column({
+      mainAxisAlignment: "spaceAround",
+      children: [Bar(), Bar(), Bar(), Bar(), Bar(), Bar()],
     }),
   })
 }

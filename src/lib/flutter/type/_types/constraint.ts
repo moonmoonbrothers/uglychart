@@ -76,8 +76,8 @@ class Constraint {
     return new Constraint({
       maxWidth: Math.max(this.minWidth, this.maxWidth),
       maxHeight: Math.max(this.maxHeight, this.minHeight),
-      minWidth: Math.min(this.minWidth, this.maxWidth),
       minHeight: Math.min(this.minHeight, this.maxHeight),
+      minWidth: Math.min(this.minWidth, this.maxWidth),
     })
   }
 

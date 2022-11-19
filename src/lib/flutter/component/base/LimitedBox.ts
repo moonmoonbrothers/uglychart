@@ -64,7 +64,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
       this.stretchable
         ? child.layout(constraint)
         : child.layout(
-            Constraint.tight({
+            Constraint.loose({
               width: this.width,
               height: this.height,
             })

@@ -12,12 +12,7 @@ class RenderObject {
   offset: Offset = Offset.zero()
 
   layout(constraint: Constraint) {
-    /* 
-      constraint.normalize()로 할당해야 하는데 현재 에러 발생중.. 
-      다른 컴포넌트의 레이아웃 정책이 올바른지 살펴봐야 함..
-      일단 문제 없으니 냅둡니다.
-    */
-    this.constraint = constraint
+    this.constraint = constraint.normalize()
     this.preformLayout()
   }
 
