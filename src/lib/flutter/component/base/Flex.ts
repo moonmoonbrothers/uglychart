@@ -5,10 +5,19 @@ import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidg
 import type Widget from "../../widget/Widget"
 import { RenderFlexible } from "./Flexible"
 
+export type MainAxisAlignment =
+  | "start"
+  | "end"
+  | "spaceEvenly"
+  | "spaceBetween"
+  | "spaceAround"
+
+export type CrossAxisAlignment = "stretch" | "center" | "start" | "end"
+
 class Flex extends MultiChildRenderObjectWidget {
   flexDirection: "row" | "column"
-  mainAxisAlignment: "start" | "end" //  end, between 추가할것
-  crossAxisAlignment: "stretch" | "center" | "start" | "end"
+  mainAxisAlignment: MainAxisAlignment
+  crossAxisAlignment: CrossAxisAlignment
   constructor({
     children,
     flexDirection,
@@ -17,8 +26,8 @@ class Flex extends MultiChildRenderObjectWidget {
   }: {
     children: Widget[]
     flexDirection: "row" | "column"
-    mainAxisAlignment?: "start" | "end" // spaceBetween 추가할것
-    crossAxisAlignment?: "stretch" | "center" | "start" | "end"
+    mainAxisAlignment?: MainAxisAlignment
+    crossAxisAlignment?: CrossAxisAlignment
   }) {
     super({ children })
     this.flexDirection = flexDirection
@@ -37,8 +46,8 @@ class Flex extends MultiChildRenderObjectWidget {
 
 class RenderFlex extends MultiChildRenderObject {
   flexDirection: "row" | "column"
-  mainAxisAlignment: "start" | "end" //  spaceBetween 추가할것
-  crossAxisAlignment: "stretch" | "center" | "start" | "end"
+  mainAxisAlignment: MainAxisAlignment
+  crossAxisAlignment: CrossAxisAlignment
   mainAxis: "width" | "height"
   crossAxis: "width" | "height"
   constructor({
@@ -47,8 +56,8 @@ class RenderFlex extends MultiChildRenderObject {
     crossAxisAlignment,
   }: {
     flexDirection: "row" | "column"
-    mainAxisAlignment: "start" | "end" // start, end, center 추가할것
-    crossAxisAlignment: "stretch" | "center" | "start" | "end" // 'end' 추가할것
+    mainAxisAlignment: MainAxisAlignment
+    crossAxisAlignment: CrossAxisAlignment
   }) {
     super()
     this.flexDirection = flexDirection
@@ -148,30 +157,71 @@ class RenderFlex extends MultiChildRenderObject {
 
   private getChildOffsetsOnMainAxis(childMainAxisValues: number[]) {
     let offsetsOnMainAxis: number[] = []
+    const sum = (acc: number, value: number) => acc + value
+    const restSpaceSize =
+      this.size[this.mainAxis] - childMainAxisValues.reduce(sum, 0)
 
-    if (this.mainAxisAlignment === "start") {
-      let previousOffset = 0
-      childMainAxisValues.forEach((value) => {
-        offsetsOnMainAxis.push(previousOffset)
-        previousOffset += value
-      })
-    } else if (this.mainAxisAlignment === "end") {
-      let previousOffset = 0
-      const temp: number[] = []
-      ;[...childMainAxisValues].reverse().forEach((value) => {
-        previousOffset += value
-        temp.push(previousOffset)
-      })
-      offsetsOnMainAxis = temp
-        .reverse()
-        .map((value) => this.size[this.mainAxis] - value)
-    } else {
-      throw {
-        message: "unimplemented mainAxisAlignment: " + this.mainAxisAlignment,
-      }
+    switch (this.mainAxisAlignment) {
+      case "start":
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: 0,
+          additionalSpace: 0,
+          childMainAxisValues,
+        })
+        break
+      case "end":
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: restSpaceSize,
+          additionalSpace: 0,
+          childMainAxisValues,
+        })
+        break
+      case "spaceAround":
+        // eslint-disable-next-line no-case-declarations
+        const aroundSpace = restSpaceSize / childMainAxisValues.length
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: aroundSpace / 2,
+          additionalSpace: aroundSpace,
+          childMainAxisValues,
+        })
+        break
+      case "spaceBetween":
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: 0,
+          additionalSpace: restSpaceSize / (childMainAxisValues.length - 1),
+          childMainAxisValues,
+        })
+        break
+      case "spaceEvenly":
+        // eslint-disable-next-line no-case-declarations
+        const evenSpace = restSpaceSize / (childMainAxisValues.length + 1)
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: evenSpace,
+          additionalSpace: evenSpace,
+          childMainAxisValues,
+        })
+        break
     }
 
     return offsetsOnMainAxis
+  }
+
+  private _getChildOffsetsOnMainAxis({
+    startOffset,
+    childMainAxisValues,
+    additionalSpace,
+  }: {
+    startOffset: number
+    childMainAxisValues: number[]
+    additionalSpace: number
+  }): number[] {
+    const result: number[] = []
+    let previousOffset = startOffset
+    childMainAxisValues.forEach((value) => {
+      result.push(previousOffset)
+      previousOffset += value + additionalSpace
+    })
+    return result
   }
 
   private getChildOffsetOnCrossAixs(childCrossAxisValue: number) {

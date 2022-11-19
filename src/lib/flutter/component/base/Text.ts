@@ -1,12 +1,10 @@
 import RenderObject from "../../renderobject/RenderObject"
 import { getTextHeight, getTextWidth } from "../../utils/caculator"
-import type Constraint from "../../utils/constraint"
 import Size from "../../utils/size"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
 export type TextProps = {
-  text: string
   style?: {
     fontFamily?: string
     fontSize?: string
@@ -35,8 +33,7 @@ class Text extends RenderObjectWidget {
     | "alphabetic"
     | "ideographic"
     | "bottom"
-  constructor({
-    text,
+  constructor(text: string, {
     textAlign = "left",
     textBaseline = "top",
     style: {

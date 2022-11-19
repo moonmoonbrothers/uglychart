@@ -33,7 +33,7 @@ export default function Container({
 }: ContainerProps = {}) {
   let current = child
   if (alignment != null) {
-    current = Align({ child: current, alignment })
+    current = Align({ child: current, alignment, width, height })
   }
 
   current = new LimitedBox({

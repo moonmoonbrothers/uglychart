@@ -20,160 +20,31 @@ class BarCharWidget extends ComponentWidget {
     return Container({
       width: Infinity,
       height: Infinity,
-      color: "orange",
-      padding: EdgeInsets.symmetric({ horizontal: 20, vertical: 10 }),
       child: Column({
         children: [
-          Text({ text: "Title" }),
+          Text("Profile of Neuropsychological Tests", {
+           style: {
+            fontSize: '19px',
+            fontWeight: '700',
+            fontFamily: 'Arial'
+           }
+          }),
           SizedBox({
-            height: 10,
+            height: 22,
           }),
           Flexible({
             flex: 1,
             fit: "loose",
             child: Container({
               color: "lightgrey",
-              width: Infinity,
               height: Infinity,
               child: Grid({
-                templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-                templateRows: [Grid.Fr(1), Grid.ContentFit()],
+                templateColumns: [Grid.ContentFit(), Grid.ContentFit()],
+                templateRows: [Grid.ContentFit(), Grid.ContentFit()],
                 gap: Gap.all(0),
                 childrenByRow: [
-                  [
-                    Container({
-                      color: "red",
-                      child: Row({
-                        children: [
-                          Container({
-                            child: Column({
-                              crossAxisAlignment: "start",
-                              children: [
-                                ColumnExpanded(0.5),
-                                YLabel(),
-                                ColumnExpanded(),
-                                YLabel(),
-                                ColumnExpanded(),
-                                YLabel(),
-                                ColumnExpanded(),
-                                YLabel(),
-                                ColumnExpanded(),
-                                YLabel(),
-                                ColumnExpanded(),
-                                YLabel(),
-                                ColumnExpanded(0.5),
-                              ],
-                            }),
-                          }),
-                          SizedBox({ width: 10 }),
-                          Container({
-                            child: Column({
-                              children: [
-                                ColumnExpanded(0.5),
-                                yTick(),
-                                ColumnExpanded(),
-                                yTick(),
-                                ColumnExpanded(),
-                                yTick(),
-                                ColumnExpanded(),
-                                yTick(),
-                                ColumnExpanded(),
-                                yTick(),
-                                ColumnExpanded(),
-                                yTick(),
-                                ColumnExpanded(0.5),
-                              ],
-                            }),
-                          }),
-                        ],
-                      }),
-                    }),
-                    Container({
-                      color: "white",
-                      height: Infinity,
-                      width: Infinity,
-                      border: BorderStyle.all({
-                        thickness: 2,
-                      }),
-                      child: Column({
-                        children: [
-                          ColumnExpanded(0.5),
-                          Bar(),
-                          ColumnExpanded(),
-                          Bar(),
-                          ColumnExpanded(),
-                          Bar(),
-                          ColumnExpanded(),
-                          Bar(),
-                          ColumnExpanded(),
-                          Bar(),
-                          ColumnExpanded(),
-                          Bar(),
-                          ColumnExpanded(0.5),
-                        ],
-                      }),
-                    }),
-                  ],
-                  [
-                    Container({
-                      padding: EdgeInsets.all(3),
-                    }),
-                    Container({
-                      height: 30,
-                      width: Infinity,
-                      child: Column({
-                        children: [
-                          Row({
-                            children: [
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                              RowExpanded(1),
-                              XTick(),
-                            ],
-                          }),
-                          SizedBox({ height: 5 }),
-                          Row({
-                            children: [
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                              RowExpanded(1),
-                              XLabel(0),
-                            ],
-                          }),
-                        ],
-                      }),
-                    }),
-                  ],
+                  [YAxis(), Plot()],
+                  [null, XAxis()],
                 ],
               }),
             }),
@@ -182,6 +53,149 @@ class BarCharWidget extends ComponentWidget {
       }),
     })
   }
+}
+
+function YAxis() {
+  return Container({
+    border: BorderStyle.only({
+      bottom: {
+        color: "rgba(0,0,0,0)",
+        thickness: 1,
+      },
+    }),
+    child: Row({
+      children: [
+        Container({
+          child: Column({
+            crossAxisAlignment: "start",
+            children: [
+              ColumnExpanded(0.5),
+              YLabel(),
+              ColumnExpanded(),
+              YLabel(),
+              ColumnExpanded(),
+              YLabel(),
+              ColumnExpanded(),
+              YLabel(),
+              ColumnExpanded(),
+              YLabel(),
+              ColumnExpanded(),
+              YLabel(),
+              ColumnExpanded(0.5),
+            ],
+          }),
+        }),
+        SizedBox({ width: 10 }),
+        Container({
+          child: Column({
+            children: [
+              ColumnExpanded(0.5),
+              yTick(),
+              ColumnExpanded(),
+              yTick(),
+              ColumnExpanded(),
+              yTick(),
+              ColumnExpanded(),
+              yTick(),
+              ColumnExpanded(),
+              yTick(),
+              ColumnExpanded(),
+              yTick(),
+              ColumnExpanded(0.5),
+            ],
+          }),
+        }),
+      ],
+    }),
+  })
+}
+
+function XAxis() {
+  return Container({
+    height: 30,
+    width: Infinity,
+    child: Column({
+      children: [
+        Row({
+          children: [
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+            RowExpanded(1),
+            XTick(),
+          ],
+        }),
+        SizedBox({ height: 5 }),
+        Row({
+          children: [
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+            RowExpanded(1),
+            XLabel(0),
+          ],
+        }),
+      ],
+    }),
+  })
+}
+
+function Plot() {
+  return Container({
+    color: "white",
+    border: BorderStyle.all({
+      thickness: 1,
+    }),
+    child: SizedBox({
+      height: 254,
+      width: 506,
+      child: Column({
+        children: [
+          ColumnExpanded(0.5),
+          Bar(),
+          ColumnExpanded(),
+          Bar(),
+          ColumnExpanded(),
+          Bar(),
+          ColumnExpanded(),
+          Bar(),
+          ColumnExpanded(),
+          Bar(),
+          ColumnExpanded(),
+          Bar(),
+          ColumnExpanded(0.5),
+        ],
+      }),
+    }),
+  })
 }
 
 function Bar() {
@@ -202,11 +216,9 @@ function Bar() {
 
 function YLabel() {
   return Container({
-    color: "lightblue",
-    child: Text({
-      text: "attention",
+    child: Text("attention", {
       style: {
-        fontSize: "20px",
+        fontSize: "16px",
       },
     }),
   })
@@ -214,14 +226,13 @@ function YLabel() {
 
 function XLabel(value: number) {
   return Container({
-    color: "red",
-    width: 2,
+    width: 1,
     height: 10,
+    alignment: Alignment.center,
     child: SizedBox({
       width: 0,
       height: 10,
-      child: Text({
-        text: `${value}`,
+      child: Text(`${value}`, {
         textAlign: "center",
         style: {
           fontSize: "10px",
@@ -253,7 +264,7 @@ function yTick({ width = 10 }: { width?: number } = {}) {
   return Container({
     child: Container({
       width,
-      height: 2,
+      height: 1,
       color: "black",
     }),
   })
@@ -264,7 +275,7 @@ function XTick({ height = 10 }: { height?: number } = {}) {
     child: Container({
       height,
       border: BorderStyle.only({
-        left: { thickness: 2, color: "black" },
+        left: { thickness: 1, color: "black" },
       }),
     }),
   })

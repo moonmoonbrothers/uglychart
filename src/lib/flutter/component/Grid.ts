@@ -4,6 +4,7 @@ import Gap from "../utils/gap"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
 import BaseGrid, { GridTemplate, type BaseGridProps } from "./base/BaseGrid"
+import LimitedBox from "./base/LimitedBox"
 import Padding from "./Padding"
 
 function Grid({
@@ -12,17 +13,18 @@ function Grid({
   gap = Gap.all(0),
   ...props
 }: BaseGridProps & {
-  childrenByRow: Widget[][]
+  childrenByRow: (Widget | null | undefined)[][]
   alignment?: Alignment
-  gap?: Gap,
+  gap?: Gap
 }): BaseGrid {
   const childrenByRow = _childrenByRow.map((children, rowIndex) => {
     return children
+      .map((child) => child || new LimitedBox({ width: 0, height: 0 }))
       .map((child, columnIndex) =>
         Padding({
           padding: EdgeInsets.only({
             left: columnIndex === 0 ? 0 : gap.x,
-            top: rowIndex === 0 ? 0 : gap.y
+            top: rowIndex === 0 ? 0 : gap.y,
           }),
           child,
         })

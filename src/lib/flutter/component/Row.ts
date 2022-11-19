@@ -1,5 +1,8 @@
 import type Widget from "../widget/Widget"
-import Flex from "./base/Flex"
+import Flex, {
+  type CrossAxisAlignment,
+  type MainAxisAlignment,
+} from "./base/Flex"
 
 export default function Row({
   children,
@@ -7,8 +10,8 @@ export default function Row({
   crossAxisAlignment = "center",
 }: {
   children: Widget[]
-  mainAxisAlignment?: "start" | "end"
-  crossAxisAlignment?: "stretch" | "start" | "center" | "end"
+  mainAxisAlignment?: MainAxisAlignment
+  crossAxisAlignment?: CrossAxisAlignment
 }) {
   return new Flex({
     children,

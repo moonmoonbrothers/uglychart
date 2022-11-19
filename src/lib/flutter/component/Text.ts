@@ -1,5 +1,5 @@
-import _Text, {type TextProps} from "./base/Text";
+import _Text, { type TextProps } from "./base/Text"
 
-export default function Text (props: TextProps) {
-  return new _Text(props)
+export default function Text(text: string, props: TextProps = {}) {
+  return new _Text(text, props)
 }
