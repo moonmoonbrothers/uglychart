@@ -1,4 +1,3 @@
-import { children } from "svelte/internal"
 import type RenderObject from "../renderobject/RenderObject"
 import type Widget from "../widget/Widget"
 import RenderObjectElement from "./RenderObjectElement"

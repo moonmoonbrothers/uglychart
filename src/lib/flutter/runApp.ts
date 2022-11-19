@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type Element from "./element/Element"
-import Constraint from "./utils/constraint"
-import Offset from "./utils/offset"
-import Size from "./utils/size"
+import { Size, Offset, Constraint } from "./type"
 import type { PaintContext } from "./utils/type"
 import RenderObjectToWidgetAdapter from "./widget/RenderObjectToWidgetAdapter"
 import type Widget from "./widget/Widget"

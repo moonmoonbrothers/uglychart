@@ -1,8 +1,6 @@
 import MultiChildRenderObject from "$lib/flutter/renderobject/MultiChildRenderObject"
 import type RenderObject from "$lib/flutter/renderobject/RenderObject"
-import Constraint from "$lib/flutter/utils/constraint"
-import Offset from "$lib/flutter/utils/offset"
-import Size from "$lib/flutter/utils/size"
+import { Constraint, Size, Offset } from "$lib/flutter/type"
 import MultiChildRenderObjectWidget from "$lib/flutter/widget/MultiChildRenerObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 

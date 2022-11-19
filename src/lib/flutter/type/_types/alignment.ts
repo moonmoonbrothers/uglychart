@@ -1,5 +1,4 @@
-import Offset from "./offset"
-import type Size from "./size"
+import Offset from ".//offset"
 
 class Alignment {
   x: number // -1 ~ 1
@@ -10,7 +9,13 @@ class Alignment {
     this.y = y
   }
 
-  getOffset({ target, current }: { target: Size; current: Size }): Offset {
+  getOffset({
+    target,
+    current,
+  }: {
+    target: { width: number; height: number }
+    current: { width: number; height: number }
+  }): Offset {
     return new Offset({
       x: ((1 + this.x) * (current.width - target.width)) / 2,
       y: ((1 + this.y) * (current.height - target.height)) / 2,

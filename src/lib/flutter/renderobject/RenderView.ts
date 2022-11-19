@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Constraint from "../utils/constraint"
-import Size from "../utils/size"
+import { Size, Constraint } from "../type"
 import type { PaintContext } from "../utils/type"
 import RenderObject from "./RenderObject"
 

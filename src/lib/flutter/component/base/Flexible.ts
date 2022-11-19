@@ -1,6 +1,5 @@
-import Constraint from "$lib/flutter/utils/constraint"
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import Size from "../../utils/size"
+import { Size, Constraint } from "$lib/flutter/type"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"

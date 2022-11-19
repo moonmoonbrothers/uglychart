@@ -1,6 +1,6 @@
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
-import Alignment from "$lib/flutter/utils/alignment"
-import Size from "$lib/flutter/utils/size"
+import Alignment from "$lib/flutter/type/_types/alignment"
+import { Size } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 

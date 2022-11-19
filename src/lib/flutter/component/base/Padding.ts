@@ -1,8 +1,5 @@
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
-import Constraint from "$lib/flutter/utils/constraint"
-import EdgeInsets from "$lib/flutter/utils/edgeInsets"
-import Offset from "$lib/flutter/utils/offset"
-import Size from "$lib/flutter/utils/size"
+import { Size, Offset, EdgeInsets, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 

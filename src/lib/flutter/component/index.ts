@@ -1,25 +1,27 @@
-import _Column from "./Column"
-import _Row from "./Row"
-import _Text from "./Text"
-import _Expanded from "./Expanded"
-import _SizeBox from "./SizedBox"
-import _Container from "./Container"
-import _Padding from "./Padding"
-import _Builder from "./Builder"
-import _Align from "./Align"
-import _Center from "./Center"
-import _Grid from './Grid'
-import _Flexible from './Flextible'
+import Column from "./Column"
+import Row from "./Row"
+import Text from "./Text"
+import Expanded from "./Expanded"
+import SizedBox from "./SizedBox"
+import Container from "./Container"
+import Padding from "./Padding"
+import Builder from "./Builder"
+import Align from "./Align"
+import Center from "./Center"
+import Grid from "./Grid"
+import Flexible from "./Flextible"
 
-export const Padding = _Padding
-export const Column = _Column
-export const Row = _Row
-export const Text = _Text
-export const Expanded = _Expanded
-export const SizedBox = _SizeBox
-export const Container = _Container
-export const Builder = _Builder
-export const Align = _Align
-export const Center = _Center
-export const Grid = _Grid
-export const Flexible = _Flexible
+export {
+  Center,
+  Row,
+  Text,
+  Expanded,
+  SizedBox,
+  Container,
+  Padding,
+  Builder,
+  Align,
+  Grid,
+  Flexible,
+  Column,
+}

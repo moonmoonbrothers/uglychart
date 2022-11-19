@@ -1,5 +1,5 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject"
-import Constraint from "../../utils/constraint"
+import { Constraint } from "$lib/flutter/type"
 import type { PaintContext } from "../../utils/type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidget"
 import type Widget from "../../widget/Widget"

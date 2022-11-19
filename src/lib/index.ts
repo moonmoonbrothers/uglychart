@@ -1,1 +1,0 @@
-import Widget from './widget/Widget'

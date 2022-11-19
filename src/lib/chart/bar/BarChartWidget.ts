@@ -1,15 +1,15 @@
-import { SizedBox, Text } from "$lib/flutter/component"
-import Align from "$lib/flutter/component/Align"
-import Column from "$lib/flutter/component/Column"
-import Container from "$lib/flutter/component/Container"
-import Expanded from "$lib/flutter/component/Expanded"
-import Flexible from "$lib/flutter/component/Flextible"
-import Grid from "$lib/flutter/component/Grid"
-import Row from "$lib/flutter/component/Row"
-import Alignment from "$lib/flutter/utils/alignment"
-import BorderStyle from "$lib/flutter/utils/borderstyle"
-import EdgeInsets from "$lib/flutter/utils/edgeInsets"
-import Gap from "$lib/flutter/utils/gap"
+import {
+  SizedBox,
+  Text,
+  Align,
+  Column,
+  Container,
+  Expanded,
+  Flexible,
+  Grid,
+  Row,
+} from "$lib/flutter/component"
+import { Alignment, BorderStyle, Gap } from "$lib/flutter/type"
 import ComponentWidget, {
   BuildContext,
 } from "$lib/flutter/widget/ComponentWidget"
@@ -23,11 +23,11 @@ class BarCharWidget extends ComponentWidget {
       child: Column({
         children: [
           Text("Profile of Neuropsychological Tests", {
-           style: {
-            fontSize: '19px',
-            fontWeight: '700',
-            fontFamily: 'Arial'
-           }
+            style: {
+              fontSize: "19px",
+              fontWeight: "700",
+              fontFamily: "Arial",
+            },
           }),
           SizedBox({
             height: 22,
@@ -68,20 +68,14 @@ function YAxis() {
         Container({
           child: Column({
             crossAxisAlignment: "start",
+            mainAxisAlignment: "spaceAround",
             children: [
-              ColumnExpanded(0.5),
               YLabel(),
-              ColumnExpanded(),
               YLabel(),
-              ColumnExpanded(),
               YLabel(),
-              ColumnExpanded(),
               YLabel(),
-              ColumnExpanded(),
               YLabel(),
-              ColumnExpanded(),
               YLabel(),
-              ColumnExpanded(0.5),
             ],
           }),
         }),
@@ -117,25 +111,17 @@ function XAxis() {
     child: Column({
       children: [
         Row({
+          mainAxisAlignment: "spaceBetween",
           children: [
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
-            RowExpanded(1),
             XTick(),
           ],
         }),
@@ -178,21 +164,8 @@ function Plot() {
       height: 254,
       width: 506,
       child: Column({
-        children: [
-          ColumnExpanded(0.5),
-          Bar(),
-          ColumnExpanded(),
-          Bar(),
-          ColumnExpanded(),
-          Bar(),
-          ColumnExpanded(),
-          Bar(),
-          ColumnExpanded(),
-          Bar(),
-          ColumnExpanded(),
-          Bar(),
-          ColumnExpanded(0.5),
-        ],
+        mainAxisAlignment: "spaceAround",
+        children: [Bar(), Bar(), Bar(), Bar(), Bar(), Bar()],
       }),
     }),
   })
@@ -216,7 +189,7 @@ function Bar() {
 
 function YLabel() {
   return Container({
-    child: Text("attention", {
+    child: Text("dsc", {
       style: {
         fontSize: "16px",
       },

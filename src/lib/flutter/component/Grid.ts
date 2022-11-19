@@ -1,6 +1,5 @@
-import Alignment from "../utils/alignment"
-import EdgeInsets from "../utils/edgeInsets"
-import Gap from "../utils/gap"
+import Alignment from "../type/_types/alignment"
+import { EdgeInsets, Gap } from "$lib/flutter/type"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
 import BaseGrid, { GridTemplate, type BaseGridProps } from "./base/BaseGrid"

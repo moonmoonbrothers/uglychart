@@ -1,7 +1,9 @@
-import type Alignment from "../utils/alignment"
-import type BorderStyle from "../utils/borderstyle"
-import type EdgeInsets from "../utils/edgeInsets"
-import type Radius from "../utils/radius"
+import type {
+  EdgeInsets,
+  Radius,
+  BorderStyle,
+  Alignment,
+} from "$lib/flutter/type"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
 import DecoratedBox from "./base/DecoratedBox"

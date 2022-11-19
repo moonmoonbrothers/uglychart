@@ -1,6 +1,6 @@
 import RenderObject from "../../renderobject/RenderObject"
 import { getTextHeight, getTextWidth } from "../../utils/caculator"
-import Size from "../../utils/size"
+import { Size } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
@@ -33,16 +33,19 @@ class Text extends RenderObjectWidget {
     | "alphabetic"
     | "ideographic"
     | "bottom"
-  constructor(text: string, {
-    textAlign = "left",
-    textBaseline = "top",
-    style: {
-      fontFamily = "serif",
-      fontSize = "16px",
-      fontWeight = "normal",
-      fontColor = "black",
-    } = {},
-  }: TextProps) {
+  constructor(
+    text: string,
+    {
+      textAlign = "left",
+      textBaseline = "top",
+      style: {
+        fontFamily = "serif",
+        fontSize = "16px",
+        fontWeight = "normal",
+        fontColor = "black",
+      } = {},
+    }: TextProps
+  ) {
     super({ children: [] })
     this.text = text
     this.font = `${fontWeight} ${fontSize} ${fontFamily}`
