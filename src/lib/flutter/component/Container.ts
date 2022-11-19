@@ -30,7 +30,7 @@ export default function Container({
   alignment,
   radius,
   border,
-}: ContainerProps) {
+}: ContainerProps = {}) {
   let current = child
   if (alignment != null) {
     current = Align({ child: current, alignment })

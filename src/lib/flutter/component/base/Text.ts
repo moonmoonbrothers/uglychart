@@ -13,14 +13,32 @@ export type TextProps = {
     fontWeight?: string
     fontColor?: string
   }
+  textAlign?: "left" | "right" | "center" | "start" | "end"
+  textBaseline?:
+    | "top"
+    | "hanging"
+    | "middle"
+    | "alphabetic"
+    | "ideographic"
+    | "bottom"
 }
 
 class Text extends RenderObjectWidget {
   text: string
   font: string
   fontColor: string
+  textAlign: "left" | "right" | "center" | "start" | "end"
+  textBaseline:
+    | "top"
+    | "hanging"
+    | "middle"
+    | "alphabetic"
+    | "ideographic"
+    | "bottom"
   constructor({
     text,
+    textAlign = "left",
+    textBaseline = "top",
     style: {
       fontFamily = "serif",
       fontSize = "16px",
@@ -32,6 +50,7 @@ class Text extends RenderObjectWidget {
     this.text = text
     this.font = `${fontWeight} ${fontSize} ${fontFamily}`
     this.fontColor = fontColor
+    ;(this.textAlign = textAlign), (this.textBaseline = textBaseline)
   }
 
   createRenderObject(): RenderObject {
@@ -39,6 +58,8 @@ class Text extends RenderObjectWidget {
       text: this.text,
       font: this.font,
       fillStyle: this.fontColor,
+      textAlign: this.textAlign,
+      textBaseline: this.textBaseline,
     })
   }
 }
@@ -47,26 +68,47 @@ class RenderText extends RenderObject {
   text: string
   font: string
   fillStyle: string
+  textBaseline:
+    | "top"
+    | "hanging"
+    | "middle"
+    | "alphabetic"
+    | "ideographic"
+    | "bottom"
+  textAlign: "left" | "right" | "center" | "start" | "end"
   constructor({
     text,
     font,
     fillStyle,
+    textAlign,
+    textBaseline,
   }: {
     text: string
     font: string
     fillStyle: string
+    textBaseline:
+      | "top"
+      | "hanging"
+      | "middle"
+      | "alphabetic"
+      | "ideographic"
+      | "bottom"
+    textAlign: "left" | "right" | "center" | "start" | "end"
   }) {
     super()
     this.text = text
     this.font = font
     this.fillStyle = fillStyle
+    this.textBaseline = textBaseline
+    this.textAlign = textAlign
   }
 
   protected performPaint(context: PaintContext): void {
     const { ctx } = context
     ctx.fillStyle = this.fillStyle
     ctx.font = this.font
-    ctx.textBaseline = "top"
+    ctx.textAlign = this.textAlign
+    ctx.textBaseline = this.textBaseline
     ctx.fillText(this.text, 0, 1)
   }
 

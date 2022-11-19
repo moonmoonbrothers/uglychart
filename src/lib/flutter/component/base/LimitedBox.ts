@@ -1,3 +1,4 @@
+import Constraint from "$lib/flutter/utils/constraint"
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
 import Size from "../../utils/size"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -7,21 +8,30 @@ export type LimitedBoxProps = {
   width?: number
   height?: number
   child?: Widget
+  stretchable?: boolean
 }
 
 class LimitedBox extends SingleChildRenderObjectWidget {
   width: number
   height: number
-  constructor({ width = 0, height = 0, child }: LimitedBoxProps) {
+  stretchable: boolean // can be resized by child
+  constructor({
+    width = 0,
+    height = 0,
+    child,
+    stretchable = true,
+  }: LimitedBoxProps) {
     super({ child })
     this.width = width
     this.height = height
+    this.stretchable = stretchable
   }
 
   createRenderObject(): SingleChildRenderObject {
     return new RenderLimitedBox({
       width: this.width,
       height: this.height,
+      stretchable: this.stretchable,
     })
   }
 }
@@ -29,10 +39,20 @@ class LimitedBox extends SingleChildRenderObjectWidget {
 class RenderLimitedBox extends SingleChildRenderObject {
   private width: number
   private height: number
-  constructor({ width, height }: { width: number; height: number }) {
+  stretchable: boolean // can be resized by child
+  constructor({
+    width,
+    height,
+    stretchable,
+  }: {
+    width: number
+    height: number
+    stretchable: boolean
+  }) {
     super()
     this.width = width
     this.height = height
+    this.stretchable = stretchable
   }
 
   protected preformLayout(): void {
@@ -42,11 +62,22 @@ class RenderLimitedBox extends SingleChildRenderObject {
     )
     const child = this.child
     if (child != null) {
-      child.layout(constraint)
+      this.stretchable
+        ? child.layout(constraint)
+        : child.layout(
+            Constraint.tight({
+              width: this.width,
+              height: this.height,
+            })
+          )
       const childSize = child.size
       this.size = new Size({
-        width: Math.max(size.width, childSize.width),
-        height: Math.max(size.height, childSize.height),
+        width: this.stretchable
+          ? Math.max(size.width, childSize.width)
+          : this.width,
+        height: this.stretchable
+          ? Math.max(size.height, childSize.height)
+          : this.height,
       })
     } else {
       this.size = size
@@ -55,16 +86,21 @@ class RenderLimitedBox extends SingleChildRenderObject {
 
   override getIntrinsicHeight(): number {
     const childInstrinsicHeight = this.child?.getIntrinsicHeight() || 0
-    return this.height === Infinity
-      ? childInstrinsicHeight
-      : Math.max(this.height, childInstrinsicHeight)
+    const height =
+      this.height === Infinity
+        ? childInstrinsicHeight
+        : Math.max(this.height, childInstrinsicHeight)
+
+    return this.stretchable ? height : this.height
   }
 
   override getIntrinsicWidth(): number {
     const childInstrinsicWidth = this.child?.getIntrinsicWidth() || 0
-    return this.width === Infinity
-      ? childInstrinsicWidth
-      : Math.max(this.width, childInstrinsicWidth)
+    const width =
+      this.width === Infinity
+        ? childInstrinsicWidth
+        : Math.max(this.width, childInstrinsicWidth)
+    return this.stretchable ? width : this.width
   }
 }
 

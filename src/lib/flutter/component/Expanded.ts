@@ -7,7 +7,7 @@ export default function Expanded({
 }: {
   flex?: number
   child?: Widget
-}) {
+} = {}) {
   return new Flexible({
     flex,
     child: new Flexible({

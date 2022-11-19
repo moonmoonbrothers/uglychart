@@ -11,46 +11,111 @@ import Column from "$lib/flutter/component/Column"
 import Expanded from "$lib/flutter/component/Expanded"
 import SizeBox from "$lib/flutter/component/SizedBox"
 import Gap from "$lib/flutter/utils/gap"
+import Row from "$lib/flutter/component/Row"
+import { children } from "svelte/internal"
+import Flexible from "$lib/flutter/component/Flextible"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
     return Container({
       color: "lightgrey",
-      child: Container({
-        color: "lightgrey",
-        width: Infinity,
-        height: Infinity,
-        child: Grid({
-          templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-          templateRows: [Grid.Fr(1), Grid.ContentFit()],
-          gap: Gap.all(5),
-          childrenByRow: [
-            [
-              Container({
-                width: 50,
-                height: Infinity,
-                color: "red",
-              }),
-              Container({
-                width: Infinity,
-                height: Infinity,
-                color: "blue",
-              }),
-            ],
-            [
-              Container({
-                color: "lightblue",
-                width: 30,
-                child: Text({ text: "AAA" }),
-              }),
-              Container({
-                height: 30,
-                width: Infinity,
-                color: "black",
-              }),
-            ],
+      width: Infinity,
+      height: Infinity,
+      child: Grid({
+        templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
+        templateRows: [Grid.Fr(1), Grid.ContentFit()],
+        alignment: Alignment.topLeft,
+        childrenByRow: [
+          [
+            Row({
+              children: [
+                Container({
+                  color: "purple",
+                  child: Column({
+                    crossAxisAlignment: "start",
+                    children: [
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                      Flexible({
+                        flex: 1,
+                        child: Container({
+                          height: Infinity,
+                        }),
+                      }),
+                      Text({ text: "Attention" }),
+                    ],
+                  }),
+                }),
+                Container({
+                  color: "grey",
+                  child: Column({
+                    children: [
+                      Text({ text: " asd" }),
+                      Container({
+                        width: 10,
+                        height: 10,
+                        color: "black",
+                        border: BorderStyle.only({
+                          bottom: { thickness: 2, color: "black" },
+                        }),
+                      }),
+                    ],
+                  }),
+                }),
+              ],
+            }),
+            Container({
+              color: "blue",
+              height: 100,
+              width: 100,
+            }),
           ],
-        }),
+          [
+            Container({
+              padding: EdgeInsets.all(3),
+              color: "white",
+              child: Text({ text: "AAA" }),
+            }),
+            Container({
+              height: 30,
+              width: Infinity,
+              color: "black",
+            }),
+          ],
+        ],
       }),
     })
   }

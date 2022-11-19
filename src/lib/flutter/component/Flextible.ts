@@ -9,7 +9,7 @@ export default function Flexible({
   child?: Widget
   flex?: number
   fit?: "loose" | "tight"
-}) {
+} = {}) {
   return new _Flexible({
     child,
     fit,
