@@ -10,6 +10,7 @@ import {
   Row,
 } from "$lib/flutter/component"
 import { Alignment, BorderStyle, Gap } from "$lib/flutter/type"
+import Utils from "$lib/flutter/utils"
 import ComponentWidget, {
   BuildContext,
 } from "$lib/flutter/widget/ComponentWidget"
@@ -82,21 +83,8 @@ function YAxis() {
         SizedBox({ width: 10 }),
         Container({
           child: Column({
-            children: [
-              ColumnExpanded(0.5),
-              yTick(),
-              ColumnExpanded(),
-              yTick(),
-              ColumnExpanded(),
-              yTick(),
-              ColumnExpanded(),
-              yTick(),
-              ColumnExpanded(),
-              yTick(),
-              ColumnExpanded(),
-              yTick(),
-              ColumnExpanded(0.5),
-            ],
+            mainAxisAlignment: "spaceAround",
+            children: Utils.repeat(YTick(), 6),
           }),
         }),
       ],
@@ -112,42 +100,12 @@ function XAxis() {
       children: [
         Row({
           mainAxisAlignment: "spaceBetween",
-          children: [
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-            XTick(),
-          ],
+          children: [...Utils.repeat(XTick(), 11)],
         }),
         SizedBox({ height: 5 }),
         Row({
-          children: [
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-            RowExpanded(1),
-            XLabel(0),
-          ],
+          mainAxisAlignment: "spaceBetween",
+          children: Array.from({ length: 11 }, (_, i) => i * 10).map(XLabel),
         }),
       ],
     }),
@@ -233,7 +191,7 @@ function RowExpanded(flex = 1) {
   })
 }
 
-function yTick({ width = 10 }: { width?: number } = {}) {
+function YTick({ width = 10 }: { width?: number } = {}) {
   return Container({
     child: Container({
       width,

@@ -1,5 +1,5 @@
 import RenderObject from "../../renderobject/RenderObject"
-import { getTextHeight, getTextWidth } from "../../utils/caculator"
+import { getTextHeight, getTextWidth } from "../../utils/getTextSize"
 import { Size } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
