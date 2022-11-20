@@ -27,28 +27,10 @@ class TempWidget extends ComponentWidget {
       width: Infinity,
       height: Infinity,
       color: "lightgrey",
-      alignment: Alignment.topLeft,
+      alignment: Alignment.center,
       padding: EdgeInsets.all(10),
-      child: Column({
-        children: [
-          Container({
-            width: 50,
-            height: 50,
-            color: "red",
-          }),
-          Flexible({
-            child: Container({
-              width: 50,
-              height: Infinity,
-              color: "purple",
-            }),
-          }),
-          Container({
-            width: 50,
-            height: 50,
-            color: "black",
-          }),
-        ],
+      child: Container({
+        color: "red",
       }),
     })
   }

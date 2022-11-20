@@ -39,7 +39,8 @@ class RenderContrainedBox extends SingleChildRenderObject {
   }
 
   override getIntrinsicHeight(): number {
-    if (this.additionalConstraint.hasTightHeight) return this.additionalConstraint.minHeight
+    if (this.additionalConstraint.hasTightHeight)
+      return this.additionalConstraint.minHeight
     return Math.max(
       this.additionalConstraint.minHeight,
       this.child?.getIntrinsicHeight() || 0
@@ -47,7 +48,8 @@ class RenderContrainedBox extends SingleChildRenderObject {
   }
 
   override getIntrinsicWidth(): number {
-    if (this.additionalConstraint.hasTightWidth) return this.additionalConstraint.minWidth
+    if (this.additionalConstraint.hasTightWidth)
+      return this.additionalConstraint.minWidth
     return Math.max(
       this.additionalConstraint.minWidth,
       this.child?.getIntrinsicWidth() || 0

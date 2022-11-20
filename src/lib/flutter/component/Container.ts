@@ -12,6 +12,7 @@ import DecoratedBox from "./base/DecoratedBox"
 import LimitedBox from "./base/BaseSizedBox"
 import Padding from "./Padding"
 import { SizedBox } from "."
+import { init } from "svelte/internal"
 
 type ContainerProps = {
   padding?: EdgeInsets
@@ -41,7 +42,7 @@ export default function Container({
   let current = child
 
   if (current == null && !constraint.isTight) {
-    current = SizedBox({ width: 0, height: 0 })
+    current = SizedBox({ width: Infinity, height: Infinity })
   } else if (alignment != null) {
     current = Align({ child: current, alignment, width, height })
   }

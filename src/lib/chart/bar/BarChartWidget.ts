@@ -30,6 +30,7 @@ class BarCharWidget extends ComponentWidget {
       height: Infinity,
       alignment: Alignment.center,
       padding: EdgeInsets.all(10),
+      color: "lightgrey",
       child: Column({
         children: [
           Title(),
@@ -248,12 +249,9 @@ function YTick({ width = 10 }: { width?: number } = {}) {
 
 function XTick({ height = 10 }: { height?: number } = {}) {
   return Container({
-    child: Container({
-      height,
-      border: BorderStyle.only({
-        left: { thickness: 1, color: "black" },
-      }),
-    }),
+    height,
+    width: 1,
+    color: "black",
   })
 }
 
