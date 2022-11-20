@@ -2,7 +2,7 @@ import type Widget from "../widget/Widget"
 import Flex, {
   type CrossAxisAlignment,
   type MainAxisAlignment,
-} from "./base/Flex"
+} from "./base/BaseFlex"
 
 export default function Row({
   children,

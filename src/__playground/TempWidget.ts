@@ -6,63 +6,32 @@ import {
   Flexible,
   Grid,
   Row,
+  Transform,
 } from "$lib/flutter/component"
-import { EdgeInsets, BorderStyle, Radius, Gap } from "$lib/flutter/type"
+import { EdgeInsets, BorderStyle, Radius, Gap, Offset } from "$lib/flutter/type"
 import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
-    const grid = Grid({
-      templateColumns: [Grid.ContentFit()],
-      templateRows: [Grid.ContentFit()],
-      childrenByRow: [
-        [
-          Container({
-            width: 400,
-            height: 300,
-            color: "lightgrey",
-            child: Column({
-              children: [
-                Row({
-                  children: [
-                    Flexible({
-                      flex: 70,
-                      child: Container({
-                        width: Infinity,
-                        height: 20,
-                        color: "green",
-                      }),
-                    }),
-                    Flexible({
-                      flex: 30,
-                      child: Container({
-                        width: Infinity,
-                        height: 20,
-                        color: "red",
-                      }),
-                    }),
-                  ],
-                }),
-              ],
-            }),
-          }),
-        ],
-      ],
+    const box = Container({
+      color: "red",
+      width: 50,
+      height: 50,
     })
     return Container({
       width: Infinity,
       height: Infinity,
-      child: grid,
+      padding: EdgeInsets.all(50),
+      color: "lightgrey",
+      child: Center({
+        child: Transform.translate({
+          offset: { x: -30, y: 60 },
+          child: box,
+        }),
+      }),
     })
   }
 }
-
-const RowExpaned = () =>
-  Flexible({
-    child: Container({
-      width: Infinity,
-    }),
-  })
 
 export default TempWidget

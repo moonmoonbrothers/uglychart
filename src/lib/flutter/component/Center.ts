@@ -1,6 +1,6 @@
 import { Alignment } from "../type"
 import type Widget from "../widget/Widget"
-import Align from "./base/Align"
+import Align from "./base/BaseAlign"
 
 export default function Center({
   child,

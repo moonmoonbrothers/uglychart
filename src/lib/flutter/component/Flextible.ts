@@ -1,5 +1,5 @@
 import type Widget from "../widget/Widget"
-import _Flexible from "./base/Flexible"
+import _Flexible from "./base/BaseFlexible"
 
 export default function Flexible({
   child,

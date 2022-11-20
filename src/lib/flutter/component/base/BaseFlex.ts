@@ -3,7 +3,7 @@ import { Constraint } from "$lib/flutter/type"
 import type { PaintContext } from "../../utils/type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidget"
 import type Widget from "../../widget/Widget"
-import { RenderFlexible } from "./Flexible"
+import { RenderFlexible } from "./BaseFlexible"
 
 export type MainAxisAlignment =
   | "start"

@@ -10,6 +10,7 @@ import Align from "./Align"
 import Center from "./Center"
 import Grid from "./Grid"
 import Flexible from "./Flextible"
+import Transform from "./Transform"
 
 export {
   Center,
@@ -24,4 +25,5 @@ export {
   Grid,
   Flexible,
   Column,
+  Transform
 }

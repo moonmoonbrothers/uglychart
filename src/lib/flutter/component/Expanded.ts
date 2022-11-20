@@ -1,4 +1,4 @@
-import Flexible from "./base/Flexible"
+import Flexible from "./base/BaseFlexible"
 import type Widget from "../widget/Widget"
 
 export default function Expanded({

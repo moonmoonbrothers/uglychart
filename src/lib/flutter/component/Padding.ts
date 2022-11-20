@@ -1,6 +1,6 @@
 import { EdgeInsets } from "$lib/flutter/type"
 import type Widget from "../widget/Widget"
-import _Padding from "./base/Padding"
+import _Padding from "./base/BasePadding"
 import Expanded from "./Expanded"
 
 export default function Padding({

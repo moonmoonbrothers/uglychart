@@ -1,6 +1,6 @@
 import Alignment from "../type/_types/alignment"
 import type Widget from "../widget/Widget"
-import _Align from "./base/Align"
+import _Align from "./base/BaseAlign"
 
 export default function Align({
   child,
