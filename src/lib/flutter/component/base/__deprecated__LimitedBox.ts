@@ -3,6 +3,10 @@ import { Size, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
+/*
+  this widget must be renamed to SizedBox
+*/
+
 export type LimitedBoxProps = {
   width?: number
   height?: number

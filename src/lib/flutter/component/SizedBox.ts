@@ -1,10 +1,10 @@
 import type Widget from "../widget/Widget"
-import LimitedBox from "./base/LimitedBox"
+import LimitedBox from "./base/__deprecated__LimitedBox"
 
 export default function SizeBox({
   width = 0,
   height = 0,
-  child
+  child,
 }: {
   width?: number
   height?: number

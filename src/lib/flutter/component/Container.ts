@@ -1,13 +1,15 @@
-import type {
-  EdgeInsets,
-  Radius,
-  BorderStyle,
-  Alignment,
+import {
+  type EdgeInsets,
+  type Radius,
+  type BorderStyle,
+  type Alignment,
+  Constraint,
 } from "$lib/flutter/type"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
+import ConstrainedBox from "./base/BaseConstrainedBox"
 import DecoratedBox from "./base/DecoratedBox"
-import LimitedBox from "./base/LimitedBox"
+import LimitedBox from "./base/__deprecated__LimitedBox"
 import Padding from "./Padding"
 
 type ContainerProps = {
@@ -38,12 +40,6 @@ export default function Container({
     current = Align({ child: current, alignment, width, height })
   }
 
-  current = new LimitedBox({
-    child: current,
-    width,
-    height,
-  })
-
   if (padding != null) {
     current = Padding({ child: current, padding })
   }
@@ -58,6 +54,14 @@ export default function Container({
       child: current,
     })
   }
+
+  current = new ConstrainedBox({
+    child: current,
+    constraint: Constraint.tightOnly({
+      width,
+      height,
+    }),
+  })
 
   if (margin != null) {
     current = Padding({

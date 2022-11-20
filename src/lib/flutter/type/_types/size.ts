@@ -16,11 +16,11 @@ class Size {
     return new Size({ width: 0, height: 0 })
   }
 
-  //depricated
   static maximum(): Size {
     return new Size({ width: Infinity, height: Infinity })
   }
 
+  //depricated because javascript is vernerable for unexpected mutating variable
   static infinite: Size = new Size({ width: Infinity, height: Infinity })
 
   get shortest() {

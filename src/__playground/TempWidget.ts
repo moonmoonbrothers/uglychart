@@ -22,32 +22,16 @@ import type Widget from "$lib/flutter/widget/Widget"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
-    const box = Container({
-      color: "red",
-      width: 50,
-      height: 50,
-    })
     return Container({
-      width: Infinity,
-      height: Infinity,
-      padding: EdgeInsets.all(50),
-      color: "lightgrey",
-      child: Column({
-        children: [
-          SizeBox({
-            width: 10,
-            height: 10,
-            child: Container({
-              width: Infinity,
-              height: Infinity,
-              color: "white",
-              alignment: Alignment.center,
-              child: Text("asdf", {
-                textBaseline: "middle",
-              }),
-            }),
-          }),
-        ],
+      width: 300,
+      height: 300,
+      color: "red",
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10),
+      child: Container({
+        color: "blue",
+        alignment: Alignment.center,
+        child: Text("asdf"),
       }),
     })
   }

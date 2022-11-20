@@ -3,7 +3,7 @@ import { EdgeInsets, Gap } from "$lib/flutter/type"
 import type Widget from "../widget/Widget"
 import Align from "./Align"
 import BaseGrid, { GridTemplate, type BaseGridProps } from "./base/BaseGrid"
-import LimitedBox from "./base/LimitedBox"
+import LimitedBox from "./base/__deprecated__LimitedBox"
 import Padding from "./Padding"
 
 function Grid({

@@ -61,7 +61,7 @@ class RenderAlign extends SingleChildRenderObject {
 
     if (this.child == null) return
 
-    this.child.layout(this.constraint)
+    this.child.layout(this.constraint.loosen())
 
     if (this.constraint.isUnbounded) {
       this.size = this.child.size

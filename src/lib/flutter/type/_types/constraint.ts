@@ -56,12 +56,35 @@ class Constraint {
     })
   }
 
+  /*
+    depricated!!
+    because method name is similar to constrain. it can be confusing
+    instead use enforce!!
+  */
   restrict(child: Constraint): Constraint {
+    console.log("deprecated restric mehtod in constraint.ts")
     return new Constraint({
       maxHeight: Math.min(this.maxHeight, child.maxHeight),
       minHeight: Math.max(this.minHeight, child.minHeight),
       maxWidth: Math.min(this.maxWidth, child.maxWidth),
       minWidth: Math.max(this.minWidth, child.minWidth),
+    })
+  }
+
+  enforce(parent: Constraint): Constraint {
+    return new Constraint({
+      minWidth: parent.clampWidth(this.minWidth),
+      maxWidth: parent.clampWidth(this.maxWidth),
+      minHeight: parent.clampHeight(this.minHeight),
+      maxHeight: parent.clampHeight(this.maxHeight),
+    })
+  }
+
+  loosen(): Constraint {
+    return new Constraint({
+      ...this,
+      minHeight: 0,
+      minWidth: 0,
     })
   }
 
@@ -74,8 +97,7 @@ class Constraint {
 
   normalize(): Constraint {
     return new Constraint({
-      maxWidth: Math.max(this.minWidth, this.maxWidth),
-      maxHeight: Math.max(this.maxHeight, this.minHeight),
+      ...this,
       minHeight: Math.min(this.minHeight, this.maxHeight),
       minWidth: Math.min(this.minWidth, this.maxWidth),
     })
