@@ -8,8 +8,15 @@ import {
   Flexible,
   Grid,
   Row,
+  Transform,
 } from "$lib/flutter/component"
-import { Alignment, BorderStyle, Gap } from "$lib/flutter/type"
+import {
+  Alignment,
+  BorderStyle,
+  EdgeInsets,
+  Gap,
+  Radius,
+} from "$lib/flutter/type"
 import Utils from "$lib/flutter/utils"
 import ComponentWidget, {
   BuildContext,
@@ -139,10 +146,30 @@ function Bar() {
     children: [
       Flexible({
         flex: 70,
-        child: Container({
-          width: Infinity,
-          height: 10,
-          color: "green",
+        child: Row({
+          children: [
+            Container({
+              width: Infinity,
+              height: 10,
+              color: "green",
+            }),
+            Container({
+              alignment: Alignment.centerLeft,
+              child: Transform.translate({
+                offset: { x: 5 },
+                child: Container({
+                  color: "grey",
+                  radius: Radius.all(5),
+                  padding: EdgeInsets.symmetric({ horizontal: 5, vertical: 3 }),
+                  child: Text("70.00", {
+                    style: {
+                      fontSize: "8px",
+                    },
+                  }),
+                }),
+              }),
+            }),
+          ],
         }),
       }),
       RowExpanded(30),

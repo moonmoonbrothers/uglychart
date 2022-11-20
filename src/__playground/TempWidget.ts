@@ -8,7 +8,15 @@ import {
   Row,
   Transform,
 } from "$lib/flutter/component"
-import { EdgeInsets, BorderStyle, Radius, Gap, Offset } from "$lib/flutter/type"
+import SizeBox from "$lib/flutter/component/SizedBox"
+import {
+  EdgeInsets,
+  BorderStyle,
+  Radius,
+  Gap,
+  Offset,
+  Alignment,
+} from "$lib/flutter/type"
 import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 
@@ -24,11 +32,22 @@ class TempWidget extends ComponentWidget {
       height: Infinity,
       padding: EdgeInsets.all(50),
       color: "lightgrey",
-      child: Center({
-        child: Transform.translate({
-          offset: { x: -30, y: 60 },
-          child: box,
-        }),
+      child: Column({
+        children: [
+          SizeBox({
+            width: 10,
+            height: 10,
+            child: Container({
+              width: Infinity,
+              height: Infinity,
+              color: "white",
+              alignment: Alignment.center,
+              child: Text("asdf", {
+                textBaseline: "middle",
+              }),
+            }),
+          }),
+        ],
       }),
     })
   }

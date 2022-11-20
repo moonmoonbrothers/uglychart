@@ -109,7 +109,7 @@ class RenderText extends RenderObject {
     ctx.font = this.font
     ctx.textAlign = this.textAlign
     ctx.textBaseline = this.textBaseline
-    ctx.fillText(this.text, 0, 1)
+    ctx.fillText(this.text, 0, 0)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
