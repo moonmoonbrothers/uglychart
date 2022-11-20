@@ -1,5 +1,5 @@
 import type Widget from "../widget/Widget"
-import LimitedBox from "./base/__deprecated__LimitedBox"
+import LimitedBox from "./base/BaseSizedBox"
 
 export default function SizeBox({
   width = 0,

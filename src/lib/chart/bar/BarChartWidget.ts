@@ -28,6 +28,8 @@ class BarCharWidget extends ComponentWidget {
     return Container({
       width: Infinity,
       height: Infinity,
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10),
       child: Column({
         children: [
           Title(),
@@ -45,15 +47,20 @@ function Chart() {
   return Flexible({
     flex: 1,
     child: Container({
-      color: "lightgrey",
       height: Infinity,
+      alignment: Alignment.topRight,
       child: Grid({
-        templateColumns: [Grid.ContentFit(), Grid.ContentFit()],
+        templateColumns: [
+          Grid.Fr(1),
+          Grid.ContentFit(),
+          Grid.ContentFit(),
+          Grid.Fr(1),
+        ],
         templateRows: [Grid.ContentFit(), Grid.ContentFit()],
         gap: Gap.all(0),
         childrenByRow: [
-          [YAxis(), Plot()],
-          [null, XAxis()],
+          [null, YAxis(), Plot(), null],
+          [null, null, XAxis(), null],
         ],
       }),
     }),
@@ -78,6 +85,7 @@ function YAxis() {
         thickness: 1,
       },
     }),
+    alignment: Alignment.center,
     child: Row({
       children: [
         Container({
@@ -109,7 +117,7 @@ function YAxis() {
 function XAxis() {
   return Container({
     height: 30,
-    width: Infinity,
+    alignment: Alignment.center,
     child: Column({
       children: [
         Row({
@@ -134,6 +142,7 @@ function Plot() {
     border: BorderStyle.all({
       thickness: 1,
     }),
+    alignment: Alignment.center,
     child: Column({
       mainAxisAlignment: "spaceAround",
       children: [Bar(), Bar(), Bar(), Bar(), Bar(), Bar()],
@@ -150,16 +159,17 @@ function Bar() {
           children: [
             Container({
               width: Infinity,
-              height: 10,
-              color: "green",
+              height: 9,
+              alignment: Alignment.center,
+              color: "lightblue",
             }),
             Container({
               alignment: Alignment.centerLeft,
               child: Transform.translate({
                 offset: { x: 5 },
                 child: Container({
-                  color: "grey",
-                  radius: Radius.all(5),
+                  color: "lightgrey",
+                  radius: Radius.all(4),
                   padding: EdgeInsets.symmetric({ horizontal: 5, vertical: 3 }),
                   child: Text("70.00", {
                     style: {
@@ -179,7 +189,8 @@ function Bar() {
 
 function YLabel() {
   return Container({
-    child: Text("dsc", {
+    alignment: Alignment.center,
+    child: Text("daaszasf", {
       style: {
         fontSize: "16px",
       },
@@ -210,6 +221,7 @@ function ColumnExpanded(flex = 1) {
     flex,
     child: Container({
       height: Infinity,
+      alignment: Alignment.center,
     }),
   })
 }
@@ -219,6 +231,7 @@ function RowExpanded(flex = 1) {
     flex,
     child: Container({
       width: Infinity,
+      alignment: Alignment.center,
     }),
   })
 }

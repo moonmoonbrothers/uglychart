@@ -9,8 +9,9 @@ import type Widget from "../widget/Widget"
 import Align from "./Align"
 import ConstrainedBox from "./base/BaseConstrainedBox"
 import DecoratedBox from "./base/DecoratedBox"
-import LimitedBox from "./base/__deprecated__LimitedBox"
+import LimitedBox from "./base/BaseSizedBox"
 import Padding from "./Padding"
+import { SizedBox } from "."
 
 type ContainerProps = {
   padding?: EdgeInsets
@@ -35,8 +36,13 @@ export default function Container({
   radius,
   border,
 }: ContainerProps = {}) {
+  const constraint = Constraint.tightOnly({ width, height })
+
   let current = child
-  if (alignment != null) {
+
+  if (current == null && !constraint.isTight) {
+    current = SizedBox({ width: 0, height: 0 })
+  } else if (alignment != null) {
     current = Align({ child: current, alignment, width, height })
   }
 
@@ -57,10 +63,7 @@ export default function Container({
 
   current = new ConstrainedBox({
     child: current,
-    constraint: Constraint.tightOnly({
-      width,
-      height,
-    }),
+    constraint,
   })
 
   if (margin != null) {

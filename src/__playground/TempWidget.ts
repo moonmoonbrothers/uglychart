@@ -8,6 +8,7 @@ import {
   Row,
   Transform,
 } from "$lib/flutter/component"
+import { GridTemplate } from "$lib/flutter/component/base/BaseGrid"
 import SizeBox from "$lib/flutter/component/SizedBox"
 import {
   EdgeInsets,
@@ -23,15 +24,31 @@ import type Widget from "$lib/flutter/widget/Widget"
 class TempWidget extends ComponentWidget {
   build(): Widget {
     return Container({
-      width: 300,
-      height: 300,
-      color: "red",
-      alignment: Alignment.center,
+      width: Infinity,
+      height: Infinity,
+      color: "lightgrey",
+      alignment: Alignment.topLeft,
       padding: EdgeInsets.all(10),
-      child: Container({
-        color: "blue",
-        alignment: Alignment.center,
-        child: Text("asdf"),
+      child: Column({
+        children: [
+          Container({
+            width: 50,
+            height: 50,
+            color: "red",
+          }),
+          Flexible({
+            child: Container({
+              width: 50,
+              height: Infinity,
+              color: "purple",
+            }),
+          }),
+          Container({
+            width: 50,
+            height: 50,
+            color: "black",
+          }),
+        ],
       }),
     })
   }

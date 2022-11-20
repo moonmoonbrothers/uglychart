@@ -8,7 +8,7 @@ class RenderObject {
     return this.ownerElement.children.map((child) => child.renderObject)
   }
   size: Size = Size.zero()
-  constraint: Constraint = Constraint.zero()
+  constraint: Constraint = Constraint.loose(Size.maximum())
   offset: Offset = Offset.zero()
 
   layout(constraint: Constraint) {

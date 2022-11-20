@@ -111,12 +111,28 @@ class Constraint {
     return key === "width" ? this.minWidth : this.minHeight
   }
 
+  get hasTightWidth(): boolean {
+    return this.maxWidth === this.minWidth
+  }
+
+  get hasTightHeight(): boolean {
+    return this.maxHeight === this.minHeight
+  }
+
   get isTight(): boolean {
-    return this.maxHeight === this.minHeight && this.maxWidth === this.minWidth
+    return this.hasTightWidth && this.hasBoundedHeight
+  }
+
+  get hasBoundedWidth(): boolean {
+    return this.maxWidth !== Infinity
+  }
+
+  get hasBoundedHeight(): boolean {
+    return this.maxHeight !== Infinity
   }
 
   get isUnbounded(): boolean {
-    return this.maxWidth === Infinity && this.maxHeight === Infinity
+    return this.hasBoundedHeight && this.hasBoundedWidth
   }
 
   private clampWidth(width: number) {
