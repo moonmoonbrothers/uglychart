@@ -1,10 +1,8 @@
 import {
   SizedBox,
   Text,
-  Align,
   Column,
   Container,
-  Expanded,
   Flexible,
   Grid,
   Row,
@@ -14,17 +12,14 @@ import {
   Alignment,
   BorderStyle,
   EdgeInsets,
-  Gap,
   Radius,
 } from "$lib/flutter/type"
 import Utils from "$lib/flutter/utils"
-import ComponentWidget, {
-  BuildContext,
-} from "$lib/flutter/widget/ComponentWidget"
+import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 
 class BarCharWidget extends ComponentWidget {
-  override build(context: BuildContext): Widget {
+  override build(): Widget {
     return Container({
       width: Infinity,
       height: Infinity,
@@ -58,7 +53,6 @@ function Chart() {
           Grid.Fr(1),
         ],
         templateRows: [Grid.ContentFit(), Grid.ContentFit()],
-        gap: Gap.all(0),
         childrenByRow: [
           [null, YAxis(), Plot(), null],
           [null, null, XAxis(), null],
@@ -161,11 +155,9 @@ function Bar() {
             Container({
               width: Infinity,
               height: 9,
-              alignment: Alignment.center,
               color: "lightblue",
             }),
             Container({
-              alignment: Alignment.centerLeft,
               child: Transform.translate({
                 offset: { x: 5 },
                 child: Container({
@@ -183,14 +175,19 @@ function Bar() {
           ],
         }),
       }),
-      RowExpanded(30),
+      Flexible({
+        flex: 30,
+        child: Container({
+          width: Infinity,
+          alignment: Alignment.center,
+        }),
+      }),
     ],
   })
 }
 
 function YLabel() {
   return Container({
-    alignment: Alignment.center,
     child: Text("daaszasf", {
       style: {
         fontSize: "16px",
@@ -203,7 +200,6 @@ function XLabel(value: number) {
   return Container({
     width: 1,
     height: 10,
-    alignment: Alignment.center,
     child: SizedBox({
       width: 0,
       height: 10,
@@ -213,26 +209,6 @@ function XLabel(value: number) {
           fontSize: "10px",
         },
       }),
-    }),
-  })
-}
-
-function ColumnExpanded(flex = 1) {
-  return Flexible({
-    flex,
-    child: Container({
-      height: Infinity,
-      alignment: Alignment.center,
-    }),
-  })
-}
-
-function RowExpanded(flex = 1) {
-  return Flexible({
-    flex,
-    child: Container({
-      width: Infinity,
-      alignment: Alignment.center,
     }),
   })
 }
