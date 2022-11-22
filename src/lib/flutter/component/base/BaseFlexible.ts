@@ -39,22 +39,19 @@ export class RenderFlexible extends SingleChildRenderObject {
   }
 
   protected preformLayout(): void {
-    const constraint =
+    const childConstraint =
       this.fit === "tight"
         ? Constraint.tight({
             width: this.constraint.maxWidth,
             height: this.constraint.maxHeight,
           })
-        : Constraint.loose({
-            width: this.constraint.maxWidth,
-            height: this.constraint.maxHeight,
-          })
+        : this.constraint.loosen()
     let size = Size.zero()
     if (this.child != null) {
-      this.child.layout(constraint)
+      this.child.layout(childConstraint)
       size = this.child.size
     }
-    this.size = constraint.constrain(size)
+    this.size = this.constraint.constrain(size)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function

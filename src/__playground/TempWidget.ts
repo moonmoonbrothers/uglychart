@@ -26,12 +26,27 @@ class TempWidget extends ComponentWidget {
     return Container({
       width: Infinity,
       height: Infinity,
-      color: "lightgrey",
+      color: "lightblue",
       alignment: Alignment.center,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
       child: Container({
-        color: "red",
-        child: Text("asdf"),
+        child: Column({
+          children: [
+            Container({
+              width: 50,
+              height: 50,
+              color: "",
+            }),
+            SizeBox({
+              height: 30,
+            }),
+            Container({
+              width: 50,
+              height: 50,
+              color: "blue",
+            }),
+          ],
+        }),
       }),
     })
   }

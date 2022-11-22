@@ -6,7 +6,9 @@
   let canvalEl!: HTMLCanvasElement
 
   onMount(() => {
-    const runner = new AppRunner({canvas: canvalEl})
+    const runner = new AppRunner({ 
+      canvas: canvalEl
+    })
     runner.runApp(new BarCharWidget())
   })
 </script>

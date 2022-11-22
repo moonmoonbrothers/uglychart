@@ -23,8 +23,8 @@ class BarCharWidget extends ComponentWidget {
     return Container({
       width: Infinity,
       height: Infinity,
-      alignment: Alignment.center,
       padding: EdgeInsets.all(10),
+      alignment: Alignment.center,
       color: "lightgrey",
       child: Column({
         children: [

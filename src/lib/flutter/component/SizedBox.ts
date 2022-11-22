@@ -10,5 +10,10 @@ export default function SizeBox({
   height?: number
   child?: Widget
 }) {
-  return new LimitedBox({ child, width, height, stretchable: false })
+  return new LimitedBox({
+    child,
+    width,
+    height,
+    stretchable: false,
+  })
 }
