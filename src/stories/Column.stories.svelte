@@ -10,6 +10,9 @@
 <Meta
   title="Widget/Column"
   component={Widget}
+  parameters={{
+    chromatic: { delay: 300 }
+  }}
 />
 
 <Template let:args>

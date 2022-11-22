@@ -8,7 +8,6 @@
   onMount(() => {
     const runner = new AppRunner({canvas: canvalEl})
     runner.runApp(new TempWidget())
-    //const ctx = canvalEl.getContext('2d')!
   })
 </script>
 

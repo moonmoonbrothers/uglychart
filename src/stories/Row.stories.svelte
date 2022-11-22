@@ -9,6 +9,9 @@
 <Meta
   title="Widget/Row"
   component={Widget}
+  parameters={{
+    chromatic: { delay: 300 }
+  }}
 />
 
 <Template let:args>
