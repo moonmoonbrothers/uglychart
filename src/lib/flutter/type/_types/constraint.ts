@@ -132,7 +132,7 @@ class Constraint {
   }
 
   get isUnbounded(): boolean {
-    return this.hasBoundedHeight && this.hasBoundedWidth
+    return !this.hasBoundedHeight && !this.hasBoundedWidth
   }
 
   private clampWidth(width: number) {

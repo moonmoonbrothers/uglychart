@@ -31,6 +31,7 @@ class TempWidget extends ComponentWidget {
       padding: EdgeInsets.all(10),
       child: Container({
         color: "red",
+        child: Text("asdf"),
       }),
     })
   }
