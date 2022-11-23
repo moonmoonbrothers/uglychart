@@ -10,7 +10,7 @@
   title="Widget/Row"
   component={Widget}
   parameters={{
-    chromatic: { delay: 300 }
+    chromatic: { delay: 1000 }
   }}
 />
 
