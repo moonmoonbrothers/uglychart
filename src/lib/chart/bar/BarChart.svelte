@@ -1,5 +1,6 @@
 <script lang="ts">
   import AppRunner from "$lib/flutter/runApp"
+  import TempWidget from "../../../__playground/TempWidget"
   import { onMount } from "svelte"
   import BarCharWidget from "./BarChartWidget"
 
@@ -9,7 +10,7 @@
     const runner = new AppRunner({ 
       canvas: canvalEl
     })
-    runner.runApp(new BarCharWidget())
+    runner.runApp(new TempWidget())
   })
 </script>
 

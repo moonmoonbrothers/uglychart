@@ -57,7 +57,7 @@ class ProviderElement extends Element {
 
   mount(newParent?: Element | undefined): void {
     super.mount(newParent)
-    this.child = this.inflateWidget(this.widget)
+    this.child = this.inflateWidget(this.widget.child)
   }
 
   update(newWidget: Widget): void {

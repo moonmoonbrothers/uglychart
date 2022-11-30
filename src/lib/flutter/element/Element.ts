@@ -74,10 +74,10 @@ class Element {
   }
 
   mount(newParent?: Element) {
-    this.parent = newParent
     if (newParent) {
       this.owner = newParent.owner
     }
+    this.parent = newParent
   }
 
   update(newWidget: Widget) {

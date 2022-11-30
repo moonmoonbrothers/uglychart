@@ -18,8 +18,9 @@ import {
   Offset,
   Alignment,
 } from "$lib/flutter/type"
-import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
+import ComponentWidget, { BuildContext } from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
+import TempProvider from "./provider/TempProvider"
 
 class TempWidget extends ComponentWidget {
   build(): Widget {
@@ -29,26 +30,36 @@ class TempWidget extends ComponentWidget {
       color: "lightblue",
       alignment: Alignment.center,
       padding: EdgeInsets.all(20),
-      child: Container({
-        child: Column({
-          children: [
-            Container({
-              width: 50,
-              height: 50,
-              color: "",
-            }),
-            SizeBox({
-              height: 30,
-            }),
-            Container({
-              width: 50,
-              height: 50,
-              color: "blue",
-            }),
-          ],
+      child: TempProvider({
+        value: { temp: "asdfaaasasdfasdf" },
+        child: Container({
+          child: Column({
+            children: [
+              Container({
+                width: 50,
+                height: 50,
+                color: "",
+              }),
+              SizeBox({
+                height: 30,
+              }),
+              Container({
+                width: 50,
+                height: 50,
+                color: "blue",
+              }),
+              new Temp()
+            ],
+          }),
         }),
       }),
     })
+  }
+}
+
+class Temp extends ComponentWidget {
+  override build(context: BuildContext): Widget {
+    return Text(TempProvider.of(context).temp)
   }
 }
 
