@@ -1,29 +1,24 @@
 <script lang="ts">
   import AppRunner from "$lib/flutter/runApp"
-  import { onMount } from "svelte"
-  import TempWidget from "./TempWidget"
+  import ComponentWidget from "$lib/flutter/widget/ComponentWidget"
+  import { parseHTML } from "linkedom"
 
   let canvalEl!: HTMLCanvasElement
+  let svg: HTMLElement
+  const text = ``
+  const {document: _docu} = parseHTML(`<div class="container"></div>`)
+  const container = _docu.querySelector('.container')!
+  let newElement = _docu.createElementNS('http://www.w3.org/2000/svg','rect');
+  newElement.setAttribute('fill','orange');
+  newElement.setAttribute('width','200');
+  newElement.setAttribute('height','200');
 
-  onMount(() => {
-    const runner = new AppRunner({canvas: canvalEl})
-    runner.runApp(new TempWidget())
-  })
+
 </script>
 
-<canvas bind:this={canvalEl}/>
+<svg width="200" height="200">
+  {@html container.innerHTML}
+</svg>
 
 <style>
-  div {
-    width: 150px;
-    height: 150px;
-    border-bottom: black solid 5px;
-    border-right: red solid 5px;
-    border-left: yellow solid 5px;
-    background-color: blue;
-  }
-  canvas {
-    width: 100%;
-    height: calc(100vh - 60px);
-  }
 </style>

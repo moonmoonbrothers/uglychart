@@ -3,19 +3,22 @@ import type Widget from "../widget/Widget"
 import Element from "./Element"
 
 class ComponentElement extends Element {
-  private _child!: Element
-  get child(): Element {
-    return this._child
-  }
-  set child(value: Element) {
-    value.parent = this
-    this._child = value
-  }
+  child!: Element
 
   override widget: ComponentWidget
   constructor(widget: ComponentWidget) {
     super(widget)
     this.widget = widget
+  }
+
+  override mount(newParent?: Element | undefined): void {
+    super.mount(newParent)
+    this._firstBuild()
+  }
+
+  override update(newWidget: Widget): void {
+      super.update(newWidget)
+      this.rebuild()
   }
 
   initState(): void {
@@ -26,14 +29,21 @@ class ComponentElement extends Element {
     return this.widget.build(this)
   }
 
+  _firstBuild() {
+    this.performRebuild()
+  }
+
   override performRebuild(): void {
     this.initState()
-    this.child = this.build().createElement()
+    const built = this.build()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.child = this.updateChild(this.child, built)!
   }
 
   override visitChildren(visitor: (child: Element) => void): void {
     visitor(this.child)
   }
 }
+
 
 export default ComponentElement

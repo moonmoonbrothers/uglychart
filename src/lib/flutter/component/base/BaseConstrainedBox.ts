@@ -1,3 +1,4 @@
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Size, type Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
@@ -18,6 +19,10 @@ class BaseContrainedBox extends SingleChildRenderObjectWidget {
 
   createRenderObject(): SingleChildRenderObject {
     return new RenderContrainedBox({ constraint: this.constraint })
+  }
+
+  updateRenderObject(renderObject: RenderContrainedBox): void {
+    renderObject.constraint = this.constraint
   }
 }
 

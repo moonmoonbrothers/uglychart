@@ -2,6 +2,7 @@ import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
 import { Size, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 /*
   this widget must be renamed to SizedBox
@@ -37,11 +38,17 @@ class LimitedBox extends SingleChildRenderObjectWidget {
       stretchable: this.stretchable,
     })
   }
+
+  updateRenderObject(renderObject: RenderLimitedBox): void {
+    renderObject.width = this.width
+    renderObject.height = this.height
+    renderObject.stretchable = this.stretchable
+  }
 }
 
 class RenderLimitedBox extends SingleChildRenderObject {
-  private width: number
-  private height: number
+  width: number
+  height: number
   stretchable: boolean // can be resized by child
   constructor({
     width,

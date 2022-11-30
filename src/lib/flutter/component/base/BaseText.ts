@@ -62,6 +62,14 @@ class Text extends RenderObjectWidget {
       textBaseline: this.textBaseline,
     })
   }
+
+  updateRenderObject(renderObject: RenderText): void {
+    renderObject.text= this.text
+    renderObject.font= this.font
+    renderObject.fillStyle= this.fontColor
+    renderObject.textAlign= this.textAlign
+    renderObject.textBaseline= this.textBaseline
+  }
 }
 
 class RenderText extends RenderObject {

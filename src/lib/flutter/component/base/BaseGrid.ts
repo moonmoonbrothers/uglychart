@@ -37,6 +37,14 @@ class BaseGrid extends MultiChildRenderObjectWidget {
   override createRenderObject(): RenderBaseGrid {
     return new RenderBaseGrid({ ...this })
   }
+
+  override updateRenderObject(renderObject: RenderBaseGrid): void {
+    renderObject.templateRows = this.templateRows
+    renderObject.templateColumns = this.templateColumns 
+    renderObject.autoColumn = this.autoColumn
+    renderObject.autoRow = this.autoRow
+    renderObject.columnCounts = this.columnCounts
+  }
 }
 
 class RenderBaseGrid extends MultiChildRenderObject {

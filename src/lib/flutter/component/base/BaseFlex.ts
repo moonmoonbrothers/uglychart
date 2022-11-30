@@ -4,6 +4,7 @@ import type { PaintContext } from "../../utils/type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidget"
 import type Widget from "../../widget/Widget"
 import { RenderFlexible } from "./BaseFlexible"
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 export type MainAxisAlignment =
   | "start"
@@ -41,6 +42,12 @@ class Flex extends MultiChildRenderObjectWidget {
       mainAxisAlignment: this.mainAxisAlignment,
       crossAxisAlignment: this.crossAxisAlignment,
     })
+  }
+
+  updateRenderObject(renderObject: RenderFlex): void {
+    renderObject.flexDirection = this.flexDirection
+    renderObject.mainAxisAlignment = this.mainAxisAlignment
+    renderObject.crossAxisAlignment = this.crossAxisAlignment
   }
 }
 

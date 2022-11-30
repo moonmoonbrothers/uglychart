@@ -1,3 +1,4 @@
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Size, Offset, EdgeInsets, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
@@ -20,6 +21,10 @@ export default class Padding extends SingleChildRenderObjectWidget {
     return new RenderPadding({
       padding: this.padding,
     })
+  }
+
+  updateRenderObject(renderObject: RenderPadding): void {
+    renderObject.padding = this.padding
   }
 }
 

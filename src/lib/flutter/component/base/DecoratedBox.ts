@@ -1,3 +1,4 @@
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Constraint, Size, Radius, BorderStyle } from "$lib/flutter/type"
 import type { PaintContext } from "$lib/flutter/utils/type"
@@ -36,6 +37,10 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
 
   override createRenderObject(): RenderDocoratedBox {
     return new RenderDocoratedBox(this.decoration)
+  }
+
+  updateRenderObject(renderObject: RenderDocoratedBox): void {
+    renderObject.decoration = this.decoration
   }
 }
 

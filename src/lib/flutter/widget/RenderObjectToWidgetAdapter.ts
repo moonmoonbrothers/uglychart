@@ -11,6 +11,11 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   createRenderObject(): RenderObject {
       return new RenderView()
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateRenderObject(renderObject: RenderObject): void {
+      //
+  }
 }
 
 export default RenderObjectToWidgetAdapter

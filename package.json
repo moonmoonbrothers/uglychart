@@ -26,6 +26,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@sveltejs/package": "next",
+    "@types/jsdom": "^20.0.1",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "babel-loader": "^8.3.0",
@@ -43,5 +44,12 @@
   },
   "type": "module",
   "readme": "ERROR: No README data found!",
-  "_id": "uglychart@0.0.1"
+  "_id": "uglychart@0.0.1",
+  "dependencies": {
+    "happy-dom": "^7.7.0",
+    "i": "^0.3.7",
+    "linkedom": "^0.14.21",
+    "npm": "^9.1.2",
+    "short-unique-id": "^4.4.4"
+  }
 }

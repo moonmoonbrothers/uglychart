@@ -1,12 +1,8 @@
 <script lang="ts">
-  import Widget from "$lib/Widget.svelte"
   import Temp from "../__playground/TempTemp.svelte"
-
-
-
 </script>
 
-<div>
+<div >
   <h1>Welcome to UglyChart Library</h1>
   <p>
     this is inspired by flutter. 
@@ -15,6 +11,6 @@
     <br/>
     you can make whatever you want with this library!
   </p>
-  <Widget/>
+  <Temp/>
 
 </div>

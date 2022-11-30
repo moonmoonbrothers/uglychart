@@ -3,6 +3,7 @@ import { Size, Constraint } from "$lib/flutter/type"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 class Flexible extends SingleChildRenderObjectWidget {
   flex: number
@@ -19,6 +20,10 @@ class Flexible extends SingleChildRenderObjectWidget {
   }
   createRenderObject(): RenderFlexible {
     return new RenderFlexible({ flex: this.flex, fit: this.fit })
+  }
+  updateRenderObject(renderObject: RenderFlexible): void {
+    renderObject.flex = this.flex
+    renderObject.fit = this.fit
   }
 }
 

@@ -11,10 +11,12 @@ type AppRunnerProps = {
 
 class AppRunner {
   root!: Element
+  owner: Owner
   canvasEl: HTMLCanvasElement
   paintContext: PaintContext
   canvasSize: Size = Size.zero()
   constructor({ canvas }: AppRunnerProps) {
+    this.owner = new Owner()
     this.canvasEl = canvas
     const ctx = this.canvasEl.getContext("2d")!
     this.paintContext = { ctx }
@@ -22,7 +24,7 @@ class AppRunner {
 
   runApp(widget: Widget) {
     this.root = new RenderObjectToWidgetAdapter({ app: widget }).createElement()
-    this.rebuild()
+    this.root.mount(null)
     this.observeCanvasSize()
   }
 
@@ -43,10 +45,6 @@ class AppRunner {
     resizeObserver.observe(this.canvasEl)
   }
 
-  rebuild() {
-    this.root.rebuild()
-  }
-
   draw() {
     this.layout()
     this.paint()
@@ -63,6 +61,10 @@ class AppRunner {
     const rootRenderObject = this.root.renderObject
     rootRenderObject.paint(this.paintContext, Offset.zero())
   }
+}
+
+export class Owner {
+
 }
 
 export default AppRunner

@@ -3,6 +3,7 @@ import Alignment from "$lib/flutter/type/_types/alignment"
 import { Size } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 class Align extends SingleChildRenderObjectWidget {
   width: number
@@ -31,6 +32,12 @@ class Align extends SingleChildRenderObjectWidget {
       width: this.width,
       height: this.height,
     })
+  }
+
+  override updateRenderObject(renderObject: RenderAlign) {
+    renderObject.alignment = this.alignment
+    renderObject.width = this.width
+    renderObject.height = this.height
   }
 }
 

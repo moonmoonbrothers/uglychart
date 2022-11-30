@@ -1,3 +1,4 @@
+import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Offset, Size } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
@@ -23,6 +24,10 @@ class Transform extends SingleChildRenderObjectWidget {
 
   override createRenderObject(): SingleChildRenderObject {
     return new RenderTransform({ translate: this.translate })
+  }
+
+  updateRenderObject(renderObject: RenderTransform): void {
+    renderObject.translate = this.translate
   }
 }
 
