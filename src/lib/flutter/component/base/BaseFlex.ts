@@ -109,7 +109,7 @@ class RenderFlex extends MultiChildRenderObject {
         childConstraint = this.getFlexItemConstraint(childMainAxisValue)
       }
 
-      child.layout(this.constraint.restrict(childConstraint))
+      child.layout(childConstraint.enforce(this.constraint))
     })
 
     const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
@@ -140,7 +140,7 @@ class RenderFlex extends MultiChildRenderObject {
         childConstraint = this.constraint
     }
 
-    return this.constraint.restrict(childConstraint)
+    return childConstraint.enforce(this.constraint)
   }
 
   private getFlexItemConstraint(childMainAxisValue: number) {
@@ -158,7 +158,7 @@ class RenderFlex extends MultiChildRenderObject {
         })
     }
 
-    return this.constraint.restrict(childConstraint)
+    return childConstraint.enforce(this.constraint)
   }
 
   private getChildOffsetsOnMainAxis(childMainAxisValues: number[]) {
