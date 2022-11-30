@@ -1,4 +1,3 @@
-import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Size, Offset, EdgeInsets, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"

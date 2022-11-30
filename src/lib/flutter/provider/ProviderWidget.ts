@@ -41,18 +41,12 @@ class ProviderWidget<ProviderKey, Value> extends Widget {
 
 class ProviderElement extends Element {
   override widget: ProviderWidget<unknown, unknown>
-  private _child!: Element
-  get child() {
-    return this._child
-  }
-  set child(value: Element) {
-    value.parent = this
-    this._child = value
-  }
+  child!: Element
 
   get providerKey() {
     return this.widget.providerKey
   }
+
   get value() {
     return this.widget.value
   }
@@ -61,8 +55,19 @@ class ProviderElement extends Element {
     visitor(this.child)
   }
 
+  mount(newParent?: Element | undefined): void {
+    super.mount(newParent)
+    this.child = this.inflateWidget(this.widget)
+  }
+
+  update(newWidget: Widget): void {
+      super.update(newWidget)
+      this.performRebuild()
+  }
+
   protected override performRebuild(): void {
-    this.child = this.widget.child.createElement()
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.child = this.updateChild(this.child, this.child.widget)!
   }
 
   constructor(widget: ProviderWidget<unknown, unknown>) {

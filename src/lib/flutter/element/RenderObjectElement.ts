@@ -19,6 +19,7 @@ class RenderObjectElement extends Element {
 
   override mount(newParent?: Element | undefined): void {
     super.mount(newParent)
+    this._renderObject = this.createRenderObject()
     this.children = (this.widget as RenderObjectWidget).children.map(this.inflateWidget)
   }
 

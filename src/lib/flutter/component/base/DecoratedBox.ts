@@ -1,4 +1,3 @@
-import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
 import { Constraint, Size, Radius, BorderStyle } from "$lib/flutter/type"
 import type { PaintContext } from "$lib/flutter/utils/type"

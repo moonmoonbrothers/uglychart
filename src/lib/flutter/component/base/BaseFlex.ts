@@ -4,7 +4,6 @@ import type { PaintContext } from "../../utils/type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenerObjectWidget"
 import type Widget from "../../widget/Widget"
 import { RenderFlexible } from "./BaseFlexible"
-import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 export type MainAxisAlignment =
   | "start"

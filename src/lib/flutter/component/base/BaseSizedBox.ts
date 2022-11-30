@@ -2,7 +2,6 @@ import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
 import { Size, Constraint } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
-import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 
 /*
   this widget must be renamed to SizedBox

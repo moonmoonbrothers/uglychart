@@ -1,6 +1,5 @@
-import type RenderObject from "$lib/flutter/renderobject/RenderObject"
 import SingleChildRenderObject from "$lib/flutter/renderobject/SingleChildRenderObject"
-import { Offset, Size } from "$lib/flutter/type"
+import { Offset } from "$lib/flutter/type"
 import SingleChildRenderObjectWidget from "$lib/flutter/widget/SingleChildRenderObjectWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 
