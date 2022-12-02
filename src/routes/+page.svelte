@@ -1,5 +1,6 @@
 <script lang="ts">
   import Widget from "$lib/Widget.svelte"
+  import TempTemp from "../__playground/TempTemp.svelte"
 </script>
 
 <div >
@@ -11,8 +12,6 @@
     <br/>
     you can make whatever you want with this library!
   </p>
-  <Widget
-    height="calc(100vh - 60px)"
-  />
+  <TempTemp/>
 
 </div>

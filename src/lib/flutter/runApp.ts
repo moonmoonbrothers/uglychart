@@ -9,7 +9,7 @@ type AppRunnerProps = {
   document?: Document
   window?: Window
   view: SVGSVGElement
-  size?: { width: number; height: number }
+  ssrSize?: { width: number; height: number }
 }
 
 class AppRunner {
@@ -20,9 +20,9 @@ class AppRunner {
     view,
     document: _document = document,
     window: _window = window,
-    size = Size.zero(),
+    ssrSize  = Size.zero(),
   }: AppRunnerProps) {
-    this.viewSize = size
+    this.viewSize = ssrSize
     this.owner = new Owner({ view, document: _document, window: _window })
   }
 
@@ -63,6 +63,9 @@ class AppRunner {
   observeCanvasSize(target: HTMLElement) {
     const resize = (child: ResizeObserverEntry) => {
       const { width, height } = child.target.getBoundingClientRect()
+      const dpr = window.devicePixelRatio
+      this.owner.view.setAttribute("width", `${width}`)
+      this.owner.view.setAttribute("height", `${height}`)
       this.viewSize = new Size({ width, height })
     }
     const resizeObserver = new ResizeObserver((entries) => {

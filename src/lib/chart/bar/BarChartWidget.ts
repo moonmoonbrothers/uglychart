@@ -74,12 +74,6 @@ function Title() {
 
 function YAxis() {
   return Container({
-    border: BorderStyle.only({
-      bottom: {
-        color: "rgba(0,0,0,0)",
-        thickness: 1,
-      },
-    }),
     alignment: Alignment.center,
     child: Row({
       children: [
@@ -204,7 +198,7 @@ function XLabel(value: number) {
       width: 0,
       height: 10,
       child: Text(`${value}`, {
-        textAlign: "center",
+        textAlign: 'middle',
         style: {
           fontSize: "10px",
         },

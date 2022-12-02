@@ -56,8 +56,7 @@ class RenderObject {
       svgEl = this.createDefaultSvgEl(context)
       appendSvgEl(svgEl)
     }
-      svgEl.setAttribute('x', `${offset.x}`)
-      svgEl.setAttribute('y', `${offset.y}`)
+      svgEl.setAttribute('transform', `translate(${offset.x} ${offset.y})`)
       return svgEl
   }
 

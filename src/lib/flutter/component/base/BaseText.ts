@@ -5,7 +5,7 @@ import { Offset, Size } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
-type TextAlign = "middle" | "center" | "start"
+type TextAlign = "middle" | "end" | "start"
 type TextBaseline = "auto" | "text-bottom" | "alphabetic" | 
 "ideographic" | "middle" | "central" | "mathematical" | "hanging" | "text-top"
 type TextStyle = {

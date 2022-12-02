@@ -13,6 +13,7 @@
       child: Text('please implement widget here!')
     }
   )
+  export let ssrSize: { width: number, height: number } | undefined = undefined
   export let width = '100%'
   export let height = '300px'
 
@@ -24,6 +25,7 @@
     view: _svg,
     window: _window,
     document: _document,
+    ssrSize,
   })
   const innerHTML = runner.runApp(widget)
   onMount(() => {

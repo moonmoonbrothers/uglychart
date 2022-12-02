@@ -1,4 +1,4 @@
-type Border = {
+export type Border = {
   thickness: number
   color: string
 }
