@@ -10,9 +10,6 @@
 <Meta
   title="Widget/Column"
   component={Widget}
-  parameters={{
-    chromatic: { delay: 300 }
-  }}
 />
 
 <Template let:args>
@@ -25,6 +22,7 @@
 <Story
   name="case1"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -59,6 +57,7 @@
 <Story
   name="case2"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -91,6 +90,7 @@
 <Story
   name="case3"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -122,6 +122,7 @@
 <Story
   name="case4"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -154,6 +155,7 @@
 <Story
   name="case5"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -186,6 +188,7 @@
 <Story
   name="case6"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -219,6 +222,7 @@
 <Story
   name="case7"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -252,6 +256,7 @@
 <Story
   name="case8"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -285,6 +290,7 @@
 <Story
   name="case9"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
@@ -318,6 +324,7 @@
 <Story
   name="case10"
   args={{
+    ssrSize: {width: 600, height: 300},
     width: '600px',
     height: '300px',
     widget: Container({
