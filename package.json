@@ -46,10 +46,8 @@
   "readme": "ERROR: No README data found!",
   "_id": "uglychart@0.0.1",
   "dependencies": {
-    "happy-dom": "^7.7.0",
-    "i": "^0.3.7",
+    "canvas": "^2.10.2",
     "linkedom": "^0.14.21",
-    "npm": "^9.1.2",
     "short-unique-id": "^4.4.4"
   }
 }

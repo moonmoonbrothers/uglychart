@@ -70,7 +70,7 @@ class Element {
 
   unmount() {
     this.parent = undefined
-    this.renderObject.dispose()
+    this.renderObject.dispose(this.owner.paintContext)
   }
 
   mount(newParent?: Element) {

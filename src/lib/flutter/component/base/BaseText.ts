@@ -1,43 +1,36 @@
+import { getTextHeight, getTextWidth } from "$lib/flutter/utils"
 import RenderObject from "../../renderobject/RenderObject"
-import { getTextHeight, getTextWidth } from "../../utils/getTextSize"
-import { Size } from "../../type"
+// import { getTextHeight, getTextWidth } from "../../utils/getTextSize"
+import { Offset, Size } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
+type TextAlign = "middle" | "center" | "start"
+type TextBaseline = "auto" | "text-bottom" | "alphabetic" | 
+"ideographic" | "middle" | "central" | "mathematical" | "hanging" | "text-top"
+type TextStyle = {
+  fontFamily: string
+  fontSize: string
+  fontWeight: string
+  fontColor: string
+}
+
 export type TextProps = {
-  style?: {
-    fontFamily?: string
-    fontSize?: string
-    fontWeight?: string
-    fontColor?: string
-  }
-  textAlign?: "left" | "right" | "center" | "start" | "end"
-  textBaseline?:
-    | "top"
-    | "hanging"
-    | "middle"
-    | "alphabetic"
-    | "ideographic"
-    | "bottom"
+  style?: Partial<TextStyle>
+  textAlign?: TextAlign
+  textBaseline?: TextBaseline
 }
 
 class Text extends RenderObjectWidget {
   text: string
-  font: string
-  fontColor: string
-  textAlign: "left" | "right" | "center" | "start" | "end"
-  textBaseline:
-    | "top"
-    | "hanging"
-    | "middle"
-    | "alphabetic"
-    | "ideographic"
-    | "bottom"
+  style: TextStyle
+  textAlign: TextAlign
+  textBaseline: TextBaseline
   constructor(
     text: string,
     {
-      textAlign = "left",
-      textBaseline = "top",
+      textAlign = "start",
+      textBaseline = "hanging",
       style: {
         fontFamily = "serif",
         fontSize = "16px",
@@ -48,16 +41,14 @@ class Text extends RenderObjectWidget {
   ) {
     super({ children: [] })
     this.text = text
-    this.font = `${fontWeight} ${fontSize} ${fontFamily}`
-    this.fontColor = fontColor
+    this.style = {fontColor, fontFamily, fontSize, fontWeight}
     ;(this.textAlign = textAlign), (this.textBaseline = textBaseline)
   }
 
   createRenderObject(): RenderObject {
     return new RenderText({
       text: this.text,
-      font: this.font,
-      fillStyle: this.fontColor,
+      style: this.style,
       textAlign: this.textAlign,
       textBaseline: this.textBaseline,
     })
@@ -65,8 +56,7 @@ class Text extends RenderObjectWidget {
 
   updateRenderObject(renderObject: RenderText): void {
     renderObject.text= this.text
-    renderObject.font= this.font
-    renderObject.fillStyle= this.fontColor
+    renderObject.style= this.style
     renderObject.textAlign= this.textAlign
     renderObject.textBaseline= this.textBaseline
   }
@@ -74,50 +64,43 @@ class Text extends RenderObjectWidget {
 
 class RenderText extends RenderObject {
   text: string
-  font: string
-  fillStyle: string
-  textBaseline:
-    | "top"
-    | "hanging"
-    | "middle"
-    | "alphabetic"
-    | "ideographic"
-    | "bottom"
-  textAlign: "left" | "right" | "center" | "start" | "end"
+  textBaseline: TextBaseline
+  textAlign: TextAlign
+  style: TextStyle
   constructor({
     text,
-    font,
-    fillStyle,
     textAlign,
     textBaseline,
+    style
   }: {
     text: string
-    font: string
-    fillStyle: string
-    textBaseline:
-      | "top"
-      | "hanging"
-      | "middle"
-      | "alphabetic"
-      | "ideographic"
-      | "bottom"
-    textAlign: "left" | "right" | "center" | "start" | "end"
+    textBaseline: TextBaseline
+    textAlign: TextAlign
+    style: TextStyle
   }) {
     super()
     this.text = text
-    this.font = font
-    this.fillStyle = fillStyle
+    this.style = style
     this.textBaseline = textBaseline
     this.textAlign = textAlign
   }
+  get font(): string {
+    const {fontWeight, fontSize, fontFamily} = this.style
+    return `${fontWeight} ${fontSize} ${fontFamily}`
+  }
 
-  protected performPaint(context: PaintContext): void {
-    const { ctx } = context
-    ctx.fillStyle = this.fillStyle
-    ctx.font = this.font
-    ctx.textAlign = this.textAlign
-    ctx.textBaseline = this.textBaseline
-    ctx.fillText(this.text, 0, 0)
+  protected performPaint(context: PaintContext, offset: Offset): void {
+    const textEl = this.findOrAppendSvgEl(context, offset)
+    const {fontFamily, fontColor, fontSize, fontWeight} = this.style
+    textEl.setAttribute('id', this.id)
+    textEl.setAttribute('text-anchor', this.textAlign)
+    textEl.setAttribute('alignment-baseline', this.textBaseline)
+    textEl.setAttribute('fill', fontColor)
+    textEl.setAttribute('font-size', fontSize)
+    textEl.setAttribute('font-family', fontFamily)
+    textEl.setAttribute('font-weight', fontWeight)
+    textEl.textContent = this.text
+    context.appendSvgEl(textEl)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -126,7 +109,6 @@ class RenderText extends RenderObject {
       width: getTextWidth({ text: this.text, font: this.font }),
       height: getTextHeight({ text: this.text, font: this.font }),
     })
-
     this.size = size
   }
 
@@ -136,6 +118,10 @@ class RenderText extends RenderObject {
 
   override getIntrinsicWidth(): number {
     return getTextWidth({ text: this.text, font: this.font })
+  }
+
+  createDefaultSvgEl({ createSvgEl }: PaintContext): SVGElement {
+    return createSvgEl('text', this.id)
   }
 }
 

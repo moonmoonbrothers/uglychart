@@ -6,7 +6,7 @@ import ShortUniqueId from "short-unique-id"
 const uid = new ShortUniqueId({ dictionary: "hex" })
 
 class RenderObject {
-  id = "#" + uid.randomUUID(6)
+  id = uid.randomUUID(6)
   ownerElement!: RenderObjectElement
   get children(): RenderObject[] {
     return this.ownerElement.children.map((child) => child.renderObject)
@@ -21,13 +21,8 @@ class RenderObject {
   }
 
   paint(context: PaintContext, offset: Offset) {
-    const { ctx } = context
     const totalOffset = offset.plus(this.offset)
-    ctx.save()
-    ctx.translate(totalOffset.x, totalOffset.y)
-    this.performPaint(context)
-    ctx.restore()
-
+    this.performPaint(context, totalOffset)
     this.children.forEach((child) => child.paint(context, totalOffset))
   }
 
@@ -35,9 +30,9 @@ class RenderObject {
     this.ownerElement = ownerElement
   }
 
-  dispose() {
-    // TODO
-    this.children.forEach(child => child.dispose())
+  dispose(context: PaintContext) {
+    context.findSvgEl(this.id)?.remove()
+    this.children.forEach((child) => child.dispose(context))
   }
 
   getIntrinsicWidth() {
@@ -46,6 +41,29 @@ class RenderObject {
 
   getIntrinsicHeight() {
     return 0
+  }
+
+  findOrAppendSvgEl(
+    context: PaintContext,
+    offset: Offset
+  ): SVGElement {
+    const {findSvgEl, appendSvgEl} = context
+    let svgEl:SVGElement
+    const oldEl = findSvgEl(this.id)
+    if (oldEl) {
+      svgEl = oldEl
+    } else {
+      svgEl = this.createDefaultSvgEl(context)
+      appendSvgEl(svgEl)
+    }
+      svgEl.setAttribute('x', `${offset.x}`)
+      svgEl.setAttribute('y', `${offset.y}`)
+      return svgEl
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  createDefaultSvgEl(paintContext: PaintContext): SVGElement {
+    throw { message: "not implemented defaultSvgEl" }
   }
 
   /*
@@ -60,7 +78,7 @@ class RenderObject {
    * Do not call this method directly. instead call paint
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(context: PaintContext): void {}
+  protected performPaint(context: PaintContext, offset: Offset): void {}
 }
 
 export default RenderObject

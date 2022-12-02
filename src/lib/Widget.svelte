@@ -2,32 +2,51 @@
   import AppRunner from "./flutter/runApp"
   import { onMount } from "svelte"
   import { Container, Text } from "./flutter/component"
-  import { Alignment } from "./flutter/type"
   import type Widget from "./flutter/widget/Widget"
-  export let widget: Widget = Container({
-    color: 'lightgrey',
-    width: Infinity,
-    height: Infinity,
-    alignment: Alignment.center,
-    child: Text('replace widget props! on this component')
-    
-  })
-  export let width = '600px'
+  import { parseHTML } from "linkedom"
+  import { Alignment } from "./flutter/type"
+  export let widget: Widget = Container(
+    {
+      width: Infinity,
+      height: Infinity,
+      alignment: Alignment.center,
+      child: Text('please implement widget here!')
+    }
+  )
+  export let width = '100%'
   export let height = '300px'
 
-  let canvalEl!: HTMLCanvasElement
-
+  let svgEl!: SVGSVGElement
+  let containerEl: HTMLElement
+  const { document: _document, window: _window } = parseHTML(`<svg></svg>`)
+  const _svg = _document.querySelector('svg')!
+  const runner = new AppRunner({
+    view: _svg,
+    window: _window,
+    document: _document,
+  })
+  const innerHTML = runner.runApp(widget)
   onMount(() => {
-    const runner = new AppRunner({canvas: canvalEl})
-    runner.runApp(widget)
+    runner.onMount({
+      view: svgEl,
+      resizeTarget: containerEl,
+    })
   })
 </script>
 
-<canvas style="--canvas-width: {width}; --canvas-height: {height}"  bind:this={canvalEl} />
+<div bind:this={containerEl} style="--width: {width}; --height: {height}">
+  <svg  bind:this={svgEl}>
+    {@html innerHTML}
+  </svg>
+</div>
 
 <style>
-  canvas {
-    width: var(--canvas-width);
-    height: var(--canvas-height);
+  div {
+    width: var(--width);
+    height: var(--height);
+  }
+  svg {
+    width: 100%;
+    height: 100%;
   }
 </style>

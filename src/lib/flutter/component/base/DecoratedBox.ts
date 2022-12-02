@@ -86,7 +86,8 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     this.size = this.constraint.constrain(size)
   }
 
-  protected override performPaint({ ctx }: PaintContext): void {
+  protected override performPaint({ appendSvgEl, createSvgEl }: PaintContext): void {
+    /*
     const {
       color,
       border: {
@@ -234,6 +235,7 @@ class RenderDocoratedBox extends SingleChildRenderObject {
         }
       })
     })
+  */
   }
 
   private getEdgeKey(

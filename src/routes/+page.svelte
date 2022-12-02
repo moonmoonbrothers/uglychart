@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BarChart from "$lib/chart/bar/BarChart.svelte"
+  import Widget from "$lib/Widget.svelte"
 </script>
 
 <div >
@@ -11,6 +11,8 @@
     <br/>
     you can make whatever you want with this library!
   </p>
-  <BarChart/>
+  <Widget
+    height="calc(100vh - 60px)"
+  />
 
 </div>
