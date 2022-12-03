@@ -15,7 +15,7 @@
         alignment: Alignment.topLeft,
         child: Container({
               color: 'yellow',
-              child: Text('문대승')
+              child: Text('asedT문text sha zz', { style: { fontSize: '30px' }})
             }),
       })
   }

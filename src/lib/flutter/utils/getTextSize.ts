@@ -1,11 +1,11 @@
 export const LINE_HEIGHT_NORMAL = 2
-import { createCanvas } from 'canvas';
-const canvas = createCanvas(0,0)
-const ctx = canvas.getContext('2d')
+import { createCanvas } from "canvas"
+const canvas = createCanvas(0, 0)
+const ctx = canvas.getContext("2d")
 
 function getCtx() {
   // brouswer에서는 다른걸 써야 할지도..?
-  if(typeof window !== "undefined") {
+  if (typeof window !== "undefined") {
     return ctx
   } else {
     return ctx
@@ -30,16 +30,19 @@ export function getTextHeight({ text, font }: { text: string; font: string }) {
   const validActualBoundingBox =
     isNumber(actualBoundingBoxAscent) && isNumber(actualBoundingBoxDescent)
 
+  /*
   return validActualBoundingBox
     ? Math.ceil(
         Math.abs(actualBoundingBoxAscent) + Math.abs(actualBoundingBoxDescent)
       ) + 1
     : getFontHeight(font)
+    */
+  return getFontHeight(font)
 }
 
 function getFontHeight(font: string) {
   const fontSize = font.match(/\d+(?=px)/)
-  return parseInt(String(Number(fontSize) * LINE_HEIGHT_NORMAL), 10)
+  return parseInt(String(Number(fontSize)), 10)
 }
 
 function isNumber(value: unknown): value is number {
