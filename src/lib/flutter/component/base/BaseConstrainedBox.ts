@@ -28,7 +28,7 @@ class BaseContrainedBox extends SingleChildRenderObjectWidget {
 class RenderContrainedBox extends SingleChildRenderObject {
   additionalConstraint: Constraint
   constructor({ constraint }: { constraint: Constraint }) {
-    super()
+    super({ isPainter: false })
     this.additionalConstraint = constraint
   }
 

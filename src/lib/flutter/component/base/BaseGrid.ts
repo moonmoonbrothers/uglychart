@@ -60,7 +60,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
     autoRow,
     columnCounts,
   }: Required<BaseGridProps> & { columnCounts: number[] }) {
-    super()
+    super({ isPainter: false })
     this.columnCounts = columnCounts
     this.templateRows = templateRows
     this.templateColumns = templateColumns

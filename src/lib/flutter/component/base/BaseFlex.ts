@@ -65,7 +65,7 @@ class RenderFlex extends MultiChildRenderObject {
     mainAxisAlignment: MainAxisAlignment
     crossAxisAlignment: CrossAxisAlignment
   }) {
-    super()
+    super({ isPainter: false })
     this.flexDirection = flexDirection
     this.mainAxisAlignment = mainAxisAlignment
     this.crossAxisAlignment = crossAxisAlignment
@@ -271,9 +271,6 @@ class RenderFlex extends MultiChildRenderObject {
       ? childInstrinsicWidths.reduce(max, 0)
       : childInstrinsicWidths.reduce(sum, 0)
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  protected performPaint({ ctx }: PaintContext): void {}
 }
 
 export default Flex

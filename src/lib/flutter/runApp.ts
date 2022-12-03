@@ -20,7 +20,7 @@ class AppRunner {
     view,
     document: _document = document,
     window: _window = window,
-    ssrSize  = Size.zero(),
+    ssrSize = Size.zero(),
   }: AppRunnerProps) {
     this.viewSize = ssrSize
     this.owner = new Owner({ view, document: _document, window: _window })
@@ -126,13 +126,15 @@ export class Owner {
   get paintContext(): PaintContext {
     const { document: _document, view } = this
     return {
-      createSvgEl(tagName, id: string) {
+      createSvgEl(tagName) {
         const el = _document.createElementNS(
           "http://www.w3.org/2000/svg",
           tagName
         ) as unknown as SVGElement
-        el.setAttribute("data-render-id", id)
         return el
+      },
+      setId(el, id) {
+        el.setAttribute("data-render-id", id)
       },
       appendSvgEl(el) {
         view.appendChild(el)

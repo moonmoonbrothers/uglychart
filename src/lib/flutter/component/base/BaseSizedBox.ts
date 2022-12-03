@@ -58,7 +58,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
     height: number
     stretchable: boolean
   }) {
-    super()
+    super({ isPainter: false })
     this.width = width
     this.height = height
     this.stretchable = stretchable

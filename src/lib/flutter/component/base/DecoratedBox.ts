@@ -47,7 +47,7 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
 class RenderDocoratedBox extends SingleChildRenderObject {
   decoration: Required<Decoration>
   constructor(decoration: Required<Decoration>) {
-    super()
+    super({ isPainter: true })
     this.decoration = decoration
   }
 
@@ -86,9 +86,7 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     size.height += top.thickness + bottom.thickness
     this.size = this.constraint.constrain(size)
   }
-
-  protected override performPaint(context: PaintContext, offset: Offset): void {
-    const rectEl = this.findOrAppendSvgEl(context, offset)
+  protected performPaint({rect: rectEl}: { [key: string]: SVGElement; }): void {
     const {
       color,
       border: {
@@ -123,8 +121,11 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     rectEl.setAttribute('style', `fill:${color};stroke-width:${borderTop.thickness}px;stroke:${borderTop.color}`)
   }
 
-  createDefaultSvgEl({ createSvgEl }: PaintContext): SVGElement {
-    return createSvgEl('rect', this.id)
+  createDefaultSvgEl({createSvgEl}: PaintContext): { [key: string]: SVGElement; } {
+    return {
+      borderTop: createSvgEl('path'),
+      rect: createSvgEl('rect')
+    }
   }
 
   private assertEqualRadius(radius1: number, radius2: number) {

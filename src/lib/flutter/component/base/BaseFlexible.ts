@@ -37,7 +37,7 @@ export class RenderFlexible extends SingleChildRenderObject {
 
     fit: "tight" | "loose"
   }) {
-    super()
+    super({ isPainter: false })
     this.flex = flex
     this.fit = fit
   }
@@ -57,9 +57,6 @@ export class RenderFlexible extends SingleChildRenderObject {
     }
     this.size = this.constraint.constrain(size)
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(context: PaintContext): void {}
 }
 
 export default Flexible

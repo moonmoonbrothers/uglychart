@@ -78,7 +78,7 @@ class RenderText extends RenderObject {
     textAlign: TextAlign
     style: TextStyle
   }) {
-    super()
+    super({ isPainter: true })
     this.text = text
     this.style = style
     this.textBaseline = textBaseline
@@ -89,8 +89,7 @@ class RenderText extends RenderObject {
     return `${fontWeight} ${fontSize} ${fontFamily}`
   }
 
-  protected performPaint(context: PaintContext, offset: Offset): void {
-    const textEl = this.findOrAppendSvgEl(context, offset)
+  protected performPaint({text: textEl}: { [key: string]: SVGElement; }): void {
     const {fontFamily, fontColor, fontSize, fontWeight} = this.style
     textEl.setAttribute('id', this.id)
     textEl.setAttribute('text-anchor', this.textAlign)
@@ -100,7 +99,6 @@ class RenderText extends RenderObject {
     textEl.setAttribute('font-family', fontFamily)
     textEl.setAttribute('font-weight', fontWeight)
     textEl.textContent = this.text
-    context.appendSvgEl(textEl)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -120,8 +118,10 @@ class RenderText extends RenderObject {
     return getTextWidth({ text: this.text, font: this.font })
   }
 
-  createDefaultSvgEl({ createSvgEl }: PaintContext): SVGElement {
-    return createSvgEl('text', this.id)
+  createDefaultSvgEl({createSvgEl}: PaintContext): { [key: string]: SVGElement; } {
+    return {
+      text: createSvgEl('text')
+    }
   }
 }
 

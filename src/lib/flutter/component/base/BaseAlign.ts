@@ -54,7 +54,7 @@ class RenderAlign extends SingleChildRenderObject {
     width: number
     height: number
   }) {
-    super()
+    super({ isPainter: false })
     this.alignment = alignment
     this.width = width
     this.height = height

@@ -30,7 +30,7 @@ export default class Padding extends SingleChildRenderObjectWidget {
 class RenderPadding extends SingleChildRenderObject {
   padding: EdgeInsets
   constructor({ padding }: { padding: EdgeInsets }) {
-    super()
+    super({ isPainter: false })
     this.padding = padding
   }
   protected preformLayout(): void {

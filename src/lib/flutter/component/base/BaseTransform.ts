@@ -37,7 +37,7 @@ class RenderTransform extends SingleChildRenderObject {
   }
 
   constructor({ translate }: { translate: { x: number; y: number } }) {
-    super()
+    super({ isPainter: false })
     this.translate = translate
   }
 

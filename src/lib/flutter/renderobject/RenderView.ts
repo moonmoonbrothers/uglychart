@@ -4,6 +4,9 @@ import type { PaintContext } from "../utils/type"
 import RenderObject from "./RenderObject"
 
 class RenderView extends RenderObject {
+  constructor() {
+    super({ isPainter: false })
+  }
   preformLayout(): void {
     const constraint = this.constraint
     if (!constraint.isTight)
@@ -14,9 +17,6 @@ class RenderView extends RenderObject {
     })
     this.children.forEach((child) => child.layout(Constraint.loose(this.size)))
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  protected performPaint(context: PaintContext): void {}
 }
 
 export default RenderView
