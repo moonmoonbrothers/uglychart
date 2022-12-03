@@ -6,9 +6,8 @@ import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
 type TextAlign = "middle" | "end" | "start"
-type TextBaseline = "auto" | "text-bottom" | "alphabetic" | 
-"ideographic" | "middle" | "central" | "mathematical" | "hanging" | "text-top"
-type TextStyle = {
+type TextBaseline = "text-before-edge" | "text-after-edge" | "alphabetic" | "ideographic" | "middle" | "hanging"
+ type TextStyle = {
   fontFamily: string
   fontSize: string
   fontWeight: string
@@ -30,7 +29,7 @@ class Text extends RenderObjectWidget {
     text: string,
     {
       textAlign = "start",
-      textBaseline = "hanging",
+      textBaseline = "text-before-edge",
       style: {
         fontFamily = "serif",
         fontSize = "16px",

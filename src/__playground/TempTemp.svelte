@@ -13,19 +13,9 @@
         height: Infinity,
         color: 'red',
         alignment: Alignment.topLeft,
-        border: BorderStyle.all({
-          color: 'black',
-          thickness: 10,
-        }),
-        child: 
-            Container({
-              width: 100,
-              height: 100,
-              color: 'blue',
-              border: BorderStyle.all({
-                color: 'white',
-                thickness: 10,
-              })
+        child: Container({
+              color: 'yellow',
+              child: Text('문대승')
             }),
       })
   }
