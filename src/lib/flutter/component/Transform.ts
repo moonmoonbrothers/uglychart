@@ -2,11 +2,8 @@ import type Widget from "../widget/Widget"
 import BaseTransform from "./base/BaseTransform"
 
 export default class Transform {
-  constructor() {
-    throw {
-      message:
-        "can not call this widget directly, it has aleady provide various static method to create this",
-    }
+  private constructor() {
+    //
   }
 
   static translate({

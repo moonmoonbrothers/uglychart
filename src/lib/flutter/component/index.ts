@@ -11,6 +11,8 @@ import Center from "./Center"
 import Grid from "./Grid"
 import Flexible from "./Flextible"
 import Transform from "./Transform"
+import Stack from "./Stack"
+import Positioned from "./Positioned"
 
 export {
   Center,
@@ -25,5 +27,7 @@ export {
   Grid,
   Flexible,
   Column,
-  Transform
+  Transform,
+  Stack,
+  Positioned
 }
