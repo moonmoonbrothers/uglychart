@@ -1,7 +1,7 @@
 <script lang="ts">
   import BarChart from "$lib/chart/bar/BarChart.svelte"
 import Widget from "$lib/Widget.svelte"
-  import TempTemp from "../__playground/TempTemp.svelte"
+  import TempTemp from "../MoonBlog/Hello.svelte"
 </script>
 
 <div >

@@ -123,7 +123,6 @@ class RenderDocoratedBox extends SingleChildRenderObject {
 
   createDefaultSvgEl({createSvgEl}: PaintContext): { [key: string]: SVGElement; } {
     return {
-      borderTop: createSvgEl('path'),
       rect: createSvgEl('rect')
     }
   }

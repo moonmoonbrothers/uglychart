@@ -143,7 +143,7 @@ function Bar() {
   return Row({
     children: [
       Flexible({
-        flex: 70,
+        flex: 80.0,
         child: Row({
           children: [
             Container({
@@ -155,7 +155,7 @@ function Bar() {
               child: Transform.translate({
                 offset: { x: 5 },
                 child: Container({
-                  color: "lightgrey",
+                  color: "white",
                   radius: Radius.all(4),
                   padding: EdgeInsets.symmetric({ horizontal: 5, vertical: 3 }),
                   child: Text("70.00", {
@@ -170,7 +170,7 @@ function Bar() {
         }),
       }),
       Flexible({
-        flex: 30,
+        flex: 5,
         child: Container({
           width: Infinity,
           alignment: Alignment.center,

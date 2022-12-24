@@ -18,7 +18,9 @@ import {
   Offset,
   Alignment,
 } from "$lib/flutter/type"
-import ComponentWidget, { BuildContext } from "$lib/flutter/widget/ComponentWidget"
+import ComponentWidget, {
+  BuildContext,
+} from "$lib/flutter/widget/ComponentWidget"
 import type Widget from "$lib/flutter/widget/Widget"
 import TempProvider from "./provider/TempProvider"
 
@@ -48,7 +50,7 @@ class TempWidget extends ComponentWidget {
                 height: 50,
                 color: "blue",
               }),
-              new Temp()
+              new Temp(),
             ],
           }),
         }),
@@ -64,3 +66,10 @@ class Temp extends ComponentWidget {
 }
 
 export default TempWidget
+
+// child: Container({
+//   padding: EdgeInsets.all(16),
+//   color: "#c0392b",
+//   radius: Radius.all(8),
+//   child: Text("Hello! It's Moon Blog", { style: { fontSize: "30px" } }),
+// }),

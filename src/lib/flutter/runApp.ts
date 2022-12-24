@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type Element from "./element/Element"
+import type RenderObjectElement from "./element/RenderObjectElement"
 import { Size, Offset, Constraint } from "./type"
 import type { PaintContext } from "./utils/type"
 import RenderObjectToWidgetAdapter from "./widget/RenderObjectToWidgetAdapter"
@@ -13,7 +14,7 @@ type AppRunnerProps = {
 }
 
 class AppRunner {
-  root!: Element
+  root!: RenderObjectElement
   owner: Owner
   viewSize: { width: number; height: number }
   constructor({
@@ -63,7 +64,6 @@ class AppRunner {
   observeCanvasSize(target: HTMLElement) {
     const resize = (child: ResizeObserverEntry) => {
       const { width, height } = child.target.getBoundingClientRect()
-      const dpr = window.devicePixelRatio
       this.owner.view.setAttribute("width", `${width}`)
       this.owner.view.setAttribute("height", `${height}`)
       this.viewSize = new Size({ width, height })
@@ -79,6 +79,10 @@ class AppRunner {
   draw() {
     this.layout()
     this.paint()
+  }
+
+  rebuild() {
+    this.root.children[0].rebuild()
   }
 
   layout() {
