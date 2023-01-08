@@ -1,4 +1,4 @@
-import { EdgeInsets } from "$lib/flutter/type"
+import { EdgeInsets } from "../type"
 import type Widget from "../widget/Widget"
 import _Padding from "./base/BasePadding"
 import Expanded from "./Expanded"
