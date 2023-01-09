@@ -14,13 +14,6 @@
     "chromatic": "npx chromatic --project-token=39002ee740e0"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.0-beta.20",
-    "@storybook/addon-interactions": "^7.0.0-beta.20",
-    "@storybook/addon-links": "^7.0.0-beta.20",
-    "@storybook/blocks": "^7.0.0-beta.20",
-    "@storybook/svelte": "^7.0.0-beta.20",
-    "@storybook/sveltekit": "^7.0.0-beta.20",
-    "@storybook/testing-library": "^0.0.13",
     "@sveltejs/adapter-auto": "^1.0.0",
     "@sveltejs/kit": "^1.0.0",
     "@sveltejs/package": "^1.0.0",

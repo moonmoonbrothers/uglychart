@@ -1,33 +1,19 @@
-const { typescript: preprocessTs } = require("svelte-preprocess")
-const path = require("path")
-
+const path = require('path');
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx|svelte)",
+  "stories": [
+    "../src/**/*.mdx",
+    "../src/**/*.stories.@(js|jsx|ts|tsx|svelte)"
   ],
-  addons: [
+  "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
+    "@storybook/addon-interactions"
   ],
-  framework: "@storybook/svelte",
-  core: {
-    builder: "@storybook/builder-vite",
+  "framework": {
+    "name": "@storybook/svelte-vite",
+    "options": {}
   },
-  svelteOptions: {
-    preprocess: [preprocessTs()],
-  },
-
-  viteFinal: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      $lib: path.resolve(__dirname, "../src/lib"),
-    }
-    return config
-  },
-  // this is working for svele native format
-  // "features": {
-  //   "storyStoreV7": true
-  // }
+  "docs": {
+    "autodocs": "tag"
+  }
 }
