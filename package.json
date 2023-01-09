@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:flutter": "npm run dev -workspace=@moonmoonbrothers/like-flutter",
     "start:chart": "npm run start -workspace=@moonmoonbrothers/uglychart",
-    "start:flutter-svelte": "npm run dev -workspace=@moonmoonbrothers/like-flutter-svelte",
+    "start:flutter-svelte": "npm run dev -workspace=@moonmoonbrothers/flutterjs-svelte",
     "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/uglychart",
     "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/like-flutter",
     "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/like-flutter",
@@ -27,8 +27,9 @@
   "homepage": "https://github.com/moonmoonbrothers/uglychart#readme",
   "workspaces": [
     "packages/like-flutter",
-    "packages/like-flutter-svelte",
-    "packages/uglychart"
+    "packages/flutterjs-svelte",
+    "packages/uglychart",
+    "packages/flutterjs"
   ],
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.0-beta.20",

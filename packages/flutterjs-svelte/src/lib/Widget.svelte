@@ -7,7 +7,7 @@
 		AppRunner,
 		Container,
 		Text
-	} from '@moonmoonbrothers/like-flutter';
+	} from '@moonmoonbrothers/flutterjs';
 
 	export let widget: Widget = Container({
 		width: Infinity,
