@@ -8,7 +8,7 @@ import {
 } from "@moonmoonbrothers/flutterjs"
 
 const Widget: Component<{ widget: _Widget }> = ({
-  width = "calc(100% - 10px)",
+  width = "calc(100vw - 30px)",
   height = "calc(100vh - 40px)",
   widget = Container({
     width: Infinity,
