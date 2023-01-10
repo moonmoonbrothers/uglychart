@@ -10,10 +10,7 @@
     "start:flutter-svelte": "npm run dev -workspace=@moonmoonbrothers/flutterjs-svelte",
     "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/uglychart",
     "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
-    "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/like-flutter",
-    "build:flutter": "npm run build --workspace=@moonmoonbrothers/like-flutter",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/storybook-flutterjs"
   },
   "repository": {
     "type": "git",
