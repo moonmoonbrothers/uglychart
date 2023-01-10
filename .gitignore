@@ -6,3 +6,5 @@ node_modules
 /packages/*/build
 /packages/*/.svelte-kit
 /packages/*/package
+.vscode
+.idea

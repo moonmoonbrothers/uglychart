@@ -23,13 +23,11 @@
   },
   "homepage": "https://github.com/moonmoonbrothers/uglychart#readme",
   "workspaces": [
-    "packages/like-flutter",
-    "packages/flutterjs-svelte",
     "packages/uglychart",
     "packages/flutterjs",
-    "packages/storybook-flutterjs",
-    "packages/storybook-flutterjs2"
+    "packages/flutterjs-svelte",
+    "packages/flutterjs-solid",
+    "packages/storybook-flutterjs"
   ],
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
