@@ -9,7 +9,7 @@
     "start:chart": "npm run start -workspace=@moonmoonbrothers/uglychart",
     "start:flutter-svelte": "npm run dev -workspace=@moonmoonbrothers/flutterjs-svelte",
     "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/uglychart",
-    "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/like-flutter",
+    "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
     "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/like-flutter",
     "build:flutter": "npm run build --workspace=@moonmoonbrothers/like-flutter",
     "storybook": "storybook dev -p 6006",
@@ -29,16 +29,10 @@
     "packages/like-flutter",
     "packages/flutterjs-svelte",
     "packages/uglychart",
-    "packages/flutterjs"
+    "packages/flutterjs",
+    "packages/storybook-flutterjs",
+    "packages/storybook-flutterjs2"
   ],
   "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.0-beta.20",
-    "@storybook/addon-interactions": "^7.0.0-beta.20",
-    "@storybook/addon-links": "^7.0.0-beta.20",
-    "@storybook/blocks": "^7.0.0-beta.20",
-    "@storybook/svelte": "^7.0.0-beta.20",
-    "@storybook/sveltekit": "^7.0.0-beta.20",
-    "@storybook/testing-library": "^0.0.13",
-    "chromatic": "^6.14.0"
   }
 }
