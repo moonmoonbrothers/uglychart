@@ -4,16 +4,18 @@ import {
   AppRunner,
   Container,
   Text,
+  Alignment,
 } from "@moonmoonbrothers/flutterjs"
 
-const Widget: Component = ({
-  width = "100%",
-  height = "calc(100vh - 30px)",
+const Widget: Component<{ widget: _Widget }> = ({
+  width = "calc(100% - 10px)",
+  height = "calc(100vh - 40px)",
   widget = Container({
     width: Infinity,
     height: Infinity,
-    child: Text("asdf"),
-    color: "red",
+    alignment: Alignment.center,
+    child: Text("Empty space"),
+    color: "green",
   }),
 }: {
   width?: string
