@@ -1,0 +1,17 @@
+{
+  "include": ["src/index.ts"],
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "package",
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2022"
+  }
+}
