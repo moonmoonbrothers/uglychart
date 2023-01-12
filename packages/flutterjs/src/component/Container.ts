@@ -9,7 +9,6 @@ import type Widget from '../widget/Widget';
 import Align from './Align';
 import ConstrainedBox from './base/BaseConstrainedBox';
 import DecoratedBox from './base/DecoratedBox';
-import LimitedBox from './base/BaseSizedBox';
 import Padding from './Padding';
 import SizedBox from './SizedBox';
 

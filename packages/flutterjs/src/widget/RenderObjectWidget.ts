@@ -20,7 +20,7 @@ class RenderObjectWidget extends Widget {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateRenderObject(renderObject: RenderObject) {
-    throw {message: "not implemented updatedRenderObject"}
+    throw { message: "not implemented updatedRenderObject" }
   }
 }
 

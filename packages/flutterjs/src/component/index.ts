@@ -13,6 +13,8 @@ import Flexible from "./Flexible"
 import Transform from "./Transform"
 import Stack from "./Stack"
 import Positioned from "./Positioned"
+import IntrinsicHeight from "./IntrinsicHeight"
+import IntrinsicWidth from "./IntrinsicWidth"
 
 export {
   Center,
@@ -29,5 +31,7 @@ export {
   Column,
   Transform,
   Stack,
-  Positioned
+  Positioned,
+  IntrinsicHeight,
+  IntrinsicWidth,
 }
