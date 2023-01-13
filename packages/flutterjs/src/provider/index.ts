@@ -7,7 +7,7 @@ export type ProviderProps<ProviderKey, Value> = {
   child: Widget
 }
 
-function Provider<ProviderKey, Value>(
+export function Provider<ProviderKey, Value>(
   props: ProviderProps<ProviderKey, Value>
 ) {
   return new ProviderWidget(props)

@@ -14,11 +14,12 @@ type TextBaseline =
 	| 'hanging'
 	| 'top'
 	| 'bottom';
-type TextStyle = {
+export type TextStyle = {
 	fontFamily: string;
 	fontSize: string;
 	fontWeight: string;
 	fontColor: string;
+	lineHeight: string
 };
 
 export type TextProps = {
@@ -41,13 +42,14 @@ class Text extends RenderObjectWidget {
 				fontFamily = 'serif',
 				fontSize = '16px',
 				fontWeight = 'normal',
-				fontColor = 'black'
+				fontColor = 'black',
+				lineHeight = '2px'
 			} = {}
 		}: TextProps
 	) {
 		super({ children: [] });
 		this.text = text;
-		this.style = { fontColor, fontFamily, fontSize, fontWeight };
+		this.style = { fontColor, fontFamily, fontSize, fontWeight, lineHeight };
 		(this.textAlign = textAlign), (this.textBaseline = textBaseline);
 	}
 

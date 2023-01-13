@@ -1,25 +1,31 @@
-import { Alignment, EdgeInsets, Widget, type Positioned } from "@moonmoonbrothers/flutterjs"
+import {
+  Alignment,
+  BorderStyle,
+  EdgeInsets,
+  Widget,
+} from "@moonmoonbrothers/flutterjs"
+import { TextProps, TextStyle } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
 
 export type BarChartProps = {
   title?: string
   data: Data
   theme?: Theme
-  width?: string
-  height?: string
   padding?: EdgeInsets
-  custom?: {
-    title: Title
-    bar?: Bar
-    barLayout?: BarLayout
-    xAxis?: XAxis
-    yAxis?: YAxis
-    xAxisLabel?: XAxisLabel
-    yAxisLabel?: YAxisLabel
-    plot?: Plot
-    chart?: Chart
-    dataLabel?: DataLabel
-    additions?: Addition[]
-  }
+  custom?: Custom
+}
+
+export type Custom = {
+  title?: Title
+  bar?: Bar
+  barLayout?: BarLayout
+  xAxisScale?: XAxisScale
+  yAxisScale?: YAxisScale
+  xAxisLabel?: XAxisLabel
+  yAxisLabel?: YAxisLabel
+  plot?: Plot
+  chart?: Chart
+  dataLabel?: DataLabel
+  additions?: Addition[]
 }
 
 export type Data = {
@@ -30,75 +36,162 @@ export type Data = {
   }[]
 }
 
-type BarLayout = {
-  stacked?: boolean
-  gap?: number
-}
+type BarLayout =
+  | {
+      type: "stack"
+      Custom?: () => Widget
+    }
+  | {
+      type: "series"
+      gap?: number
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type Bar = {
-  thickness?: number
-  thicknessPercentage?: number
-  colors?: string[]
-  custom?: () => Widget
-}
+type Bar =
+  | {
+      type: "config"
+      thickness?: number
+      thicknessPercentage?: number
+      colors?: string[]
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type Title = {
-  margin?: EdgeInsets
-  alignment?: Alignment
-  font?: Font
-  custom?: () => Widget
-}
+type Title =
+  | {
+      type: "config"
+      margin?: EdgeInsets
+      alignment?: "start" | "end" | "center"
+      font?: Font
+    }
+  | {
+      type: "custom"
+      Custom: (props: {text: string}) => Widget
+    }
 
-type YAxis = {
-  color?: string
-  thickness?: number
-}
+type Tick =
+  | {
+      type: "config"
+      color?: string
+      thickness?: number
+      length?: number
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type Tick = {}
+export type XAxisScale = DataAxisScale | LabelAxisScale
 
-type XAxis = {
-  color?: string
-  thickness?: number
-  tick?: Tick
-}
+export type YAxisScale = DataAxisScale | LabelAxisScale
 
-type YAxisLabel = {
-  margin?: EdgeInsets
-  font?: Font
-}
+type YAxisLabel =
+  | {
+      type: "config"
+      margin?: EdgeInsets
+      font?: Font
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type XAxisLabel = {
-  margin?: EdgeInsets
-  font?: Font
-}
+type XAxisLabel =
+  | {
+      type: "config"
+      margin?: EdgeInsets
+      font?: Font
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type DataLabel = {
-  margin?: EdgeInsets
-  font?: Font
-}
+type DataLabel =
+  | {
+      type: "config"
+      margin?: EdgeInsets
+      font?: Font
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
 
-type Plot = {
-  minValue?: number
-  maxValue?: number
+type Plot =
+  | {
+      type: "config"
+      width?: number
+      height?: number
+      border?: BorderStyle
+      verticalLine?: {
+        color?: string
+        width?: string
+        count?: number
+      }
+      horizontalLine?: {
+        color?: string
+        width?: string
+        count?: number
+      }
+    }
+  | {
+      type: "custom"
+      Custom: () => Widget
+    }
+
+export type Chart = {
+  type: "config"
   width?: number
   height?: number
+  alignment?: Alignment
+} | {
+  type: "custom"
+  Custom: () => Widget
 }
 
-type Chart = {}
-
-type Theme = {
-  font?: Font
+export type Theme = {
+  text?: Font
   borderColor?: string
 }
 
-type Font = {
-  color?: string
-  weight?: number
-  lineHeight?: number
-  family?: string
-  size?: string
+export type Font = TextProps
+
+export type Addition = {
+  position: { top?: number; bottom?: number; left?: number; right?: number }
+  Custom: () => Widget
 }
 
-type Addition = {
-  positioned: ReturnType<typeof Positioned>
+type DataAxisScale = {
+  axis: "data"
+  type: "config"
+  value?: {
+    step?: number
+    min?: number
+    max?: number
+  }
+  color?: string
+  thickness?: number
+  tick?: Tick
+} | {
+  axis: "data"
+  type: "custom"
+  Custom: () => Widget
+}
+
+type LabelAxisScale = {
+  axis: "label"
+  type: "config"
+  color?: string
+  thickness?: number
+  tick?: Tick
+} | {
+  axis: "label"
+  type: "custom"
+  Custom: () => Widget
 }
