@@ -1,15 +1,12 @@
 import {
-  AppRunner,
   Container,
   Text,
   Alignment,
   Column,
-  Expanded,
   type Widget,
   EdgeInsets,
   Grid,
   Row,
-  Padding,
   Align,
   IntrinsicWidth,
   IntrinsicHeight,
@@ -22,15 +19,17 @@ import { ThemeProvider, DataProvider, CustomProvider } from "./provider"
 import { BarChartProps } from "./types"
 import DefaultTitle from "./component/Title"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import BarLayout from "./component/BarLayout"
+import Layout from "./component/Layout"
 
 const BarChart = ({
-  title: titleText,
   padding,
   custom: {
+    layout = { type: "config" as const },
     title = { type: "config" as const },
     bar = { type: "config" as const },
-    barLayout = { type: "series" as const },
+    barGroup = { kind: "series" as const, type: "config" as const },
+    xAxis = { type: "config" as const },
+    yAxis = { type: "config" as const },
     xAxisScale = { axis: "data" as const, type: "config" as const },
     yAxisScale = { axis: "label" as const, type: "config" as const },
     xAxisLabel = { type: "config" as const },
@@ -71,8 +70,11 @@ const BarChart = ({
       data,
       child: CustomProvider({
         custom: {
+          layout,
           bar,
-          barLayout,
+          barGroup,
+          xAxis,
+          yAxis,
           xAxisScale,
           yAxisScale,
           xAxisLabel,
@@ -83,56 +85,12 @@ const BarChart = ({
           additions,
           title,
         },
-        child: new Layout({
-          title: titleText,
-          padding,
-        }),
+        child: Layout(),
       }),
     }),
   })
 }
 export default BarChart
-
-class Layout extends ComponentWidget {
-  private title: string
-  private padding: EdgeInsets
-  constructor({
-    title = "",
-    padding = EdgeInsets.all(0),
-  }: {
-    title?: string
-    padding?: EdgeInsets
-  }) {
-    super()
-    this.title = title
-    this.padding = padding
-  }
-  build(context: BuildContext): Widget {
-    const { title, chart } = CustomProvider.of(context)
-    const Title =
-      title.type === "custom"
-        ? title.Custom({ text: this.title })
-        : new DefaultTitle({
-            text: this.title,
-            align: title.alignment,
-            margin: title.margin,
-            textProps: title.font ?? ThemeProvider.of(context).text,
-          })
-    return Container({
-      width: Infinity,
-      height: Infinity,
-      padding: this.padding,
-      child: Column({
-        children: [
-          Title,
-          Flexible({
-            child: Chart(),
-          }),
-        ],
-      }),
-    })
-  }
-}
 
 const Chart = () => {
   return Align({
@@ -143,20 +101,12 @@ const Chart = () => {
           child: IntrinsicHeight({
             child: IntrinsicWidth({
               child: Grid({
-                childrenByRow: [
-                  [YAxis(), Plot()],
-                  [null, XAxis()],
-                ],
+                childrenByRow: [],
                 templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
                 templateRows: [Grid.Fr(1), Grid.ContentFit()],
               }),
             }),
           }),
-        }),
-        Positioned({
-          right: 0,
-          bottom: -30,
-          child: Text("asdlkf"),
         }),
       ],
     }),
@@ -222,3 +172,5 @@ const Tick = () =>
   })
 
 const labelAxisWrapper = () => {}
+
+new Function()

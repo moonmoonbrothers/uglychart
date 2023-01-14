@@ -1,13 +1,16 @@
 import {
   Alignment,
   BorderStyle,
+  ComponentWidget,
   EdgeInsets,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
-import { TextProps, TextStyle } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import {
+  TextProps,
+  TextStyle,
+} from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
 
 export type BarChartProps = {
-  title?: string
   data: Data
   theme?: Theme
   padding?: EdgeInsets
@@ -17,10 +20,13 @@ export type BarChartProps = {
 export type Custom = {
   title?: Title
   bar?: Bar
-  barLayout?: BarLayout
+  layout?: Layout
+  barGroup?: BarGroup
+  xAxis?: XAxis
   xAxisScale?: XAxisScale
-  yAxisScale?: YAxisScale
   xAxisLabel?: XAxisLabel
+  yAxis?: YAxis
+  yAxisScale?: YAxisScale
   yAxisLabel?: YAxisLabel
   plot?: Plot
   chart?: Chart
@@ -29,6 +35,7 @@ export type Custom = {
 }
 
 export type Data = {
+  title?: string
   labels: string[]
   datasets: {
     legend: string
@@ -36,19 +43,60 @@ export type Data = {
   }[]
 }
 
-type BarLayout =
+type CustomWidget<T extends string | {} | Record<string, any>, R = {}> = {
+  type: "custom"
+  Custom: (
+    child: T extends string
+      ? { [key in T]: () => Widget }
+      : T extends {}
+      ? {}
+      : T,
+    data: R & { theme: Theme }
+  ) => Widget
+}
+
+type XAxis =
   | {
-      type: "stack"
-      Custom?: () => Widget
+      type: "config"
+    }
+  | CustomWidget<{
+      XAxisLabel: (props: { index: number; text: number }) => Widget
+      XAxisScale: () => Widget
+    }>
+
+type YAxis =
+  | {
+      type: "config"
+    }
+  | CustomWidget<{
+      YAxisLabel: (props: { index: number; text: number }) => Widget
+      YAxisScale: () => Widget
+    }>
+
+type BarGroup =
+  | {
+      kind: "series"
+      type: "config"
     }
   | {
-      type: "series"
+      kind: "stack"
+      type: "config"
       gap?: number
     }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
+  | CustomWidget<
+      {
+        Bar: (props: {
+          color: string
+          index: number
+          minValue: number
+          maxValue: number
+          value: number
+          label: string
+          legend: string
+        }) => Widget
+      },
+      { index: number; label: string }
+    >
 
 type Bar =
   | {
@@ -57,10 +105,20 @@ type Bar =
       thicknessPercentage?: number
       colors?: string[]
     }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
+  | CustomWidget<
+      {},
+      {
+        color: string
+        index: number
+        minValue: number
+        maxValue: number
+        value: number
+        label: string
+        legend: string
+        data: Data
+        theme: Theme
+      }
+    >
 
 type Title =
   | {
@@ -69,37 +127,7 @@ type Title =
       alignment?: "start" | "end" | "center"
       font?: Font
     }
-  | {
-      type: "custom"
-      Custom: (props: {text: string}) => Widget
-    }
-
-type Tick =
-  | {
-      type: "config"
-      color?: string
-      thickness?: number
-      length?: number
-    }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
-
-export type XAxisScale = DataAxisScale | LabelAxisScale
-
-export type YAxisScale = DataAxisScale | LabelAxisScale
-
-type YAxisLabel =
-  | {
-      type: "config"
-      margin?: EdgeInsets
-      font?: Font
-    }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
+  | CustomWidget<{}, { text: string }>
 
 type XAxisLabel =
   | {
@@ -107,10 +135,60 @@ type XAxisLabel =
       margin?: EdgeInsets
       font?: Font
     }
+  | CustomWidget<{}, { text: string; index: number }>
+
+type YAxisLabel =
   | {
-      type: "custom"
-      Custom: () => Widget
+      type: "config"
+      margin?: EdgeInsets
+      font?: Font
     }
+  | CustomWidget<{}, { text: string; index: number }>
+
+export type XAxisScale =
+  | DataAxisScale
+  | LabelAxisScale
+  | ({ axis: "data" | "label" } & CustomWidget<{}, { data: Data }>)
+
+export type YAxisScale =
+  | DataAxisScale
+  | LabelAxisScale
+  | ({ axis: "data" | "label" } & CustomWidget<{}, { data: Data }>)
+
+type Layout =
+  | {
+      type: "config"
+      padding?: EdgeInsets
+    }
+  | CustomWidget<"Title" | "Chart">
+
+type DataAxisScale = {
+  axis: "data"
+  type: "config"
+  value?: {
+    step?: number
+    min?: number
+    max?: number
+  }
+  color?: string
+  thickness?: number
+  tick?: Tick
+}
+
+type LabelAxisScale = {
+  axis: "label"
+  type: "config"
+  color?: string
+  thickness?: number
+  tick?: Tick
+}
+
+type Tick = {
+  type: "config"
+  color?: string
+  width?: number
+  height?: number
+}
 
 type DataLabel =
   | {
@@ -118,10 +196,10 @@ type DataLabel =
       margin?: EdgeInsets
       font?: Font
     }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
+  | CustomWidget<
+      {},
+      { value: string; index: number; legend: string; label: string }
+    >
 
 type Plot =
   | {
@@ -140,20 +218,19 @@ type Plot =
         count?: number
       }
     }
-  | {
-      type: "custom"
-      Custom: () => Widget
-    }
+  | CustomWidget<
+      { BarGroup: (props: { index: number; label: string }) => Widget },
+      { data: Data }
+    >
 
-export type Chart = {
-  type: "config"
-  width?: number
-  height?: number
-  alignment?: Alignment
-} | {
-  type: "custom"
-  Custom: () => Widget
-}
+export type Chart =
+  | {
+      type: "config"
+      width?: number
+      height?: number
+      alignment?: Alignment
+    }
+  | CustomWidget<"XAxis" | "YAxis" | "Plot">
 
 export type Theme = {
   text?: Font
@@ -164,34 +241,5 @@ export type Font = TextProps
 
 export type Addition = {
   position: { top?: number; bottom?: number; left?: number; right?: number }
-  Custom: () => Widget
-}
-
-type DataAxisScale = {
-  axis: "data"
-  type: "config"
-  value?: {
-    step?: number
-    min?: number
-    max?: number
-  }
-  color?: string
-  thickness?: number
-  tick?: Tick
-} | {
-  axis: "data"
-  type: "custom"
-  Custom: () => Widget
-}
-
-type LabelAxisScale = {
-  axis: "label"
-  type: "config"
-  color?: string
-  thickness?: number
-  tick?: Tick
-} | {
-  axis: "label"
-  type: "custom"
   Custom: () => Widget
 }

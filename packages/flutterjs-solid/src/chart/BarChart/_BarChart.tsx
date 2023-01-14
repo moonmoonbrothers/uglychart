@@ -10,20 +10,21 @@ import BarChart from "./BarChart"
 const _BarChart = () => {
   return (
     <Widget
+      height="400px"
       widget={BarChart({
-        title: "Title",
         custom: {
           title: {
             type: "config",
-            alignment: 'center',
+            alignment: "center",
             font: {
               style: {
-                fontSize: '40px'
-              }
-            }
-          }
+                fontSize: "40px",
+              },
+            },
+          },
         },
         data: {
+          title: "Title",
           labels: [],
           datasets: [],
         },

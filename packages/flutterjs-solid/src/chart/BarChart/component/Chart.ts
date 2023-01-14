@@ -1,20 +1,50 @@
-import { Align, Alignment, Container, Grid } from "@moonmoonbrothers/flutterjs"
+import {
+  Align,
+  Alignment,
+  ComponentWidget,
+  Container,
+  Grid,
+  IntrinsicHeight,
+  IntrinsicWidth,
+  Stack,
+  Widget,
+} from "@moonmoonbrothers/flutterjs"
+import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
+import { CustomProvider, ThemeProvider } from "../provider"
+import XAxis from "./XAxis"
+import YAxis from "./YAxis"
+import Plot from "./Plot"
 
-const Chart = () => {
-  return Container({
-      color: "green",
+class Chart extends ComponentWidget {
+  build(context: BuildContext): Widget {
+    const theme = ThemeProvider.of(context)
+    const { chart } = CustomProvider.of(context)
+    if (chart.type === "custom") {
+      return chart.Custom({ XAxis, YAxis, Plot }, { theme })
+    }
+
+    return Align({
       alignment: Alignment.topCenter,
-      width: 400,
-      height: 300,
-      child: Grid({
-        templateColumns: [Grid.ContentFit(), Grid.Px(400)],
-        templateRows: [Grid.Px(300), Grid.ContentFit()],
-        childrenByRow: [
-          // [YAxisWrapper(), Plot()],
-          // [null, XAxisWrapper()],
+      child: Stack({
+        children: [
+          Container({
+            child: IntrinsicHeight({
+              child: IntrinsicWidth({
+                child: Grid({
+                  childrenByRow: [
+                    [XAxis(), Plot()],
+                    [null, YAxis()],
+                  ],
+                  templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
+                  templateRows: [Grid.Fr(1), Grid.ContentFit()],
+                }),
+              }),
+            }),
+          }),
         ],
       }),
     })
+  }
 }
 
-export default Chart
+export default () => new Chart()

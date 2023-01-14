@@ -1,17 +1,35 @@
-import { Container, Row } from "@moonmoonbrothers/flutterjs"
+import {
+  Column,
+  ComponentWidget,
+  Container,
+  Row,
+  Widget,
+} from "@moonmoonbrothers/flutterjs"
+import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
+import { children } from "solid-js"
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import YAxisLabel from "./YAxisLabel"
+import YAxisScale from "./YAxisScale"
 
-Row
-const YAxis = () =>
-  Row({
-    children: [
-    ],
-  })
+class YAxis extends ComponentWidget {
+  build(context: BuildContext): Widget {
+    const theme = ThemeProvider.of(context)
+    const { labels, datasets } = DataProvider.of(context)
+    const { yAxis } = CustomProvider.of(context)
 
-const Tick = () =>
-  Container({
-    width: 10,
-    height: 2,
-    color: "black",
-  })
+    if (yAxis.type === "custom") {
+      return yAxis.Custom({ YAxisLabel, YAxisScale }, { theme })
+    }
 
-  export default YAxis
+    return Row({
+      children: [
+        Column({
+          children: [],
+        }),
+        YAxisScale()
+      ],
+    })
+  }
+}
+
+export default () => new YAxis()
