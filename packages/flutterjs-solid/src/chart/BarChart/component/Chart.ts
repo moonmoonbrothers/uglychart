@@ -6,6 +6,7 @@ import {
   Grid,
   IntrinsicHeight,
   IntrinsicWidth,
+  Positioned,
   Stack,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
@@ -18,7 +19,7 @@ import Plot from "./Plot"
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
-    const { chart } = CustomProvider.of(context)
+    const { chart, additions } = CustomProvider.of(context)
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme })
     }
@@ -32,8 +33,8 @@ class Chart extends ComponentWidget {
               child: IntrinsicWidth({
                 child: Grid({
                   childrenByRow: [
-                    [XAxis(), Plot()],
-                    [null, YAxis()],
+                    [YAxis(), Plot()],
+                    [null, XAxis()],
                   ],
                   templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
                   templateRows: [Grid.Fr(1), Grid.ContentFit()],
@@ -41,6 +42,9 @@ class Chart extends ComponentWidget {
               }),
             }),
           }),
+          ...additions.map(({ position, Custom }) =>
+            Positioned({ ...position, child: Custom() })
+          ),
         ],
       }),
     })

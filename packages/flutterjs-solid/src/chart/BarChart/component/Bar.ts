@@ -7,7 +7,11 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import {
+  CustomProvider as CustomProvider,
+  DataProvider,
+  ThemeProvider,
+} from "../provider"
 
 type BarProps = {
   color: string
@@ -26,7 +30,8 @@ export class Bar extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
-    const { bar, xAxisScale } = CustomProvider.of(context)
+    const { bar, xAxis, } = CustomProvider.of(context)
+
     const { color, index, label, minValue, maxValue, value, legend } =
       this.props
 
@@ -49,18 +54,18 @@ export class Bar extends ComponentWidget {
 
     const { thickness } = bar
 
-    const horizontal = xAxisScale.axis === "data"
+    //   const horizontal = xAxis.axis === "data"
 
     const barRatio = (value - minValue) / (maxValue - minValue)
 
-    return (horizontal ? Row : Column)({
+    return Row({
       children: [
         Flexible({
           flex: barRatio,
           child: Container({
             color,
-            width: horizontal ? Infinity : thickness,
-            height: horizontal ? thickness : Infinity,
+            width: Infinity,
+            height: thickness,
           }),
         }),
         Flexible({ flex: 1 - barRatio }),

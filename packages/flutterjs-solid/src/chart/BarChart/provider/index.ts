@@ -1,9 +1,5 @@
-import CustomProvider from "./CustomProvider";
-import DataProvider from "./DataProvider";
-import ThemeProvider from "./ThemeProvider";
+import ConfigProvider from "./CustomProvider"
+import DataProvider from "./DataProvider"
+import ThemeProvider from "./ThemeProvider"
 
-export {
-  CustomProvider,
-  DataProvider,
-  ThemeProvider,
-}
+export { ConfigProvider as CustomProvider, DataProvider, ThemeProvider }

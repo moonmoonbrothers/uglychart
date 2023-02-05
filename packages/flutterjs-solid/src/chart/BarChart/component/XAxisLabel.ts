@@ -1,6 +1,8 @@
 import {
   ComponentWidget,
+  Container,
   Padding,
+  SizedBox,
   Text,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
@@ -28,7 +30,10 @@ class XAxisLabel extends ComponentWidget {
 
     return Padding({
       padding: margin,
-      child: Text(text, { ...theme.text, ...font }),
+      child: Container({
+        width: 0,
+        child: Text(text, { ...theme.text, ...font, textAlign: "middle" }),
+      }),
     })
   }
 }

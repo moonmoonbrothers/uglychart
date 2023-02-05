@@ -1,32 +1,29 @@
 import {
   Alignment,
   BorderStyle,
-  ComponentWidget,
   EdgeInsets,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
-import {
-  TextProps,
-  TextStyle,
-} from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
 
-export type BarChartProps = {
+export type BarChartProps<TYPE extends BarChartType> = {
   data: Data
   theme?: Theme
   padding?: EdgeInsets
-  custom?: Custom
+  custom?: Custom<TYPE>
+  type: TYPE
 }
 
-export type Custom = {
+export type BarChartType = "vertical" | "horizontal"
+
+export type Custom<TYPE extends BarChartType> = {
   title?: Title
   bar?: Bar
   layout?: Layout
   barGroup?: BarGroup
-  xAxis?: XAxis
-  xAxisScale?: XAxisScale
+  xAxis?: XAxis<TYPE>
   xAxisLabel?: XAxisLabel
-  yAxis?: YAxis
-  yAxisScale?: YAxisScale
+  yAxis?: YAxis<TYPE>
   yAxisLabel?: YAxisLabel
   plot?: Plot
   chart?: Chart
@@ -54,24 +51,6 @@ type CustomWidget<T extends string | {} | Record<string, any>, R = {}> = {
     data: R & { theme: Theme }
   ) => Widget
 }
-
-type XAxis =
-  | {
-      type: "config"
-    }
-  | CustomWidget<{
-      XAxisLabel: (props: { index: number; text: number }) => Widget
-      XAxisScale: () => Widget
-    }>
-
-type YAxis =
-  | {
-      type: "config"
-    }
-  | CustomWidget<{
-      YAxisLabel: (props: { index: number; text: number }) => Widget
-      YAxisScale: () => Widget
-    }>
 
 type BarGroup =
   | {
@@ -145,15 +124,19 @@ type YAxisLabel =
     }
   | CustomWidget<{}, { text: string; index: number }>
 
-export type XAxisScale =
-  | DataAxisScale
-  | LabelAxisScale
-  | ({ axis: "data" | "label" } & CustomWidget<{}, { data: Data }>)
+export type XAxis<TYPE extends BarChartType> =
+  | (TYPE extends "horizontal" ? DataAxis : LabelAxis)
+  | ({ axis: "data" | "label" } & CustomWidget<
+      { XAxisLabel: (props: { index: number; text: number }) => Widget },
+      { data: Data }
+    >)
 
-export type YAxisScale =
-  | DataAxisScale
-  | LabelAxisScale
-  | ({ axis: "data" | "label" } & CustomWidget<{}, { data: Data }>)
+export type YAxis<TYPE extends BarChartType> =
+  | (TYPE extends "vertical" ? DataAxis : LabelAxis)
+  | CustomWidget<
+      { YAxisLabel: (props: { index: number; text: number }) => Widget },
+      { data: Data }
+    >
 
 type Layout =
   | {
@@ -162,10 +145,10 @@ type Layout =
     }
   | CustomWidget<"Title" | "Chart">
 
-type DataAxisScale = {
-  axis: "data"
+type DataAxis = {
   type: "config"
-  value?: {
+  axis: 'data',
+  scale?: {
     step?: number
     min?: number
     max?: number
@@ -175,9 +158,9 @@ type DataAxisScale = {
   tick?: Tick
 }
 
-type LabelAxisScale = {
-  axis: "label"
+type LabelAxis = {
   type: "config"
+  axis: 'label',
   color?: string
   thickness?: number
   tick?: Tick
