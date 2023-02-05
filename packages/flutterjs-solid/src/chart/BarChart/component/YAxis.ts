@@ -29,7 +29,15 @@ class YAxis extends ComponentWidget {
 
     const { axis } = yAxis
     const horizontal = axis === "data"
-    const { labels } = data
+
+    let yLabels: string[]
+
+    if (axis === "label") {
+      const { labels } = data
+      yLabels = labels
+    } else {
+      yLabels = []
+    }
 
     return Row({
       children: [
@@ -38,7 +46,7 @@ class YAxis extends ComponentWidget {
           child: Column({
             children: [
               Flexible({ flex: 0.5 }),
-              ...labels.map((label, index) =>
+              ...yLabels.map((label, index) =>
                 Flexible({
                   child: Align({
                     alignment: Alignment.centerRight,

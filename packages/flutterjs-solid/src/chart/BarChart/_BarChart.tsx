@@ -14,6 +14,9 @@ const _BarChart = () => {
       height="400px"
       widget={BarChart({
         type: "horizontal",
+        scale: {
+          max: 100,
+        },
         custom: {
           xAxis: {
             type: "config",
@@ -64,11 +67,11 @@ const _BarChart = () => {
           datasets: [
             {
               legend: "A",
-              data: [30, 40.5, 90.12, 30.5, 40],
+              data: [30, 40.5, 50.12, 30.5, 40],
             },
             {
               legend: "B",
-              data: [60, 20.5, 1.2, 12.5, 20.1],
+              data: [60, 20.5, 50.2, 22.5, 10],
             },
           ],
         },

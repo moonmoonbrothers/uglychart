@@ -5,11 +5,10 @@ type ValueEdge = {
   max: number
 }
 
-type ScaleData = {
+export type Scale = {
   min: number
   max: number
-  stepSize: number
-  stepCount: number
+  step: number
 }
 
 function getDigits(num: number): number {
@@ -79,20 +78,17 @@ function getNormalizedStepCount(limitSize: number, stepSize: number) {
 //   return typeof stepSize === "number"
 // }
 
-export function getScale(roughScaleDate: ScaleData): ScaleData {
-  const stepSize = getNormalizedStep(roughScaleDate.stepSize)
+export function getScale(roughScaleDate: Scale): Scale {
+  const step = getNormalizedStep(roughScaleDate.step)
   const edge = getNormalizedLimit(
     { min: roughScaleDate.min, max: roughScaleDate.max },
-    stepSize
+    step
   )
-  const limitSize = Math.abs(edge.max - edge.min)
-  const stepCount = getNormalizedStepCount(limitSize, stepSize)
 
   return {
     min: edge.min,
     max: edge.max,
-    stepSize,
-    stepCount,
+    step,
   }
 }
 

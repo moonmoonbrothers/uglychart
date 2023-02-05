@@ -30,7 +30,7 @@ export class Bar extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
-    const { bar, xAxis, } = CustomProvider.of(context)
+    const { bar, xAxis } = CustomProvider.of(context)
 
     const { color, index, label, minValue, maxValue, value, legend } =
       this.props
@@ -68,7 +68,7 @@ export class Bar extends ComponentWidget {
             height: thickness,
           }),
         }),
-        Flexible({ flex: 1 - barRatio }),
+        Flexible({ flex: 1 - barRatio || 0.0001 }),
       ],
     })
   }

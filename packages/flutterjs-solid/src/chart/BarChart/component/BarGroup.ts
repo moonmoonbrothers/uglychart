@@ -6,7 +6,12 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import {
+  CustomProvider,
+  DataProvider,
+  ScaleProvider,
+  ThemeProvider,
+} from "../provider"
 import Bar from "./Bar"
 
 type BarGroupProps = {
@@ -22,11 +27,13 @@ class BarGroup extends ComponentWidget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
     const data = DataProvider.of(context)
+    const scale = ScaleProvider.of(context)
     const { index, label } = this.props
 
     if (barGroup.type === "custom") {
       return barGroup.Custom({ Bar }, { index, theme, label })
     }
+
 
     const { datasets, labels } = data
 
@@ -40,8 +47,8 @@ class BarGroup extends ComponentWidget {
             index,
             label: labels[this.props.index],
             legend,
-            maxValue: 100,
-            minValue: 0,
+            maxValue: scale.max,
+            minValue: scale.min,
             value: data[this.props.index],
           })
         ),

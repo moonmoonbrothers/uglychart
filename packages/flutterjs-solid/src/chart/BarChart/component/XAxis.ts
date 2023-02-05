@@ -8,13 +8,19 @@ import {
 } from "@moonmoonbrothers/flutterjs"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import {
+  CustomProvider,
+  DataProvider,
+  ScaleProvider,
+  ThemeProvider,
+} from "../provider"
 import XAxisLabel from "./XAxisLabel"
 
 class XAxis extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
+    const scale = ScaleProvider.of(context)
     const { xAxis, plot } = CustomProvider.of(context)
 
     if (xAxis.type === "custom") {
@@ -23,16 +29,19 @@ class XAxis extends ComponentWidget {
 
     const { axis } = xAxis
 
-    const { labels, datasets } = data
+    let xLabels: string[]
 
     if (axis === "data") {
-      const { value } = xAxis
+      const {} = xAxis
+      const { step, min, max } = scale
+      console.log(max)
+      xLabels = Array.from(
+        { length: Math.floor((max - min) / step) + 1 },
+        (_, i) => `${step * i + min}`
+      )
     } else {
+      xLabels = []
     }
-
-    // 일단 horizontal로 가정하고..
-
-    const xLabels = Array.from({ length: 11 }, (_, i) => 10 * i)
 
     return Column({
       children: [
@@ -43,6 +52,7 @@ class XAxis extends ComponentWidget {
             IntrinsicHeight({
               child: Column({
                 children: [
+                  /* tick */
                   Container({
                     width: 2,
                     height: 10,
