@@ -34,7 +34,6 @@ class BarGroup extends ComponentWidget {
       return barGroup.Custom({ Bar }, { index, theme, label })
     }
 
-
     const { datasets, labels } = data
 
     return Container({

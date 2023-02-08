@@ -5,7 +5,7 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
-import { Scale } from "../util/getScale"
+import { Scale } from "./util/getScale"
 
 export type BarChartProps<TYPE extends BarChartType> = {
   data: Data
