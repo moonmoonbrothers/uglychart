@@ -3,13 +3,7 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { Custom, BarChartType } from "../types"
 
 const KEY = Symbol("THEME")
-const CustomProvider = <TYPE extends BarChartType>({
-  child,
-  custom,
-}: {
-  child: Widget
-  custom: Custom<TYPE>
-}) =>
+const CustomProvider = ({ child, custom }: { child: Widget; custom: Custom }) =>
   Provider({
     providerKey: KEY,
     child,
@@ -17,6 +11,6 @@ const CustomProvider = <TYPE extends BarChartType>({
   })
 
 CustomProvider.of = <TYPE extends BarChartType>(context: BuildContext) =>
-  Provider.of<Required<Custom<TYPE>>>(KEY, context)
+  Provider.of<Required<Custom>>(KEY, context)
 
 export default CustomProvider

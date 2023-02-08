@@ -16,31 +16,22 @@ import {
 } from "../provider"
 import XAxisLabel from "./XAxisLabel"
 
+export type XAxisProps = {
+  labels: string[]
+}
+
 class XAxis extends ComponentWidget {
+  constructor(private props: XAxisProps) {
+    super()
+  }
+
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
-    const scale = ScaleProvider.of(context)
-    const { xAxis, plot } = CustomProvider.of(context)
+    const { xAxis } = CustomProvider.of(context)
 
     if (xAxis.type === "custom") {
       return xAxis.Custom({ XAxisLabel }, { theme, data })
-    }
-
-    const { axis } = xAxis
-
-    let xLabels: string[]
-
-    if (axis === "data") {
-      const {} = xAxis
-      const { step, min, max } = scale
-      console.log(max)
-      xLabels = Array.from(
-        { length: Math.floor((max - min) / step) + 1 },
-        (_, i) => `${step * i + min}`
-      )
-    } else {
-      xLabels = []
     }
 
     return Column({
@@ -48,7 +39,7 @@ class XAxis extends ComponentWidget {
         Row({
           mainAxisAlignment: "spaceBetween",
           crossAxisAlignment: "end",
-          children: xLabels.map((label, index) =>
+          children: this.props.labels.map((label, index) =>
             IntrinsicHeight({
               child: Column({
                 children: [
@@ -70,4 +61,4 @@ class XAxis extends ComponentWidget {
   }
 }
 
-export default () => new XAxis()
+export default (props: XAxisProps) => new XAxis(props)

@@ -17,7 +17,15 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import YAxisLabel from "./YAxisLabel"
 
+export type YAxisProps = {
+  labels: string[]
+}
+
 class YAxis extends ComponentWidget {
+  constructor(private props: YAxisProps) {
+    super()
+  }
+
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
@@ -27,18 +35,6 @@ class YAxis extends ComponentWidget {
       return yAxis.Custom({ YAxisLabel }, { theme, data })
     }
 
-    const { axis } = yAxis
-    const horizontal = axis === "data"
-
-    let yLabels: string[]
-
-    if (axis === "label") {
-      const { labels } = data
-      yLabels = labels
-    } else {
-      yLabels = []
-    }
-
     return Row({
       children: [
         Padding({
@@ -46,7 +42,7 @@ class YAxis extends ComponentWidget {
           child: Column({
             children: [
               Flexible({ flex: 0.5 }),
-              ...yLabels.map((label, index) =>
+              ...this.props.labels.map((label, index) =>
                 Flexible({
                   child: Align({
                     alignment: Alignment.centerRight,
@@ -75,4 +71,4 @@ class YAxis extends ComponentWidget {
   }
 }
 
-export default () => new YAxis()
+export default (props: YAxisProps) => new YAxis(props)

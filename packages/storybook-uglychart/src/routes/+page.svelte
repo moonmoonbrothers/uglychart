@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
 	import { EdgeInsets, Text, Container } from '@moonmoonbrothers/flutterjs';
-	import { BarChart, BarGroup } from '@moonmoonbrothers/uglychart';
+	import { BarChart } from '@moonmoonbrothers/uglychart';
 </script>
 
 <div class="container">
@@ -10,7 +10,6 @@
 			width=""
 			height="400px"
 			widget={BarChart({
-				type: 'horizontal',
 				scale: {
 					max: 100
 				},
@@ -20,13 +19,9 @@
 						type: 'config',
 						barBackgroundColors: ['blue', 'green', 'yellow']
 					},
-					xAxis: {
+					chart: {
 						type: 'config',
-						axis: 'data'
-					},
-					yAxis: {
-						type: 'config',
-						axis: 'label'
+						direction: 'vertical'
 					},
 					bar: {
 						type: 'config',

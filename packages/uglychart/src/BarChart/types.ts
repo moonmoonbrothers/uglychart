@@ -5,27 +5,28 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import { XAxisProps } from "./component/XAxis"
+import { YAxisProps } from "./component/YAxis"
 import { Scale } from "./util/getScale"
 
-export type BarChartProps<TYPE extends BarChartType> = {
+export type BarChartProps = {
   data: Data
   scale?: Partial<Scale>
   theme?: Theme
   padding?: EdgeInsets
-  custom?: Custom<TYPE>
-  type: TYPE
+  custom?: Custom
 }
 
 export type BarChartType = "vertical" | "horizontal"
 
-export type Custom<TYPE extends BarChartType> = {
+export type Custom = {
   title?: Title
   bar?: Bar
   layout?: Layout
   barGroup?: BarGroup
-  xAxis?: XAxis<TYPE>
+  xAxis?: XAxis
   xAxisLabel?: XAxisLabel
-  yAxis?: YAxis<TYPE>
+  yAxis?: YAxis
   yAxisLabel?: YAxisLabel
   plot?: Plot
   chart?: Chart
@@ -127,15 +128,21 @@ type YAxisLabel =
     }
   | CustomWidget<{}, { text: string; index: number }>
 
-export type XAxis<TYPE extends BarChartType> =
-  | (TYPE extends "horizontal" ? DataAxis : LabelAxis)
+export type XAxis =
+  | Axis
+  | {
+      type: "config"
+      color?: string
+      thickness?: number
+      tick?: Tick
+    }
   | ({ axis: "data" | "label" } & CustomWidget<
       { XAxisLabel: (props: { index: number; text: number }) => Widget },
       { data: Data }
     >)
 
-export type YAxis<TYPE extends BarChartType> =
-  | (TYPE extends "vertical" ? DataAxis : LabelAxis)
+export type YAxis =
+  | Axis
   | CustomWidget<
       { YAxisLabel: (props: { index: number; text: number }) => Widget },
       { data: Data }
@@ -148,32 +155,18 @@ type Layout =
     }
   | CustomWidget<"Title" | "Chart">
 
-type DataAxis = {
-  type: "config"
-  axis: "data"
-  scale?: {
-    step?: number
-    min?: number
-    max?: number
-  }
-  color?: string
-  thickness?: number
-  tick?: Tick
-}
-
-type LabelAxis = {
-  type: "config"
-  axis: "label"
-  color?: string
-  thickness?: number
-  tick?: Tick
-}
-
 type Tick = {
   type: "config"
   color?: string
   width?: number
   height?: number
+}
+
+type Axis = {
+  type: "config"
+  color?: string
+  thickness?: number
+  tick?: Tick
 }
 
 type DataLabel =
@@ -214,9 +207,14 @@ export type Chart =
       type: "config"
       width?: number
       height?: number
+      direction?: "horizontal" | "vertical"
       alignment?: Alignment
     }
-  | CustomWidget<"XAxis" | "YAxis" | "Plot">
+  | CustomWidget<{
+      Plot: () => Widget
+      XAxis: (props: XAxisProps) => Widget
+      YAxis: (props: YAxisProps) => Widget
+    }>
 
 export type Theme = {
   text?: Font

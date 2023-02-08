@@ -11,7 +11,12 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, ThemeProvider } from "../provider"
+import {
+  CustomProvider,
+  DataProvider,
+  ScaleProvider,
+  ThemeProvider,
+} from "../provider"
 import XAxis from "./XAxis"
 import YAxis from "./YAxis"
 import Plot from "./Plot"
@@ -19,10 +24,27 @@ import Plot from "./Plot"
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
+    const { labels } = DataProvider.of(context)
     const { chart, additions } = CustomProvider.of(context)
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme })
     }
+
+    const scale = ScaleProvider.of(context)
+    const { step, min, max } = scale
+
+    const valueLabels = Array.from(
+      { length: Math.floor((max - min) / step) + 1 },
+      (_, i) => `${step * i + min}`
+    )
+    const indexLabels = labels
+
+    const [xLabels, yLabels] =
+      chart.direction === "horizontal"
+        ? [valueLabels, indexLabels]
+        : [indexLabels, valueLabels]
+
+    const { direction = "horizontal" } = chart
 
     return Align({
       alignment: Alignment.topCenter,
@@ -33,8 +55,8 @@ class Chart extends ComponentWidget {
               child: IntrinsicWidth({
                 child: Grid({
                   childrenByRow: [
-                    [YAxis(), Plot()],
-                    [null, XAxis()],
+                    [YAxis({ labels: yLabels }), Plot()],
+                    [null, XAxis({ labels: xLabels })],
                   ],
                   templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
                   templateRows: [Grid.Fr(1), Grid.ContentFit()],

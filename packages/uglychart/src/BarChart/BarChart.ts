@@ -12,15 +12,13 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { Custom, Data, Theme } from "./types"
 import { getValueEdge } from "./util/getValueEdge"
 
-class BarChart<TYPE extends BarChartType> extends ComponentWidget {
-  type: TYPE
+class BarChart extends ComponentWidget {
   scale: { min?: number; max?: number; step?: number }
-  custom: Required<Custom<TYPE>>
+  custom: Required<Custom>
   data: Data
   theme: Required<Theme>
 
   constructor({
-    type,
     scale = {},
     custom: {
       layout = { type: "config" as const },
@@ -30,8 +28,8 @@ class BarChart<TYPE extends BarChartType> extends ComponentWidget {
         type: "config" as const,
         kind: "series" as const,
       },
-      xAxis = { type: "config" as const } as XAxis<TYPE>,
-      yAxis = { type: "config" as const } as YAxis<TYPE>,
+      xAxis = { type: "config" as const },
+      yAxis = { type: "config" as const },
       xAxisLabel = {
         type: "config" as const,
         font: {},
@@ -57,9 +55,8 @@ class BarChart<TYPE extends BarChartType> extends ComponentWidget {
       } = {},
       borderColor = "lightblue",
     } = {},
-  }: BarChartProps<TYPE>) {
+  }: BarChartProps) {
     super()
-    this.type = type
     this.scale = scale
 
     this.custom = {
@@ -131,5 +128,5 @@ class BarChart<TYPE extends BarChartType> extends ComponentWidget {
   }
 }
 
-export default <TYPE extends BarChartType>(props: BarChartProps<TYPE>) =>
+export default <TYPE extends BarChartType>(props: BarChartProps) =>
   new BarChart(props)
