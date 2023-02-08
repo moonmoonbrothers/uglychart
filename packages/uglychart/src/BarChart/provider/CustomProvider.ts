@@ -8,7 +8,7 @@ const CustomProvider = <TYPE extends BarChartType>({
   custom,
 }: {
   child: Widget
-  custom: Required<Custom<TYPE>>
+  custom: Custom<TYPE>
 }) =>
   Provider({
     providerKey: KEY,

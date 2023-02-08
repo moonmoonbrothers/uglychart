@@ -1,5 +1,5 @@
 {
-  "name": "storybook-uglychart",
+  "name": "@moonmoonbrothers/storybook-uglychart",
   "version": "0.0.1",
   "private": true,
   "scripts": {

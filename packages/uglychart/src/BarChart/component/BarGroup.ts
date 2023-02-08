@@ -34,7 +34,12 @@ class BarGroup extends ComponentWidget {
       return barGroup.Custom({ Bar }, { index, theme, label })
     }
 
+    const { barBackgroundColors: backgroundColors = ["gray"] } = barGroup
     const { datasets, labels } = data
+
+    const getRatio = (value: number) => {
+      return (value - scale.min) / (scale.max - scale.min)
+    }
 
     return Container({
       width: Infinity,
@@ -42,13 +47,11 @@ class BarGroup extends ComponentWidget {
         mainAxisAlignment: "spaceAround",
         children: datasets.map(({ data, legend }, index) =>
           Bar({
-            color: "black",
+            backgroundColor: backgroundColors[index % backgroundColors.length],
             index,
             label: labels[this.props.index],
             legend,
-            maxValue: scale.max,
-            minValue: scale.min,
-            value: data[this.props.index],
+            ratio: getRatio(data[this.props.index]),
           })
         ),
       }),

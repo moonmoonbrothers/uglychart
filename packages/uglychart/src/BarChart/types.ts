@@ -58,11 +58,14 @@ type BarGroup =
   | {
       kind: "series"
       type: "config"
+      barBackgroundColors?: string[]
+      barBorderColors?: string[]
     }
   | {
       kind: "stack"
       type: "config"
-      gap?: number
+      barBackgroundColors?: string[]
+      barBorderColors?: string[]
     }
   | CustomWidget<
       {
@@ -91,9 +94,7 @@ type Bar =
       {
         color: string
         index: number
-        minValue: number
-        maxValue: number
-        value: number
+        ratio: number
         label: string
         legend: string
         data: Data
@@ -149,7 +150,7 @@ type Layout =
 
 type DataAxis = {
   type: "config"
-  axis: 'data',
+  axis: "data"
   scale?: {
     step?: number
     min?: number
@@ -162,7 +163,7 @@ type DataAxis = {
 
 type LabelAxis = {
   type: "config"
-  axis: 'label',
+  axis: "label"
   color?: string
   thickness?: number
   tick?: Tick

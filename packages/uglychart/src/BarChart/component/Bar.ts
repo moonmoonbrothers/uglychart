@@ -14,11 +14,9 @@ import {
 } from "../provider"
 
 type BarProps = {
-  color: string
+  backgroundColor: string
   index: number
-  minValue: number
-  maxValue: number
-  value: number
+  ratio: number
   label: string
   legend: string
 }
@@ -32,8 +30,7 @@ export class Bar extends ComponentWidget {
     const data = DataProvider.of(context)
     const { bar, xAxis } = CustomProvider.of(context)
 
-    const { color, index, label, minValue, maxValue, value, legend } =
-      this.props
+    const { backgroundColor: color, index, label, ratio, legend } = this.props
 
     if (bar.type === "custom") {
       return bar.Custom(
@@ -41,9 +38,7 @@ export class Bar extends ComponentWidget {
         {
           color,
           index,
-          minValue,
-          maxValue,
-          value,
+          ratio,
           theme,
           label,
           legend,
@@ -56,19 +51,17 @@ export class Bar extends ComponentWidget {
 
     //   const horizontal = xAxis.axis === "data"
 
-    const barRatio = (value - minValue) / (maxValue - minValue)
-
     return Row({
       children: [
         Flexible({
-          flex: barRatio,
+          flex: this.props.ratio,
           child: Container({
             color,
             width: Infinity,
             height: thickness,
           }),
         }),
-        Flexible({ flex: 1 - barRatio || 0.0001 }),
+        Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
       ],
     })
   }

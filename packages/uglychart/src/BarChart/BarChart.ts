@@ -26,7 +26,10 @@ class BarChart<TYPE extends BarChartType> extends ComponentWidget {
       layout = { type: "config" as const },
       title = { type: "config" as const },
       bar = { type: "config" as const },
-      barGroup = { kind: "series" as const, type: "config" as const },
+      barGroup = {
+        type: "config" as const,
+        kind: "series" as const,
+      },
       xAxis = { type: "config" as const } as XAxis<TYPE>,
       yAxis = { type: "config" as const } as YAxis<TYPE>,
       xAxisLabel = {
