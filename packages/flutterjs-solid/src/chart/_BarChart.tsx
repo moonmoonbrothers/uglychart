@@ -5,8 +5,8 @@ import {
   Alignment,
   EdgeInsets,
 } from "@moonmoonbrothers/flutterjs"
-import Widget from "../../lib/Widget"
-import BarChart from "./BarChart"
+import Widget from "../lib/Widget"
+import { BarChart } from "@moonmoonbrothers/uglychart"
 
 const _BarChart = () => {
   return (

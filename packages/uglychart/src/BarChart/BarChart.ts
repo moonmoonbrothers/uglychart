@@ -6,11 +6,11 @@ import {
 } from "./provider"
 import { BarChartProps, BarChartType, XAxis, YAxis } from "./types"
 import Layout from "./component/Layout"
-import getScale, { Scale } from "../util/getScale"
+import getScale, { Scale } from "./util/getScale"
 import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { Custom, Data, Theme } from "./types"
-import { getValueEdge } from "../util/getValueEdge"
+import { getValueEdge } from "./util/getValueEdge"
 
 class BarChart<TYPE extends BarChartType> extends ComponentWidget {
   type: TYPE
