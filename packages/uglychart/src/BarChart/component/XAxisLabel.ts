@@ -9,7 +9,7 @@ import {
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, ThemeProvider } from "../provider"
 
-type XAxisLabelProps = {
+export type XAxisLabelProps = {
   index: number
   text: string
 }

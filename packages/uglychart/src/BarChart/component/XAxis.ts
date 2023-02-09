@@ -11,12 +11,7 @@ import {
 } from "@moonmoonbrothers/flutterjs"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import {
-  CustomProvider,
-  DataProvider,
-  ScaleProvider,
-  ThemeProvider,
-} from "../provider"
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import XAxisLabel from "./XAxisLabel"
 
 export type XAxisProps = {

@@ -9,7 +9,7 @@ import {
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, ThemeProvider } from "../provider"
 
-type YAxisLabelProps = {
+export type YAxisLabelProps = {
   index: number
   text: string
 }

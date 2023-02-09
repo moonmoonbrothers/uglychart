@@ -45,17 +45,19 @@
 			width=""
 			height="500px"
 			widget={BarChart({
-				scale: {
-					max: 100
-				},
 				custom: {
 					barGroup: {
 						kind: 'series',
 						type: 'config',
-						barBackgroundColors: ['blue', 'green', 'yellow', 'black']
+						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
 					chart: {
-						type: 'config'
+						type: 'config',
+						scale: {
+							min: 0,
+							max: 100,
+							step: 10
+						}
 					},
 					bar: {
 						type: 'config',
@@ -107,11 +109,16 @@
 					barGroup: {
 						kind: 'series',
 						type: 'config',
-						barBackgroundColors: ['blue', 'green', 'yellow', 'black']
+						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
 					chart: {
 						type: 'config',
-						direction: 'vertical'
+						direction: 'vertical',
+						scale: {
+							min: 0,
+							max: 100,
+							step: 10
+						}
 					},
 					bar: {
 						type: 'config',

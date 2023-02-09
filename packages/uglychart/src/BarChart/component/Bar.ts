@@ -14,7 +14,7 @@ import {
   ThemeProvider,
 } from "../provider"
 
-type BarProps = {
+export type BarProps = {
   backgroundColor: string
   index: number
   ratio: number

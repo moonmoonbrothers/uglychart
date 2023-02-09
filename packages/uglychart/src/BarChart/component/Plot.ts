@@ -11,10 +11,12 @@ import {
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import { Scale } from "../types"
 import BarGroup from "./BarGroup"
 
 export type PlotProps = {
   direction: "vertical" | "horizontal"
+  scale: Scale
 }
 
 class Plot extends ComponentWidget {
@@ -48,6 +50,7 @@ class Plot extends ComponentWidget {
               Flexible({
                 child: BarGroup({
                   index,
+                  scale: this.props.scale,
                   label,
                   direction: this.props.direction,
                 }),

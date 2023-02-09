@@ -10,18 +10,15 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import {
-  CustomProvider,
-  DataProvider,
-  ScaleProvider,
-  ThemeProvider,
-} from "../provider"
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+import { Scale } from "../util"
 import Bar from "./Bar"
 
-type BarGroupProps = {
+export type BarGroupProps = {
   direction: "vertical" | "horizontal"
   index: number
   label: string
+  scale: Scale
 }
 
 class BarGroup extends ComponentWidget {
@@ -32,7 +29,6 @@ class BarGroup extends ComponentWidget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
     const data = DataProvider.of(context)
-    const scale = ScaleProvider.of(context)
     const { index, label } = this.props
 
     if (barGroup.type === "custom") {
@@ -42,6 +38,7 @@ class BarGroup extends ComponentWidget {
     const { barBackgroundColors: backgroundColors = ["gray"] } = barGroup
     const { datasets, labels } = data
 
+    const { scale } = this.props
     const getRatio = (value: number) => {
       return (value - scale.min) / (scale.max - scale.min)
     }

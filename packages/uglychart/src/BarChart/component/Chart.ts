@@ -11,35 +11,54 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import {
-  CustomProvider,
-  DataProvider,
-  ScaleProvider,
-  ThemeProvider,
-} from "../provider"
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import XAxis from "./XAxis"
 import YAxis from "./YAxis"
 import Plot from "./Plot"
+import { getScale, getValueEdge, Scale } from "../util"
 
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
-    const { labels } = DataProvider.of(context)
+    const { labels, datasets } = DataProvider.of(context)
     const { chart, additions } = CustomProvider.of(context)
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme })
     }
 
-    const scale = ScaleProvider.of(context)
-    const { step, min, max } = scale
+    /* scale 구하기 */
+    const valueEdge = getValueEdge(datasets.map(({ data }) => data))
 
+    const roughEdge = {
+      min: valueEdge.min > 0 ? 0 : valueEdge.min,
+      max: valueEdge.max,
+    }
+    const roughStepCount = 10 /* chart size에 따라 보정 필요!*/
+
+    const roughScale: Scale = {
+      min: valueEdge.min > 0 ? 0 : valueEdge.min,
+      max: valueEdge.max,
+      step: (roughEdge.max - roughEdge.min) / roughStepCount,
+    }
+
+    const suggestedScale = getScale(roughScale)
+
+    const { direction = "horizontal", scale: scaleOption } = chart
+
+    const scale: Scale = {
+      min: scaleOption?.min ?? suggestedScale.min,
+      max: scaleOption?.max ?? suggestedScale.max,
+      step: scaleOption?.step ?? suggestedScale.step,
+    }
+
+    const { min, max, step } = scale
+
+    /* label 생성 */
     const valueLabels = Array.from(
       { length: Math.floor((max - min) / step) + 1 },
       (_, i) => `${step * i + min}`
     )
     const indexLabels = labels
-
-    const { direction = "horizontal" } = chart
 
     const [xLabels, yLabels] =
       direction === "horizontal"
@@ -60,7 +79,7 @@ class Chart extends ComponentWidget {
                         labels: yLabels,
                         type: direction === "horizontal" ? "index" : "value",
                       }),
-                      Plot({ direction }),
+                      Plot({ direction, scale }),
                     ],
                     [
                       null,

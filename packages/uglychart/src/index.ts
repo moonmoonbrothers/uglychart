@@ -1,4 +1,4 @@
-import BarChart from "./BarChart/BarChart"
+import BarChart from "./BarChart/BaseBarChart"
 
 export * from "./BarChart/component"
 export * from "./BarChart/provider"

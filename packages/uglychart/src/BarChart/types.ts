@@ -5,10 +5,15 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import { BarProps } from "./component/Bar"
+import { BarGroupProps } from "./component/BarGroup"
 import { PlotProps } from "./component/Plot"
 import { XAxisProps } from "./component/XAxis"
 import { YAxisProps } from "./component/YAxis"
-import { Scale } from "./util/getScale"
+import { YAxisLabelProps } from "./component/YAxisLabel"
+import { Scale as _Scale } from "./util/getScale"
+
+export type Scale = _Scale
 
 export type BarChartProps = {
   data: Data
@@ -71,15 +76,7 @@ type BarGroup =
     }
   | CustomWidget<
       {
-        Bar: (props: {
-          color: string
-          index: number
-          minValue: number
-          maxValue: number
-          value: number
-          label: string
-          legend: string
-        }) => Widget
+        Bar: (props: BarProps) => Widget
       },
       { index: number; label: string }
     >
@@ -145,7 +142,7 @@ export type XAxis =
 export type YAxis =
   | Axis
   | CustomWidget<
-      { YAxisLabel: (props: { index: number; text: number }) => Widget },
+      { YAxisLabel: (props: YAxisLabelProps) => Widget },
       { data: Data }
     >
 
@@ -199,7 +196,9 @@ type Plot =
       }
     }
   | CustomWidget<
-      { BarGroup: (props: { index: number; label: string }) => Widget },
+      {
+        BarGroup: (props: BarGroupProps) => Widget
+      },
       { data: Data }
     >
 
@@ -208,6 +207,7 @@ export type Chart =
       type: "config"
       width?: number
       height?: number
+      scale?: Partial<Scale>
       direction?: "horizontal" | "vertical"
       alignment?: Alignment
     }
