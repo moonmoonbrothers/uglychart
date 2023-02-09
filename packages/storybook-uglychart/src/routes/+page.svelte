@@ -20,8 +20,7 @@
 						barBackgroundColors: ['blue', 'green', 'yellow']
 					},
 					chart: {
-						type: 'config',
-						direction: 'vertical'
+						type: 'config'
 					},
 					bar: {
 						type: 'config',

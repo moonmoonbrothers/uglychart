@@ -5,6 +5,7 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import { PlotProps } from "./component/Plot"
 import { XAxisProps } from "./component/XAxis"
 import { YAxisProps } from "./component/YAxis"
 import { Scale } from "./util/getScale"
@@ -211,7 +212,7 @@ export type Chart =
       alignment?: Alignment
     }
   | CustomWidget<{
-      Plot: () => Widget
+      Plot: (props: PlotProps) => Widget
       XAxis: (props: XAxisProps) => Widget
       YAxis: (props: YAxisProps) => Widget
     }>

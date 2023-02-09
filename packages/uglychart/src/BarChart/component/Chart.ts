@@ -39,12 +39,12 @@ class Chart extends ComponentWidget {
     )
     const indexLabels = labels
 
+    const { direction = "horizontal" } = chart
+
     const [xLabels, yLabels] =
-      chart.direction === "horizontal"
+      direction === "horizontal"
         ? [valueLabels, indexLabels]
         : [indexLabels, valueLabels]
-
-    const { direction = "horizontal" } = chart
 
     return Align({
       alignment: Alignment.topCenter,
@@ -55,7 +55,7 @@ class Chart extends ComponentWidget {
               child: IntrinsicWidth({
                 child: Grid({
                   childrenByRow: [
-                    [YAxis({ labels: yLabels }), Plot()],
+                    [YAxis({ labels: yLabels }), Plot({ direction })],
                     [null, XAxis({ labels: xLabels })],
                   ],
                   templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
