@@ -1,6 +1,7 @@
 import {
   ComponentWidget,
   Container,
+  EdgeInsets,
   Padding,
   Text,
   Widget,
@@ -29,7 +30,11 @@ class YAxisLabel extends ComponentWidget {
 
     return Padding({
       padding: margin,
-      child: Text(text, { ...theme.text, ...font }),
+      child: Container({
+        height: 0,
+        padding: EdgeInsets.only({ top: 1 }), //숫자 기준 가운데 정렬
+        child: Text(text, { ...theme.text, ...font, textBaseline: "central" }),
+      }),
     })
   }
 }

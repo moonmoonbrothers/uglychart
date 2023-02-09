@@ -14,7 +14,7 @@ import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import BarGroup from "./BarGroup"
 
 export type PlotProps = {
-  direction?: "vertical" | "horizontal"
+  direction: "vertical" | "horizontal"
 }
 
 class Plot extends ComponentWidget {
@@ -45,7 +45,11 @@ class Plot extends ComponentWidget {
           Flexible({ flex: 0.5 }),
           ...labels.map((label, index) =>
             Flexible({
-              child: BarGroup({ index, label }),
+              child: BarGroup({
+                index,
+                label,
+                direction: this.props.direction,
+              }),
             })
           ),
           Flexible({ flex: 0.5 }),

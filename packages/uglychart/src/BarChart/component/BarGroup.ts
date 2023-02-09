@@ -15,6 +15,7 @@ import {
 import Bar from "./Bar"
 
 type BarGroupProps = {
+  direction: 'vertical' | 'horizontal',
   index: number
   label: string
 }

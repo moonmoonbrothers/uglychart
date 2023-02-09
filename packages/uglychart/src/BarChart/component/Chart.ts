@@ -55,8 +55,20 @@ class Chart extends ComponentWidget {
               child: IntrinsicWidth({
                 child: Grid({
                   childrenByRow: [
-                    [YAxis({ labels: yLabels }), Plot({ direction })],
-                    [null, XAxis({ labels: xLabels })],
+                    [
+                      YAxis({
+                        labels: yLabels,
+                        type: direction === "horizontal" ? "index" : "value",
+                      }),
+                      Plot({ direction }),
+                    ],
+                    [
+                      null,
+                      XAxis({
+                        labels: xLabels,
+                        type: direction === "vertical" ? "index" : "value",
+                      }),
+                    ],
                   ],
                   templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
                   templateRows: [Grid.Fr(1), Grid.ContentFit()],

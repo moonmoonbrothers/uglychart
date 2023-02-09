@@ -1,7 +1,10 @@
 import {
+  Align,
+  Alignment,
   Column,
   ComponentWidget,
   Container,
+  Flexible,
   IntrinsicHeight,
   Row,
   Widget,
@@ -17,6 +20,7 @@ import {
 import XAxisLabel from "./XAxisLabel"
 
 export type XAxisProps = {
+  type: "index" | "value"
   labels: string[]
 }
 
@@ -34,30 +38,67 @@ class XAxis extends ComponentWidget {
       return xAxis.Custom({ XAxisLabel }, { theme, data })
     }
 
-    return Column({
-      children: [
-        Row({
-          mainAxisAlignment: "spaceBetween",
-          crossAxisAlignment: "end",
-          children: this.props.labels.map((label, index) =>
-            IntrinsicHeight({
-              child: Column({
-                children: [
-                  /* tick */
-                  Container({
-                    width: 2,
-                    height: 10,
-                    color: "black",
+    if (this.props.type === "index") {
+      return Column({
+        children: [
+          Row({
+            mainAxisAlignment: "spaceBetween",
+            crossAxisAlignment: "end",
+            children: [
+              Flexible({ flex: 0.5 }),
+              ...this.props.labels.map((label, index) =>
+                Flexible({
+                  child: Align({
+                    alignment: Alignment.topCenter,
+                    child: IntrinsicHeight({
+                      child: Column({
+                        children: [
+                          /* tick */
+                          Container({
+                            width: 2,
+                            height: 10,
+                            color: "black",
+                          }),
+                          XAxisLabel({ text: `${label}`, index }),
+                        ],
+                      }),
+                    }),
                   }),
-                  XAxisLabel({ text: `${label}`, index }),
-                  SizeBox({ width: 2 }),
-                ],
-              }),
-            })
-          ),
-        }),
-      ],
-    })
+                })
+              ),
+              Flexible({ flex: 0.5 }),
+            ],
+          }),
+        ],
+      })
+    } else {
+      return Column({
+        children: [
+          Row({
+            mainAxisAlignment: "spaceBetween",
+            crossAxisAlignment: "end",
+            children: [
+              ...this.props.labels.map((label, index) =>
+                IntrinsicHeight({
+                  child: Column({
+                    children: [
+                      /* tick */
+                      Container({
+                        width: 2,
+                        height: 10,
+                        color: "black",
+                      }),
+                      XAxisLabel({ text: `${label}`, index }),
+                      SizeBox({ width: 2 }), //이건 뭐지??
+                    ],
+                  }),
+                })
+              ),
+            ],
+          }),
+        ],
+      })
+    }
   }
 }
 

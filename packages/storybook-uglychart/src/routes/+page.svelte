@@ -1,11 +1,27 @@
 <script lang="ts">
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
-	import { EdgeInsets, Text, Container } from '@moonmoonbrothers/flutterjs';
+	import { EdgeInsets, Text, Container, Row } from '@moonmoonbrothers/flutterjs';
 	import { BarChart } from '@moonmoonbrothers/uglychart';
 </script>
 
 <div class="container">
 	<div class="chart">
+		<!-- <Widget
+			height="400px"
+			widget={Container({
+				margin: EdgeInsets.only({ top: 50 }),
+				color: 'lightblue',
+				child: Row({
+					children: [
+						Container({
+							color: ' red',
+							child: Text('1234가', { style: { fontSize: '50px' }, textBaseline: 'central' })
+						}),
+						Container({ height: 2, color: 'red', width: 10 })
+					]
+				})
+			})}
+		/> -->
 		<Widget
 			width=""
 			height="400px"
@@ -20,7 +36,8 @@
 						barBackgroundColors: ['blue', 'green', 'yellow']
 					},
 					chart: {
-						type: 'config'
+						type: 'config',
+						direction: 'vertical'
 					},
 					bar: {
 						type: 'config',
