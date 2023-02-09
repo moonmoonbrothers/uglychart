@@ -19,6 +19,7 @@ type BarProps = {
   ratio: number
   label: string
   legend: string
+  direction: "horizontal" | "vertical"
 }
 export class Bar extends ComponentWidget {
   constructor(private props: BarProps) {
@@ -51,19 +52,35 @@ export class Bar extends ComponentWidget {
 
     //   const horizontal = xAxis.axis === "data"
 
-    return Row({
-      children: [
-        Flexible({
-          flex: this.props.ratio,
-          child: Container({
-            color,
-            width: Infinity,
-            height: thickness,
+    if (this.props.direction === "horizontal") {
+      return Row({
+        children: [
+          Flexible({
+            flex: this.props.ratio,
+            child: Container({
+              color,
+              width: Infinity,
+              height: thickness,
+            }),
           }),
-        }),
-        Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
-      ],
-    })
+          Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
+        ],
+      })
+    } else {
+      return Column({
+        children: [
+          Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
+          Flexible({
+            flex: this.props.ratio,
+            child: Container({
+              color,
+              width: thickness,
+              height: Infinity,
+            }),
+          }),
+        ],
+      })
+    }
   }
 }
 

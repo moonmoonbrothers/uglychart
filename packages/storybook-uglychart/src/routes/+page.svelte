@@ -24,7 +24,7 @@
 		/> -->
 		<Widget
 			width=""
-			height="400px"
+			height="700px"
 			widget={BarChart({
 				scale: {
 					max: 100
@@ -33,11 +33,11 @@
 					barGroup: {
 						kind: 'series',
 						type: 'config',
-						barBackgroundColors: ['blue', 'green', 'yellow']
+						barBackgroundColors: ['blue', 'green', 'yellow', 'black']
 					},
 					chart: {
-						type: 'config',
-						direction: 'vertical'
+						type: 'config'
+						// direction: 'vertical'
 					},
 					bar: {
 						type: 'config',
@@ -84,7 +84,15 @@
 						},
 						{
 							legend: 'B',
-							data: [60, 20.5, 50.2, 22.5, 10]
+							data: [60, 20.5, 20.2, 22.5, 10]
+						},
+						{
+							legend: 'C',
+							data: [60, 20.5, 0.2, 22.5, 10].reverse()
+						},
+						{
+							legend: 'D',
+							data: [30, 40.5, 12, 30.5, 40].reverse()
 						}
 					]
 				}

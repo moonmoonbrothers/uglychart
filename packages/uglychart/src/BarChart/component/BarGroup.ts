@@ -2,6 +2,7 @@ import {
   Column,
   ComponentWidget,
   Container,
+  EdgeInsets,
   Row,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
@@ -15,7 +16,7 @@ import {
 import Bar from "./Bar"
 
 type BarGroupProps = {
-  direction: 'vertical' | 'horizontal',
+  direction: "vertical" | "horizontal"
   index: number
   label: string
 }
@@ -44,10 +45,16 @@ class BarGroup extends ComponentWidget {
 
     return Container({
       width: Infinity,
-      child: Column({
+      padding: EdgeInsets.symmetric(
+        this.props.direction === "horizontal"
+          ? { vertical: 10 }
+          : { horizontal: 10 }
+      ),
+      child: (this.props.direction === "horizontal" ? Column : Row)({
         mainAxisAlignment: "spaceAround",
         children: datasets.map(({ data, legend }, index) =>
           Bar({
+            direction: this.props.direction,
             backgroundColor: backgroundColors[index % backgroundColors.length],
             index,
             label: labels[this.props.index],

@@ -45,21 +45,23 @@ class YAxis extends ComponentWidget {
               mainAxisAlignment: "spaceBetween",
               crossAxisAlignment: "end",
               children: [
-                ...this.props.labels.map((label, index) =>
-                  IntrinsicWidth({
-                    child: Row({
-                      children: [
-                        YAxisLabel({ text: label, index }),
-                        SizeBox({ width: 2 }),
-                        Container({
-                          width: 10,
-                          height: 2,
-                          color: "black",
-                        }),
-                      ],
-                    }),
-                  })
-                ),
+                ...this.props.labels
+                  .map((label, index) =>
+                    IntrinsicWidth({
+                      child: Row({
+                        children: [
+                          YAxisLabel({ text: label, index }),
+                          SizeBox({ width: 2 }),
+                          Container({
+                            width: 10,
+                            height: 2,
+                            color: "black",
+                          }),
+                        ],
+                      }),
+                    })
+                  )
+                  .reverse(),
               ],
             }),
           }),
@@ -67,12 +69,12 @@ class YAxis extends ComponentWidget {
       })
     } else {
       return Row({
-        mainAxisAlignment: "spaceBetween",
         children: [
           Padding({
             padding: EdgeInsets.symmetric({ vertical: 2 }),
             child: Column({
               children: [
+                Flexible({ flex: 0.5 }),
                 ...this.props.labels.map((label, index) =>
                   Flexible({
                     child: Align({
@@ -93,6 +95,7 @@ class YAxis extends ComponentWidget {
                     }),
                   })
                 ),
+                Flexible({ flex: 0.5 }),
               ],
             }),
           }),
