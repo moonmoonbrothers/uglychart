@@ -3,6 +3,9 @@ import {
   ComponentWidget,
   Container,
   EdgeInsets,
+  Expanded,
+  Flexible,
+  Padding,
   Row,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
@@ -45,23 +48,29 @@ class BarGroup extends ComponentWidget {
 
     return Container({
       width: Infinity,
-      padding: EdgeInsets.symmetric(
-        this.props.direction === "horizontal"
-          ? { vertical: 10 }
-          : { horizontal: 10 }
-      ),
       child: (this.props.direction === "horizontal" ? Column : Row)({
-        mainAxisAlignment: "spaceAround",
-        children: datasets.map(({ data, legend }, index) =>
-          Bar({
-            direction: this.props.direction,
-            backgroundColor: backgroundColors[index % backgroundColors.length],
-            index,
-            label: labels[this.props.index],
-            legend,
-            ratio: getRatio(data[this.props.index]),
-          })
-        ),
+        children: [
+          Expanded(),
+          ...datasets.map(({ data, legend }, index) =>
+            Padding({
+              padding: EdgeInsets.symmetric(
+                this.props.direction === "vertical"
+                  ? { horizontal: 2 }
+                  : { vertical: 2 }
+              ),
+              child: Bar({
+                direction: this.props.direction,
+                backgroundColor:
+                  backgroundColors[index % backgroundColors.length],
+                index,
+                label: labels[this.props.index],
+                legend,
+                ratio: getRatio(data[this.props.index]),
+              }),
+            })
+          ),
+          Expanded(),
+        ],
       }),
     })
   }

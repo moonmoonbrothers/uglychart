@@ -2,6 +2,7 @@ import {
   Column,
   ComponentWidget,
   Container,
+  EdgeInsets,
   Flexible,
   Row,
   Widget,

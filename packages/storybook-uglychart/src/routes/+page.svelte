@@ -2,6 +2,25 @@
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
 	import { EdgeInsets, Text, Container, Row } from '@moonmoonbrothers/flutterjs';
 	import { BarChart } from '@moonmoonbrothers/uglychart';
+
+	const data = {
+		title: 'Title',
+		labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
+		datasets: [
+			{
+				legend: 'A',
+				data: [30, 40.5, 50.12, 30.5, 40]
+			},
+			{
+				legend: 'B',
+				data: [60, 20.5, 20.2, 22.5, 10]
+			},
+			{
+				legend: 'C',
+				data: [60, 20.5, 29, 22.5, 10].reverse()
+			}
+		]
+	};
 </script>
 
 <div class="container">
@@ -24,7 +43,7 @@
 		/> -->
 		<Widget
 			width=""
-			height="700px"
+			height="500px"
 			widget={BarChart({
 				scale: {
 					max: 100
@@ -37,7 +56,6 @@
 					},
 					chart: {
 						type: 'config'
-						// direction: 'vertical'
 					},
 					bar: {
 						type: 'config',
@@ -74,28 +92,63 @@
 						}
 					}
 				},
-				data: {
-					title: 'Title',
-					labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
-					datasets: [
+				data
+			})}
+		/>
+
+		<Widget
+			width=""
+			height="400px"
+			widget={BarChart({
+				scale: {
+					max: 100
+				},
+				custom: {
+					barGroup: {
+						kind: 'series',
+						type: 'config',
+						barBackgroundColors: ['blue', 'green', 'yellow', 'black']
+					},
+					chart: {
+						type: 'config',
+						direction: 'vertical'
+					},
+					bar: {
+						type: 'config',
+						thickness: 15
+					},
+					layout: {
+						type: 'config',
+						padding: EdgeInsets.symmetric({ horizontal: 40, vertical: 30 })
+					},
+					additions: [
 						{
-							legend: 'A',
-							data: [30, 40.5, 50.12, 30.5, 40]
+							position: { top: -10, left: -35 },
+							Custom: () => Text('%ile')
 						},
 						{
-							legend: 'B',
-							data: [60, 20.5, 20.2, 22.5, 10]
-						},
-						{
-							legend: 'C',
-							data: [60, 20.5, 0.2, 22.5, 10].reverse()
-						},
-						{
-							legend: 'D',
-							data: [30, 40.5, 12, 30.5, 40].reverse()
+							position: { bottom: -25, left: 20 },
+							Custom: () =>
+								Container({
+									color: 'black',
+									padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
+									child: Text('made by moon', {
+										style: { fontSize: '12px', fontColor: 'white' }
+									})
+								})
 						}
-					]
-				}
+					],
+					title: {
+						type: 'config',
+						alignment: 'center',
+						font: {
+							style: {
+								fontSize: '40px'
+							}
+						}
+					}
+				},
+				data
 			})}
 		/>
 	</div>

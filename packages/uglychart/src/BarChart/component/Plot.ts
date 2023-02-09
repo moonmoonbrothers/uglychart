@@ -43,15 +43,17 @@ class Plot extends ComponentWidget {
       child: (this.props.direction === "horizontal" ? Column : Row)({
         children: [
           Flexible({ flex: 0.5 }),
-          ...labels.map((label, index) =>
-            Flexible({
-              child: BarGroup({
-                index,
-                label,
-                direction: this.props.direction,
+          ...labels
+            .map((label, index) => [
+              Flexible({
+                child: BarGroup({
+                  index,
+                  label,
+                  direction: this.props.direction,
+                }),
               }),
-            })
-          ),
+            ])
+            .flat(),
           Flexible({ flex: 0.5 }),
         ],
       }),
