@@ -1,4 +1,6 @@
 import {
+  Align,
+  Alignment,
   Column,
   ComponentWidget,
   Expanded,
@@ -9,29 +11,32 @@ import {
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import BarChart from "../BarChart"
-import { BarChartProps, Scale } from "../BarChart/types"
+import { BarProps } from "../BarChart/component/Bar"
+import { BarGroupProps } from "../BarChart/component/BarGroup"
+import { BarChartProps, Custom, CustomWidget, Scale } from "../BarChart/types"
 import { getScale } from "../BarChart/util"
 import { getStackValueEdge } from "./util/getStackValueEdge"
 
-export type StackBarChartProps = BarChartProps & {
-  custom?: {
+export type StackBarChartProps = Omit<BarChartProps, "custom"> & {
+  custom?: Omit<Custom, "barGroup"> & {
     barGroup:
       | {
           type: "config"
-          asdf?: string[]
+          barBackgroundColors?: string[]
+          barBorderColors?: string[]
         }
-      | {
-          type: "custom"
-          Custom: () => Widget
-        }
+      | CustomWidget<
+          {
+            Bar: (props: BarProps) => Widget
+          },
+          BarGroupProps
+        >
   }
 }
 
 export class StackedBarChart extends ComponentWidget {
   constructor(private props: StackBarChartProps) {
     super()
-    if (props.custom?.barGroup.type === "config") {
-    }
   }
 
   build(context: BuildContext): Widget {
@@ -65,151 +70,173 @@ export class StackedBarChart extends ComponentWidget {
       step: scaleOption?.step ?? suggestedScale.step,
     }
 
+    const { barGroup: barGroupProps } = this.props.custom ?? {}
+
     return BarChart({
       ...this.props,
       custom: {
         ...this.props.custom,
-        chart: this.props.custom?.chart ?? {
-          type: "config",
-          scale,
-        },
-        barGroup: {
-          type: "custom",
-          Custom({ Bar }, { data, theme, scale, direction, index, label }) {
-            const backgroundColors = ["grey"]
-            const { datasets } = data
-
-            const barGroupRatio = {
-              negative:
-                scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
-              positive:
-                scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
-            }
-            type AreaType = "negative" | "positive"
-
-            const BarGroupContainer = direction === "horizontal" ? Row : Column
-            const BarGroup = ({
-              type,
-              children,
-            }: {
-              type: AreaType
-              children: Widget[]
-            }) => {
-              const flex = barGroupRatio[type]
-              if (flex === 0) return SizeBox({ width: 0, height: 0 })
-
-              return Flexible({
-                flex,
-                child: (direction === "horizontal" ? Row : Column)({
-                  children,
-                }),
-              })
-            }
-
-            const areas: AreaType[] =
-              direction === "horizontal"
-                ? ["negative", "positive"]
-                : ["positive", "negative"]
-
-            const barRatio = {
-              negative: (value: number) => {
-                // this must not be happened!
-                if (value > 0 || scale.min > 0) return 0
-
-                const max = -1 * scale.min
-                const min = Math.min(-1 * scale.max, 0)
-
-                return (-1 * value - min) / (max - min)
+        chart:
+          this.props.custom?.chart?.type === "custom"
+            ? this.props.custom.chart
+            : {
+                type: "config",
+                scale,
+                ...this.props.custom?.chart,
               },
-              positive: (value: number) => {
-                // this must not be happened!
-                if (value < 0 || scale.max < 0) return 0
+        barGroup:
+          barGroupProps?.type === "custom"
+            ? barGroupProps
+            : {
+                type: "custom",
+                Custom(
+                  { Bar },
+                  { data, theme, scale, direction, index, label }
+                ) {
+                  const { barBackgroundColors = ["grey"] } = barGroupProps ?? {}
+                  const { datasets } = data
 
-                const max = scale.max
-                const min = Math.min(scale.min, 0)
+                  const barGroupRatio = {
+                    negative:
+                      scale.min > 0
+                        ? 0
+                        : (0 - scale.min) / (scale.max - scale.min),
+                    positive:
+                      scale.max < 0
+                        ? 0
+                        : (scale.max - 0) / (scale.max - scale.min),
+                  }
+                  type AreaType = "negative" | "positive"
 
-                return (value - min) / (max - min)
-              },
-            }
+                  const areas: AreaType[] =
+                    direction === "horizontal"
+                      ? ["negative", "positive"]
+                      : ["positive", "negative"]
 
-            const barData = {
-              negative: datasets.map(({ data, legend }) => ({
-                legend,
-                value: data[index] > 0 ? 0 : data[index],
-              })),
-              positive: datasets.map(({ data, legend }) => ({
-                legend,
-                value: data[index] > 0 ? 0 : data[index],
-              })),
-            }
+                  const barRatio = {
+                    negative: (value: number) => {
+                      // this must not be happened!
+                      if (value > 0 || scale.min > 0) return 0
 
-            const StackedBar = ({
-              index,
-              legend,
-            }: {
-              index: number
-              legend: string
-            }) =>
-              Bar({
-                direction,
-                backgroundColor:
-                  backgroundColors[index % backgroundColors.length],
-                index,
-                label,
-                legend,
-                ratio: 1,
-              })
+                      const max = -1 * scale.min
+                      const min = Math.max(-1 * scale.max, 0)
 
-            const StackedBars = ({ type }: { type: AreaType }) => {
-              const total = barData[type]
-                .map(({ value }) => value)
-                .reduce((acc, value) => acc + value, 0)
-              const spaceRatio = 1 - barRatio[type](total)
+                      return (-1 * value - min) / (max - min)
+                    },
+                    positive: (value: number) => {
+                      // this must not be happened!
+                      if (value < 0 || scale.max < 0) return 0
 
-              const bars = [
-                ...barData[type].map(({ value, legend }, index) =>
-                  Flexible({
-                    flex: barRatio[type](value),
-                    child: StackedBar({
-                      index,
+                      const max = scale.max
+                      const min = Math.max(scale.min, 0)
+
+                      return (value - min) / (max - min)
+                    },
+                  }
+
+                  const barData = {
+                    negative: datasets.map(({ data, legend }) => ({
                       legend,
-                    }),
-                  })
-                ),
-                spaceRatio
-                  ? Expanded({ flex: spaceRatio })
-                  : SizeBox({ width: 0, height: 0 }),
-              ]
-              return type === "positive" ? bars : bars.reverse()
-            }
+                      value: data[index] > 0 ? 0 : data[index],
+                    })),
+                    positive: datasets.map(({ data, legend }) => ({
+                      legend,
+                      value: data[index] < 0 ? 0 : data[index],
+                    })),
+                  }
 
-            return BarGroupContainer({
-              children: areas.map((type) =>
-                BarGroup({
-                  type,
-                  children: [
-                    type === "negative"
-                      ? Expanded({
-                          flex: barRatio[type](
-                            barData[type]
-                              .map(({}) => 1)
-                              .reduce((a, b) => a + b, 0)
-                          ),
-                        })
-                      : SizeBox({ width: 0, height: 0 }),
-                    ...StackedBars({ type }),
-                    type === "positive"
-                      ? Expanded({})
-                      : SizeBox({ width: 0, height: 0 }),
-                  ],
-                })
-              ),
-            })
-          },
-        },
+                  const BarGroupContainer = ({
+                    children,
+                  }: {
+                    children: Widget[]
+                  }) =>
+                    Align({
+                      alignment: Alignment.center,
+                      child:
+                        direction === "horizontal"
+                          ? Row({ children })
+                          : Column({ children }),
+                    })
+                  const BarGroup = ({
+                    type,
+                    children,
+                  }: {
+                    type: AreaType
+                    children: Widget[]
+                  }) => {
+                    const flex = barGroupRatio[type]
+                    if (flex === 0) return SizeBox({ width: 0, height: 0 })
+
+                    return Flexible({
+                      flex,
+                      child: (direction === "horizontal" ? Row : Column)({
+                        children,
+                      }),
+                    })
+                  }
+
+                  const StackedBar = ({
+                    index,
+                    legend,
+                  }: {
+                    index: number
+                    legend: string
+                  }) =>
+                    Bar({
+                      direction,
+                      backgroundColor:
+                        barBackgroundColors[index % barBackgroundColors.length],
+                      index,
+                      label,
+                      legend,
+                      ratio: 1,
+                    })
+
+                  const StackedBars = ({ type }: { type: AreaType }) => {
+                    const total = barData[type]
+                      .map(({ value }) => value)
+                      .reduce((acc, value) => acc + value, 0)
+
+                    const spaceRatio = 1 - barRatio[type](total)
+
+                    const bars = [
+                      ...barData[type].map(({ value, legend }, index) =>
+                        barRatio[type](value)
+                          ? Flexible({
+                              flex: barRatio[type](value),
+                              child: StackedBar({
+                                index,
+                                legend,
+                              }),
+                            })
+                          : SizeBox({ width: 0, height: 0 })
+                      ),
+                      spaceRatio
+                        ? Expanded({
+                            flex: spaceRatio,
+                          })
+                        : SizeBox({ width: 0, height: 0 }),
+                    ]
+                    return (type === "positive" &&
+                      direction === "horizontal") ||
+                      (type === "negative" && direction === "vertical")
+                      ? bars
+                      : bars.reverse()
+                  }
+
+                  return BarGroupContainer({
+                    children: areas.map((type) =>
+                      BarGroup({
+                        type,
+                        children: StackedBars({ type }),
+                      })
+                    ),
+                  })
+                },
+              },
       },
     })
   }
 }
 
-export default StackedBarChart
+export default (props: StackBarChartProps) => new StackedBarChart(props)

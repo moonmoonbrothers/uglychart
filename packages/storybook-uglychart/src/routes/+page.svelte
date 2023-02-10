@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
 	import { EdgeInsets, Text, Container, Row } from '@moonmoonbrothers/flutterjs';
-	import { BarChart , StackedBarChart } from '@moonmoonbrothers/uglychart';
+	import { BarChart, StackedBarChart } from '@moonmoonbrothers/uglychart';
 
 	const data = {
 		title: 'Title',
@@ -9,11 +9,15 @@
 		datasets: [
 			{
 				legend: 'A',
-				data: [30, -40.5, 50.12, -30.5, 40].map((d) => -d)
+				data: [30, 40.5, 50.12, 30.5, 40]
 			},
 			{
 				legend: 'B',
-				data: [-60, 20.5, 20.2, 22.5, 10].map((d) => -d)
+				data: [60, 20.5, 20.2, 22.5, 10]
+			},
+			{
+				legend: 'C',
+				data: [6, 10.5, 20.2, 12.5, 1]
 			}
 		]
 	};
@@ -40,10 +44,9 @@
 		<Widget
 			width=""
 			height="500px"
-			widget={BarChart({
+			widget={StackedBarChart({
 				custom: {
 					barGroup: {
-						kind: 'series',
 						type: 'config',
 						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
@@ -98,8 +101,8 @@
 				},
 				custom: {
 					barGroup: {
-						kind: 'series',
 						type: 'config',
+						gap: 2,
 						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
 					chart: {

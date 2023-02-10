@@ -49,7 +49,10 @@ export type Data = {
   }[]
 }
 
-type CustomWidget<T extends string | {} | Record<string, any>, R = {}> = {
+export type CustomWidget<
+  T extends string | {} | Record<string, any>,
+  R = {}
+> = {
   type: "custom"
   Custom: (
     child: T extends string
@@ -63,16 +66,10 @@ type CustomWidget<T extends string | {} | Record<string, any>, R = {}> = {
 
 type BarGroup =
   | {
-      kind: "series"
       type: "config"
       barBackgroundColors?: string[]
       barBorderColors?: string[]
-    }
-  | {
-      kind: "stack"
-      type: "config"
-      barBackgroundColors?: string[]
-      barBorderColors?: string[]
+      gap?: number
     }
   | CustomWidget<
       {

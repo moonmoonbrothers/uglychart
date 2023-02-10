@@ -63,7 +63,6 @@ export class Bar extends ComponentWidget {
               flex: this.props.ratio,
               child: Container({
                 color,
-                width: Infinity,
                 height: thickness,
               }),
             })
@@ -86,7 +85,6 @@ export class Bar extends ComponentWidget {
               child: Container({
                 color,
                 width: thickness,
-                height: Infinity,
               }),
             })
           : Container({ width: thickness, height: Infinity }),

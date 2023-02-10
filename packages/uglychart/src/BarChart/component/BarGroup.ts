@@ -28,14 +28,15 @@ class BarGroup extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
-    const {  scale, direction } = this.props
+    const { scale, direction } = this.props
     const data = DataProvider.of(context)
 
     if (barGroup.type === "custom") {
       return barGroup.Custom({ Bar }, { theme, data, ...this.props })
     }
 
-    const { barBackgroundColors: backgroundColors = ["gray"] } = barGroup
+    const { barBackgroundColors: backgroundColors = ["gray"], gap = 2 } =
+      barGroup
     const { datasets } = data
 
     const barGroupRatio = {
@@ -84,7 +85,9 @@ class BarGroup extends ComponentWidget {
     }
 
     const barGap = EdgeInsets.symmetric(
-      direction === "horizontal" ? { vertical: 2 } : { horizontal: 2 }
+      direction === "horizontal"
+        ? { vertical: gap / 2 }
+        : { horizontal: gap / 2 }
     )
 
     const areas: AreaType[] =

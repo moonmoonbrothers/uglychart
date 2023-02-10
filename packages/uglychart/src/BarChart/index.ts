@@ -1,8 +1,4 @@
-import {
-  ThemeProvider,
-  DataProvider,
-  CustomProvider,
-} from "./provider"
+import { ThemeProvider, DataProvider, CustomProvider } from "./provider"
 import { BarChartProps, BarChartType, XAxis, YAxis } from "./types"
 import Layout from "./component/Layout"
 import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs"
@@ -21,7 +17,6 @@ class BarChart extends ComponentWidget {
       bar = { type: "config" as const },
       barGroup = {
         type: "config" as const,
-        kind: "series" as const,
       },
       xAxis = { type: "config" as const },
       yAxis = { type: "config" as const },
