@@ -9,7 +9,9 @@ import {
   Row,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
+import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
+import { Utils } from "../../utils"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import { Scale } from "../util"
 import Bar from "./Bar"
@@ -42,32 +44,158 @@ class BarGroup extends ComponentWidget {
     const getRatio = (value: number) => {
       return (value - scale.min) / (scale.max - scale.min)
     }
+    const barGroupRatio = {
+      negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
+      positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
+    }
 
-    return Container({
-      width: Infinity,
-      child: (this.props.direction === "horizontal" ? Column : Row)({
+    const barRatio = {
+      negative: (value: number) => {
+        if (value > 0 || scale.min > 0) return 0
+
+        const max = -1 * scale.min
+        const min = Math.min(-1 * scale.max, 0)
+
+        return (-1 * value - min) / (max - min)
+      },
+      positive: (value: number) => {
+        if (value < 0 || scale.max < 0) return 0
+
+        const max = scale.max
+        const min = Math.min(scale.min, 0)
+
+        return (value - min) / (max - min)
+      },
+    }
+
+    if (this.props.direction === "horizontal") {
+      return Row({
         children: [
-          Expanded(),
-          ...datasets.map(({ data, legend }, index) =>
-            Padding({
-              padding: EdgeInsets.symmetric(
-                this.props.direction === "vertical"
-                  ? { horizontal: 2 }
-                  : { vertical: 2 }
-              ),
-              child: Bar({
-                direction: this.props.direction,
-                backgroundColor:
-                  backgroundColors[index % backgroundColors.length],
-                index,
-                label: labels[this.props.index],
-                legend,
-                ratio: getRatio(data[this.props.index]),
-              }),
-            })
-          ),
-          Expanded(),
+          barGroupRatio.negative
+            ? Flexible({
+                flex: barGroupRatio.negative,
+                child: Column({
+                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
+                  children: [
+                    Expanded(),
+                    ...datasets.map(({ data, legend }, index) =>
+                      this.Bar({
+                        legend: legend,
+                        index,
+                        reverse: true,
+                        ratio: barRatio.negative(data[this.props.index]),
+                        backgroundColor:
+                          backgroundColors[index % backgroundColors.length],
+                      })
+                    ),
+                    Expanded(),
+                  ],
+                }),
+              })
+            : SizeBox({ width: 0, height: 0 }),
+          barGroupRatio.positive
+            ? Flexible({
+                flex: barGroupRatio.positive,
+                child: Column({
+                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
+                  children: [
+                    Expanded(),
+                    ...datasets.map(({ data, legend }, index) =>
+                      this.Bar({
+                        legend: legend,
+                        index,
+                        reverse: false,
+                        ratio: barRatio.positive(data[this.props.index]),
+                        backgroundColor:
+                          backgroundColors[index % backgroundColors.length],
+                      })
+                    ),
+                    Expanded(),
+                  ],
+                }),
+              })
+            : SizeBox({ width: 0, height: 0 }),
         ],
+      })
+    } else {
+      return Column({
+        children: [
+          barGroupRatio.positive
+            ? Flexible({
+                flex: barGroupRatio.positive,
+                child: Row({
+                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
+                  children: [
+                    Expanded(),
+                    ...datasets.map(({ data, legend }, index) =>
+                      this.Bar({
+                        legend: legend,
+                        index,
+                        reverse: false,
+                        ratio: barRatio.positive(data[this.props.index]),
+                        backgroundColor:
+                          backgroundColors[index % backgroundColors.length],
+                      })
+                    ),
+                    Expanded(),
+                  ],
+                }),
+              })
+            : SizeBox({ width: 0, height: 0 }),
+          barGroupRatio.negative
+            ? Flexible({
+                flex: barGroupRatio.negative,
+                child: Row({
+                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
+                  children: [
+                    Expanded(),
+                    ...datasets.map(({ data, legend }, index) =>
+                      this.Bar({
+                        legend: legend,
+                        index,
+                        reverse: true,
+                        ratio: barRatio.negative(data[this.props.index]),
+                        backgroundColor:
+                          backgroundColors[index % backgroundColors.length],
+                      })
+                    ),
+                    Expanded(),
+                  ],
+                }),
+              })
+            : SizeBox({ width: 0, height: 0 }),
+        ],
+      })
+    }
+  }
+
+  Bar({
+    legend,
+    index,
+    ratio,
+    backgroundColor,
+    reverse,
+  }: {
+    ratio: number
+    legend: string
+    index: number
+    backgroundColor: string
+    reverse: boolean
+  }) {
+    return Padding({
+      padding: EdgeInsets.symmetric(
+        this.props.direction === "horizontal"
+          ? { vertical: 2 }
+          : { horizontal: 2 }
+      ),
+      child: Bar({
+        direction: this.props.direction,
+        backgroundColor: backgroundColor,
+        index,
+        label: this.props.label,
+        legend,
+        reverse,
+        ratio: ratio,
       }),
     })
   }

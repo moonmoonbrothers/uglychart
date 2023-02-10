@@ -13,11 +13,14 @@ import {
   DataProvider,
   ThemeProvider,
 } from "../provider"
+import { Utils } from "../../utils"
+import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 
 export type BarProps = {
   backgroundColor: string
   index: number
   ratio: number
+  reverse?: boolean
   label: string
   legend: string
   direction: "horizontal" | "vertical"
@@ -54,32 +57,42 @@ export class Bar extends ComponentWidget {
     //   const horizontal = xAxis.axis === "data"
 
     if (this.props.direction === "horizontal") {
+      const children = [
+        this.props.ratio
+          ? Flexible({
+              flex: this.props.ratio,
+              child: Container({
+                color,
+                width: Infinity,
+                height: thickness,
+              }),
+            })
+          : Container({ height: thickness, width: Infinity }),
+        1 - this.props.ratio
+          ? Flexible({ flex: 1 - this.props.ratio })
+          : SizeBox({ width: 0, height: 0 }),
+      ]
       return Row({
-        children: [
-          Flexible({
-            flex: this.props.ratio,
-            child: Container({
-              color,
-              width: Infinity,
-              height: thickness,
-            }),
-          }),
-          Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
-        ],
+        children: this.props.reverse ? children.reverse() : children,
       })
     } else {
+      const children = [
+        1 - this.props.ratio
+          ? Flexible({ flex: 1 - this.props.ratio })
+          : SizeBox({ width: 0, height: 0 }),
+        this.props.ratio
+          ? Flexible({
+              flex: this.props.ratio,
+              child: Container({
+                color,
+                width: thickness,
+                height: Infinity,
+              }),
+            })
+          : Container({ width: thickness, height: Infinity }),
+      ]
       return Column({
-        children: [
-          Flexible({ flex: 1 - this.props.ratio || 0.0001 }),
-          Flexible({
-            flex: this.props.ratio,
-            child: Container({
-              color,
-              width: thickness,
-              height: Infinity,
-            }),
-          }),
-        ],
+        children: this.props.reverse ? children.reverse() : children,
       })
     }
   }

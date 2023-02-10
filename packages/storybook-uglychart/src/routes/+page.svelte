@@ -9,15 +9,15 @@
 		datasets: [
 			{
 				legend: 'A',
-				data: [30, 40.5, 50.12, 30.5, 40]
+				data: [30, -40.5, 50.12, 30.5, 40]
 			},
 			{
 				legend: 'B',
-				data: [60, 20.5, 20.2, 22.5, 10]
+				data: [60, 20.5, 20.2, -22.5, 10]
 			},
 			{
 				legend: 'C',
-				data: [60, 20.5, 29, 22.5, 10].reverse()
+				data: [0, 1.5, 66, -22.5, 29]
 			}
 		]
 	};
@@ -52,12 +52,7 @@
 						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
 					chart: {
-						type: 'config',
-						scale: {
-							min: 0,
-							max: 100,
-							step: 10
-						}
+						type: 'config'
 					},
 					bar: {
 						type: 'config',
@@ -113,12 +108,7 @@
 					},
 					chart: {
 						type: 'config',
-						direction: 'vertical',
-						scale: {
-							min: 0,
-							max: 100,
-							step: 10
-						}
+						direction: 'vertical'
 					},
 					bar: {
 						type: 'config',

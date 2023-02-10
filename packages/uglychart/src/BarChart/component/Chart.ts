@@ -31,13 +31,13 @@ class Chart extends ComponentWidget {
 
     const roughEdge = {
       min: valueEdge.min > 0 ? 0 : valueEdge.min,
-      max: valueEdge.max,
+      max: valueEdge.max < 0 ? 0 : valueEdge.max,
     }
     const roughStepCount = 10 /* chart size에 따라 보정 필요!*/
 
     const roughScale: Scale = {
-      min: valueEdge.min > 0 ? 0 : valueEdge.min,
-      max: valueEdge.max,
+      min: roughEdge.min,
+      max: roughEdge.max,
       step: (roughEdge.max - roughEdge.min) / roughStepCount,
     }
 
