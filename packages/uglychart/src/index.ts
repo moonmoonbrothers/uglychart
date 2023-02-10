@@ -1,5 +1,4 @@
 import BarChart from "./BarChart"
+import StackedBarChart from "./StackedBarChart"
 
-export {
-  BarChart
-}
+export { BarChart, StackedBarChart }

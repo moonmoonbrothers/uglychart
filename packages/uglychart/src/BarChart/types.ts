@@ -55,9 +55,9 @@ type CustomWidget<T extends string | {} | Record<string, any>, R = {}> = {
     child: T extends string
       ? { [key in T]: () => Widget }
       : T extends {}
-      ? {}
-      : T,
-    data: R & { theme: Theme }
+      ? T
+      : {},
+    data: R & { theme: Theme; data: Data }
   ) => Widget
 }
 
@@ -78,7 +78,7 @@ type BarGroup =
       {
         Bar: (props: BarProps) => Widget
       },
-      { index: number; label: string }
+      BarGroupProps
     >
 
 type Bar =

@@ -9,14 +9,15 @@ import {
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import Title from "./Title"
 import Chart from "./Chart"
-import { CustomProvider, ThemeProvider } from "../provider"
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 
 class Layout extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
+    const data = DataProvider.of(context)
     const { layout } = CustomProvider.of(context)
     if (layout.type === "custom")
-      return layout.Custom({ Title, Chart }, { theme })
+      return layout.Custom({ Title, Chart }, { theme, data })
 
     const { padding } = layout
     return Container({

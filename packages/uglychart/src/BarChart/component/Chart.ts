@@ -20,10 +20,11 @@ import { getScale, getValueEdge, Scale } from "../util"
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
+    const data = DataProvider.of(context)
     const { labels, datasets } = DataProvider.of(context)
     const { chart, additions } = CustomProvider.of(context)
     if (chart.type === "custom") {
-      return chart.Custom({ XAxis, YAxis, Plot }, { theme })
+      return chart.Custom({ XAxis, YAxis, Plot }, { theme, data })
     }
 
     /* scale 구하기 */

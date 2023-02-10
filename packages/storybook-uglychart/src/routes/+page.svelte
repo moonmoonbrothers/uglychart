@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
 	import { EdgeInsets, Text, Container, Row } from '@moonmoonbrothers/flutterjs';
-	import { BarChart } from '@moonmoonbrothers/uglychart';
+	import { BarChart , StackedBarChart } from '@moonmoonbrothers/uglychart';
 
 	const data = {
 		title: 'Title',

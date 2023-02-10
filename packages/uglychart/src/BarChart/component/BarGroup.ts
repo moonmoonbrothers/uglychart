@@ -28,14 +28,14 @@ class BarGroup extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
-    const { index, label, scale, direction } = this.props
+    const {  scale, direction } = this.props
+    const data = DataProvider.of(context)
 
     if (barGroup.type === "custom") {
-      return barGroup.Custom({ Bar }, { index, theme, label })
+      return barGroup.Custom({ Bar }, { theme, data, ...this.props })
     }
 
     const { barBackgroundColors: backgroundColors = ["gray"] } = barGroup
-    const data = DataProvider.of(context)
     const { datasets } = data
 
     const barGroupRatio = {
