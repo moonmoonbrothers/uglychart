@@ -2,9 +2,9 @@ import { BarChartProps } from "./types"
 import BaseBarChart from "./BaseBarChart"
 
 export function BarChart({
-  type,
+  type = "series",
   ...props
-}: BarChartProps & { type: "series" | "stack" | "diverging" }) {
+}: BarChartProps & { type?: "series" | "stack" | "diverging" }) {
   return BaseBarChart({
     ...props,
     custom: {
@@ -12,3 +12,7 @@ export function BarChart({
     },
   })
 }
+
+export default BarChart
+
+

@@ -1,7 +1,6 @@
 import {
   Column,
   ComponentWidget,
-  Container,
   EdgeInsets,
   Expanded,
   Flexible,
@@ -11,7 +10,6 @@ import {
 } from "@moonmoonbrothers/flutterjs"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { Utils } from "../../utils"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import { Scale } from "../util"
 import Bar from "./Bar"
@@ -30,20 +28,16 @@ class BarGroup extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
-    const data = DataProvider.of(context)
-    const { index, label } = this.props
+    const { index, label, scale, direction } = this.props
 
     if (barGroup.type === "custom") {
       return barGroup.Custom({ Bar }, { index, theme, label })
     }
 
     const { barBackgroundColors: backgroundColors = ["gray"] } = barGroup
-    const { datasets, labels } = data
+    const data = DataProvider.of(context)
+    const { datasets } = data
 
-    const { scale } = this.props
-    const getRatio = (value: number) => {
-      return (value - scale.min) / (scale.max - scale.min)
-    }
     const barGroupRatio = {
       negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
       positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
@@ -68,135 +62,64 @@ class BarGroup extends ComponentWidget {
       },
     }
 
-    if (this.props.direction === "horizontal") {
-      return Row({
-        children: [
-          barGroupRatio.negative
-            ? Flexible({
-                flex: barGroupRatio.negative,
-                child: Column({
-                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
-                  children: [
-                    Expanded(),
-                    ...datasets.map(({ data, legend }, index) =>
-                      this.Bar({
-                        legend: legend,
-                        index,
-                        reverse: true,
-                        ratio: barRatio.negative(data[this.props.index]),
-                        backgroundColor:
-                          backgroundColors[index % backgroundColors.length],
-                      })
-                    ),
-                    Expanded(),
-                  ],
-                }),
-              })
-            : SizeBox({ width: 0, height: 0 }),
-          barGroupRatio.positive
-            ? Flexible({
-                flex: barGroupRatio.positive,
-                child: Column({
-                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
-                  children: [
-                    Expanded(),
-                    ...datasets.map(({ data, legend }, index) =>
-                      this.Bar({
-                        legend: legend,
-                        index,
-                        reverse: false,
-                        ratio: barRatio.positive(data[this.props.index]),
-                        backgroundColor:
-                          backgroundColors[index % backgroundColors.length],
-                      })
-                    ),
-                    Expanded(),
-                  ],
-                }),
-              })
-            : SizeBox({ width: 0, height: 0 }),
-        ],
-      })
-    } else {
-      return Column({
-        children: [
-          barGroupRatio.positive
-            ? Flexible({
-                flex: barGroupRatio.positive,
-                child: Row({
-                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
-                  children: [
-                    Expanded(),
-                    ...datasets.map(({ data, legend }, index) =>
-                      this.Bar({
-                        legend: legend,
-                        index,
-                        reverse: false,
-                        ratio: barRatio.positive(data[this.props.index]),
-                        backgroundColor:
-                          backgroundColors[index % backgroundColors.length],
-                      })
-                    ),
-                    Expanded(),
-                  ],
-                }),
-              })
-            : SizeBox({ width: 0, height: 0 }),
-          barGroupRatio.negative
-            ? Flexible({
-                flex: barGroupRatio.negative,
-                child: Row({
-                  // mainAxisAlignment: center 가 아직 없어서 임시로 Expanded 붙여놓음 ㅎㅎ;;
-                  children: [
-                    Expanded(),
-                    ...datasets.map(({ data, legend }, index) =>
-                      this.Bar({
-                        legend: legend,
-                        index,
-                        reverse: true,
-                        ratio: barRatio.negative(data[this.props.index]),
-                        backgroundColor:
-                          backgroundColors[index % backgroundColors.length],
-                      })
-                    ),
-                    Expanded(),
-                  ],
-                }),
-              })
-            : SizeBox({ width: 0, height: 0 }),
-        ],
+    type AreaType = "negative" | "positive"
+
+    const BarGroupContainer = direction === "horizontal" ? Row : Column
+    const BarGroup = ({
+      type,
+      children,
+    }: {
+      type: AreaType
+      children: Widget[]
+    }) => {
+      const flex = barGroupRatio[type]
+      if (flex === 0) return SizeBox({ width: 0, height: 0 })
+
+      return Flexible({
+        flex,
+        child: (direction === "horizontal" ? Column : Row)({
+          children,
+        }),
       })
     }
-  }
 
-  Bar({
-    legend,
-    index,
-    ratio,
-    backgroundColor,
-    reverse,
-  }: {
-    ratio: number
-    legend: string
-    index: number
-    backgroundColor: string
-    reverse: boolean
-  }) {
-    return Padding({
-      padding: EdgeInsets.symmetric(
-        this.props.direction === "horizontal"
-          ? { vertical: 2 }
-          : { horizontal: 2 }
+    const barGap = EdgeInsets.symmetric(
+      direction === "horizontal" ? { vertical: 2 } : { horizontal: 2 }
+    )
+
+    const areas: AreaType[] =
+      direction === "horizontal"
+        ? ["negative", "positive"]
+        : ["positive", "negative"]
+
+    return BarGroupContainer({
+      children: areas.map((type) =>
+        BarGroup({
+          type,
+          children: [
+            /**
+             * mainAxisAlignment: center가 없어서 임시로 Expanded로 구현;
+             */
+            Expanded(),
+            ...datasets.map(({ data, legend }, index) =>
+              Padding({
+                padding: barGap,
+                child: Bar({
+                  direction: this.props.direction,
+                  backgroundColor:
+                    backgroundColors[index % backgroundColors.length],
+                  index,
+                  label: this.props.label,
+                  legend,
+                  reverse: type === "negative",
+                  ratio: barRatio[type](data[this.props.index]),
+                }),
+              })
+            ),
+            Expanded(),
+          ],
+        })
       ),
-      child: Bar({
-        direction: this.props.direction,
-        backgroundColor: backgroundColor,
-        index,
-        label: this.props.label,
-        legend,
-        reverse,
-        ratio: ratio,
-      }),
     })
   }
 }
