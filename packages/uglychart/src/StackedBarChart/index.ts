@@ -157,6 +157,7 @@ export class StackedBarChart extends ComponentWidget {
                           ? Row({ children })
                           : Column({ children }),
                     })
+
                   const BarGroup = ({
                     type,
                     children,
@@ -201,21 +202,17 @@ export class StackedBarChart extends ComponentWidget {
 
                     const bars = [
                       ...barData[type].map(({ value, legend }, index) =>
-                        barRatio[type](value)
-                          ? Flexible({
-                              flex: barRatio[type](value),
-                              child: StackedBar({
-                                index,
-                                legend,
-                              }),
-                            })
-                          : SizeBox({ width: 0, height: 0 })
+                        Flexible({
+                          flex: barRatio[type](value),
+                          child: StackedBar({
+                            index,
+                            legend,
+                          }),
+                        })
                       ),
-                      spaceRatio
-                        ? Expanded({
-                            flex: spaceRatio,
-                          })
-                        : SizeBox({ width: 0, height: 0 }),
+                      Expanded({
+                        flex: spaceRatio,
+                      }),
                     ]
                     return (type === "positive" &&
                       direction === "horizontal") ||

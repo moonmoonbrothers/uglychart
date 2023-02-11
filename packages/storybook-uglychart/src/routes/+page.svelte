@@ -42,9 +42,8 @@
 			})}
 		/> -->
 		<Widget
-			width=""
 			height="500px"
-			widget={StackedBarChart({
+			widget={BarChart({
 				custom: {
 					barGroup: {
 						type: 'config',
@@ -93,7 +92,6 @@
 		/>
 
 		<Widget
-			width=""
 			height="400px"
 			widget={BarChart({
 				scale: {
@@ -102,7 +100,7 @@
 				custom: {
 					barGroup: {
 						type: 'config',
-						gap: 2,
+						gap: 4,
 						barBackgroundColors: ['black', 'grey', 'brown', 'black']
 					},
 					chart: {

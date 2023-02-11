@@ -5,8 +5,10 @@ import {
   EdgeInsets,
   Expanded,
   Flexible,
+  Positioned,
   Row,
   Stack,
+  Text,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
@@ -62,10 +64,34 @@ export class Bar extends ComponentWidget {
       )
     }
 
-    const { thickness } = bar
+    const { thickness = 2 } = bar
 
     const BarWrapper = ({ children }: { children: Widget[] }) =>
       direction === "horizontal" ? Row({ children }) : Column({ children })
+
+    const DataLabel = () =>
+      direction === "horizontal"
+        ? Positioned({
+            child: Container({
+              width: 0,
+              height: 0,
+              child: Text("22", { textBaseline: "central" }),
+            }),
+            top: thickness / 2,
+            right: -5,
+          })
+        : Positioned({
+            child: Container({
+              height: 0,
+              width: 0,
+              child: Text("10", {
+                textAlign: "middle",
+                textBaseline: "bottom",
+              }),
+            }),
+            left: thickness / 2,
+            top: -5,
+          })
 
     const Bar = () =>
       Flexible({
@@ -78,6 +104,7 @@ export class Bar extends ComponentWidget {
                 ? { height: thickness }
                 : { width: thickness }),
             }),
+            DataLabel(),
           ],
         }),
       })
