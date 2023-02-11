@@ -13,8 +13,8 @@ class Flexible extends SingleChildRenderObjectWidget {
     fit = "loose",
   }: { flex?: number; child?: Widget; fit?: "tight" | "loose" } = {}) {
     super({ child })
-    if (flex <= 0)
-      throw { message: `flex must be over zero (current: ${flex} }` }
+    if (flex < 0)
+      throw { message: `flex must not be under zero (current: ${flex} }` }
     this.flex = flex
     this.fit = fit
   }

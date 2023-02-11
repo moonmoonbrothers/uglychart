@@ -3,8 +3,10 @@ import {
   ComponentWidget,
   Container,
   EdgeInsets,
+  Expanded,
   Flexible,
   Row,
+  Stack,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
@@ -33,9 +35,17 @@ export class Bar extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const data = DataProvider.of(context)
-    const { bar, xAxis } = CustomProvider.of(context)
+    const { bar } = CustomProvider.of(context)
 
-    const { backgroundColor: color, index, label, ratio, legend } = this.props
+    const {
+      backgroundColor: color,
+      index,
+      label,
+      ratio,
+      legend,
+      direction,
+      reverse,
+    } = this.props
 
     if (bar.type === "custom") {
       return bar.Custom(
@@ -54,45 +64,33 @@ export class Bar extends ComponentWidget {
 
     const { thickness } = bar
 
-    //   const horizontal = xAxis.axis === "data"
+    const BarWrapper = ({ children }: { children: Widget[] }) =>
+      direction === "horizontal" ? Row({ children }) : Column({ children })
 
-    if (this.props.direction === "horizontal") {
-      const children = [
-        this.props.ratio
-          ? Flexible({
-              flex: this.props.ratio,
-              child: Container({
-                color,
-                height: thickness,
-              }),
-            })
-          : Container({ height: thickness, width: Infinity }),
-        1 - this.props.ratio
-          ? Flexible({ flex: 1 - this.props.ratio })
-          : SizeBox({ width: 0, height: 0 }),
-      ]
-      return Row({
-        children: this.props.reverse ? children.reverse() : children,
+    const Bar = () =>
+      Flexible({
+        flex: ratio,
+        child: Stack({
+          children: [
+            Container({
+              color,
+              ...(direction === "horizontal"
+                ? { height: thickness }
+                : { width: thickness }),
+            }),
+          ],
+        }),
       })
-    } else {
-      const children = [
-        1 - this.props.ratio
-          ? Flexible({ flex: 1 - this.props.ratio })
-          : SizeBox({ width: 0, height: 0 }),
-        this.props.ratio
-          ? Flexible({
-              flex: this.props.ratio,
-              child: Container({
-                color,
-                width: thickness,
-              }),
-            })
-          : Container({ width: thickness, height: Infinity }),
-      ]
-      return Column({
-        children: this.props.reverse ? children.reverse() : children,
-      })
-    }
+
+    const Vacant = () => Expanded({ flex: 1 - ratio })
+
+    return BarWrapper({
+      children:
+        (direction === "horizontal" && !reverse) ||
+        (direction === "vertical" && reverse)
+          ? [Bar(), Vacant()]
+          : [Vacant(), Bar()],
+    })
   }
 }
 
