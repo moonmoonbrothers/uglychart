@@ -6,6 +6,7 @@ import {
   Flexible,
   Padding,
   Row,
+  Stack,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
@@ -28,7 +29,7 @@ class BarGroup extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context)
     const { barGroup } = CustomProvider.of(context)
-    const { scale, direction } = this.props
+    const { scale, direction, label } = this.props
     const data = DataProvider.of(context)
 
     if (barGroup.type === "custom") {
@@ -104,21 +105,28 @@ class BarGroup extends ComponentWidget {
              * mainAxisAlignment: center가 없어서 임시로 Expanded로 구현;
              */
             Expanded(),
-            ...datasets.map(({ data, legend }, index) =>
-              Padding({
+            ...datasets.map(({ data, legend }, index) => {
+              const value = data[this.props.index]
+              const reverse = type === "negative"
+              return Padding({
                 padding: barGap,
-                child: Bar({
-                  direction: this.props.direction,
-                  backgroundColor:
-                    backgroundColors[index % backgroundColors.length],
-                  index,
-                  label: this.props.label,
-                  legend,
-                  reverse: type === "negative",
-                  ratio: barRatio[type](data[this.props.index]),
+                child: Stack({
+                  children: [
+                    Bar({
+                      direction,
+                      backgroundColor:
+                        backgroundColors[index % backgroundColors.length],
+                      index,
+                      label,
+                      legend,
+                      value,
+                      reverse,
+                      ratio: barRatio[type](value),
+                    }),
+                  ],
                 }),
               })
-            ),
+            }),
             Expanded(),
           ],
         })

@@ -2,9 +2,13 @@ import {
   Alignment,
   BorderStyle,
   EdgeInsets,
+  Radius,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
-import { TextProps } from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
+import {
+  TextProps,
+  TextStyle,
+} from "@moonmoonbrothers/flutterjs/src/component/base/BaseText"
 import { BarProps } from "./component/Bar"
 import { BarGroupProps } from "./component/BarGroup"
 import { PlotProps } from "./component/Plot"
@@ -88,11 +92,13 @@ type Bar =
   | CustomWidget<
       {},
       {
-        color: string
+        backgroundColor: string
         index: number
         ratio: number
         label: string
         legend: string
+        reverse: boolean
+        direction: 'vertical' | 'horizontal'
         data: Data
         theme: Theme
       }
@@ -167,12 +173,16 @@ type Axis = {
 type DataLabel =
   | {
       type: "config"
-      margin?: EdgeInsets
+      gap?: number
       font?: Font
+      backgroundColor?: string
+      borderColor?: string
+      borderWidth?: number
+      borderRadius?: Radius
     }
   | CustomWidget<
       {},
-      { value: string; index: number; legend: string; label: string }
+      { value: number; index: number; legend: string; label: string, reverse: boolean, direction: 'horizontal' | 'vertical' }
     >
 
 type Plot =

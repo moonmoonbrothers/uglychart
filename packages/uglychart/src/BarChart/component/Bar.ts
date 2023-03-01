@@ -19,11 +19,13 @@ import {
 } from "../provider"
 import { Utils } from "../../utils"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
+import DataLabel from "./DataLabel"
 
 export type BarProps = {
   backgroundColor: string
   index: number
   ratio: number
+  value: number
   reverse?: boolean
   label: string
   legend: string
@@ -40,26 +42,29 @@ export class Bar extends ComponentWidget {
     const { bar } = CustomProvider.of(context)
 
     const {
-      backgroundColor: color,
+      backgroundColor,
       index,
       label,
       ratio,
       legend,
+      value,
       direction,
-      reverse,
+      reverse = false,
     } = this.props
 
     if (bar.type === "custom") {
       return bar.Custom(
         {},
         {
-          color,
+          backgroundColor,
           index,
           ratio,
           theme,
           label,
           legend,
           data,
+          direction,
+          reverse,
         }
       )
     }
@@ -69,29 +74,6 @@ export class Bar extends ComponentWidget {
     const BarWrapper = ({ children }: { children: Widget[] }) =>
       direction === "horizontal" ? Row({ children }) : Column({ children })
 
-    const DataLabel = () =>
-      direction === "horizontal"
-        ? Positioned({
-            child: Container({
-              width: 0,
-              height: 0,
-              child: Text("22", { textBaseline: "central" }),
-            }),
-            top: thickness / 2,
-            right: -5,
-          })
-        : Positioned({
-            child: Container({
-              height: 0,
-              width: 0,
-              child: Text("10", {
-                textAlign: "middle",
-                textBaseline: "bottom",
-              }),
-            }),
-            left: thickness / 2,
-            top: -5,
-          })
 
     const Bar = () =>
       Flexible({
@@ -99,12 +81,20 @@ export class Bar extends ComponentWidget {
         child: Stack({
           children: [
             Container({
-              color,
+              color: backgroundColor,
               ...(direction === "horizontal"
                 ? { height: thickness }
                 : { width: thickness }),
             }),
-            DataLabel(),
+            // It is wrapped by Positioned Widget
+            DataLabel({
+              value,
+              index,
+              label,
+              legend,
+              direction,
+              reverse,
+            }),
           ],
         }),
       })
