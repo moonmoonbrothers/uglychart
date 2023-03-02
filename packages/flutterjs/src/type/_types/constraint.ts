@@ -1,4 +1,4 @@
-import Size from "./size"
+import Size from "./Size"
 
 type ConstraintProps = {
   minWidth: number

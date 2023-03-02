@@ -11,12 +11,16 @@ class Offset {
     this.y = y
   }
 
+  static raw({x, y}:{x: number, y: number}) {
+    return new Offset({x: x, y: y})
+  }
+
   static zero() {
-    return new Offset({ x: 0, y: 0 })
+    return Offset.raw({ x: 0, y: 0 })
   }
 
   plus({ x, y }: Offset) {
-    return new Offset({ x: this.x + x, y: this.y + y })
+    return Offset.raw({ x: this.x + x, y: this.y + y })
   }
 }
 

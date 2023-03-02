@@ -1,11 +1,14 @@
-import Offset from "./_types/offset";
-import Alignment from "./_types/alignment";
-import BorderStyle from "./_types/borderstyle";
-import Constraint from "./_types/constraint";
-import EdgeInsets from "./_types/edgeInsets";
-import Gap from "./_types/gap";
-import Radius from "./_types/radius";
-import Size from "./_types/size";
+import Offset from "./_types/Offset"
+import Alignment from "./_types/Alignment"
+import BorderStyle from "./_types/BorderStyle"
+import Constraint from "./_types/Constraint"
+import EdgeInsets from "./_types/EdgeInsets"
+import Gap from "./_types/Gap"
+import BorderRadiusGeometry from "./_types/BorderRadiusGeometry"
+import Size from "./_types/Size"
+import Path from "./_types/Path"
+import Rect from "./_types/Rect"
+import RRect from "./_types/RRect"
 
 export {
   Offset,
@@ -14,6 +17,9 @@ export {
   Constraint,
   EdgeInsets,
   Gap,
-  Radius,
-  Size
+  BorderRadiusGeometry as Radius,
+  Size,
+  Path,
+  RRect,
+  Rect,
 }
