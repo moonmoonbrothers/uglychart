@@ -5,10 +5,7 @@ import { Container, Path, ClipPath, Rect, Center } from '@moonmoonbrothers/flutt
 const meta = {
 	title: 'Widget/ClipPath',
 	component: Widget,
-	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
-	tags: ['autodocs'],
 	parameters: {
-		// More on how to position stories at: https://storybook.js.org/docs/7.0/svelte/configure/story-layout
 		layout: 'fullscreen'
 	}
 } satisfies Meta<Widget>;
@@ -34,6 +31,7 @@ export const Basic: Story = {
 		})
 	}
 };
+
 export const RectClip: Story = {
 	args: {
 		ssrSize: { width: 400, height: 400 },

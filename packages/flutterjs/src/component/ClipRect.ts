@@ -2,7 +2,7 @@ import { Path, Rect, Size } from "../type"
 import Widget from "../widget/Widget"
 import BaseClipPath from "./base/BaseClipPath"
 
-export default function ClipOval({
+export default function ClipRect({
   child,
   clipper,
   clipped = true,
@@ -14,6 +14,6 @@ export default function ClipOval({
   if (!clipped) return child
   return new BaseClipPath({
     child,
-    clipper: (size) => new Path().addOval(clipper(size)),
+    clipper: (size) => new Path().addRect(clipper(size)),
   })
 }
