@@ -29,6 +29,11 @@ class RenderClipPath extends SingleChildRenderObject {
     super({ isPainter: true })
     this.clipper = clipper
   }
+  protected getChildClipId(
+    parentClipId?: string | undefined
+  ): string | undefined {
+    return this.id
+  }
 
   protected override preformLayout(): void {
     this.child?.layout(this.constraint)

@@ -1,5 +1,5 @@
 import type Rect from "./Rect"
-import { RRect } from "./RRect"
+import { RRect } from "./rRect"
 
 export class Path {
   private _d: string = ""
@@ -16,11 +16,11 @@ export class Path {
     return this._moveTo(point, true)
   }
 
-  lintTo(point: Offset) {
+  lineTo(point: Offset) {
     return this._lineTo(point, false)
   }
 
-  relativeLintTo(point: Offset) {
+  relativeLineTo(point: Offset) {
     return this._lineTo(point, true)
   }
 
@@ -70,9 +70,9 @@ export class Path {
 
   addRect(rect: Rect) {
     return this.moveTo({ x: rect.left, y: rect.top })
-      .lintTo({ x: rect.right, y: rect.top })
-      .lintTo({ x: rect.right, y: rect.bottom })
-      .lintTo({ x: rect.left, y: rect.bottom })
+      .lineTo({ x: rect.right, y: rect.top })
+      .lineTo({ x: rect.right, y: rect.bottom })
+      .lineTo({ x: rect.left, y: rect.bottom })
       .close()
   }
 
@@ -106,7 +106,7 @@ export class Path {
     if (points.length < 3) throw Error("polygons need at least 3 points")
 
     this.moveTo(points[0])
-    points.slice(1).forEach((point) => this.lintTo(point))
+    points.slice(1).forEach((point) => this.lineTo(point))
     return this.close()
   }
 

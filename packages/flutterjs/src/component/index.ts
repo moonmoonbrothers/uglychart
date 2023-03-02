@@ -13,8 +13,10 @@ import Flexible from "./Flexible"
 import Transform from "./Transform"
 import Stack from "./Stack"
 import Positioned from "./Positioned"
+import ClipPath from "./ClipPath"
 
 export {
+  ClipPath,
   Center,
   Row,
   Text,
