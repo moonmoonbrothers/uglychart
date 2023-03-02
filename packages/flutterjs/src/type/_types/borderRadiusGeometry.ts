@@ -50,5 +50,4 @@ class BorderRadiusGeometry {
   }
 }
 
-
 export default BorderRadiusGeometry

@@ -1,4 +1,4 @@
-import Alignment from "../type/_types/alignment"
+import Alignment from "../type/_types/Alignment"
 import type Widget from "../widget/Widget"
 import _Align from "./base/BaseAlign"
 

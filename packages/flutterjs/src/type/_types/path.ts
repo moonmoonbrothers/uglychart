@@ -1,89 +1,185 @@
+import type Rect from "./Rect"
+import { RRect } from "./rRect"
+
 export class Path {
   private path: string
 
-  lineTo({ x, y }: Offset) {
-    this.path += `L${x} ${y}`
+  private _moveTo({ x, y }: Offset, relative: boolean) {
+    this.path += `${relative ? "m" : "M"}${x} ${y}`
     return this
   }
 
-  moveTo({ x, y }: Offset) {
-    this.path += `M${x} ${y}`
+  moveTo(point: Offset) {
+    return this._moveTo(point, false)
+  }
+
+  relativeMoveTo(point: Offset) {
+    return this._moveTo(point, true)
+  }
+
+  private _lineTo({ x, y }: Offset, relative: boolean) {
+    this.path += `${relative ? "l" : "L"}${x} ${y}`
     return this
   }
 
-  quadraticBezierTo({
-    controlPoint,
-    endPoint,
-  }: {
-    controlPoint: Offset
-    endPoint: Offset
-  }) {
-    this.path += `Q ${controlPoint.x} ${controlPoint.y} ${endPoint.x} ${endPoint.y}`
+  lintTo(point: Offset) {
+    return this._lineTo(point, false)
+  }
+
+  relativeLintTo(point: Offset) {
+    return this._lineTo(point, true)
+  }
+
+  quadraticBezierTo(props: { controlPoint: Offset; endPoint: Offset }) {
+    return this._quadraticBezierTo(props, false)
+  }
+
+  relativeQuadraticBezierTo(props: { controlPoint: Offset; endPoint: Offset }) {
+    return this._quadraticBezierTo(props, true)
+  }
+
+  private _quadraticBezierTo(
+    {
+      controlPoint,
+      endPoint,
+    }: {
+      controlPoint: Offset
+      endPoint: Offset
+    },
+    relative: boolean
+  ) {
+    this.path += `${relative ? "q" : "Q"}${controlPoint.x} ${controlPoint.y} ${
+      endPoint.x
+    } ${endPoint.y}`
     return this
   }
 
-  cubicTo({
-    startControlPoint,
-    endControlPoint,
-    endPoint,
-  }: {
+  private _cubicTo(
+    {
+      startControlPoint,
+      endControlPoint,
+      endPoint,
+    }: {
+      endControlPoint: Offset
+      startControlPoint: Offset
+      endPoint: Offset
+    },
+    relative: boolean
+  ) {
+    this.path += `${relative ? "c" : "C"}${startControlPoint.x} ${
+      startControlPoint.y
+    } ${endControlPoint.x} ${endControlPoint.y} ${endPoint.x} ${endPoint.y}`
+    return this
+  }
+
+  cubicTo(props: {
     endControlPoint: Offset
     startControlPoint: Offset
     endPoint: Offset
   }) {
-    this.path += `C ${startControlPoint.x} ${startControlPoint.y} ${endControlPoint.x} ${endControlPoint.y} ${endPoint.x} ${endPoint.y}`
+    return this._cubicTo(props, false)
+  }
+
+  relativeCubicTo(props: {
+    endControlPoint: Offset
+    startControlPoint: Offset
+    endPoint: Offset
+  }) {
+    return this._cubicTo(props, true)
+  }
+
+  _arcToPoint(
+    {
+      endPoint,
+      radius,
+      rotation,
+      largeArc,
+      clockwise,
+    }: {
+      endPoint: Offset
+      rotation: number
+      radius: Radius
+      largeArc: boolean
+      clockwise: boolean
+    },
+    relative: boolean
+  ) {
+    this.path += `${relative ? "a" : "A"}${radius.x} ${radius.y} ${rotation} ${
+      largeArc ? 1 : 0
+    } ${clockwise ? 1 : 0} ${endPoint.x} ${endPoint.y}`
     return this
   }
 
-  arcToPoint({
-    endPoint,
-    radius,
-    rotation,
-    largeArc,
-    clockwise,
-  }: {
+  arcToPoint(props: {
     endPoint: Offset
-    rx: number
-    ry: number
     rotation: number
     radius: Radius
     largeArc: boolean
     clockwise: boolean
   }) {
-    this.path += `A ${radius.x} ${radius.y} ${rotation} ${largeArc ? 1 : 0} ${
-      clockwise ? 1 : 0
-    } ${endPoint.x} ${endPoint.y}`
-    return this
+    return this._arcToPoint(props, false)
+  }
+
+  relativeArcToPoint(props: {
+    endPoint: Offset
+    rotation: number
+    radius: Radius
+    largeArc: boolean
+    clockwise: boolean
+  }) {
+    return this._arcToPoint(props, true)
   }
 
   addRect(rect: Rect) {
-    return this
+    return this.moveTo({ x: rect.left, y: rect.top })
+      .lintTo({ x: rect.right, y: rect.top })
+      .lintTo({ x: rect.right, y: rect.bottom })
+      .lintTo({ x: rect.left, y: rect.bottom })
+      .close()
   }
 
-  addRRect(rect: Rect, radius: Radius) {
-    return this
+  addRRect(rect: RRect) {
+    throw new Error('addRRect is not implemented')
   }
 
   addOval(rect: Rect) {
-    return this
+    const common = {
+      rotation: 0,
+      radius: { x: rect.width / 2, y: rect.height / 2 },
+      largeArc: false,
+      clockwise: true,
+    }
+    const point1 = { x: rect.left, y: rect.height / 2 }
+    const point2 = { x: rect.right, y: rect.height / 2 }
+
+    return this.moveTo(point1)
+      .arcToPoint({
+        ...common,
+        endPoint: point2,
+      })
+      .arcToPoint({
+        ...common,
+        endPoint: point1,
+      })
+      .close()
   }
 
   addPolygons(points: Offset[]) {
-    return this
+    if (points.length < 3) throw Error("polygons need at least 3 points")
+
+    this.moveTo(points[0])
+    points.slice(1).forEach((point) => this.lintTo(point))
+    return this.close()
   }
 
   close() {
+    this.path += "Z"
     return this
   }
 }
 
 type Offset = { x: number; y: number }
-type Rect = {
-  left: number
-  top: number
-  right: number
-  bottom: number
-}
+
 type Radius = {
   x: number
   y: number

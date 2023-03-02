@@ -1,4 +1,4 @@
-import Offset from ".//offset"
+import Offset from "./Offset"
 
 class Alignment {
   x: number // -1 ~ 1
