@@ -25,7 +25,7 @@ class RenderObject {
     this.preformLayout();
   }
 
-  paint(context: PaintContext, offset: Offset) {
+  paint(context: PaintContext, offset: Offset, clipId?: string) {
     const totalOffset = offset.plus(this.offset);
     if (this.isPainter) {
       // this line should be refactored.. It always return only one svgEl.
@@ -34,9 +34,15 @@ class RenderObject {
         "transform",
         `translate(${totalOffset.x} ${totalOffset.y})`
       );
+      if (clipId) {
+        container.setAttribute("clip-path", `url(#{clipId})`);
+      }
       this.performPaint(svgEls);
     }
-    this.children.forEach((child) => child.paint(context, totalOffset));
+    const childClipId = this.type === "RenderClipPath" ? this.id : clipId;
+    this.children.forEach((child) =>
+      child.paint(context, totalOffset, childClipId)
+    );
   }
 
   attach(ownerElement: RenderObjectElement) {
