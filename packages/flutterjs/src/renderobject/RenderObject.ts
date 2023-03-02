@@ -35,11 +35,11 @@ class RenderObject {
         `translate(${totalOffset.x} ${totalOffset.y})`
       );
       if (clipId) {
-        container.setAttribute("clip-path", `url(#{clipId})`);
+        container.setAttribute("clip-path", `url(#${clipId})`);
       }
-      this.performPaint(svgEls);
+      this.performPaint(svgEls, context);
     }
-    const childClipId = this.type === "RenderClipPath" ? this.id : clipId;
+    const childClipId = this.getChildClipId(clipId)
     this.children.forEach((child) =>
       child.paint(context, totalOffset, childClipId)
     );
@@ -128,7 +128,11 @@ class RenderObject {
    * Do not call this method directly. instead call paint
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(svgEls: { [key: string]: SVGElement }): void {}
+  protected performPaint(svgEls: { [key: string]: SVGElement }, context: PaintContext): void {}
+
+  protected getChildClipId(parentClipId?: string) {
+    return parentClipId 
+  }
 }
 
 export default RenderObject;

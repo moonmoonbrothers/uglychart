@@ -11,6 +11,10 @@ class Offset {
     this.y = y
   }
 
+  static of({x, y}:{x: number, y: number}) {
+    return new Offset({x: x, y: y})
+  }
+
   static zero() {
     return new Offset({ x: 0, y: 0 })
   }
