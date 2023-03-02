@@ -30,12 +30,17 @@ class RenderClipPath extends SingleChildRenderObject {
     this.clipper = clipper
   }
 
-  protected override preformLayout(): void {}
+  protected override preformLayout(): void {
+    this.child?.layout(this.constraint)
+    this.size = this.child?.size ?? Size.zero()
+  }
 
   protected performPaint({ clipPath }: { [key: string]: SVGElement }): void {
     const pathEl = clipPath.getElementsByTagName("path")[0]
-    const pathClip = this.clipper(this.size)
+    const d = this.clipper(this.size).getD()
 
+    pathEl.setAttribute("stroke-width", "0")
+    pathEl.setAttribute("d", d)
   }
 
   protected createDefaultSvgEl({ createSvgEl }: PaintContext): {

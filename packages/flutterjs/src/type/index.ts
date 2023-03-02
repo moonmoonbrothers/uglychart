@@ -6,6 +6,9 @@ import EdgeInsets from "./_types/EdgeInsets"
 import Gap from "./_types/Gap"
 import BorderRadiusGeometry from "./_types/BorderRadiusGeometry"
 import Size from "./_types/Size"
+import Path from "./_types/Path"
+import Rect from "./_types/Rect"
+import RRect from "./_types/RRect"
 
 export {
   Offset,
@@ -16,4 +19,7 @@ export {
   Gap,
   BorderRadiusGeometry as Radius,
   Size,
+  Path,
+  RRect,
+  Rect,
 }

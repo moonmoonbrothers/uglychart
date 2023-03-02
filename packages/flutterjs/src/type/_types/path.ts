@@ -1,12 +1,11 @@
 import type Rect from "./Rect"
-import { RRect } from "./rRect"
+import { RRect } from "./RRect"
 
 export class Path {
-  private path: string
+  private _d: string = ""
 
-  private _moveTo({ x, y }: Offset, relative: boolean) {
-    this.path += `${relative ? "m" : "M"}${x} ${y}`
-    return this
+  getD(): string {
+    return this._d
   }
 
   moveTo(point: Offset) {
@@ -15,11 +14,6 @@ export class Path {
 
   relativeMoveTo(point: Offset) {
     return this._moveTo(point, true)
-  }
-
-  private _lineTo({ x, y }: Offset, relative: boolean) {
-    this.path += `${relative ? "l" : "L"}${x} ${y}`
-    return this
   }
 
   lintTo(point: Offset) {
@@ -38,40 +32,6 @@ export class Path {
     return this._quadraticBezierTo(props, true)
   }
 
-  private _quadraticBezierTo(
-    {
-      controlPoint,
-      endPoint,
-    }: {
-      controlPoint: Offset
-      endPoint: Offset
-    },
-    relative: boolean
-  ) {
-    this.path += `${relative ? "q" : "Q"}${controlPoint.x} ${controlPoint.y} ${
-      endPoint.x
-    } ${endPoint.y}`
-    return this
-  }
-
-  private _cubicTo(
-    {
-      startControlPoint,
-      endControlPoint,
-      endPoint,
-    }: {
-      endControlPoint: Offset
-      startControlPoint: Offset
-      endPoint: Offset
-    },
-    relative: boolean
-  ) {
-    this.path += `${relative ? "c" : "C"}${startControlPoint.x} ${
-      startControlPoint.y
-    } ${endControlPoint.x} ${endControlPoint.y} ${endPoint.x} ${endPoint.y}`
-    return this
-  }
-
   cubicTo(props: {
     endControlPoint: Offset
     startControlPoint: Offset
@@ -86,28 +46,6 @@ export class Path {
     endPoint: Offset
   }) {
     return this._cubicTo(props, true)
-  }
-
-  _arcToPoint(
-    {
-      endPoint,
-      radius,
-      rotation,
-      largeArc,
-      clockwise,
-    }: {
-      endPoint: Offset
-      rotation: number
-      radius: Radius
-      largeArc: boolean
-      clockwise: boolean
-    },
-    relative: boolean
-  ) {
-    this.path += `${relative ? "a" : "A"}${radius.x} ${radius.y} ${rotation} ${
-      largeArc ? 1 : 0
-    } ${clockwise ? 1 : 0} ${endPoint.x} ${endPoint.y}`
-    return this
   }
 
   arcToPoint(props: {
@@ -139,7 +77,7 @@ export class Path {
   }
 
   addRRect(rect: RRect) {
-    throw new Error('addRRect is not implemented')
+    throw new Error("addRRect is not implemented")
   }
 
   addOval(rect: Rect) {
@@ -173,7 +111,73 @@ export class Path {
   }
 
   close() {
-    this.path += "Z"
+    this._d += "Z"
+    return this
+  }
+
+  private _quadraticBezierTo(
+    {
+      controlPoint,
+      endPoint,
+    }: {
+      controlPoint: Offset
+      endPoint: Offset
+    },
+    relative: boolean
+  ) {
+    this._d += `${relative ? "q" : "Q"}${controlPoint.x} ${controlPoint.y} ${
+      endPoint.x
+    } ${endPoint.y}`
+    return this
+  }
+
+  private _lineTo({ x, y }: Offset, relative: boolean) {
+    this._d += `${relative ? "l" : "L"}${x} ${y}`
+    return this
+  }
+
+  private _moveTo({ x, y }: Offset, relative: boolean) {
+    this._d += `${relative ? "m" : "M"}${x} ${y}`
+    return this
+  }
+
+  private _cubicTo(
+    {
+      startControlPoint,
+      endControlPoint,
+      endPoint,
+    }: {
+      endControlPoint: Offset
+      startControlPoint: Offset
+      endPoint: Offset
+    },
+    relative: boolean
+  ) {
+    this._d += `${relative ? "c" : "C"}${startControlPoint.x} ${
+      startControlPoint.y
+    } ${endControlPoint.x} ${endControlPoint.y} ${endPoint.x} ${endPoint.y}`
+    return this
+  }
+
+  private _arcToPoint(
+    {
+      endPoint,
+      radius,
+      rotation,
+      largeArc,
+      clockwise,
+    }: {
+      endPoint: Offset
+      rotation: number
+      radius: Radius
+      largeArc: boolean
+      clockwise: boolean
+    },
+    relative: boolean
+  ) {
+    this._d += `${relative ? "a" : "A"}${radius.x} ${radius.y} ${rotation} ${
+      largeArc ? 1 : 0
+    } ${clockwise ? 1 : 0} ${endPoint.x} ${endPoint.y}`
     return this
   }
 }
@@ -184,3 +188,5 @@ type Radius = {
   x: number
   y: number
 }
+
+export default Path
