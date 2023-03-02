@@ -1,5 +1,5 @@
 import type Rect from "./Rect"
-import { RRect } from "./rRect"
+import { RRect } from "./RRect"
 
 export class Path {
   private _d: string = ""
@@ -87,8 +87,8 @@ export class Path {
       largeArc: false,
       clockwise: true,
     }
-    const point1 = { x: rect.left, y: rect.height / 2 }
-    const point2 = { x: rect.right, y: rect.height / 2 }
+    const point1 = { x: rect.left, y: (rect.top + rect.bottom) / 2}
+    const point2 = { x: rect.right, y: (rect.top + rect.bottom) / 2 }
 
     return this.moveTo(point1)
       .arcToPoint({

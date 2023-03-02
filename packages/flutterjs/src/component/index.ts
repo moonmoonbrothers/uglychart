@@ -14,9 +14,13 @@ import Transform from "./Transform"
 import Stack from "./Stack"
 import Positioned from "./Positioned"
 import ClipPath from "./ClipPath"
+import ClipRect from "./ClipRect"
+import ClipOval from "./ClipRect"
 
 export {
   ClipPath,
+  ClipOval,
+  ClipRect,
   Center,
   Row,
   Text,
