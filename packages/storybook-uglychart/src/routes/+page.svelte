@@ -25,32 +25,13 @@
 
 <div class="container">
 	<div class="chart">
-		<!-- <Widget
-			height="400px"
-			widget={Container({
-				margin: EdgeInsets.only({ top: 50 }),
-				color: 'lightblue',
-				child: Row({
-					children: [
-						Container({
-							color: ' red',
-							child: Text('1234가', { style: { fontSize: '50px' }, textBaseline: 'central' })
-						}),
-						Container({ height: 2, color: 'red', width: 10 })
-					]
-				})
-			})}
-		/> -->
 		<Widget
 			height="500px"
-			widget={BarChart({
+			widget={StackedBarChart({
 				custom: {
 					barGroup: {
 						type: 'config',
 						barBackgroundColors: ['black', 'grey', 'brown', 'black']
-					},
-					chart: {
-						type: 'config'
 					},
 					bar: {
 						type: 'config',
@@ -94,9 +75,6 @@
 		<Widget
 			height="400px"
 			widget={BarChart({
-				scale: {
-					max: 100
-				},
 				custom: {
 					barGroup: {
 						type: 'config',
@@ -105,7 +83,7 @@
 					},
 					chart: {
 						type: 'config',
-						direction: 'vertical'
+						direction: 'vertical',
 					},
 					bar: {
 						type: 'config',

@@ -56,7 +56,7 @@ export class DataLabel extends ComponentWidget {
 
     return Positioned({
       child: Container({
-        child: Text(`${value}`, {}),
+        child: Text(``, {}),
       }),
     })
   }
