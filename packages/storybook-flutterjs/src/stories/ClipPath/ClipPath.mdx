@@ -1,0 +1,131 @@
+import { Meta, Story } from '@storybook/blocks';
+import { Source } from '@storybook/addon-docs';
+import { dedent } from 'ts-dedent';
+import * as Stories from './ClipPath.stories';
+
+<Meta of={Stories} />
+
+# ClipPath 
+
+This widget clip the child widget like ClipPath Widget in Flutter.
+
+ClipPath take clipper that is callback function and return Path object.
+
+You can create Whatever shape with Path object.
+
+
+<br />
+<br />
+
+## Basic
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+  import { Container, ClipPath } from '@moonmoonbrothers/flutterjs';
+  import { Path } from '@moonmoonbrothers/flutterjs/types';
+
+  ClipPath({
+    clipper: (size) => new Path()
+      .moveTo({ x: 0, y: 0 })
+      .lineTo({ x: 0, y: size.height })
+      .lineTo({ x: size.width, y: size.height })
+      .close(),
+    child: Container({
+      color: 'black'
+    })
+  })
+`}
+/>
+
+<Story of={Stories.Basic} />
+
+<br/>
+
+## Rect
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+  import { Container, ClipPath } from '@moonmoonbrothers/flutterjs';
+  import { Path, Rect } from '@moonmoonbrothers/flutterjs/types';
+
+  ClipPath({
+    clipper: (size) => new Path()
+      .addRect(
+        Rect.fromCenter({
+          center: { x: size.width / 2, y: size.height / 2 },
+          width: size.width / 2,
+          height: size.height / 2
+        })
+      )
+      .addRect(
+        Rect.fromCenter({
+          center: { x: (size.width * 7) / 8, y: size.height / 8 },
+          width: size.width / 4,
+          height: size.height / 4
+        })
+      )
+      .addRect(
+        Rect.fromCenter({
+          center: { x: size.width / 8, y: size.height / 8 },
+          width: size.width / 4,
+          height: size.height / 4
+        })
+      )
+      .addRect(
+        Rect.fromCenter({
+          center: { x: size.width / 8, y: (size.height * 7) / 8 },
+          width: size.width / 4,
+          height: size.height / 4
+        })
+      )
+      .addRect(
+        Rect.fromCenter({
+          center: { x: (size.width * 7) / 8, y: (size.height * 7) / 8 },
+          width: size.width / 4,
+          height: size.height / 4
+        })
+      ),
+    child: Container({
+      color: 'black'
+    })
+  })
+`}
+/>
+
+<Story of={Stories.RectClip} />
+
+<br/>
+
+## Oval
+
+<Source
+  language='jsx'
+  dark
+  format={false}
+  code={dedent`
+  import { Container, ClipPath } from '@moonmoonbrothers/flutterjs';
+  import { Path, Rect } from '@moonmoonbrothers/flutterjs/types';
+
+  ClipPath({
+    clipper: (size) => new Path()
+      .addOval(
+        Rect.fromCenter({
+          center: { x: size.width / 2, y: size.height / 2 },
+          width: size.width,
+          height: size.height
+        })
+      ),
+    child: Container({
+      color: 'black'
+    })
+  })
+`}
+/>
+
+<Story of={Stories.RectOval} />

@@ -5,9 +5,6 @@ import { Container, Path, ClipPath, Rect, Center } from '@moonmoonbrothers/flutt
 const meta = {
 	title: 'Widget/ClipPath',
 	component: Widget,
-	parameters: {
-		layout: 'fullscreen'
-	}
 } satisfies Meta<Widget>;
 
 export default meta;
