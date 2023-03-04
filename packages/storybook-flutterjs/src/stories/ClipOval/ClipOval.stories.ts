@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '@moonmoonbrothers/flutterjs-svelte';
-import { Container, Path, ClipRect, Rect, Center, ClipOval } from '@moonmoonbrothers/flutterjs';
+import { Container, Rect, ClipOval, Column, Row, Flexible } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
 	title: 'Widget/ClipOval',
@@ -27,8 +27,41 @@ export const Basic: Story = {
 					width: size.width / 2,
 					height: size.height / 2
 				}),
-			child: Container({
-				color: 'black'
+			child: Column({
+				children: [
+					Flexible({
+						child: Row({
+							children: [
+								Flexible({
+									child: Container({
+										color: 'blue'
+									})
+								}),
+								Flexible({
+									child: Container({
+										color: 'red'
+									})
+								})
+							]
+						})
+					}),
+					Flexible({
+						child: Row({
+							children: [
+								Flexible({
+									child: Container({
+										color: 'green'
+									})
+								}),
+								Flexible({
+									child: Container({
+										color: 'purple'
+									})
+								})
+							]
+						})
+					})
+				]
 			})
 		})
 	}
