@@ -66,3 +66,63 @@ export const Basic: Story = {
 		})
 	}
 };
+
+export const TranslatedClip: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		widget: Column({
+			children: [
+				Flexible({
+					child: Row({
+						children: [
+							Flexible({
+								child: ClipOval({
+									clipper: (size) =>
+										Rect.fromCenter({
+											center: { x: size.width / 2, y: size.height / 2 },
+											width: size.width / 2,
+											height: size.height / 2
+										}),
+									child: Container({
+										color: 'blue'
+									})
+								})
+							}),
+							Flexible({
+								child: Container({
+									color: 'red'
+								})
+							})
+						]
+					})
+				}),
+				Flexible({
+					child: Row({
+						children: [
+							Flexible({
+								child: Container({
+									color: 'green'
+								})
+							}),
+							Flexible({
+								child: ClipOval({
+									clipper: (size) =>
+										Rect.fromCenter({
+											center: { x: size.width / 2, y: size.height / 2 },
+											width: size.width / 2,
+											height: size.height / 2
+										}),
+									child: Container({
+										color: 'purple'
+									})
+								})
+							})
+						]
+					})
+				})
+			]
+		})
+	}
+};

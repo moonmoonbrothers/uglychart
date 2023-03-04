@@ -67,10 +67,19 @@ class RenderObject {
     let container: SVGElement
     if (oldEl) {
       container = oldEl
-      for (const child of oldEl.children) {
+      if (oldEl.nodeName === "g") {
+        for (const child of oldEl.children) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const name = child.getAttribute("data-render-name")!
+          svgEls[name] = child as unknown as SVGElement
+        }
+      /*
+        This must be clip path element!
+      */
+      } else {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const name = child.getAttribute("data-render-name")!
-        svgEls[name] = child as unknown as SVGElement
+        const name = oldEl.getAttribute("data-render-name")!
+        svgEls[name] = oldEl
       }
     } else {
       svgEls = this.createDefaultSvgEl(context)
@@ -78,14 +87,32 @@ class RenderObject {
         value.setAttribute("data-render-name", name)
       })
       const values = Object.values(svgEls)
-      const svgG = context.createSvgEl("g")
-      container = svgG
-      context.setId(svgG, this.id)
-      appendSvgEl(svgG)
-      svgG.setAttribute("data-render-type", this.type)
-      values.forEach((value) => {
-        svgG.appendChild(value)
-      })
+      /*
+       For absolute Clip coordinate, 
+       svg element should be wrapped g tag and g tags must have only one attribute clip-path="url(...)" .
+       If transform and clip-path are applied to same svg element, the clip-path is also transformed that is not expected in this library.
+       So transform should be applied to g tag's children in order not to affect clip-path. 
+       And ClipPath should not be wrapped g tag for multiple clip-path 
+       if ClipPath is wrapped g tag, parent clip-path that is applied on g tag can not affect child clipPath element. 
+       parent clipPath must be applied to clipPath element itself. 
+       I don't know it is intended behavior in svg 2.0 specification.
+      */
+      if (values.length === 1 && values[0].nodeName === "CLIPPATH") {
+        const svgEl = values[0]
+        container = svgEl
+        context.setId(svgEl, this.id)
+        svgEl.setAttribute("data-render-type", this.type)
+        appendSvgEl(svgEl)
+      } else {
+        const svgG = context.createSvgEl("g")
+        container = svgG
+        context.setId(svgG, this.id)
+        appendSvgEl(svgG)
+        svgG.setAttribute("data-render-type", this.type)
+        values.forEach((value) => {
+          svgG.appendChild(value)
+        })
+      }
     }
     return { svgEls, container }
   }
