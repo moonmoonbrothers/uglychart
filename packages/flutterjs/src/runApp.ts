@@ -136,13 +136,13 @@ export class Owner {
         return el
       },
       setId(el, id) {
-        el.setAttribute("data-render-id", id)
+        el.setAttribute("id", id)
       },
       appendSvgEl(el) {
         view.appendChild(el)
       },
       findSvgEl(id: string) {
-        return view.querySelector(`[data-render-id="${id}"]`) as SVGAElement | null
+        return view.querySelector(`[id="${id}"]`) as SVGAElement | null
       },
     }
   }

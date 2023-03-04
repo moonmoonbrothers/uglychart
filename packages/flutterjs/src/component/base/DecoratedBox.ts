@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Constraint, Size, Radius, BorderStyle, Offset } from "../../type"
+import { Constraint, Size, Radius, BorderStyle } from "../../type"
 import type { Border } from "../../type/_types/BorderStyle"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -86,14 +86,11 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     size.height += top.thickness + bottom.thickness
     this.size = this.constraint.constrain(size)
   }
-  protected performPaint(
-    {
-      rect: rectEl,
-    }: {
-      [key: string]: SVGElement
-    },
-    offset: Offset
-  ): void {
+  protected performPaint({
+    rect: rectEl,
+  }: {
+    [key: string]: SVGElement
+  }): void {
     const {
       color,
       border: {
@@ -130,8 +127,6 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     this.assertEqualBorder(borderTop, borderBottom)
     this.assertEqualBorder(borderBottom, borderLeft)
     this.assertEqualBorder(borderLeft, borderRight)
-
-    rectEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`)
 
     rectEl.setAttribute(
       "style",
