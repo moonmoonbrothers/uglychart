@@ -44,7 +44,6 @@ class RenderClipPath extends SingleChildRenderObject {
     const pathEl = clipPath.getElementsByTagName("path")[0]
     const d = this.clipper(this.size).getD()
 
-    pathEl.setAttribute("stroke-width", "0")
     pathEl.setAttribute("d", d)
   }
 
@@ -52,7 +51,9 @@ class RenderClipPath extends SingleChildRenderObject {
     [key: string]: SVGElement
   } {
     const clipPath = createSvgEl("clipPath")
+    clipPath.setAttribute("id", this.id)
     const path = createSvgEl("path")
+    path.setAttribute("stroke-width", "0")
     clipPath.appendChild(path)
     return {
       clipPath,
