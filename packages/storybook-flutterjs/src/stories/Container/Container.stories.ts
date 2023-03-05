@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
@@ -73,7 +72,9 @@ export const Case1: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case1Code),
+		widget: Container({
+			color: 'lightblue'
+		}),
 		code: ImportWidgetCode + Case1Code
 	}
 };
@@ -88,7 +89,10 @@ export const Case2: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case2Code),
+		widget: Container({
+			color: 'lightblue',
+			child: Text('text', { style: { fontSize: '30px' } })
+		}),
 		code: ImportWidgetCode + Case2Code
 	}
 };
@@ -109,7 +113,17 @@ export const Case3: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case3Code),
+		widget: Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			padding: EdgeInsets.all(10),
+			child: Container({
+				color: 'green',
+				child: Text('child in blue container')
+			})
+		}),
+
 		code: ImportWidgetCode + Case3Code
 	}
 };
@@ -131,7 +145,17 @@ export const Case4: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case4Code),
+		widget: Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			padding: EdgeInsets.all(10),
+			alignment: Alignment.center,
+			child: Container({
+				color: 'green',
+				child: Text('child')
+			})
+		}),
 		code: ImportWidgetCode + Case4Code
 	}
 };

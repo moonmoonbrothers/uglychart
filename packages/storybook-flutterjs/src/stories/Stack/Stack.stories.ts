@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { Container, Alignment, Stack, Positioned } from '@moonmoonbrothers/flutterjs';
@@ -58,7 +57,24 @@ export const Case1: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case1Code),
+		widget: Container({
+			color: 'lightgrey',
+			alignment: Alignment.center,
+			child: Stack({
+				children: [
+					Container({
+						width: 100,
+						height: 100,
+						color: 'green'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					})
+				]
+			})
+		}),
 		code: ImportWidgetCode + Case1Code
 	}
 };
@@ -95,7 +111,30 @@ export const Case2: Story = {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: eval(Case2Code),
+		widget: Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				children: [
+					Container({
+						width: 100,
+						height: 100,
+						color: 'green'
+					}),
+					Positioned({
+						bottom: 0,
+						right: 0,
+						child: Container({
+							width: 50,
+							height: 50,
+							color: 'red'
+						})
+					})
+				]
+			})
+		}),
 		code: ImportWidgetCode + Case2Code
 	}
 };
