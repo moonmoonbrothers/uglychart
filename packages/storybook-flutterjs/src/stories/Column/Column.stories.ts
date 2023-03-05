@@ -14,11 +14,29 @@ const meta = {
 		docs: {
 			description: {
 				component: dedent`
-					This is **Column** widget. 
+				This is **Column** widget. 
+				This widget motivated by Row in Flutter.
+				
+				>To cause a child to expand to fill the available vertical space, wrap the child in an Expanded widget.
+				The Column widget does not scroll (and in general it is considered an error to have more children in a Column than will fit in the available room). If you have a line of widgets and want them to be able to scroll if there is insufficient room, consider using a ListView.
+				For a horizontal variant, see Row.
+				If you only have one child, then consider using Align or Center to position the child.
 
-					This widget motivated by Column in Flutter.
+				See: https://api.flutter.dev/flutter/widgets/Column-class.html
 
-					See: https://api.flutter.dev/flutter/widgets/Column-class.html
+				## Props
+				### mainAxisAlignment 
+				**Value: center | start | end | spaceBetween | spaceEven | spaceAround** (default: **start**)
+
+				This prop defines the **vertical** display of its children.
+
+				### crossAxisAlignment
+				**Value: stretch | start | center | end** (default: **center**)
+
+				This prop defines the **horizontal** display of its children.
+
+				### children
+				**value**: **Widget[]**
 				`
 			}
 		}
