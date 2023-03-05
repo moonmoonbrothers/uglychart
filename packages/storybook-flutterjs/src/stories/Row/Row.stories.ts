@@ -3,7 +3,7 @@ import Widget from '../../Widget.svelte';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
-const ImportWidgetCode = dedent` import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
+const ImportWidgetCode = dedent`import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 \n\n`;
 
 const meta = {

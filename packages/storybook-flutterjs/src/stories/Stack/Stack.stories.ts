@@ -15,10 +15,15 @@ const meta = {
 			description: {
 				component: dedent`
 					This is **Stack** widget. 
-
 					This widget motivated by Stack in Flutter.
 
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/liEGSeD3Zt8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 					See: https://api.flutter.dev/flutter/widgets/Stack-class.html
+
+					## Props
+				  ### children
+				  **Value: Widget[]**
 				`
 			}
 		}
