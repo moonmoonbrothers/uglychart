@@ -14,8 +14,11 @@ const meta = {
 		docs: {
 			description: {
 				component: dedent`
-					This is Column widget. 
-					## Hi
+					This is **Column** widget. 
+
+					This widget motivated by Column in Flutter.
+
+					See: https://api.flutter.dev/flutter/widgets/Column-class.html
 				`
 			}
 		}

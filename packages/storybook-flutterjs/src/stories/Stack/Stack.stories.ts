@@ -14,8 +14,11 @@ const meta = {
 		docs: {
 			description: {
 				component: dedent`
-					This is Stack widget. 
-					## Hi
+					This is **Stack** widget. 
+
+					This widget motivated by Stack in Flutter.
+
+					See: https://api.flutter.dev/flutter/widgets/Stack-class.html
 				`
 			}
 		}

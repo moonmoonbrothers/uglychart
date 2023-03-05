@@ -14,8 +14,11 @@ const meta = {
 		docs: {
 			description: {
 				component: dedent`
-					This is Container widget. 
-					## Hi
+					This is **Container** widget. 
+
+					This widget motivated by Container in Flutter.
+
+					See: https://api.flutter.dev/flutter/widgets/Container-class.html
 				`
 			}
 		}

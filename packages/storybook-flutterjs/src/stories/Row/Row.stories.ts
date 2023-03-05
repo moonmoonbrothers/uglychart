@@ -14,8 +14,32 @@ const meta = {
 		docs: {
 			description: {
 				component: dedent`
-					This is Row widget. 
-					## Hi
+				This is **Row** widget. 
+				This widget motivated by Row in Flutter.
+				
+					A widget that displays its children in a horizontal array.
+
+					To cause a child to expand to fill the available horizontal space, wrap the child in an Expanded widget.
+
+					The Row widget does not scroll (and in general it is considered an error to have more children in a Row than will fit in the available room). If you have a line of widgets and want them to be able to scroll if there is insufficient room, consider using a ListView.
+
+					For a vertical variant, see Column.
+
+					If you only have one child, then consider using Align or Center to position the child.
+
+				See: https://api.flutter.dev/flutter/widgets/Row-class.html
+
+
+				## Props
+				### mainAxisAlignment 
+				**value**: center | start | end | spaceBetween | spaceEven | spaceAround (default: **start**)
+
+				This prop defines the **horizontal** display of its children.
+
+				### crossAxisAlignment
+				**value**: stretch | start | center | end (default: center)
+
+				This prop defines the **vertical** display of its children.
 				`
 			}
 		}
