@@ -1,347 +1,385 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Column, Container, Flexible } from '@moonmoonbrothers/flutterjs';
+import { dedent } from 'ts-dedent';
+const ImportWidgetCode = dedent` import { Column, Container, Flexible } from '@moonmoonbrothers/flutterjs';
+\n\n`;
 
 const meta = {
 	title: 'Widget/Column',
 	component: Widget,
-	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
 	tags: ['autodocs'],
 	parameters: {
-		// More on how to position stories at: https://storybook.js.org/docs/7.0/svelte/configure/story-layout
-		layout: 'fullscreen'
+		docs: {
+			description: {
+				component: dedent`
+					This is Column widget. 
+					## Hi
+				`
+			}
+		}
 	}
 } satisfies Meta<Widget>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// description: `Column can have muliple widgets,
-// Basically, its height would be stretched as possible.
-// its width would be shrinked to fit child max width
-// `,
+const Case1Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 100,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 export const Case1: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 100,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		}),
-		description: 'ㅅ시발아'
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Some component _markdown_'
-			}
-		}
+		widget: eval(Case1Code),
+		code: ImportWidgetCode + Case1Code
 	}
 };
 
-// description: `Column can have mainAxisAlignment: 'end'`,
+const Case2Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'end',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 export const Case2: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'end',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
+		widget: eval(Case2Code),
+		code: ImportWidgetCode + Case2Code
 	}
 };
 
-// description: `Column can have mainAxisAlignment: 'spaceBetween'`,
+const Case3Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceBetween',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
+
 export const Case3: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceBetween',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
+		widget: eval(Case3Code),
+		code: ImportWidgetCode + Case3Code
 	}
 };
+
+const Case4Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceEvenly',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 
 export const Case4: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceEvenly',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-		// description: `Column can have mainAxisAlignment: 'spaceEvenly'`
+		widget: eval(Case4Code),
+		code: ImportWidgetCode + Case4Code
 	}
 };
+
+const Case5Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceAround',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 
 export const Case5: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceAround',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-		// description: `Column can have mainAxisAlignment: 'spaceAround'`
+		widget: eval(Case5Code),
+		code: ImportWidgetCode + Case5Code
 	}
 };
+
+const Case6Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceBetween',
+			crossAxisAlignment: 'center',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 100,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 
 export const Case6: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceBetween',
-				crossAxisAlignment: 'center',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 100,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-		// description: `Column can have crossAlignment: 'center(default)'`
+		widget: eval(Case6Code),
+		code: ImportWidgetCode + Case6Code
 	}
 };
+
+const Case7Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceBetween',
+			crossAxisAlignment: 'start',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 100,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 
 export const Case7: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceBetween',
-				crossAxisAlignment: 'start',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 100,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-		// description: `Column can have crossAlignment: 'start'`
+		widget: eval(Case7Code),
+		code: ImportWidgetCode + Case7Code
 	}
 };
+
+const Case8Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceBetween',
+			crossAxisAlignment: 'end',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 100,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
 
 export const Case8: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceBetween',
-				crossAxisAlignment: 'end',
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 100,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-		// description: `Column can have crossAlignment: 'end'`
+		widget: eval(Case8Code),
+		code: ImportWidgetCode + Case8Code
 	}
 };
+
+const Case9Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			mainAxisAlignment: 'spaceBetween',
+			crossAxisAlignment: 'stretch',
+			children: [
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				}),
+				Container({
+					width: 100,
+					height: 50,
+					color: 'blue'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'green'
+				})
+			]
+		})
+	})
+`;
+
 export const Case9: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				mainAxisAlignment: 'spaceBetween',
-				crossAxisAlignment: 'stretch',
-				children: [
-					Container({
+		widget: eval(Case9Code),
+		code: ImportWidgetCode + Case9Code
+	}
+};
+
+const Case10Code = dedent`
+	widget: Container({
+		color: 'lightblue',
+		child: Column({
+			children: [
+				Flexible({
+					child: Container({
 						width: 50,
 						height: 50,
 						color: 'red'
-					}),
-					Container({
-						width: 100,
-						height: 50,
-						color: 'blue'
-					}),
-					Container({
+					})
+				}),
+				Flexible({
+					child: Container({
 						width: 50,
 						height: 50,
-						color: 'green'
+						color: 'blue'
 					})
-				]
-			})
+				})
+			]
 		})
-		// description: `Column can have crossAlignment: 'stretch'`
-	}
-};
+	})
+`;
+
 export const Case10: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
-		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				children: [
-					Flexible({
-						child: Container({
-							width: 50,
-							height: 50,
-							color: 'red'
-						})
-					}),
-					Flexible({
-						child: Container({
-							width: 50,
-							height: 50,
-							color: 'blue'
-						})
-					})
-				]
-			})
-		})
-		// description: `Column can have Flexible widget`
+		widget: eval(Case10Code),
+		code: ImportWidgetCode + Case10Code
 	}
 };
