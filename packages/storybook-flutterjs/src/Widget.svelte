@@ -23,7 +23,7 @@
 </div>
 
 {#if code}
-	<div class="shadow">
+	<div class="wrapper">
 		<div class="highlight">
 			<Highlight langtag language={typescript} code={code.replaceAll('  ', ' ')} />
 		</div>
@@ -57,9 +57,10 @@
 		-webkit-clip-path: inset(0px round 4px);
 		clip-path: inset(0px round 4px);
 	}
-	.shadow {
+	.wrapper {
 		border-radius: 4px;
 		box-shadow: rgb(0 0 0 / 20%) 0 2px 5px 0 !important;
+		max-width: 1000px;
 	}
 	:global(.highlight code) {
 		padding: 20px !important;

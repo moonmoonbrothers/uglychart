@@ -14,7 +14,6 @@ import {
 	SizedBox,
 } from '@moonmoonbrothers/flutterjs';
 
-
 const importWidgets = dedent`import {
 	Container,
 	Rect,
@@ -140,6 +139,6 @@ export const TranslatedClip: Story = {
 		width: '400px',
 		height: '400px',
 		widget: eval(TranslatedClipWidget),
-		code: TranslatedClipWidget  
+		code: importWidgets + "\n\n" + TranslatedClipWidget,
 	}
 };
