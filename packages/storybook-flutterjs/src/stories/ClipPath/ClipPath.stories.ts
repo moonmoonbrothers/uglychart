@@ -80,7 +80,8 @@ const RectClipCode = dedent`
 			color: 'black'
 		})
 	})
-`;
+`; 
+
 export const RectClip: Story = {
 	args: {
 		ssrSize: { width: 400, height: 400 },
