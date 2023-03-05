@@ -17,50 +17,6 @@ This widget use <b>ClipPath</b> internally to clip the child widget
 
 ## Basic
 
-<Source
-  language='js'
-  dark
-  format={false}
-  code={dedent`
-  import { Container, ClipOval, Stack, Positioned, SizedBox } from '@moonmoonbrothers/flutterjs';
-  import { Rect } from '@moonmoonbrothers/flutterjs/types';
-
-  ClipOval({
-    clipper: (size) =>
-      Rect.fromLTWH({
-        left: 0,
-        top: 0,
-        width: size.width * 3 / 4,
-        height: size.height * 3 / 4
-      }),
-    child: Stack({
-      children: [
-        SizeBox({
-          width: 400,
-          height: 400
-        }),
-        Positioned({
-          child: Container({ width: 200, height: 200, color: 'blue' })
-        }),
-        Positioned({
-          left: 200,
-          child: Container({ width: 200, height: 200, color: 'red' })
-        }),
-        Positioned({
-          top: 200,
-          child: Container({ width: 200, height: 200, color: 'green' })
-        }),
-        Positioned({
-          left: 200,
-          top: 200,
-          child: Container({ width: 200, height: 200, color: 'purple' })
-        })
-      ]
-    })
-  })
-`}
-/>
-
 <div style={{color: 'white'}}>
   <Story of={Stories.Basic} />
 </div>

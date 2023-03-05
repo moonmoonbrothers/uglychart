@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
+import { dedent } from 'ts-dedent';
 import {
 	Container,
 	Rect,
@@ -8,10 +10,23 @@ import {
 	Row,
 	Flexible,
 	Stack,
-	Positioned
+	Positioned,
+	SizedBox,
 } from '@moonmoonbrothers/flutterjs';
-import SizeBox from '@moonmoonbrothers/flutterjs/src/component/SizedBox';
 
+
+const importWidgets = dedent`import {
+	Container,
+	Rect,
+	ClipOval,
+	Column,
+	Row,
+	Flexible,
+	Stack,
+	Positioned,
+	SizedBox,
+} from '@moonmoonbrothers/flutterjs'
+`
 const meta = {
 	title: 'Widget/ClipOval',
 	component: Widget
@@ -20,53 +35,53 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const BasicWidget = dedent`
+	ClipOval({
+		clipper: (size) =>
+			Rect.fromLTWH({
+				left: 0,
+				top: 0,
+				width: (size.width * 3) / 4,
+				height: (size.height * 3) / 4
+			}),
+		child: Stack({
+			children: [
+				SizedBox({
+					width: 400,
+					height: 400
+				}),
+				Positioned({
+					child: Container({ width: 200, height: 200, color: 'blue' })
+				}),
+				Positioned({
+					left: 200,
+					child: Container({ width: 200, height: 200, color: 'red' })
+				}),
+				Positioned({
+					top: 200,
+					child: Container({ width: 200, height: 200, color: 'green' })
+				}),
+				Positioned({
+					left: 200,
+					top: 200,
+					child: Container({ width: 200, height: 200, color: 'purple' })
+				})
+			]
+		})
+	})
+	`;
 export const Basic: Story = {
 	args: {
 		ssrSize: { width: 400, height: 400 },
 		width: '400px',
 		height: '400px',
-		widget: ClipOval({
-			clipper: (size) =>
-				Rect.fromLTWH({
-					left: 0,
-					top: 0,
-					width: (size.width * 3) / 4,
-					height: (size.height * 3) / 4
-				}),
-			child: Stack({
-				children: [
-					SizeBox({
-						width: 400,
-						height: 400
-					}),
-					Positioned({
-						child: Container({ width: 200, height: 200, color: 'blue' })
-					}),
-					Positioned({
-						left: 200,
-						child: Container({ width: 200, height: 200, color: 'red' })
-					}),
-					Positioned({
-						top: 200,
-						child: Container({ width: 200, height: 200, color: 'green' })
-					}),
-					Positioned({
-						left: 200,
-						top: 200,
-						child: Container({ width: 200, height: 200, color: 'purple' })
-					})
-				]
-			})
-		})
+		code: importWidgets + "\n\n" + BasicWidget,
+		widget: eval(BasicWidget)
 	}
 };
 
-export const TranslatedClip: Story = {
-	args: {
-		ssrSize: { width: 400, height: 400 },
-		width: '400px',
-		height: '400px',
-		widget: Column({
+const TranslatedClipWidget = dedent`
+		Column({
 			children: [
 				Flexible({
 					child: Row({
@@ -118,5 +133,13 @@ export const TranslatedClip: Story = {
 				})
 			]
 		})
+`
+export const TranslatedClip: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		widget: eval(TranslatedClipWidget),
+		code: TranslatedClipWidget  
 	}
 };
