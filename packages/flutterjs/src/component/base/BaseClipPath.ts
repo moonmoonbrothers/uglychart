@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Size, Constraint } from "../../type"
+import { Size, Constraint, Offset } from "../../type"
 import { Path } from "../../type/_types/Path"
 import { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -40,11 +40,14 @@ class RenderClipPath extends SingleChildRenderObject {
     this.size = this.child?.size ?? Size.zero()
   }
 
-  protected performPaint({ clipPath }: { [key: string]: SVGElement }): void {
+  protected performPaint(
+    { clipPath }: { [key: string]: SVGElement },
+    offset: Offset
+  ): void {
     const pathEl = clipPath.getElementsByTagName("path")[0]
     const d = this.clipper(this.size).getD()
 
-    pathEl.setAttribute("stroke-width", "0")
+    pathEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`)
     pathEl.setAttribute("d", d)
   }
 
@@ -52,7 +55,9 @@ class RenderClipPath extends SingleChildRenderObject {
     [key: string]: SVGElement
   } {
     const clipPath = createSvgEl("clipPath")
+    clipPath.setAttribute("id", this.id)
     const path = createSvgEl("path")
+    path.setAttribute("stroke-width", "0")
     clipPath.appendChild(path)
     return {
       clipPath,

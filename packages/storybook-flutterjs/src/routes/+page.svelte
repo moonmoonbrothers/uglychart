@@ -2,24 +2,20 @@
 </script>
 
 <svg viewBox="0 0 200 200">
-	<!-- 클립패스 요소 -->
-	<clipPath id="myClip">
-		<path
-			d="M0 0 L200 200 L0 200 z M200 0 L100 0 L100 100 200 100Z "
-			stroke-width="0"
-			stroke="red"
-		/>
+	<!-- <mask id="my-mask">
+		<rect x="0" y="0" width="100" height="100" fill="white" stroke="none" />
+		<rect x="25" y="25" width="50" height="50" fill="black" stroke="none" />
+	</mask> -->
+	<clipPath id="my-mask">
+		<rect x="25" y="25" width="50" height="50" fill="black" stroke="none" />
 	</clipPath>
-	<!--don't need to care about hit testing!!!!!! yahoo!!-->
+
 	<rect
-		clip-path="url(#myClip)"
-		style="cursor: pointer;"
-		on:click={() => alert('clicked!!')}
-		on:keydown={() => {}}
 		x="0"
 		y="0"
-		width="200"
-		height="200"
-		fill="black"
+		fill="blue"
+		width="100"
+		height="100"
+		transform="translate(50, 50) rotate(45)"
 	/>
 </svg>
