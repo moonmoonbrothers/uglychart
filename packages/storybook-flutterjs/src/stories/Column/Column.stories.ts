@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import Widget from '@moonmoonbrothers/flutterjs-svelte';
+import Widget from '../../Widget.svelte';
 import { Column, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -46,7 +46,15 @@ export const Case1: Story = {
 					})
 				]
 			})
-		})
+		}),
+		description: 'ㅅ시발아'
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Some component _markdown_'
+			}
+		}
 	}
 };
 

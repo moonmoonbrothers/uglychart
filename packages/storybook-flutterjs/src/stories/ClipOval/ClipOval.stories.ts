@@ -1,15 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import Widget from '@moonmoonbrothers/flutterjs-svelte';
-import { Container, Rect, ClipOval, Column, Row, Flexible } from '@moonmoonbrothers/flutterjs';
+import Widget from '../../Widget.svelte';
+import {
+	Container,
+	Rect,
+	ClipOval,
+	Column,
+	Row,
+	Flexible,
+	Stack,
+	Positioned
+} from '@moonmoonbrothers/flutterjs';
+import SizeBox from '@moonmoonbrothers/flutterjs/src/component/SizedBox';
 
 const meta = {
 	title: 'Widget/ClipOval',
-	component: Widget,
-	// This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
-	parameters: {
-		// More on how to position stories at: https://storybook.js.org/docs/7.0/svelte/configure/story-layout
-		layout: 'fullscreen'
-	}
+	component: Widget
 } satisfies Meta<Widget>;
 
 export default meta;
@@ -22,44 +27,33 @@ export const Basic: Story = {
 		height: '400px',
 		widget: ClipOval({
 			clipper: (size) =>
-				Rect.fromCenter({
-					center: { x: size.width / 2, y: size.height / 2 },
-					width: size.width / 2,
-					height: size.height / 2
+				Rect.fromLTWH({
+					left: 0,
+					top: 0,
+					width: (size.width * 3) / 4,
+					height: (size.height * 3) / 4
 				}),
-			child: Column({
+			child: Stack({
 				children: [
-					Flexible({
-						child: Row({
-							children: [
-								Flexible({
-									child: Container({
-										color: 'blue'
-									})
-								}),
-								Flexible({
-									child: Container({
-										color: 'red'
-									})
-								})
-							]
-						})
+					SizeBox({
+						width: 400,
+						height: 400
 					}),
-					Flexible({
-						child: Row({
-							children: [
-								Flexible({
-									child: Container({
-										color: 'green'
-									})
-								}),
-								Flexible({
-									child: Container({
-										color: 'purple'
-									})
-								})
-							]
-						})
+					Positioned({
+						child: Container({ width: 200, height: 200, color: 'blue' })
+					}),
+					Positioned({
+						left: 200,
+						child: Container({ width: 200, height: 200, color: 'red' })
+					}),
+					Positioned({
+						top: 200,
+						child: Container({ width: 200, height: 200, color: 'green' })
+					}),
+					Positioned({
+						left: 200,
+						top: 200,
+						child: Container({ width: 200, height: 200, color: 'purple' })
 					})
 				]
 			})

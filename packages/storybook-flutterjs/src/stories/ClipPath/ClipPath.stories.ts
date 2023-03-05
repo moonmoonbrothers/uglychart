@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import Widget from '@moonmoonbrothers/flutterjs-svelte';
+import Widget from '../../Widget.svelte';
 import { Container, Path, ClipPath, Rect, Center } from '@moonmoonbrothers/flutterjs';
 
 const meta = {

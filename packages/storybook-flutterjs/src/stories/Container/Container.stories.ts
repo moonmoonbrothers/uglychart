@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import Widget from '@moonmoonbrothers/flutterjs-svelte';
-import {  Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
+import Widget from '../../Widget.svelte';
+import { Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
 	title: 'Widget/Container',
@@ -73,8 +73,8 @@ export const Case4: Story = {
 				color: 'green',
 				child: Text('child')
 			})
-		}),
-	// 	description: `although the container is in tight constraint(including that it have own width and height), 
-  //  containter with alignment loosen constraint. so child dont have to be expanded`
+		})
+		// 	description: `although the container is in tight constraint(including that it have own width and height),
+		//  containter with alignment loosen constraint. so child dont have to be expanded`
 	}
 };
