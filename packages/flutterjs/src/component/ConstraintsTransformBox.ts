@@ -34,4 +34,16 @@ function ConstraintsTransformBox({
   })
 }
 
+ConstraintsTransformBox.heightUnconstrained =
+  BaseConstraintsTransformBox.heightUnconstrained
+ConstraintsTransformBox.maxHeightUnconstrained =
+  BaseConstraintsTransformBox.maxHeightUnconstrained
+ConstraintsTransformBox.maxUnconstrained =
+  BaseConstraintsTransformBox.maxUnconstrained
+ConstraintsTransformBox.maxWidthUnconstrained =
+  BaseConstraintsTransformBox.maxWidthUnconstrained
+ConstraintsTransformBox.unconstrained =
+  BaseConstraintsTransformBox.unconstrained
+ConstraintsTransformBox.unmodified = BaseConstraintsTransformBox.unmodified
+
 export default ConstraintsTransformBox

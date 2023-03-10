@@ -63,7 +63,7 @@ export default function Container({
 
   current = new ConstrainedBox({
     child: current,
-    constraint,
+    constraints: constraint,
   })
 
   if (margin != null) {

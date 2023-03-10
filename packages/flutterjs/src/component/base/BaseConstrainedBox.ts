@@ -3,29 +3,29 @@ import { Size, Constraints } from "../../type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
-class BaseConstraintBox extends SingleChildRenderObjectWidget {
-  constraint: Constraints
+class BaseConstrainedBox extends SingleChildRenderObjectWidget {
+  constraints: Constraints
   constructor({
     child,
-    constraint,
+    constraints,
   }: {
     child?: Widget
-    constraint: Constraints
+    constraints: Constraints
   }) {
     super({ child })
-    this.constraint = constraint
+    this.constraints = constraints
   }
 
   createRenderObject(): SingleChildRenderObject {
-    return new RenderConstraintBox({ constraint: this.constraint })
+    return new RenderConstrainedBox({ constraint: this.constraints })
   }
 
-  updateRenderObject(renderObject: RenderConstraintBox): void {
-    renderObject.constraints = this.constraint
+  updateRenderObject(renderObject: RenderConstrainedBox): void {
+    renderObject.constraints = this.constraints
   }
 }
 
-class RenderConstraintBox extends SingleChildRenderObject {
+class RenderConstrainedBox extends SingleChildRenderObject {
   additionalConstraint: Constraints
   constructor({ constraint }: { constraint: Constraints }) {
     super({ isPainter: false })
@@ -74,4 +74,4 @@ class RenderConstraintBox extends SingleChildRenderObject {
   }
 }
 
-export default BaseConstraintBox
+export default BaseConstrainedBox
