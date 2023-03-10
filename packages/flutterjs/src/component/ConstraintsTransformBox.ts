@@ -45,5 +45,7 @@ ConstraintsTransformBox.maxWidthUnconstrained =
 ConstraintsTransformBox.unconstrained =
   BaseConstraintsTransformBox.unconstrained
 ConstraintsTransformBox.unmodified = BaseConstraintsTransformBox.unmodified
+ConstraintsTransformBox.widthUnconstrained =
+  BaseConstraintsTransformBox.widthUnconstrained
 
 export default ConstraintsTransformBox
