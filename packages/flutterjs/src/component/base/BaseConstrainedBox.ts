@@ -42,22 +42,35 @@ class RenderConstraintBox extends SingleChildRenderObject {
     this.size = this.constraints.constrain(size)
   }
 
-  override getIntrinsicHeight(): number {
-    if (this.additionalConstraint.hasTightHeight)
+  override getIntrinsicHeight(width: number): number {
+    if (
+      this.additionalConstraint.hasBoundedHeight &&
+      this.additionalConstraint.hasTightHeight
+    ) {
       return this.additionalConstraint.minHeight
-    return Math.max(
-      this.additionalConstraint.minHeight,
-      this.child?.getIntrinsicHeight() || 0
-    )
+    }
+    const height = super.getIntrinsicHeight(width)
+
+    if (!this.additionalConstraint.hasInfiniteHeight) {
+      return this.additionalConstraint.constrainHeight(width)
+    }
+
+    return height
   }
 
-  override getIntrinsicWidth(): number {
-    if (this.additionalConstraint.hasTightWidth)
+  override getIntrinsicWidth(height: number): number {
+    if (
+      this.additionalConstraint.hasBoundedWidth &&
+      this.additionalConstraint.hasTightWidth
+    ) {
       return this.additionalConstraint.minWidth
-    return Math.max(
-      this.additionalConstraint.minWidth,
-      this.child?.getIntrinsicWidth() || 0
-    )
+    }
+    const width = super.getIntrinsicWidth(height)
+    if (!this.additionalConstraint.hasInfiniteWidth) {
+      return this.additionalConstraint.constrainWidth(height)
+    }
+
+    return width
   }
 }
 

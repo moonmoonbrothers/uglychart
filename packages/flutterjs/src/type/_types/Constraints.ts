@@ -128,6 +128,14 @@ class Constraints {
     return !this.hasBoundedHeight && !this.hasBoundedWidth
   }
 
+  get hasInfiniteWidth(): boolean {
+    return this.minWidth >= Infinity
+  }
+
+  get hasInfiniteHeight(): boolean {
+    return this.minHeight >= Infinity
+  }
+
   copyWith({
     maxHeight,
     maxWidth,
