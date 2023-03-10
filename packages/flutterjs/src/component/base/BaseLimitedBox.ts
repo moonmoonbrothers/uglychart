@@ -60,7 +60,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
     this.size = this.child.size
   }
 
-  private limitConstraints(constraints): Constraints {
+  private limitConstraints(constraints: Constraints): Constraints {
     return new Constraints({
       minHeight: constraints.minHeight,
       minWidth: constraints.minWidth,
