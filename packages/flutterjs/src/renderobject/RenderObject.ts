@@ -5,6 +5,10 @@ import ShortUniqueId from "short-unique-id"
 
 const uid = new ShortUniqueId({ dictionary: "hex" })
 
+/*
+  It does more things than flutters' RenderObject 
+  Actually, It is more like RenderShiftedBox
+*/
 class RenderObject {
   isPainter: boolean
   id = uid.randomUUID(6)
@@ -52,11 +56,13 @@ class RenderObject {
     this.children.forEach((child) => child.dispose(context))
   }
 
-  getIntrinsicWidth() {
+  //It is like computeIntrinsicMinWidth on Flutter
+  getIntrinsicWidth(height: number) {
     return 0
   }
 
-  getIntrinsicHeight() {
+  //It is like computeIntrinsicMinHeight on Flutter
+  getIntrinsicHeight(width: number) {
     return 0
   }
 

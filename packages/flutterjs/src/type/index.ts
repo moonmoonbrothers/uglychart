@@ -9,6 +9,7 @@ import Size from "./_types/Size"
 import Path from "./_types/Path"
 import Rect from "./_types/Rect"
 import RRect from "./_types/RRect"
+import TextDirection from "./_types/TextDirection"
 
 export {
   Offset,
@@ -22,4 +23,5 @@ export {
   Path,
   RRect,
   Rect,
+  TextDirection,
 }
