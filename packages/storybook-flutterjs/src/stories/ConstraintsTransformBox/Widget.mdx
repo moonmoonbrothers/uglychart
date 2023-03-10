@@ -3,22 +3,35 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# ClipOval
+# ConstraintsTransformBox
 
-This widget clip the child widget like ClipOval Widget in Flutter.
+This widget motivated by ConstraintsTransformBox in Flutter.
 
-<b>The ClipOval</b> take clipper that is callback function and return <b>Rect</b> object.
+> A container widget that applies an arbitrary transform to its constraints, and sizes its child using the resulting BoxConstraints, optionally clipping, or treating the overflow as an error.
+>
+> This container sizes its child using a BoxConstraints created by applying constraintsTransform to its own constraints. This container will then attempt to adopt the same size, within the limits of its own constraints. If it ends up with a different size, it will align the child based on alignment. If the container cannot expand enough to accommodate the entire child, the child will be clipped if clipBehavior is not Clip.none.
 
-This widget use <b>ClipPath</b> internally to clip the child widget
+See: [https://api.flutter.dev/flutter/widgets/ConstraintsTransformBox-class.html](https://api.flutter.dev/flutter/widgets/ConstraintsTransformBox-class.html)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vzWWDO6whIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## Props
 
-See: [https://api.flutter.dev/flutter/widgets/ClipOval-class.html](https://api.flutter.dev/flutter/widgets/ClipOval-class.html)
+### constraintsTransfrom
 
-<br />
+**Value: (constraints: Constraints) => Constraints**
 
-## Basic
+### alignment
 
-<div style={{color: 'white'}}>
-  <Story of={Stories.Basic} />
-</div>
+**Value: Alignment** (default: **Alignment.center**)
+
+### clipped
+
+**Value: boolean** (default: **false**)
+
+### child
+
+**Value: Widget | undefined**
+
+## Examples
+
+### Basic
+<Story of={Stories.Basic} />

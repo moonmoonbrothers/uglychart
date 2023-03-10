@@ -57,8 +57,6 @@ class BaseConstraintsTransformBox extends SingleChildRenderObjectWidget {
 }
 
 class RenderConstraintsTransformBox extends RenderAligningShiftedBox {
-  alignment: Alignment
-  textDirection: TextDirection
   constraintsTransform: (constraints: Constraints) => Constraints
 
   constructor({
@@ -68,7 +66,7 @@ class RenderConstraintsTransformBox extends RenderAligningShiftedBox {
   }: {
     alignment: Alignment
     textDirection: TextDirection
-    constraintsTransform
+    constraintsTransform: (constraints: Constraints) => Constraints
   }) {
     super({
       alignment,
