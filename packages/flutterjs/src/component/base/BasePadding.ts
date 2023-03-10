@@ -36,13 +36,13 @@ class RenderPadding extends SingleChildRenderObject {
   protected preformLayout(): void {
     if (this.child == null) return
     const { top, left, right, bottom } = this.padding
-    const childContraint = new Constraints({
+    const childConstraints = new Constraints({
       ...this.constraints,
       maxHeight: this.constraints.maxHeight - (top + bottom),
       maxWidth: this.constraints.maxWidth - (left + right),
     })
 
-    this.child.layout(childContraint)
+    this.child.layout(childConstraints)
     const { size: childSize } = this.child
 
     this.size = this.constraints.constrain(

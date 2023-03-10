@@ -51,14 +51,14 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     this.decoration = decoration
   }
 
-  override getIntrinsicHeight(): number {
-    const childHeight = this.child?.getIntrinsicHeight() || 0
+  override getIntrinsicHeight(width: number): number {
+    const childHeight = this.child?.getIntrinsicHeight(width) || 0
     const { top, bottom } = this.decoration.border
     return childHeight + top.thickness + bottom.thickness
   }
 
-  override getIntrinsicWidth(): number {
-    const childWidth = this.child?.getIntrinsicWidth() || 0
+  override getIntrinsicWidth(height: number): number {
+    const childWidth = this.child?.getIntrinsicWidth(height) || 0
     const { left, right } = this.decoration.border
     return childWidth + left.thickness + right.thickness
   }

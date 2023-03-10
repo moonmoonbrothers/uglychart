@@ -119,14 +119,14 @@ class RenderBaseGrid extends MultiChildRenderObject {
       columnChildren.forEach((child, columnIndex) => {
         if (this.columns[columnIndex].type === "content-fit") {
           contentFitColumnWidths[columnIndex] = Math.max(
-            child.getIntrinsicWidth(),
+            child.getIntrinsicWidth(this.constraints.maxHeight),
             contentFitColumnWidths[columnIndex]
           )
         }
 
         if (this.rows[rowIndex].type === "content-fit") {
           contentFitRowHeights[rowIndex] = Math.max(
-            child.getIntrinsicHeight(),
+            child.getIntrinsicHeight(this.constraints.maxWidth),
             contentFitRowHeights[rowIndex]
           )
         }

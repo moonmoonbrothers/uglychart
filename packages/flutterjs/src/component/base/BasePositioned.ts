@@ -72,12 +72,12 @@ export class RenderPositioned extends SingleChildRenderObject {
     this.size = this.constraints.constrain(size)
   }
 
-  override getIntrinsicWidth(): number {
-    return this.child?.getIntrinsicWidth() || 0
+  override getIntrinsicWidth(height: number): number {
+    return this.child?.getIntrinsicWidth(height) || 0
   }
 
-  override getIntrinsicHeight(): number {
-    return this.child?.getIntrinsicHeight() || 0
+  override getIntrinsicHeight(width: number): number {
+    return this.child?.getIntrinsicHeight(width) || 0
   }
 }
 

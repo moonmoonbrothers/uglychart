@@ -47,15 +47,15 @@ class RenderStack extends MultiChildRenderObject {
     })
   }
 
-  getIntrinsicWidth(): number {
+  getIntrinsicWidth(height: number): number {
     return this.children
-      .map((child) => child.getIntrinsicWidth())
+      .map((child) => child.getIntrinsicWidth(height))
       .reduce(Utils.maxReducer, 0)
   }
 
-  getIntrinsicHeight(): number {
+  getIntrinsicHeight(width: number): number {
     return this.children
-      .map((child) => child.getIntrinsicHeight())
+      .map((child) => child.getIntrinsicHeight(width))
       .reduce(Utils.maxReducer, 0)
   }
 }

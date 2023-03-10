@@ -250,26 +250,26 @@ class RenderFlex extends MultiChildRenderObject {
     return offsetOnCrossAxis
   }
 
-  override getIntrinsicHeight(): number {
+  override getIntrinsicHeight(width: number): number {
     const sum = (acc: number, value: number) => acc + value
     const max = (acc: number, value: number) => Math.max(acc, value)
-    const childInstrinsicHeights = this.children.map((child) =>
-      child.getIntrinsicHeight()
+    const childIntrinsicHeights = this.children.map((child) =>
+      child.getIntrinsicHeight(width)
     )
     return this.flexDirection === "row"
-      ? childInstrinsicHeights.reduce(max, 0)
-      : childInstrinsicHeights.reduce(sum, 0)
+      ? childIntrinsicHeights.reduce(max, 0)
+      : childIntrinsicHeights.reduce(sum, 0)
   }
 
-  override getIntrinsicWidth(): number {
+  override getIntrinsicWidth(height: number): number {
     const sum = (acc: number, value: number) => acc + value
     const max = (acc: number, value: number) => Math.max(acc, value)
-    const childInstrinsicWidths = this.children.map((child) =>
-      child.getIntrinsicWidth()
+    const childIntrinsicWidths = this.children.map((child) =>
+      child.getIntrinsicWidth(height)
     )
     return this.flexDirection === "column"
-      ? childInstrinsicWidths.reduce(max, 0)
-      : childInstrinsicWidths.reduce(sum, 0)
+      ? childIntrinsicWidths.reduce(max, 0)
+      : childIntrinsicWidths.reduce(sum, 0)
   }
 }
 
