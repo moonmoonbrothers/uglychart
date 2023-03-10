@@ -28,7 +28,8 @@ class BaseConstraintsTransformBox extends SingleChildRenderObjectWidget {
     this.constraintsTransform = constraintsTransform
   }
 
-  static a() {}
+  static unmodified = (constraints: Constraints) => constraints
+  static unconstrained = (constraints: Constraints) => new Constraints()
 
   createRenderObject(): SingleChildRenderObject {
     throw {}

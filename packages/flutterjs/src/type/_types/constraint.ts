@@ -1,10 +1,10 @@
 import Size from "./Size"
 
-type ConstraintProps = {
-  minWidth: number
-  maxWidth: number
-  minHeight: number
-  maxHeight: number
+type ConstraintsProps = {
+  minWidth?: number
+  maxWidth?: number
+  minHeight?: number
+  maxHeight?: number
 }
 
 /*
@@ -16,7 +16,12 @@ class Constraints {
   minHeight: number
   maxHeight: number
 
-  constructor({ maxHeight, maxWidth, minHeight, minWidth }: ConstraintProps) {
+  constructor({
+    maxHeight = Infinity,
+    maxWidth = Infinity,
+    minHeight = 0,
+    minWidth = 0,
+  }: ConstraintsProps = {}) {
     this.minWidth = minWidth
     this.maxWidth = maxWidth
     this.minHeight = minHeight
@@ -61,10 +66,10 @@ class Constraints {
 
   enforce(parent: Constraints): Constraints {
     return new Constraints({
-      minWidth: parent.clampWidth(this.minWidth),
-      maxWidth: parent.clampWidth(this.maxWidth),
-      minHeight: parent.clampHeight(this.minHeight),
-      maxHeight: parent.clampHeight(this.maxHeight),
+      minWidth: parent.constrainWidth(this.minWidth),
+      maxWidth: parent.constrainWidth(this.maxWidth),
+      minHeight: parent.constrainHeight(this.minHeight),
+      maxHeight: parent.constrainHeight(this.maxHeight),
     })
   }
 
@@ -78,8 +83,8 @@ class Constraints {
 
   constrain({ width, height }: Size): Size {
     return new Size({
-      width: this.clampWidth(width),
-      height: this.clampHeight(height),
+      width: this.constrainWidth(width),
+      height: this.constrainHeight(height),
     })
   }
 
@@ -123,12 +128,46 @@ class Constraints {
     return !this.hasBoundedHeight && !this.hasBoundedWidth
   }
 
-  private clampWidth(width: number) {
-    return Math.min(this.maxWidth, Math.max(this.minWidth, width))
+  copyWith({
+    maxHeight,
+    maxWidth,
+    minHeight,
+    minWidth,
+  }: {
+    minWidth?: number
+    minHeight?: number
+    maxWidth?: number
+    maxHeight?: number
+  }): Constraints {
+    return new Constraints({
+      minHeight: minHeight ?? this.minHeight,
+      maxHeight: maxHeight ?? this.maxHeight,
+      minWidth: minWidth ?? this.minWidth,
+      maxWidth: maxWidth ?? this.maxWidth,
+    })
   }
 
-  private clampHeight(hegiht: number) {
-    return Math.min(this.maxHeight, Math.max(this.minHeight, hegiht))
+  constrainWidth(width: number = Infinity) {
+    return this.clampDouble(width, this.minWidth, this.maxWidth)
+  }
+
+  constrainHeight(height: number = Infinity) {
+    return this.clampDouble(height, this.minHeight, this.maxHeight)
+  }
+
+  widthConstraints(): Constraints {
+    return new Constraints({ minWidth: this.minWidth, maxWidth: this.maxWidth })
+  }
+
+  heightConstraints(): Constraints {
+    return new Constraints({
+      minHeight: this.minHeight,
+      maxHeight: this.maxHeight,
+    })
+  }
+
+  private clampDouble(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value))
   }
 }
 
