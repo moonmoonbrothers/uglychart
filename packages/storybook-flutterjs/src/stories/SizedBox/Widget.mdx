@@ -3,22 +3,38 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# ClipOval
+# SizedBox
 
-This widget clip the child widget like ClipOval Widget in Flutter.
+This widget motivated by SizedBox in Flutter.
 
-<b>The ClipOval</b> take clipper that is callback function and return <b>Rect</b> object.
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/EHPu_DzRfqA"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+></iframe>
 
-This widget use <b>ClipPath</b> internally to clip the child widget
+See: [https://api.flutter.dev/flutter/widgets/SizedBox-class.html](https://api.flutter.dev/flutter/widgets/SizedBox-class.html)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vzWWDO6whIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## Props
 
-See: [https://api.flutter.dev/flutter/widgets/ClipOval-class.html](https://api.flutter.dev/flutter/widgets/ClipOval-class.html)
+### width
 
-<br />
+**Value: number | undefined**
 
-## Basic
+### height
 
-<div style={{color: 'white'}}>
-  <Story of={Stories.Basic} />
-</div>
+**Value: number | undefined**
+
+### child
+
+**Value: Widget | undefined**
+
+## Examples
+
+### Basic
+
+<Story of={Stories.Basic} />
