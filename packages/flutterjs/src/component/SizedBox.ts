@@ -17,13 +17,13 @@ function SizedBox({
   })
 }
 
-SizedBox.shrink = ({ child }: { child?: Widget }) =>
+SizedBox.shrink = ({ child }: { child?: Widget } = {}) =>
   SizedBox({ width: 0, height: 0, child })
 
-SizedBox.expand = ({ child }: { child?: Widget }) =>
+SizedBox.expand = ({ child }: { child?: Widget } = {}) =>
   SizedBox({ width: Infinity, height: Infinity, child })
 
-SizedBox.fromSize = ({ child, size }: { child?: Widget; size?: Size }) =>
+SizedBox.fromSize = ({ child, size }: { child?: Widget; size?: Size } = {}) =>
   SizedBox({ width: size?.width, height: size?.height, child })
 
 SizedBox.square = ({
@@ -32,6 +32,6 @@ SizedBox.square = ({
 }: {
   child?: Widget
   dimension?: number
-}) => SizedBox({ width: dimension, height: dimension, child })
+} = {}) => SizedBox({ width: dimension, height: dimension, child })
 
 export default SizedBox
