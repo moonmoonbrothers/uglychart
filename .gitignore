@@ -8,3 +8,4 @@ node_modules
 /packages/*/package
 .vscode
 .idea
+packages/storybook-flutterjs/build-storybook.log
