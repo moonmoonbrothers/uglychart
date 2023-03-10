@@ -55,7 +55,7 @@ class Constraints {
     })
   }
 
-  static tightOnly({ width, height }: { width?: number; height?: number }) {
+  static tightFor({ width, height }: { width?: number; height?: number }) {
     return new Constraints({
       maxHeight: height ?? Infinity,
       minHeight: height ?? 0,

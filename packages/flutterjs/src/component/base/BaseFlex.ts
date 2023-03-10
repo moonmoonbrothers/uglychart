@@ -132,7 +132,7 @@ class RenderFlex extends MultiChildRenderObject {
 
     switch (this.crossAxisAlignment) {
       case "stretch":
-        childConstraint = Constraints.tightOnly({
+        childConstraint = Constraints.tightFor({
           [this.crossAxis]: this.size[this.crossAxis],
         })
         break
@@ -147,13 +147,13 @@ class RenderFlex extends MultiChildRenderObject {
     let childConstraint: Constraints
     switch (this.crossAxisAlignment) {
       case "stretch":
-        childConstraint = Constraints.tightOnly({
+        childConstraint = Constraints.tightFor({
           [this.crossAxis]: this.size[this.crossAxis],
           [this.mainAxis]: childMainAxisValue,
         })
         break
       default:
-        childConstraint = Constraints.tightOnly({
+        childConstraint = Constraints.tightFor({
           [this.mainAxis]: childMainAxisValue,
         })
     }

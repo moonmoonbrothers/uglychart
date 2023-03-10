@@ -36,7 +36,7 @@ export default function Container({
   radius,
   border,
 }: ContainerProps = {}) {
-  const constraint = Constraints.tightOnly({ width, height })
+  const constraint = Constraints.tightFor({ width, height })
 
   let current: Widget | undefined = child
 
