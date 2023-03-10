@@ -71,11 +71,11 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     if (this.child != null) {
       this.child.layout(
         new Constraints({
-          ...this.constraint,
+          ...this.constraints,
           maxHeight:
-            this.constraint.maxHeight - (top.thickness + bottom.thickness),
+            this.constraints.maxHeight - (top.thickness + bottom.thickness),
           maxWidth:
-            this.constraint.maxWidth - (left.thickness + right.thickness),
+            this.constraints.maxWidth - (left.thickness + right.thickness),
         })
       )
       size = this.child.size
@@ -84,7 +84,7 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     }
     size.width += left.thickness + right.thickness
     size.height += top.thickness + bottom.thickness
-    this.size = this.constraint.constrain(size)
+    this.size = this.constraints.constrain(size)
   }
   protected performPaint(
     {

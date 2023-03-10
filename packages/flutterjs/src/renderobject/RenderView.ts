@@ -8,7 +8,7 @@ class RenderView extends RenderObject {
     super({ isPainter: false })
   }
   preformLayout(): void {
-    const constraint = this.constraint
+    const constraint = this.constraints
     if (!constraint.isTight)
       throw { message: "constraint must be tight on render view" }
     this.size = new Size({

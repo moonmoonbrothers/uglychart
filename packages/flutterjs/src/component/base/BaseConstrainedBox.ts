@@ -21,7 +21,7 @@ class BaseConstraintBox extends SingleChildRenderObjectWidget {
   }
 
   updateRenderObject(renderObject: RenderConstraintBox): void {
-    renderObject.constraint = this.constraint
+    renderObject.constraints = this.constraint
   }
 }
 
@@ -33,13 +33,13 @@ class RenderConstraintBox extends SingleChildRenderObject {
   }
 
   protected override preformLayout(): void {
-    this.constraint = this.additionalConstraint.enforce(this.constraint)
+    this.constraints = this.additionalConstraint.enforce(this.constraints)
     let size = Size.zero()
     if (this.child != null) {
-      this.child.layout(this.constraint)
+      this.child.layout(this.constraints)
       size = this.child.size
     }
-    this.size = this.constraint.constrain(size)
+    this.size = this.constraints.constrain(size)
   }
 
   override getIntrinsicHeight(): number {

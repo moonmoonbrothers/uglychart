@@ -75,11 +75,11 @@ class RenderFlex extends MultiChildRenderObject {
   protected preformLayout(): void {
     let totalFlex = 0
     let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0]
-    const mainAxisValue = this.constraint.getMax(this.mainAxis)
+    const mainAxisValue = this.constraints.getMax(this.mainAxis)
 
     // 공통
     this.children.forEach((child) => {
-      child.layout(this.constraint)
+      child.layout(this.constraints)
       const flex = child instanceof RenderFlexible ? child.flex : 0
       totalFlex += flex
       if (flex === 0) {
@@ -87,7 +87,7 @@ class RenderFlex extends MultiChildRenderObject {
       }
       crossAxisValue =
         this.crossAxisAlignment === "stretch"
-          ? this.constraint.getMax(this.crossAxis)
+          ? this.constraints.getMax(this.crossAxis)
           : Math.max(crossAxisValue, child.size[this.crossAxis])
     })
 
@@ -109,7 +109,7 @@ class RenderFlex extends MultiChildRenderObject {
         childConstraint = this.getFlexItemConstraint(childMainAxisValue)
       }
 
-      child.layout(childConstraint.enforce(this.constraint))
+      child.layout(childConstraint.enforce(this.constraints))
     })
 
     const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
@@ -137,10 +137,10 @@ class RenderFlex extends MultiChildRenderObject {
         })
         break
       default:
-        childConstraint = this.constraint
+        childConstraint = this.constraints
     }
 
-    return childConstraint.enforce(this.constraint)
+    return childConstraint.enforce(this.constraints)
   }
 
   private getFlexItemConstraint(childMainAxisValue: number) {
@@ -158,7 +158,7 @@ class RenderFlex extends MultiChildRenderObject {
         })
     }
 
-    return childConstraint.enforce(this.constraint)
+    return childConstraint.enforce(this.constraints)
   }
 
   private getChildOffsetsOnMainAxis(childMainAxisValues: number[]) {

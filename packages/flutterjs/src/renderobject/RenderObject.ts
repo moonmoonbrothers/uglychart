@@ -21,11 +21,11 @@ class RenderObject {
     return this.ownerElement.children.map((child) => child.renderObject)
   }
   size: Size = Size.zero()
-  constraint: Constraints = Constraints.loose(Size.maximum())
+  constraints: Constraints = Constraints.loose(Size.maximum())
   offset: Offset = Offset.zero()
 
   layout(constraint: Constraints) {
-    this.constraint = constraint.normalize()
+    this.constraints = constraint.normalize()
     this.preformLayout()
   }
 

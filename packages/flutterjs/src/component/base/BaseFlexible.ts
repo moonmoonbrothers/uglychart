@@ -46,16 +46,16 @@ export class RenderFlexible extends SingleChildRenderObject {
     const childConstraint =
       this.fit === "tight"
         ? Constraints.tight({
-            width: this.constraint.maxWidth,
-            height: this.constraint.maxHeight,
+            width: this.constraints.maxWidth,
+            height: this.constraints.maxHeight,
           })
-        : this.constraint.loosen()
+        : this.constraints.loosen()
     let size = Size.zero()
     if (this.child != null) {
       this.child.layout(childConstraint)
       size = this.child.size
     }
-    this.size = this.constraint.constrain(size)
+    this.size = this.constraints.constrain(size)
   }
 }
 

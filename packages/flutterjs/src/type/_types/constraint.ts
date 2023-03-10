@@ -166,6 +166,20 @@ class Constraints {
     })
   }
 
+  get smallest(): Size {
+    return new Size({
+      width: this.constrainWidth(0),
+      height: this.constrainHeight(0),
+    })
+  }
+
+  get biggest(): Size {
+    return new Size({
+      width: this.constrainWidth(),
+      height: this.constrainHeight(),
+    })
+  }
+
   private clampDouble(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value))
   }

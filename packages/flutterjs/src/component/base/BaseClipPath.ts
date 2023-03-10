@@ -36,7 +36,7 @@ class RenderClipPath extends SingleChildRenderObject {
   }
 
   protected override preformLayout(): void {
-    this.child?.layout(this.constraint)
+    this.child?.layout(this.constraints)
     this.size = this.child?.size ?? Size.zero()
   }
 

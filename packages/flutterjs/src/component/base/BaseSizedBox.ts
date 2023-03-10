@@ -65,7 +65,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
   }
 
   protected preformLayout(): void {
-    const constraint = this.constraint
+    const constraint = this.constraints
     const size = constraint.constrain(
       new Size({ width: this.width, height: this.height })
     )

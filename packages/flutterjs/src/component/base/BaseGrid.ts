@@ -104,7 +104,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
 
   protected preformLayout(): void {
     // stretch to fit parent
-    this.size = this.constraint.constrain(Size.infinite)
+    this.size = this.constraints.constrain(Size.infinite)
 
     const contentFitColumnWidths: number[] = Array.from(
       { length: this.columnCount },
@@ -198,7 +198,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
     this.childrenByRow.forEach((columnChildren, rowIndex) => {
       columnChildren.forEach((child, columnIndex) => {
         const childConstraint = new Constraints({
-          ...this.constraint,
+          ...this.constraints,
           maxHeight: heights[rowIndex],
           maxWidth: widths[columnIndex],
         })

@@ -58,15 +58,15 @@ class RenderAlign extends RenderAligningShiftedBox {
   }
 
   protected preformLayout(): void {
-    this.size = this.constraint.constrain(
+    this.size = this.constraints.constrain(
       new Size({ width: this.widthFactor, height: this.heightFactor })
     )
 
     if (this.child == null) return
 
-    this.child.layout(this.constraint.loosen())
+    this.child.layout(this.constraints.loosen())
 
-    if (this.constraint.isUnbounded) {
+    if (this.constraints.isUnbounded) {
       this.size = this.child.size
     }
 

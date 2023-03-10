@@ -37,15 +37,15 @@ class RenderPadding extends SingleChildRenderObject {
     if (this.child == null) return
     const { top, left, right, bottom } = this.padding
     const childContraint = new Constraints({
-      ...this.constraint,
-      maxHeight: this.constraint.maxHeight - (top + bottom),
-      maxWidth: this.constraint.maxWidth - (left + right),
+      ...this.constraints,
+      maxHeight: this.constraints.maxHeight - (top + bottom),
+      maxWidth: this.constraints.maxWidth - (left + right),
     })
 
     this.child.layout(childContraint)
     const { size: childSize } = this.child
 
-    this.size = this.constraint.constrain(
+    this.size = this.constraints.constrain(
       new Size({
         width: childSize.width + left + right,
         height: childSize.height + top + bottom,
