@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Constraint, Size, Radius, BorderStyle, Offset } from "../../type"
+import { Constraints, Size, Radius, BorderStyle, Offset } from "../../type"
 import type { Border } from "../../type/_types/BorderStyle"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -51,14 +51,14 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     this.decoration = decoration
   }
 
-  override getIntrinsicHeight(): number {
-    const childHeight = this.child?.getIntrinsicHeight() || 0
+  override getIntrinsicHeight(width: number): number {
+    const childHeight = this.child?.getIntrinsicHeight(width) || 0
     const { top, bottom } = this.decoration.border
     return childHeight + top.thickness + bottom.thickness
   }
 
-  override getIntrinsicWidth(): number {
-    const childWidth = this.child?.getIntrinsicWidth() || 0
+  override getIntrinsicWidth(height: number): number {
+    const childWidth = this.child?.getIntrinsicWidth(height) || 0
     const { left, right } = this.decoration.border
     return childWidth + left.thickness + right.thickness
   }
@@ -70,12 +70,12 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     } = this.decoration
     if (this.child != null) {
       this.child.layout(
-        new Constraint({
-          ...this.constraint,
+        new Constraints({
+          ...this.constraints,
           maxHeight:
-            this.constraint.maxHeight - (top.thickness + bottom.thickness),
+            this.constraints.maxHeight - (top.thickness + bottom.thickness),
           maxWidth:
-            this.constraint.maxWidth - (left.thickness + right.thickness),
+            this.constraints.maxWidth - (left.thickness + right.thickness),
         })
       )
       size = this.child.size
@@ -84,7 +84,7 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     }
     size.width += left.thickness + right.thickness
     size.height += top.thickness + bottom.thickness
-    this.size = this.constraint.constrain(size)
+    this.size = this.constraints.constrain(size)
   }
   protected performPaint(
     {

@@ -16,8 +16,18 @@ import Positioned from "./Positioned"
 import ClipPath from "./ClipPath"
 import ClipRect from "./ClipRect"
 import ClipOval from "./ClipOval"
+import ConstrainedBox from "./ConstrainedBox"
+import ConstraintsTransformBox from "./ConstraintsTransformBox"
+import UnconstrainedBox from "./UnconstrainedBox"
+import OverflowBox from "./OverflowBox"
+import LimitedBox from "./LimitedBox"
 
 export {
+  ConstrainedBox,
+  ConstraintsTransformBox,
+  UnconstrainedBox,
+  OverflowBox,
+  LimitedBox,
   ClipPath,
   ClipOval,
   ClipRect,
@@ -35,5 +45,5 @@ export {
   Column,
   Transform,
   Stack,
-  Positioned
+  Positioned,
 }

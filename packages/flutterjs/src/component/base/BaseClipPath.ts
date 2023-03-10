@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Size, Constraint, Offset } from "../../type"
+import { Size, Constraints, Offset } from "../../type"
 import { Path } from "../../type/_types/Path"
 import { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -36,7 +36,7 @@ class RenderClipPath extends SingleChildRenderObject {
   }
 
   protected override preformLayout(): void {
-    this.child?.layout(this.constraint)
+    this.child?.layout(this.constraints)
     this.size = this.child?.size ?? Size.zero()
   }
 

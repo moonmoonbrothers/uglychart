@@ -1,5 +1,5 @@
 import type RenderObjectElement from "./element/RenderObjectElement"
-import { Size, Offset, Constraint } from "./type"
+import { Size, Offset, Constraints } from "./type"
 import type { PaintContext } from "./utils/type"
 import RenderObjectToWidgetAdapter from "./widget/RenderObjectToWidgetAdapter"
 import type Widget from "./widget/Widget"
@@ -85,7 +85,7 @@ export class AppRunner {
 
   layout() {
     const rootRenderObject = this.root.renderObject
-    rootRenderObject.layout(Constraint.tight(this.viewSize))
+    rootRenderObject.layout(Constraints.tight(this.viewSize))
   }
 
   paint() {
@@ -142,7 +142,9 @@ export class Owner {
         view.appendChild(el)
       },
       findSvgEl(id: string) {
-        return view.querySelector(`[data-render-id="${id}"]`) as SVGAElement | null
+        return view.querySelector(
+          `[data-render-id="${id}"]`
+        ) as SVGAElement | null
       },
     }
   }

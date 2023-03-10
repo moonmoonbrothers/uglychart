@@ -1,80 +1,77 @@
-import SingleChildRenderObject from '../../renderobject/SingleChildRenderObject';
-import { Size, Alignment } from '../../type';
-import SingleChildRenderObjectWidget from '../../widget/SingleChildRenderObjectWidget';
-import type Widget from '../../widget/Widget';
+import { RenderAligningShiftedBox } from "../../renderobject"
+import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
+import { Size, Alignment, TextDirection } from "../../type"
+import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
+import type Widget from "../../widget/Widget"
 
 class Align extends SingleChildRenderObjectWidget {
-	width: number;
-	height: number;
-	alignment: Alignment;
-	constructor({
-		child,
-		width = Infinity,
-		height = Infinity,
-		alignment = Alignment.topLeft
-	}: {
-		child?: Widget;
-		alignment?: Alignment;
-		width?: number;
-		height?: number;
-	}) {
-		super({ child });
-		this.alignment = alignment;
-		this.width = width;
-		this.height = height;
-	}
+  width: number
+  height: number
+  alignment: Alignment
+  constructor({
+    child,
+    width = Infinity,
+    height = Infinity,
+    alignment = Alignment.topLeft,
+  }: {
+    child?: Widget
+    alignment?: Alignment
+    width?: number
+    height?: number
+  }) {
+    super({ child })
+    this.alignment = alignment
+    this.width = width
+    this.height = height
+  }
 
-	override createRenderObject(): RenderAlign {
-		return new RenderAlign({
-			alignment: this.alignment,
-			width: this.width,
-			height: this.height
-		});
-	}
+  override createRenderObject(): RenderAlign {
+    return new RenderAlign({
+      alignment: this.alignment,
+      width: this.width,
+      height: this.height,
+    })
+  }
 
-	override updateRenderObject(renderObject: RenderAlign) {
-		renderObject.alignment = this.alignment;
-		renderObject.width = this.width;
-		renderObject.height = this.height;
-	}
+  override updateRenderObject(renderObject: RenderAlign) {
+    renderObject.alignment = this.alignment
+    renderObject.widthFactor = this.width
+    renderObject.heightFactor = this.height
+  }
 }
 
-class RenderAlign extends SingleChildRenderObject {
-	alignment: Alignment;
-	width: number;
-	height: number;
-	constructor({
-		alignment,
-		width,
-		height
-	}: {
-		alignment: Alignment;
+class RenderAlign extends RenderAligningShiftedBox {
+  widthFactor: number
+  heightFactor: number
+  constructor({
+    alignment,
+    width,
+    height,
+  }: {
+    alignment: Alignment
+    width: number
+    height: number
+  }) {
+    super({ alignment, textDirection: TextDirection.ltr })
+    this.widthFactor = width
+    this.heightFactor = height
+  }
 
-		width: number;
-		height: number;
-	}) {
-		super({ isPainter: false });
-		this.alignment = alignment;
-		this.width = width;
-		this.height = height;
-	}
+  protected preformLayout(): void {
+    this.size = this.constraints.constrain(
+      new Size({ width: this.widthFactor, height: this.heightFactor })
+    )
 
-	protected preformLayout(): void {
-		this.size = this.constraint.constrain(new Size({ width: this.width, height: this.height }));
+    if (this.child == null) return
 
-		if (this.child == null) return;
+    this.child.layout(this.constraints.loosen())
 
-		this.child.layout(this.constraint.loosen());
+    if (this.constraints.isUnbounded) {
+      this.size = this.child.size
+    }
 
-		if (this.constraint.isUnbounded) {
-			this.size = this.child.size;
-		}
-
-		this.child.offset = this.alignment.getOffset({
-			target: this.child.size,
-			current: this.size
-		});
-	}
+    this.alignChild()
+  }
 }
 
-export default Align;
+export default Align
