@@ -3,22 +3,41 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# ClipOval
+# OverflowBox
 
-This widget clip the child widget like ClipOval Widget in Flutter.
+This widget motivated by OverflowBox in Flutter.
 
-<b>The ClipOval</b> take clipper that is callback function and return <b>Rect</b> object.
+> A widget that imposes different constraints on its child than it gets from its parent, possibly allowing the child to overflow the parent.
 
-This widget use <b>ClipPath</b> internally to clip the child widget
+See: [https://api.flutter.dev/flutter/widgets/OverflowBox-class.html](https://api.flutter.dev/flutter/widgets/OverflowBox-class.html)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vzWWDO6whIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## Props
 
-See: [https://api.flutter.dev/flutter/widgets/ClipOval-class.html](https://api.flutter.dev/flutter/widgets/ClipOval-class.html)
+### maxWidth
 
-<br />
+**Value: number | undefined**
 
-## Basic
+### maxHeight
 
-<div style={{color: 'white'}}>
-  <Story of={Stories.Basic} />
-</div>
+**Value: number | undefined**
+
+### minWidth
+
+**Value: number | undefined**
+
+### minHeight
+
+**Value: number | undefined**
+
+### alignment
+**Value: Alignment** (default: **Alignment.center**)
+
+### child
+
+**Value: Widget | undefined**
+
+## Examples
+
+### Basic
+
+<Story of={Stories.Basic} />
