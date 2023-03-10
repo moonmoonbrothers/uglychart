@@ -1,5 +1,5 @@
 import type RenderObjectElement from "../element/RenderObjectElement"
-import { Size, Offset, Constraint } from "../type"
+import { Size, Offset, Constraints } from "../type"
 import type { PaintContext } from "../utils/type"
 import ShortUniqueId from "short-unique-id"
 
@@ -21,10 +21,10 @@ class RenderObject {
     return this.ownerElement.children.map((child) => child.renderObject)
   }
   size: Size = Size.zero()
-  constraint: Constraint = Constraint.loose(Size.maximum())
+  constraint: Constraints = Constraints.loose(Size.maximum())
   offset: Offset = Offset.zero()
 
-  layout(constraint: Constraint) {
+  layout(constraint: Constraints) {
     this.constraint = constraint.normalize()
     this.preformLayout()
   }
@@ -79,7 +79,7 @@ class RenderObject {
           const name = child.getAttribute("data-render-name")!
           svgEls[name] = child as unknown as SVGElement
         }
-      /*
+        /*
         This must be clip path element!
       */
       } else {

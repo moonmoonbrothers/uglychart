@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Size, Constraint } from "../type"
+import { Size, Constraints } from "../type"
 import type { PaintContext } from "../utils/type"
 import RenderObject from "./RenderObject"
 
@@ -15,7 +15,7 @@ class RenderView extends RenderObject {
       width: constraint.maxWidth,
       height: constraint.maxHeight,
     })
-    this.children.forEach((child) => child.layout(Constraint.loose(this.size)))
+    this.children.forEach((child) => child.layout(Constraints.loose(this.size)))
   }
 }
 

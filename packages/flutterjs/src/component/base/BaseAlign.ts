@@ -49,7 +49,6 @@ class RenderAlign extends RenderAligningShiftedBox {
     height,
   }: {
     alignment: Alignment
-
     width: number
     height: number
   }) {

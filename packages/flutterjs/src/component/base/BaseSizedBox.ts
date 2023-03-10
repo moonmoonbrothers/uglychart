@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Size, Constraint } from "../../type"
+import { Size, Constraints } from "../../type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
@@ -74,7 +74,7 @@ class RenderLimitedBox extends SingleChildRenderObject {
       this.stretchable
         ? child.layout(constraint)
         : child.layout(
-            Constraint.loose({
+            Constraints.loose({
               width: this.width,
               height: this.height,
             })

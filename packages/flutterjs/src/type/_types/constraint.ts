@@ -7,7 +7,10 @@ type ConstraintProps = {
   maxHeight: number
 }
 
-class Constraint {
+/*
+  It is like BoxConstraints on Flutter.
+*/
+class Constraints {
   minWidth: number
   maxWidth: number
   minHeight: number
@@ -21,7 +24,7 @@ class Constraint {
   }
 
   static zero() {
-    return new Constraint({
+    return new Constraints({
       minHeight: 0,
       maxHeight: 0,
       minWidth: 0,
@@ -30,7 +33,7 @@ class Constraint {
   }
 
   static loose(size: { width: number; height: number }) {
-    return new Constraint({
+    return new Constraints({
       minHeight: 0,
       maxHeight: size.height,
       minWidth: 0,
@@ -39,7 +42,7 @@ class Constraint {
   }
 
   static tight({ width, height }: { width: number; height: number }) {
-    return new Constraint({
+    return new Constraints({
       maxHeight: height,
       minHeight: height,
       maxWidth: width,
@@ -48,7 +51,7 @@ class Constraint {
   }
 
   static tightOnly({ width, height }: { width?: number; height?: number }) {
-    return new Constraint({
+    return new Constraints({
       maxHeight: height ?? Infinity,
       minHeight: height ?? 0,
       maxWidth: width ?? Infinity,
@@ -56,8 +59,8 @@ class Constraint {
     })
   }
 
-  enforce(parent: Constraint): Constraint {
-    return new Constraint({
+  enforce(parent: Constraints): Constraints {
+    return new Constraints({
       minWidth: parent.clampWidth(this.minWidth),
       maxWidth: parent.clampWidth(this.maxWidth),
       minHeight: parent.clampHeight(this.minHeight),
@@ -65,8 +68,8 @@ class Constraint {
     })
   }
 
-  loosen(): Constraint {
-    return new Constraint({
+  loosen(): Constraints {
+    return new Constraints({
       ...this,
       minHeight: 0,
       minWidth: 0,
@@ -80,8 +83,8 @@ class Constraint {
     })
   }
 
-  normalize(): Constraint {
-    return new Constraint({
+  normalize(): Constraints {
+    return new Constraints({
       ...this,
       minHeight: Math.min(this.minHeight, this.maxHeight),
       minWidth: Math.min(this.minWidth, this.maxWidth),
@@ -129,4 +132,4 @@ class Constraint {
   }
 }
 
-export default Constraint
+export default Constraints

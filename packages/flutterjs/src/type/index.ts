@@ -1,7 +1,7 @@
 import Offset from "./_types/Offset"
 import Alignment from "./_types/Alignment"
 import BorderStyle from "./_types/BorderStyle"
-import Constraint from "./_types/Constraint"
+import Constraints from "./_types/Constraint"
 import EdgeInsets from "./_types/EdgeInsets"
 import Gap from "./_types/Gap"
 import BorderRadiusGeometry from "./_types/BorderRadiusGeometry"
@@ -15,7 +15,7 @@ export {
   Offset,
   Alignment,
   BorderStyle,
-  Constraint,
+  Constraints,
   EdgeInsets,
   Gap,
   BorderRadiusGeometry as Radius,

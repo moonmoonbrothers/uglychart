@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Constraint, Size, Radius, BorderStyle, Offset } from "../../type"
+import { Constraints, Size, Radius, BorderStyle, Offset } from "../../type"
 import type { Border } from "../../type/_types/BorderStyle"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
@@ -70,7 +70,7 @@ class RenderDocoratedBox extends SingleChildRenderObject {
     } = this.decoration
     if (this.child != null) {
       this.child.layout(
-        new Constraint({
+        new Constraints({
           ...this.constraint,
           maxHeight:
             this.constraint.maxHeight - (top.thickness + bottom.thickness),
