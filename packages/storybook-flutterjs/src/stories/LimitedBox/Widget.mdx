@@ -3,22 +3,31 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# ClipOval
+# LimitedBox
+This widget motivated by LimitedBox in Flutter.
 
-This widget clip the child widget like ClipOval Widget in Flutter.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uVki2CIzBTs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-<b>The ClipOval</b> take clipper that is callback function and return <b>Rect</b> object.
+See: [https://api.flutter.dev/flutter/widgets/LimitedBox-class.html](https://api.flutter.dev/flutter/widgets/LimitedBox-class.html)
 
-This widget use <b>ClipPath</b> internally to clip the child widget
+## Props
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vzWWDO6whIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+### maxWidth
 
-See: [https://api.flutter.dev/flutter/widgets/ClipOval-class.html](https://api.flutter.dev/flutter/widgets/ClipOval-class.html)
+**Value: number | undefined**
 
-<br />
+### maxHeight
 
-## Basic
+**Value: number | undefined**
 
-<div style={{color: 'white'}}>
-  <Story of={Stories.Basic} />
-</div>
+### child
+
+**Value: Widget | undefined**
+
+## Examples
+
+### Basic
+<Story of={Stories.Basic} />
+
+### Within Bounded Constraints
+<Story of={Stories.WithinBoundedConstraints} />
