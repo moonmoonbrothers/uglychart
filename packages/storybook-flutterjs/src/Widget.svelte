@@ -30,9 +30,12 @@
 	</div>
 {/if}
 
-<p class="description">
-	{description}
-</p>
+{#if description}
+	<h3 class="">Description</h3>
+	<p class="description">
+		{description}
+	</p>
+{/if}
 
 <style>
 	.widget {
@@ -47,8 +50,15 @@
 		bottom: 4px;
 		right: 4px;
 	}
+	h3 {
+		margin-top: 20px;
+		border-bottom: 1px solid grey;
+	}
 	.description {
+		max-width: 700px;
 		margin-top: 8px;
+		line-height: 1.5em;
+		white-space: pre-wrap;
 	}
 
 	.highlight {
