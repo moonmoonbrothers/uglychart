@@ -34,9 +34,22 @@ class BaseOverflowBox extends SingleChildRenderObjectWidget {
     this.alignment = alignment
   }
 
-  override createRenderObject(): SingleChildRenderObject {}
+  override createRenderObject(): RenderOverflowBox {
+    return new RenderOverflowBox({
+      alignment: this.alignment,
+      maxHeight: this.maxHeight,
+      maxWidth: this.maxWidth,
+      minHeight: this.minHeight,
+      minWidth: this.minWidth,
+    })
+  }
 
-  updateRenderObject(renderObject: RenderObject): void {}
+  updateRenderObject(renderObject: RenderOverflowBox): void {
+    renderObject.maxHeight = this.maxHeight
+    renderObject.maxWidth = this.maxWidth
+    renderObject.minHeight = this.minHeight
+    renderObject.minWidth = this.minWidth
+  }
 }
 
 class RenderOverflowBox extends RenderAligningShiftedBox {
