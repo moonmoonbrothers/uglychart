@@ -5,7 +5,6 @@ import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 \n\n`;
 
-
 const meta = {
 	title: 'Widget/Row',
 	component: Widget,
@@ -614,6 +613,7 @@ export const Case10: Story = {
 						})
 					}),
 					Flexible({
+						fit: 'tight',
 						child: Container({
 							width: 50,
 							height: 50,

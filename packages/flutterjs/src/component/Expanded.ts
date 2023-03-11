@@ -1,18 +1,12 @@
-import Flexible from "./base/BaseFlexible"
 import type Widget from "../widget/Widget"
+import Flexible from "./Flexible"
 
-export default function Expanded({
-  flex = 1,
-  child,
-}: {
-  flex?: number
-  child?: Widget
-} = {}) {
-  return new Flexible({
+function Expanded({ flex, child }: { flex?: number; child: Widget }) {
+  return Flexible({
     flex,
-    child: new Flexible({
-      fit: "tight",
-      child,
-    }),
+    child,
+    fit: 'tight'
   })
 }
+
+export default Expanded

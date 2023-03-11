@@ -21,6 +21,7 @@ import ConstraintsTransformBox from "./ConstraintsTransformBox"
 import UnconstrainedBox from "./UnconstrainedBox"
 import OverflowBox from "./OverflowBox"
 import LimitedBox from "./LimitedBox"
+import Spacer from './Spacer'
 
 export {
   ConstrainedBox,
@@ -46,4 +47,5 @@ export {
   Transform,
   Stack,
   Positioned,
+  Spacer
 }

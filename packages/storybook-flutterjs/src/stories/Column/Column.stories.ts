@@ -618,6 +618,7 @@ export const Case10: Story = {
 						})
 					}),
 					Flexible({
+						fit: 'tight',
 						child: Container({
 							width: 50,
 							height: 50,
