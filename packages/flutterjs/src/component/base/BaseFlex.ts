@@ -54,8 +54,24 @@ class RenderFlex extends MultiChildRenderObject {
   flexDirection: "row" | "column"
   mainAxisAlignment: MainAxisAlignment
   crossAxisAlignment: CrossAxisAlignment
-  mainAxis: "width" | "height"
-  crossAxis: "width" | "height"
+  get mainAxisSizeName(): "width" | "height" {
+    return this.flexDirection === "row" ? "width" : "height"
+  }
+  get crossAxisSizeName(): "width" | "height" {
+    return this.flexDirection === "row" ? "height" : "width"
+  }
+  get minMainAxisSizeName(): "minWidth" | "minHeight" {
+    return this.flexDirection === "row" ? "minWidth" : "minHeight"
+  }
+  get maxMainAxisSizeName(): "maxWidth" | "maxHeight" {
+    return this.flexDirection === "row" ? "maxWidth" : "maxHeight"
+  }
+  get minCrossAxisSizeName(): "minWidth" | "minHeight" {
+    return this.flexDirection === "row" ? "minHeight" : "minWidth"
+  }
+  get maxCrossAxisSizeName(): "maxWidth" | "maxHeight" {
+    return this.flexDirection === "row" ? "maxHeight" : "maxWidth"
+  }
   constructor({
     flexDirection,
     mainAxisAlignment,
@@ -69,13 +85,11 @@ class RenderFlex extends MultiChildRenderObject {
     this.flexDirection = flexDirection
     this.mainAxisAlignment = mainAxisAlignment
     this.crossAxisAlignment = crossAxisAlignment
-    this.mainAxis = this.flexDirection === "row" ? "width" : "height"
-    this.crossAxis = this.flexDirection === "row" ? "height" : "width"
   }
   protected preformLayout(): void {
     let totalFlex = 0
     let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0]
-    const mainAxisValue = this.constraints.getMax(this.mainAxis)
+    const mainAxisValue = this.constraints.getMax(this.mainAxisSizeName)
 
     // 공통
     this.children.forEach((child) => {
@@ -83,17 +97,17 @@ class RenderFlex extends MultiChildRenderObject {
       const flex = child instanceof RenderFlexible ? child.flex : 0
       totalFlex += flex
       if (flex === 0) {
-        childIntrinsicMainAxisValue += child.size[this.mainAxis]
+        childIntrinsicMainAxisValue += child.size[this.mainAxisSizeName]
       }
       crossAxisValue =
         this.crossAxisAlignment === "stretch"
-          ? this.constraints.getMax(this.crossAxis)
-          : Math.max(crossAxisValue, child.size[this.crossAxis])
+          ? this.constraints.getMax(this.crossAxisSizeName)
+          : Math.max(crossAxisValue, child.size[this.crossAxisSizeName])
     })
 
     // 크기 결정
-    this.size[this.mainAxis] = mainAxisValue
-    this.size[this.crossAxis] = crossAxisValue
+    this.size[this.mainAxisSizeName] = mainAxisValue
+    this.size[this.crossAxisSizeName] = crossAxisValue
 
     const flexUnitSize =
       (mainAxisValue - childIntrinsicMainAxisValue) / totalFlex
@@ -106,23 +120,26 @@ class RenderFlex extends MultiChildRenderObject {
       } else {
         const flex = child.flex
         const childMainAxisValue = flex * flexUnitSize
-        childConstraint = this.getFlexItemConstraint(childMainAxisValue)
+        childConstraint = this.getFlexItemConstraint(
+          childMainAxisValue,
+          child.fit
+        )
       }
 
       child.layout(childConstraint.enforce(this.constraints))
     })
 
     const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
-      this.children.map(({ size }) => size[this.mainAxis])
+      this.children.map(({ size }) => size[this.mainAxisSizeName])
     )
 
     this.children.forEach((child, i) => {
-      const [mainAixsOffset, crossAixsOffset]: ("x" | "y")[] =
+      const [mainAxisOffset, crossAxisOffset]: ("x" | "y")[] =
         this.flexDirection === "row" ? ["x", "y"] : ["y", "x"]
 
-      child.offset[mainAixsOffset] = mainAxisOffsets[i]
-      child.offset[crossAixsOffset] = this.getChildOffsetOnCrossAixs(
-        child.size[this.crossAxis]
+      child.offset[mainAxisOffset] = mainAxisOffsets[i]
+      child.offset[crossAxisOffset] = this.getChildOffsetOnCrossAxis(
+        child.size[this.crossAxisSizeName]
       )
     })
   }
@@ -133,7 +150,7 @@ class RenderFlex extends MultiChildRenderObject {
     switch (this.crossAxisAlignment) {
       case "stretch":
         childConstraint = Constraints.tightFor({
-          [this.crossAxis]: this.size[this.crossAxis],
+          [this.crossAxisSizeName]: this.size[this.crossAxisSizeName],
         })
         break
       default:
@@ -143,29 +160,23 @@ class RenderFlex extends MultiChildRenderObject {
     return childConstraint.enforce(this.constraints)
   }
 
-  private getFlexItemConstraint(childMainAxisValue: number) {
-    let childConstraint: Constraints
-    switch (this.crossAxisAlignment) {
-      case "stretch":
-        childConstraint = Constraints.tightFor({
-          [this.crossAxis]: this.size[this.crossAxis],
-          [this.mainAxis]: childMainAxisValue,
-        })
-        break
-      default:
-        childConstraint = Constraints.tightFor({
-          [this.mainAxis]: childMainAxisValue,
-        })
-    }
-
-    return childConstraint.enforce(this.constraints)
+  private getFlexItemConstraint(childExtent: number, fit: "loose" | "tight") {
+    return new Constraints({
+      [this.minCrossAxisSizeName]:
+        this.crossAxisAlignment === "stretch"
+          ? this.constraints[this.maxCrossAxisSizeName]
+          : 0,
+      [this.maxCrossAxisSizeName]: this.constraints[this.maxCrossAxisSizeName],
+      [this.maxMainAxisSizeName]: childExtent,
+      [this.minMainAxisSizeName]: fit === "tight" ? childExtent : 0,
+    })
   }
 
   private getChildOffsetsOnMainAxis(childMainAxisValues: number[]) {
     let offsetsOnMainAxis: number[] = []
     const sum = (acc: number, value: number) => acc + value
     const restSpaceSize =
-      this.size[this.mainAxis] - childMainAxisValues.reduce(sum, 0)
+      this.size[this.mainAxisSizeName] - childMainAxisValues.reduce(sum, 0)
 
     switch (this.mainAxisAlignment) {
       case "start":
@@ -230,8 +241,8 @@ class RenderFlex extends MultiChildRenderObject {
     return result
   }
 
-  private getChildOffsetOnCrossAixs(childCrossAxisValue: number) {
-    const parentCrossAxisValue = this.size[this.crossAxis]
+  private getChildOffsetOnCrossAxis(childCrossAxisValue: number) {
+    const parentCrossAxisValue = this.size[this.crossAxisSizeName]
     let offsetOnCrossAxis: number
     switch (this.crossAxisAlignment) {
       case "center":

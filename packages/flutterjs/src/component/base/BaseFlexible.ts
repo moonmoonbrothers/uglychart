@@ -34,7 +34,6 @@ export class RenderFlexible extends SingleChildRenderObject {
     fit,
   }: {
     flex: number
-
     fit: "tight" | "loose"
   }) {
     super({ isPainter: false })
@@ -43,16 +42,9 @@ export class RenderFlexible extends SingleChildRenderObject {
   }
 
   protected preformLayout(): void {
-    const childConstraint =
-      this.fit === "tight"
-        ? Constraints.tight({
-            width: this.constraints.maxWidth,
-            height: this.constraints.maxHeight,
-          })
-        : this.constraints.loosen()
     let size = Size.zero()
     if (this.child != null) {
-      this.child.layout(childConstraint)
+      this.child.layout(this.constraints)
       size = this.child.size
     }
     this.size = this.constraints.constrain(size)
