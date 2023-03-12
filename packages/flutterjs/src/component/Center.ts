@@ -4,17 +4,17 @@ import Align from "./base/BaseAlign"
 
 export default function Center({
   child,
-  width = Infinity,
-  height = Infinity,
+  widthFactor,
+  heightFactor,
 }: {
   child?: Widget
-  width?: number
-  height?: number
+  widthFactor?: number
+  heightFactor?: number
 }) {
   return new Align({
     child,
-    widthFactor: width,
-    heightFactor: height,
+    widthFactor: widthFactor,
+    heightFactor: heightFactor,
     alignment: Alignment.center,
   })
 }
