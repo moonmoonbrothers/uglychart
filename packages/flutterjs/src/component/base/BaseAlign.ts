@@ -1,76 +1,95 @@
 import { RenderAligningShiftedBox } from "../../renderobject"
-import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
 import { Size, Alignment, TextDirection } from "../../type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
 class Align extends SingleChildRenderObjectWidget {
-  width: number
-  height: number
+  widthFactor?: number
+  heightFactor?: number
   alignment: Alignment
   constructor({
     child,
-    width = Infinity,
-    height = Infinity,
-    alignment = Alignment.topLeft,
+    widthFactor,
+    heightFactor,
+    alignment = Alignment.center,
   }: {
     child?: Widget
     alignment?: Alignment
-    width?: number
-    height?: number
+    widthFactor?: number
+    heightFactor?: number
   }) {
     super({ child })
     this.alignment = alignment
-    this.width = width
-    this.height = height
+    this.widthFactor = widthFactor
+    this.heightFactor = heightFactor
   }
 
   override createRenderObject(): RenderAlign {
     return new RenderAlign({
       alignment: this.alignment,
-      width: this.width,
-      height: this.height,
+      widthFactor: this.widthFactor,
+      heightFactor: this.heightFactor,
     })
   }
 
   override updateRenderObject(renderObject: RenderAlign) {
     renderObject.alignment = this.alignment
-    renderObject.widthFactor = this.width
-    renderObject.heightFactor = this.height
+    renderObject.widthFactor = this.widthFactor
+    renderObject.heightFactor = this.heightFactor
   }
 }
 
 class RenderAlign extends RenderAligningShiftedBox {
-  widthFactor: number
-  heightFactor: number
+  widthFactor?: number
+  heightFactor?: number
   constructor({
     alignment,
-    width,
-    height,
+    widthFactor,
+    heightFactor,
   }: {
     alignment: Alignment
-    width: number
-    height: number
+    widthFactor?: number
+    heightFactor?: number
   }) {
     super({ alignment, textDirection: TextDirection.ltr })
-    this.widthFactor = width
-    this.heightFactor = height
+
+    if (widthFactor != null && widthFactor < 0)
+      throw new Error("widthFactor must be greater than zero")
+    if (heightFactor != null && heightFactor < 0)
+      throw new Error("heightFactor must be greater than zero")
+
+    this.widthFactor = widthFactor
+    this.heightFactor = heightFactor
   }
 
   protected preformLayout(): void {
-    this.size = this.constraints.constrain(
-      new Size({ width: this.widthFactor, height: this.heightFactor })
-    )
+    const constraints = this.constraints
+    const shrinkWrapWidth =
+      this.widthFactor != null || constraints.maxWidth == Infinity
+    const shrinkWrapHeight =
+      this.heightFactor != null || constraints.maxHeight == Infinity
 
-    if (this.child == null) return
-
-    this.child.layout(this.constraints.loosen())
-
-    if (this.constraints.isUnbounded) {
-      this.size = this.child.size
+    if (this.child != null) {
+      this.child.layout(constraints.loosen())
+      this.size = constraints.constrain(
+        new Size({
+          width: shrinkWrapWidth
+            ? this.child.size.width * (this.widthFactor ?? 1)
+            : Infinity,
+          height: shrinkWrapHeight
+            ? this.child.size.height * (this.heightFactor ?? 1)
+            : Infinity,
+        })
+      )
+      this.alignChild()
+    } else {
+      this.size = constraints.constrain(
+        new Size({
+          width: shrinkWrapWidth ? 0 : Infinity,
+          height: shrinkWrapHeight ? 0 : Infinity,
+        })
+      )
     }
-
-    this.alignChild()
   }
 }
 

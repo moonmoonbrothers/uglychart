@@ -42,7 +42,12 @@ export default function Container({
   if (current == null && !constraint.isTight) {
     current = SizedBox({ width: Infinity, height: Infinity })
   } else if (alignment != null) {
-    current = Align({ child: current, alignment, width, height })
+    current = Align({
+      child: current,
+      alignment,
+      widthFactor: width,
+      heightFactor: height,
+    })
   }
 
   if (padding != null) {
