@@ -1,5 +1,5 @@
 import { RenderAligningShiftedBox } from "../../renderobject"
-import { Alignment, TextDirection } from "../../type"
+import { Alignment, Constraints, Size, TextDirection } from "../../type"
 import { SingleChildRenderObjectWidget, Widget } from "../../widget"
 
 class BaseFractionallySizedBox extends SingleChildRenderObjectWidget {
@@ -61,7 +61,59 @@ class RenderFractionallySizedBox extends RenderAligningShiftedBox {
     this.heightFactor = heightFactor
   }
 
-  protected preformLayout(): void {}
+  private getInnerConstraints(constraints: Constraints): Constraints {
+    let { minHeight, maxHeight, maxWidth, minWidth } = constraints
+    if (this.widthFactor != null) {
+      const width = this.widthFactor * maxWidth
+      minWidth = width
+      maxWidth = width
+    }
+    if (this.heightFactor != null) {
+      const height = this.heightFactor * maxHeight
+      minHeight = height
+      maxHeight = height
+    }
+    return new Constraints({
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
+    })
+  }
+
+  protected preformLayout(): void {
+    if (this.child != null) {
+      this.child.layout(this.getInnerConstraints(this.constraints))
+      this.size = this.constraints.constrain(this.child.size)
+      this.alignChild()
+    } else {
+      this.size = this.constraints.constrain(
+        this.getInnerConstraints(this.constraints).constrain(Size.zero())
+      )
+    }
+  }
+
+  override getIntrinsicHeight(width: number): number {
+    let result: number
+    if (this.child == null) {
+      result = super.getIntrinsicHeight(width)
+    } else {
+      result = this.child.getIntrinsicHeight(width * (this.widthFactor ?? 1))
+    }
+
+    return result / (this.heightFactor ?? 1)
+  }
+
+  override getIntrinsicWidth(height: number): number {
+    let result: number
+    if (this.child == null) {
+      result = super.getIntrinsicWidth(height)
+    } else {
+      result = this.child.getIntrinsicWidth(height * (this.heightFactor ?? 1))
+    }
+
+    return result / (this.widthFactor ?? 1)
+  }
 }
 
 export default BaseFractionallySizedBox

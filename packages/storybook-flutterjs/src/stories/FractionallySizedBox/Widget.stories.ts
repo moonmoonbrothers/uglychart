@@ -18,11 +18,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const BasicWidget = dedent`
-	Align({
-		child: Container({
-			width: 200,
-			height: 200,
-			color: 'orange'
+	Center({
+		child: FractionallySizedBox({
+			widthFactor: 0.5,
+			heightFactor: 0.5,
+			child: Container({
+				color: 'orange'
+			})
 		})
 	})
 `;
@@ -37,6 +39,8 @@ export const Basic: Story = {
 			BasicWidget,
 		widget: Center({
 			child: FractionallySizedBox({
+				widthFactor: 0.5,
+				heightFactor: 0.5,
 				child: Container({
 					color: 'orange'
 				})
@@ -46,11 +50,28 @@ export const Basic: Story = {
 };
 
 const WhitespaceCode = dedent`
-	Align({
+	Center({
 		child: Container({
-			width: 200,
-			height: 200,
-			color: 'orange'
+			color: 'white',
+			child: Row({
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green'
+					}),
+					Flexible({
+						child: FractionallySizedBox({
+							widthFactor: 0.2
+						})
+					}),
+					Container({
+						width: 100,
+						height: 100,
+						color: 'red'
+					})
+				]
+			})
 		})
 	})
 `;
@@ -64,24 +85,27 @@ export const Whitespace: Story = {
 			dedent`import { Container, Row, FractionallySizedBox, Flexible } from '@moonmoonbrothers/flutterjs'\n\n\n` +
 			WhitespaceCode,
 		widget: Center({
-			child: Row({
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					}),
-					Flexible({
-						child: FractionallySizedBox({
-							widthFactor: 0.1
+			child: Container({
+				color: 'white',
+				child: Row({
+					children: [
+						Container({
+							width: 50,
+							height: 50,
+							color: 'green'
+						}),
+						Flexible({
+							child: FractionallySizedBox({
+								widthFactor: 0.2
+							})
+						}),
+						Container({
+							width: 100,
+							height: 100,
+							color: 'red'
 						})
-					}),
-					Container({
-						width: 100,
-						height: 100,
-						color: 'red'
-					})
-				]
+					]
+				})
 			})
 		})
 	}
