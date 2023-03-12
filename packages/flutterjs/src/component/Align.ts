@@ -4,19 +4,19 @@ import _Align from "./base/BaseAlign"
 
 export default function Align({
   child,
-  alignment = Alignment.topLeft,
-  width = Infinity,
-  height = Infinity,
+  alignment = Alignment.center,
+  widthFactor,
+  heightFactor,
 }: {
   child?: Widget
   alignment?: Alignment
-  width?: number
-  height?: number
+  widthFactor?: number
+  heightFactor?: number
 }) {
   return new _Align({
     child,
     alignment,
-    width,
-    height,
+    widthFactor,
+    heightFactor,
   })
 }

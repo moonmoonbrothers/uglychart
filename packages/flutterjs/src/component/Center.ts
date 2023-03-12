@@ -13,8 +13,8 @@ export default function Center({
 }) {
   return new Align({
     child,
-    width,
-    height,
+    widthFactor: width,
+    heightFactor: height,
     alignment: Alignment.center,
   })
 }
