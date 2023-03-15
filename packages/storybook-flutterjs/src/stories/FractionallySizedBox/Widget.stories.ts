@@ -6,7 +6,7 @@ import {
 	FractionallySizedBox,
 	Center,
 	Row,
-	Flexible
+	Flexible,
 } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -96,7 +96,7 @@ export const Whitespace: Story = {
 						}),
 						Flexible({
 							child: FractionallySizedBox({
-								widthFactor: 0.2
+								widthFactor: 0.3
 							})
 						}),
 						Container({
