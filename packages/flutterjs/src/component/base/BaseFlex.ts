@@ -110,7 +110,9 @@ class RenderFlex extends MultiChildRenderObject {
   }
   protected preformLayout(): void {
     let totalFlex = 0;
-    let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0];
+    let [childIntrinsicMainAxisValue, crossAxisValue, mainAxisValue] = [
+      0, 0, 0,
+    ];
     const sortedChildren =
       this.verticalDirection === "down"
         ? this.children
@@ -134,13 +136,14 @@ class RenderFlex extends MultiChildRenderObject {
         childIntrinsicMainAxisValue) /
       totalFlex;
 
+    /*
+      layout children
+    */
     sortedChildren.forEach((child) => {
       let childConstraint: Constraints;
 
       if (!(child instanceof RenderFlexible)) {
-        childConstraint = this.getNonFlexItemConstraint(
-          this.size[this.crossAxisSizeName]
-        );
+        childConstraint = this.getNonFlexItemConstraint(crossAxisValue);
       } else {
         const flex = child.flex;
         const childMainAxisValue = flex * flexUnitSize;
@@ -151,20 +154,6 @@ class RenderFlex extends MultiChildRenderObject {
       }
 
       child.layout(childConstraint.enforce(this.constraints));
-    });
-
-    const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
-      sortedChildren.map(({ size }) => size[this.mainAxisSizeName])
-    );
-
-    sortedChildren.forEach((child, i) => {
-      const [mainAxisOffset, crossAxisOffset]: ("x" | "y")[] =
-        this.direction === "horizontal" ? ["x", "y"] : ["y", "x"];
-
-      child.offset[mainAxisOffset] = mainAxisOffsets[i];
-      child.offset[crossAxisOffset] = this.getChildOffsetOnCrossAxis(
-        child.size[this.crossAxisSizeName]
-      );
     });
 
     /*
@@ -181,6 +170,20 @@ class RenderFlex extends MultiChildRenderObject {
         [this.crossAxisSizeName]: crossAxisValue,
       } as any)
     );
+
+    const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
+      sortedChildren.map(({ size }) => size[this.mainAxisSizeName])
+    );
+
+    sortedChildren.forEach((child, i) => {
+      const [mainAxisOffset, crossAxisOffset]: ("x" | "y")[] =
+        this.direction === "horizontal" ? ["x", "y"] : ["y", "x"];
+
+      child.offset[mainAxisOffset] = mainAxisOffsets[i];
+      child.offset[crossAxisOffset] = this.getChildOffsetOnCrossAxis(
+        child.size[this.crossAxisSizeName]
+      );
+    });
   }
 
   private getNonFlexItemConstraint(crossAxisValue: number) {
