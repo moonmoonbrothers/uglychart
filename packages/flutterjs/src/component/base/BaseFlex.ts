@@ -1,6 +1,5 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject";
 import { Constraints } from "../../type";
-import type { PaintContext } from "../../utils/type";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 import { RenderFlexible } from "./BaseFlexible";
@@ -12,13 +11,13 @@ export type MainAxisAlignment =
   | "spaceBetween"
   | "spaceAround"
   | "center";
-
 export type CrossAxisAlignment = "stretch" | "center" | "start" | "end";
-
-export type Axis = 'horizontal' | 'vertical'
+export type Axis = "horizontal" | "vertical";
+export type VerticalDirection = "up" | "down";
+export type MainAxisSize = "min" | "max";
 
 class Flex extends MultiChildRenderObjectWidget {
-  direction: Axis
+  direction: Axis;
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
   constructor({
@@ -28,7 +27,7 @@ class Flex extends MultiChildRenderObjectWidget {
     crossAxisAlignment = "center",
   }: {
     children: Widget[];
-    direction: Axis
+    direction: Axis;
     mainAxisAlignment?: MainAxisAlignment;
     crossAxisAlignment?: CrossAxisAlignment;
   }) {
@@ -54,7 +53,7 @@ class Flex extends MultiChildRenderObjectWidget {
 }
 
 class RenderFlex extends MultiChildRenderObject {
-  direction: Axis
+  direction: Axis;
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
   get mainAxisSizeName(): "width" | "height" {
@@ -80,7 +79,7 @@ class RenderFlex extends MultiChildRenderObject {
     mainAxisAlignment,
     crossAxisAlignment,
   }: {
-    direction: Axis,
+    direction: Axis;
     mainAxisAlignment: MainAxisAlignment;
     crossAxisAlignment: CrossAxisAlignment;
   }) {
@@ -197,7 +196,6 @@ class RenderFlex extends MultiChildRenderObject {
         });
         break;
       case "spaceAround":
-        // eslint-disable-next-line no-case-declarations
         const aroundSpace = restSpaceSize / childMainAxisValues.length;
         offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
           startOffset: aroundSpace / 2,
@@ -213,7 +211,6 @@ class RenderFlex extends MultiChildRenderObject {
         });
         break;
       case "spaceEvenly":
-        // eslint-disable-next-line no-case-declarations
         const evenSpace = restSpaceSize / (childMainAxisValues.length + 1);
         offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
           startOffset: evenSpace,
@@ -221,6 +218,17 @@ class RenderFlex extends MultiChildRenderObject {
           childMainAxisValues,
         });
         break;
+      case "center":
+        offsetsOnMainAxis = this._getChildOffsetsOnMainAxis({
+          startOffset: restSpaceSize / 2,
+          additionalSpace: 0,
+          childMainAxisValues,
+        });
+        break;
+      default:
+        throw new Error(
+          `this mainAixsAlignment(${this.mainAxisAlignment}) is not supported yet`
+        );
     }
 
     return offsetsOnMainAxis;

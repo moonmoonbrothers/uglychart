@@ -163,6 +163,63 @@ export const Case2: Story = {
 	}
 };
 
+const MainAxisAlignment_centerCode = dedent`
+		Container({
+			color: 'lightblue',
+			child: Column({
+				mainAxisAlignment: 'center',
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'blue'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green'
+					})
+				]
+			})
+		}),
+`;
+export const MainAxisAlignment_center: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightblue',
+			child: Column({
+				mainAxisAlignment: 'center',
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'blue'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green'
+					})
+				]
+			})
+		}),
+		code: ImportWidgetCode + MainAxisAlignment_centerCode
+	}
+};
+
 const Case3Code = dedent`
 	Container({
 		color: 'lightblue',

@@ -10,6 +10,7 @@ import Path from "./_types/Path"
 import Rect from "./_types/Rect"
 import RRect from "./_types/RRect"
 import TextDirection from "./_types/TextDirection"
+export * from './_types/etc'
 
 export {
   Offset,
