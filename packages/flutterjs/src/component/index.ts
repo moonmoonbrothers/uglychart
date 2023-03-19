@@ -23,6 +23,7 @@ import OverflowBox from "./OverflowBox"
 import LimitedBox from "./LimitedBox"
 import Spacer from "./Spacer"
 import FractionallySizedBox from "./FractionallySizedBox"
+import Flex from './Flex'
 
 export {
   ConstrainedBox,
@@ -50,4 +51,5 @@ export {
   Positioned,
   Spacer,
   FractionallySizedBox,
+  Flex,
 }

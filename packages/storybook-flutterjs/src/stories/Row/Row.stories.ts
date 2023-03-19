@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
-import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
+import { Text, Row, Container, Flexible, VerticalDirection, Alignment } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 \n\n`;
@@ -624,5 +624,75 @@ export const Case10: Story = {
 			})
 		}),
 		code: ImportWidgetCode + Case10Code
+	}
+};
+
+const VerticalDirection_upCode = dedent`
+		Container({
+			color: 'lightblue',
+			child: Row({
+				verticalDirection: VerticalDirection.up,
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red',
+						alignment: Alignment.center,
+						child: Text('1', { style: { fontColor: 'white', fontSize: '30px' } })
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'blue',
+						alignment: Alignment.center,
+						child: Text('2', { style: { fontColor: 'white', fontSize: '30px' } })
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green',
+						alignment: Alignment.center,
+						child: Text('3', { style: { fontColor: 'white', fontSize: '30px' } })
+					})
+				]
+			})
+		}),
+`;
+
+export const VerticalDirection_up: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		code: ImportWidgetCode + VerticalDirection_upCode,
+		widget: Container({
+			color: 'lightblue',
+			child: Row({
+				verticalDirection: VerticalDirection.up,
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red',
+						alignment: Alignment.center,
+						child: Text('1', { style: { fontColor: 'white', fontSize: '30px' } })
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'blue',
+						alignment: Alignment.center,
+						child: Text('2', { style: { fontColor: 'white', fontSize: '30px' } })
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green',
+						alignment: Alignment.center,
+						child: Text('3', { style: { fontColor: 'white', fontSize: '30px' } })
+					})
+				]
+			})
+		})
 	}
 };

@@ -9,3 +9,4 @@ node_modules
 .vscode
 .idea
 packages/storybook-flutterjs/build-storybook.log
+packages/storybook-flutterjs/storybook-static
