@@ -1,8 +1,6 @@
 import type Widget from "../widget/Widget";
-import Flex, {
-  type CrossAxisAlignment,
-  type MainAxisAlignment,
-} from "./base/BaseFlex";
+import Flex from "./Flex";
+import type { MainAxisAlignment, CrossAxisAlignment } from './base/BaseFlex'
 
 export default function Column({
   children,
@@ -13,9 +11,9 @@ export default function Column({
   mainAxisAlignment?: MainAxisAlignment;
   crossAxisAlignment?: CrossAxisAlignment;
 }) {
-  return new Flex({
+  return Flex({
     children,
-    direction: "column",
+    direction: "vertical",
     mainAxisAlignment,
     crossAxisAlignment,
   });

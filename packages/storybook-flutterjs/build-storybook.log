@@ -1,10 +1,10 @@
 @storybook/cli v7.0.0-beta.60
 
-info => Cleaning outputDir: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk
+info => Cleaning outputDir: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC
 info => Loading presets
 info => Building manager..
-info => Manager built (122 ms)
-info => Copying static files: /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/manager/static at /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/sb-common-assets
+info => Manager built (110 ms)
+info => Copying static files: /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/manager/static at /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/sb-common-assets
 
 vite v4.1.4 building for production...
 
@@ -12,91 +12,94 @@ vite v4.1.4 building for production...
 transforming...
 Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
 Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-✓ 1086 modules transformed.
-10:00:25 AM [vite-plugin-svelte] dom compile done.
+✓ 1091 modules transformed.
+8:18:17 PM [vite-plugin-svelte] dom compile done.
 package                              	files	  time	   avg
-svelte-highlight                     	    5	57.4ms	11.5ms
-@storybook/svelte                    	    2	48.6ms	24.3ms
-@moonmoonbrothers/storybook-flutterjs	    1	28.3ms	28.3ms
-@moonmoonbrothers/flutterjs-svelte   	    1	 9.0ms	 9.0ms
+svelte-highlight                     	    5	67.6ms	13.5ms
+@storybook/svelte                    	    2	53.2ms	26.6ms
+@moonmoonbrothers/storybook-flutterjs	    1	30.6ms	30.6ms
+@moonmoonbrothers/flutterjs-svelte   	    1	11.0ms	11.0ms
 rendering chunks...
 computing gzip size...
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/iframe.html                                            12.78 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/love_flutter-a66878f8.gif                      297.62 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/moon-animation-8baed00b.gif                    843.68 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/uglychart-6c93afd6.png                       1,762.51 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-196a85eb.css                              1.01 kB │ gzip:   0.48 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Spacer-755763e2.js                               0.17 kB │ gzip:   0.17 kB │ map:     0.58 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/MultiChildRenderObjectWidget-fe115708.js         0.17 kB │ gzip:   0.16 kB │ map:     0.85 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-d475d2ea.js                                0.21 kB │ gzip:   0.17 kB │ map:     0.83 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Row-cf40aa97.js                                  0.27 kB │ gzip:   0.21 kB │ map:     0.92 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Column-8638c549.js                               0.28 kB │ gzip:   0.21 kB │ map:     0.94 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/chunk-R4NKYYJA-96bb58e6.js                       0.30 kB │ gzip:   0.23 kB │ map:     0.81 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/WithTooltip-5WWCYCAA-4fce79ab.js                 0.40 kB │ gzip:   0.25 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/syntaxhighlighter-QTQ2UBB4-81ea7563.js           0.41 kB │ gzip:   0.27 kB │ map:     0.12 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-721d17c5.js                                0.43 kB │ gzip:   0.27 kB │ map:     0.10 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/DocsRenderer-ED6OA6OB-e0729d98.js                0.44 kB │ gzip:   0.28 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-448bece4.js                                0.53 kB │ gzip:   0.34 kB │ map:     4.28 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-1f376488.js                              0.59 kB │ gzip:   0.36 kB │ map:     0.57 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-39c3e021.js                              0.75 kB │ gzip:   0.51 kB │ map:     4.27 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/_commonjsHelpers-042e6b4d.js                     0.78 kB │ gzip:   0.44 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-356e4a49.js                                0.81 kB │ gzip:   0.51 kB │ map:     3.27 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-98d2486b.js                              0.83 kB │ gzip:   0.50 kB │ map:     1.86 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-a1e285ec.js                              0.94 kB │ gzip:   0.60 kB │ map:     2.94 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/jsx-runtime-d151e0d8.js                          1.01 kB │ gzip:   0.63 kB │ map:     2.30 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/chunk-G4YQS2SV-1e1be962.js                       1.16 kB │ gzip:   0.66 kB │ map:     3.93 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-f9319ed0.js                       1.38 kB │ gzip:   0.68 kB │ map:     3.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-48491585.js                       1.47 kB │ gzip:   0.70 kB │ map:     2.86 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-a31eb0e0.js                       1.52 kB │ gzip:   0.69 kB │ map:     2.94 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipRect-8b06ee6e.js                             1.64 kB │ gzip:   0.74 kB │ map:     2.13 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-662d4ae0.js                               1.87 kB │ gzip:   0.82 kB │ map:     2.69 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-68cee28f.js                       1.89 kB │ gzip:   0.78 kB │ map:     3.61 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-f99109d6.js                               1.90 kB │ gzip:   0.87 kB │ map:     2.65 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipOval-74386d23.js                             1.96 kB │ gzip:   0.93 kB │ map:     2.54 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-b4c0d7cc.js                               1.96 kB │ gzip:   0.85 kB │ map:     2.91 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-081480a4.js                       2.09 kB │ gzip:   0.80 kB │ map:     3.72 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-79ebffb9.js                       2.10 kB │ gzip:   0.84 kB │ map:     3.81 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-f330b91e.js                       2.18 kB │ gzip:   0.88 kB │ map:     4.99 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-a4c99ca2.js                               2.27 kB │ gzip:   0.81 kB │ map:     3.26 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-ed0e161d.js                               2.27 kB │ gzip:   0.89 kB │ map:     3.02 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipPath-07d8cbeb.js                             2.29 kB │ gzip:   0.97 kB │ map:     3.45 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Positioned-d0a66058.js                           2.30 kB │ gzip:   0.90 kB │ map:     8.36 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-f658c89a.js                              2.38 kB │ gzip:   1.27 kB │ map:    10.28 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-7d5919a2.js                               2.43 kB │ gzip:   1.14 kB │ map:     3.05 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-2e86c516.js                               2.44 kB │ gzip:   1.10 kB │ map:     3.14 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-9cca8dde.js                               2.49 kB │ gzip:   1.00 kB │ map:     3.39 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-d37d4223.js                                2.63 kB │ gzip:   1.30 kB │ map:     7.47 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-254bbdb2.js                               2.66 kB │ gzip:   1.03 kB │ map:     3.57 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-16ac5e31.js                               2.95 kB │ gzip:   1.21 kB │ map:     3.96 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-f96f0111.js                              3.29 kB │ gzip:   1.41 kB │ map:    10.12 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-215942c8.js                       3.82 kB │ gzip:   1.28 kB │ map:     9.00 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-6db5e254.js                       3.84 kB │ gzip:   1.29 kB │ map:     9.32 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Stack.stories-9cbe604f.js                        4.27 kB │ gzip:   1.27 kB │ map:     7.38 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/BaseFlex-79636b6a.js                             4.59 kB │ gzip:   1.35 kB │ map:    14.81 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipRect.stories-1b62db36.js                     5.24 kB │ gzip:   1.27 kB │ map:     9.51 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Container.stories-60c2f0d4.js                    5.42 kB │ gzip:   1.45 kB │ map:     9.60 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget.stories-00894c2e.js                       5.80 kB │ gzip:   1.28 kB │ map:    10.33 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipPath.stories-1f89d9c8.js                     6.58 kB │ gzip:   1.23 kB │ map:    12.30 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-62235626.js                              7.69 kB │ gzip:   1.60 kB │ map:    13.71 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/ClipOval.stories-ce792a96.js                     7.72 kB │ gzip:   1.54 kB │ map:    13.95 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-e6f1f377.js                              7.97 kB │ gzip:   3.03 kB │ map:    28.20 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Introduction-465b9bae.js                         8.34 kB │ gzip:   2.96 kB │ map:    12.63 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-f09cf579.js                                9.33 kB │ gzip:   3.72 kB │ map:    98.45 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/config-27fe1058.js                              10.18 kB │ gzip:   3.64 kB │ map:    17.32 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/GlobalScrollAreaStyles-XIHNDKUY-27061bb6.js     10.37 kB │ gzip:   2.33 kB │ map:    15.71 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/iframe-6f09c601.js                              15.72 kB │ gzip:   2.56 kB │ map:    11.36 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Row.stories-6c7f9bf4.js                         18.74 kB │ gzip:   2.16 kB │ map:    32.41 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Column.stories-6f608e52.js                      18.75 kB │ gzip:   2.16 kB │ map:    32.58 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/preview-05785d3f.js                             21.08 kB │ gzip:   7.00 kB │ map:    68.08 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Color-3YIJY6X7-09351a04.js                      30.94 kB │ gzip:  11.61 kB │ map:   112.57 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/OverlayScrollbars-VAV6LJAB-11509440.js          58.94 kB │ gzip:  25.27 kB │ map:   277.68 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-ce41b83c.js                               64.30 kB │ gzip:  18.39 kB │ map:   256.01 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/Widget-a9dd3ac7.js                             240.61 kB │ gzip:  83.45 kB │ map: 1,009.46 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/formatter-MGIGMU7Y-4a2d544a.js                 601.52 kB │ gzip: 185.03 kB │ map: 1,318.16 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk/assets/index-d595131c.js                              649.50 kB │ gzip: 213.27 kB │ map: 1,828.01 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/iframe.html                                            12.78 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/love_flutter-a66878f8.gif                      297.62 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/moon-animation-8baed00b.gif                    843.68 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/uglychart-6c93afd6.png                       1,762.51 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-196a85eb.css                              1.01 kB │ gzip:   0.48 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Spacer-1d8c204f.js                               0.17 kB │ gzip:   0.17 kB │ map:     0.58 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/MultiChildRenderObjectWidget-767280c6.js         0.17 kB │ gzip:   0.16 kB │ map:     0.85 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-d475d2ea.js                                0.21 kB │ gzip:   0.17 kB │ map:     0.83 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Center-448498c1.js                               0.23 kB │ gzip:   0.19 kB │ map:     0.84 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Row-4871a5e7.js                                  0.27 kB │ gzip:   0.20 kB │ map:     0.94 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Column-b804d5b5.js                               0.27 kB │ gzip:   0.20 kB │ map:     0.94 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/chunk-R4NKYYJA-96bb58e6.js                       0.30 kB │ gzip:   0.23 kB │ map:     0.81 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/WithTooltip-5WWCYCAA-ebf7fd62.js                 0.40 kB │ gzip:   0.25 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/syntaxhighlighter-QTQ2UBB4-b7fec2e0.js           0.41 kB │ gzip:   0.27 kB │ map:     0.12 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-98826557.js                                0.43 kB │ gzip:   0.27 kB │ map:     0.10 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/DocsRenderer-ED6OA6OB-de20a9e2.js                0.44 kB │ gzip:   0.28 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-0b696413.js                                0.53 kB │ gzip:   0.34 kB │ map:     4.28 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-8a9669ba.js                              0.59 kB │ gzip:   0.36 kB │ map:     0.57 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-39c3e021.js                              0.75 kB │ gzip:   0.51 kB │ map:     4.27 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/_commonjsHelpers-042e6b4d.js                     0.78 kB │ gzip:   0.44 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-356e4a49.js                                0.81 kB │ gzip:   0.51 kB │ map:     3.27 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-0462a7e9.js                              0.83 kB │ gzip:   0.50 kB │ map:     1.86 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-a1e285ec.js                              0.94 kB │ gzip:   0.60 kB │ map:     2.94 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/jsx-runtime-0a349dd4.js                          1.01 kB │ gzip:   0.64 kB │ map:     2.30 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/chunk-G4YQS2SV-d2d90789.js                       1.16 kB │ gzip:   0.66 kB │ map:     3.93 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-6e9ff99b.js                       1.28 kB │ gzip:   0.64 kB │ map:     2.38 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-150dffbf.js                       1.47 kB │ gzip:   0.70 kB │ map:     2.86 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-28502d1c.js                       1.52 kB │ gzip:   0.69 kB │ map:     2.94 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipRect-8e7f9450.js                             1.64 kB │ gzip:   0.74 kB │ map:     2.13 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-c44a5201.js                               1.87 kB │ gzip:   0.83 kB │ map:     2.69 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-76b3d5db.js                       1.89 kB │ gzip:   0.78 kB │ map:     3.61 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-5ed19a0a.js                               1.90 kB │ gzip:   0.88 kB │ map:     2.65 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipOval-06d2c3de.js                             1.96 kB │ gzip:   0.93 kB │ map:     2.54 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-06a62ca3.js                               1.96 kB │ gzip:   0.86 kB │ map:     2.91 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-94d32ce4.js                       2.09 kB │ gzip:   0.80 kB │ map:     3.72 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-3b7ddd43.js                       2.10 kB │ gzip:   0.84 kB │ map:     3.81 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-7d1a44af.js                       2.18 kB │ gzip:   0.88 kB │ map:     4.99 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-2786bf39.js                               2.27 kB │ gzip:   0.82 kB │ map:     3.26 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipPath-d224a852.js                             2.29 kB │ gzip:   0.98 kB │ map:     3.45 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-342ee27b.js                               2.30 kB │ gzip:   0.91 kB │ map:     3.02 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Positioned-9e22bbea.js                           2.30 kB │ gzip:   0.90 kB │ map:     8.36 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-34fdb12c.js                               2.38 kB │ gzip:   1.01 kB │ map:     3.23 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-f658c89a.js                              2.38 kB │ gzip:   1.27 kB │ map:    10.28 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-db33ec11.js                               2.42 kB │ gzip:   1.14 kB │ map:     3.05 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-383152c6.js                               2.43 kB │ gzip:   1.10 kB │ map:     3.14 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-92091549.js                               2.49 kB │ gzip:   1.00 kB │ map:     3.39 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-d37d4223.js                                2.63 kB │ gzip:   1.30 kB │ map:     7.47 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-3feab5b6.js                               2.66 kB │ gzip:   1.04 kB │ map:     3.57 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-62100c6f.js                               2.95 kB │ gzip:   1.22 kB │ map:     3.96 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-f96f0111.js                              3.29 kB │ gzip:   1.41 kB │ map:    10.12 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-0ddb7e8b.js                       3.82 kB │ gzip:   1.28 kB │ map:     9.00 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-ac0ad45f.js                       3.84 kB │ gzip:   1.29 kB │ map:     9.32 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Stack.stories-4b2790de.js                        4.27 kB │ gzip:   1.27 kB │ map:     7.38 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Flex-1c6b06a3.js                                 4.75 kB │ gzip:   1.38 kB │ map:    15.70 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipRect.stories-6aa97ad4.js                     5.24 kB │ gzip:   1.27 kB │ map:     9.51 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Container.stories-9128714e.js                    5.42 kB │ gzip:   1.45 kB │ map:     9.60 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-eec4222c.js                       5.51 kB │ gzip:   1.63 kB │ map:    12.46 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget.stories-b9fbb805.js                       5.80 kB │ gzip:   1.28 kB │ map:    10.33 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipPath.stories-081e0cef.js                     6.58 kB │ gzip:   1.23 kB │ map:    12.30 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-62235626.js                              7.69 kB │ gzip:   1.60 kB │ map:    13.71 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/ClipOval.stories-3c1e004d.js                     7.72 kB │ gzip:   1.54 kB │ map:    13.95 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-e6f1f377.js                              7.97 kB │ gzip:   3.03 kB │ map:    28.20 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Introduction-94ad2e26.js                         8.34 kB │ gzip:   2.96 kB │ map:    12.63 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-f09cf579.js                                9.33 kB │ gzip:   3.72 kB │ map:    98.45 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/config-27fe1058.js                              10.18 kB │ gzip:   3.64 kB │ map:    17.32 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/GlobalScrollAreaStyles-XIHNDKUY-9bfb21f6.js     10.37 kB │ gzip:   2.33 kB │ map:    15.71 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/iframe-8d3f2fbb.js                              16.68 kB │ gzip:   2.63 kB │ map:    11.83 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Row.stories-e1388e3d.js                         18.74 kB │ gzip:   2.16 kB │ map:    32.41 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Column.stories-5a855e45.js                      18.75 kB │ gzip:   2.16 kB │ map:    32.58 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/preview-05785d3f.js                             21.08 kB │ gzip:   7.00 kB │ map:    68.08 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Color-3YIJY6X7-b45dfc7a.js                      30.94 kB │ gzip:  11.61 kB │ map:   112.57 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/OverlayScrollbars-VAV6LJAB-ac16e3ca.js          58.94 kB │ gzip:  25.26 kB │ map:   277.68 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-ce41b83c.js                               64.30 kB │ gzip:  18.39 kB │ map:   256.01 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/Widget-9830da33.js                             240.61 kB │ gzip:  83.45 kB │ map: 1,009.46 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/formatter-MGIGMU7Y-c7ec7d9b.js                 601.52 kB │ gzip: 185.03 kB │ map: 1,318.16 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC/assets/index-59c542b5.js                              649.50 kB │ gzip: 213.27 kB │ map: 1,828.01 kB
 
 (!) Some chunks are larger than 500 kBs after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-info => Output directory: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--16717-EhzSh9v0cqVk
+info => Output directory: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--8789-k6b3u7wVp5tC

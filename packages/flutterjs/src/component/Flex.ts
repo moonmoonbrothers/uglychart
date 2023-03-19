@@ -1,19 +1,24 @@
 import type Widget from "../widget/Widget";
-import Flex from "./Flex";
-import type { MainAxisAlignment, CrossAxisAlignment } from "./base/BaseFlex";
+import BaseFlex, {
+  type CrossAxisAlignment,
+  type MainAxisAlignment,
+  type Axis,
+} from "./base/BaseFlex";
 
-export default function Row({
+export default function Flex({
   children,
   mainAxisAlignment = "start",
   crossAxisAlignment = "center",
+  direction,
 }: {
   children: Widget[];
   mainAxisAlignment?: MainAxisAlignment;
   crossAxisAlignment?: CrossAxisAlignment;
+  direction: Axis,
 }) {
-  return Flex({
+  return new BaseFlex({
     children,
-    direction: "horizontal",
+    direction,
     mainAxisAlignment,
     crossAxisAlignment,
   });
