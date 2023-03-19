@@ -1,6 +1,6 @@
 import RenderObject from "../../renderobject/RenderObject"
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Constraint } from "../../type"
+import { Constraints } from "../../type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 
 export default class BaseIntrinsicHeight extends SingleChildRenderObjectWidget {
@@ -13,8 +13,8 @@ export default class BaseIntrinsicHeight extends SingleChildRenderObjectWidget {
 class RenderIntrinsicHeight extends SingleChildRenderObject {
   protected preformLayout(): void {
     if (this.child == null) return
-    const height = this.child.getIntrinsicHeight() || 0
-    const constraint = Constraint.tightOnly({ height }).enforce(this.constraint)
+    const height = this.child.getIntrinsicHeight(this.constraints.maxWidth) || 0
+    const constraint = Constraints.tightFor({ height }).enforce(this.constraints)
     this.child.layout(constraint)
     this.size = this.child.size
   }
