@@ -9,7 +9,8 @@ import {
 	MainAxisSize,
 	MainAxisAlignment,
 	Text,
-	Alignment
+	Alignment,
+	Flexible
 } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -100,15 +101,8 @@ export const Column: Story = {
 	}
 };
 
-export const MainAxisSize_min: Story = {
-	args: {
-		ssrSize: { width: 600, height: 300 },
-		width: '600px',
-		height: '300px',
-		code:
-			dedent`import { Flex, Container, Axis } from '@moonmoonbrothers/flutterjs'\n\n\n` +
-			BasicWidget,
-		widget: Container({
+const MainAxisSize_minCode = dedent`
+		Container({
 			color: 'lightblue',
 			child: Flex({
 				direction: Axis.horizontal,
@@ -124,6 +118,40 @@ export const MainAxisSize_min: Story = {
 						height: 50,
 						color: 'green'
 					})
+				]
+			})
+		})
+`;
+
+export const MainAxisSize_min: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		code:
+			dedent`import { Flex, Container, Axis } from '@moonmoonbrothers/flutterjs'\n\n\n` +
+			MainAxisSize_minCode,
+		widget: Container({
+			color: 'lightblue',
+			child: 
+      Flex({
+				direction: Axis.horizontal,
+				mainAxisSize: MainAxisSize.min,
+				children: [
+					Flexible({
+						child: Container({
+							width: 50,
+							height: 50,
+							color: 'red'
+						})
+					}),
+					Flexible({
+						child: Container({
+							width: 50,
+							height: 50,
+							color: 'green'
+						})
+					}),
 				]
 			})
 		})

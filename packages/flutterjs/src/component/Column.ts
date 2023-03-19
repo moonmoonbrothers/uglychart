@@ -4,24 +4,28 @@ import type {
   MainAxisAlignment,
   CrossAxisAlignment,
   VerticalDirection,
+  MainAxisSize,
 } from "./base/BaseFlex";
 
 export default function Column({
   children,
-  mainAxisAlignment = "start",
-  crossAxisAlignment = "center",
-  verticalDirection = "down",
+  mainAxisAlignment,
+  crossAxisAlignment,
+  verticalDirection,
+  mainAxisSize,
 }: {
   children: Widget[];
   mainAxisAlignment?: MainAxisAlignment;
   crossAxisAlignment?: CrossAxisAlignment;
   verticalDirection?: VerticalDirection;
+  mainAxisSize?: MainAxisSize;
 }) {
   return Flex({
     children,
     direction: "vertical",
     mainAxisAlignment,
     crossAxisAlignment,
-    verticalDirection
+    verticalDirection,
+    mainAxisSize
   });
 }

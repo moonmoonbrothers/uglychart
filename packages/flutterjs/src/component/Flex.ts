@@ -39,7 +39,7 @@ export default function Flex({
       children,
       direction,
       verticalDirection,
-      //mainAxisSize,
+      mainAxisSize,
       mainAxisAlignment,
       crossAxisAlignment,
     }),

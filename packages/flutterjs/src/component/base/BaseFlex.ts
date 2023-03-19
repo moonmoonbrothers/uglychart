@@ -1,5 +1,5 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject";
-import { Constraints } from "../../type";
+import { Constraints, Size } from "../../type";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 import { RenderFlexible } from "./BaseFlexible";
@@ -21,24 +21,28 @@ class Flex extends MultiChildRenderObjectWidget {
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
   verticalDirection: VerticalDirection;
+  mainAxisSize: MainAxisSize;
   constructor({
     children,
     direction,
     mainAxisAlignment = "start",
     crossAxisAlignment = "center",
     verticalDirection = "down",
+    mainAxisSize = "max",
   }: {
     children: Widget[];
     direction: Axis;
     mainAxisAlignment?: MainAxisAlignment;
     crossAxisAlignment?: CrossAxisAlignment;
     verticalDirection?: VerticalDirection;
+    mainAxisSize?: MainAxisSize;
   }) {
     super({ children });
     this.direction = direction;
     this.mainAxisAlignment = mainAxisAlignment;
     this.crossAxisAlignment = crossAxisAlignment;
     this.verticalDirection = verticalDirection;
+    this.mainAxisSize = mainAxisSize;
   }
 
   createRenderObject(): RenderFlex {
@@ -47,6 +51,7 @@ class Flex extends MultiChildRenderObjectWidget {
       mainAxisAlignment: this.mainAxisAlignment,
       crossAxisAlignment: this.crossAxisAlignment,
       verticalDirection: this.verticalDirection,
+      mainAxisSize: this.mainAxisSize,
     });
   }
 
@@ -55,6 +60,7 @@ class Flex extends MultiChildRenderObjectWidget {
     renderObject.mainAxisAlignment = this.mainAxisAlignment;
     renderObject.crossAxisAlignment = this.crossAxisAlignment;
     renderObject.verticalDirection = this.verticalDirection;
+    renderObject.mainAxisSize = this.mainAxisSize;
   }
 }
 
@@ -63,6 +69,7 @@ class RenderFlex extends MultiChildRenderObject {
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
   verticalDirection: VerticalDirection;
+  mainAxisSize: MainAxisSize;
   get mainAxisSizeName(): "width" | "height" {
     return this.direction === "horizontal" ? "width" : "height";
   }
@@ -86,28 +93,29 @@ class RenderFlex extends MultiChildRenderObject {
     mainAxisAlignment,
     crossAxisAlignment,
     verticalDirection,
+    mainAxisSize,
   }: {
     direction: Axis;
     mainAxisAlignment: MainAxisAlignment;
     crossAxisAlignment: CrossAxisAlignment;
     verticalDirection: VerticalDirection;
+    mainAxisSize: MainAxisSize;
   }) {
     super({ isPainter: false });
     this.direction = direction;
     this.mainAxisAlignment = mainAxisAlignment;
     this.crossAxisAlignment = crossAxisAlignment;
     this.verticalDirection = verticalDirection;
+    this.mainAxisSize = mainAxisSize;
   }
   protected preformLayout(): void {
     let totalFlex = 0;
     let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0];
-    const mainAxisValue = this.constraints.getMax(this.mainAxisSizeName);
     const sortedChildren =
       this.verticalDirection === "down"
         ? this.children
         : [...this.children].reverse();
 
-    // 공통
     sortedChildren.forEach((child) => {
       child.layout(this.constraints);
       const flex = child instanceof RenderFlexible ? child.flex : 0;
@@ -121,18 +129,18 @@ class RenderFlex extends MultiChildRenderObject {
           : Math.max(crossAxisValue, child.size[this.crossAxisSizeName]);
     });
 
-    // 크기 결정
-    this.size[this.mainAxisSizeName] = mainAxisValue;
-    this.size[this.crossAxisSizeName] = crossAxisValue;
-
     const flexUnitSize =
-      (mainAxisValue - childIntrinsicMainAxisValue) / totalFlex;
+      (this.constraints.getMax(this.mainAxisSizeName) -
+        childIntrinsicMainAxisValue) /
+      totalFlex;
 
     sortedChildren.forEach((child) => {
       let childConstraint: Constraints;
 
       if (!(child instanceof RenderFlexible)) {
-        childConstraint = this.getNonFlexItemConstraint();
+        childConstraint = this.getNonFlexItemConstraint(
+          this.size[this.crossAxisSizeName]
+        );
       } else {
         const flex = child.flex;
         const childMainAxisValue = flex * flexUnitSize;
@@ -158,15 +166,30 @@ class RenderFlex extends MultiChildRenderObject {
         child.size[this.crossAxisSizeName]
       );
     });
+
+    /*
+      determine size of widget
+    */
+    this.size = this.constraints.constrain(
+      new Size({
+        [this.mainAxisSizeName]:
+          this.mainAxisSize === "max"
+            ? this.constraints.getMax(this.mainAxisSizeName)
+            : sortedChildren
+                .map((child) => child.size[this.mainAxisSizeName])
+                .reduce((acc, childMainAxisSize) => acc + childMainAxisSize),
+        [this.crossAxisSizeName]: crossAxisValue,
+      } as any)
+    );
   }
 
-  private getNonFlexItemConstraint() {
+  private getNonFlexItemConstraint(crossAxisValue: number) {
     let childConstraint: Constraints;
 
     switch (this.crossAxisAlignment) {
       case "stretch":
         childConstraint = Constraints.tightFor({
-          [this.crossAxisSizeName]: this.size[this.crossAxisSizeName],
+          [this.crossAxisSizeName]: crossAxisValue,
         });
         break;
       default:
