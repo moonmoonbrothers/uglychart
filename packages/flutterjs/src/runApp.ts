@@ -75,6 +75,7 @@ export class AppRunner {
   }
 
   draw() {
+    if(this.viewSize.width === 0 || this.viewSize.height === 0) return
     this.layout()
     this.paint()
   }

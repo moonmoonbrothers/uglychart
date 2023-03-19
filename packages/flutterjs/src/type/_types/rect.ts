@@ -81,3 +81,4 @@ export class Rect {
 }
 
 export default Rect
+

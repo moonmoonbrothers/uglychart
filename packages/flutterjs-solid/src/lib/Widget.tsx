@@ -7,8 +7,8 @@ import {
   Alignment,
 } from "@moonmoonbrothers/flutterjs"
 
-const Widget: Component<{ widget: _Widget }> = ({
-  width = "calc(100vw - 30px)",
+const Widget: Component<{ widget: _Widget, height?: string, width?: string  }> = ({
+  width = "calc(100vw - 40px)",
   height = "calc(100vh - 40px)",
   widget = Container({
     width: Infinity,
