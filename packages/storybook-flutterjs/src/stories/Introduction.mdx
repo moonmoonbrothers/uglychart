@@ -1,0 +1,255 @@
+import { Meta, Story } from '@storybook/blocks';
+import { Source } from '@storybook/addon-docs';
+import { dedent } from 'ts-dedent';
+import UglychartImg from './assets/uglychart.png';
+import FlutterJsExampleGif from './assets/love_flutter.gif';
+import MoonGif from './assets/moon-animation.gif';
+
+<Meta title="Introduction" />{' '}
+
+# Flutterjs
+
+This is <b>FlutterJs</b> library which is motivated by <b>Flutter</b>.
+As you know, <b>Flutter</b> is Crossplatform framework that is usually used to make mobile app.
+
+<b>The Flutter</b> has ingenious own layout rule and I think Its rule can be useful to make chart library
+
+This is made for my chart library <b>Uglychart</b> whose name imply that you can customize given chart any way and even customize it until it becomes ulgy.
+
+Here is <b>Uglychart</b> that I've been making.
+
+<img src={UglychartImg} />
+
+<b>Uglychart</b> use provider that is context manager like Flutter's Provider. By using it, the Uglychart
+provide infinite contomizing.
+
+I believe <b>Uglychart</b> can become unprecedented library among all chart libraries.
+
+## Examples
+
+I do my best to make Flutterjs look like Flutter itself. See this.
+
+<img src={FlutterJsExampleGif} />
+
+## Usage
+
+### Pure javascript
+
+```
+ npm i @moonmoonbrothers/flutterjs
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ <script>
+  import { Widget, Container } from '@moonmoonbrothers/flutterjs';
+
+  const svgElement = document.getElementById('mySvg');
+  const runner = new AppRunner({
+   // Size is automatically calculated by svgElement size.
+   view: svgElement,
+   /*
+    this is not required if javascript is running on only brower.
+    If server sider redering is needed, you should configure below props.
+    Third party libraries may be required for window, document, and svgElement running on server side.
+   */
+   /*
+    window: window,
+    document: document,
+    ssrSize: {width: 600, height: 300},
+   */
+  });
+  const widget = Container({
+   color: 'lightblue',
+  })
+  runner.runApp(widget);
+
+ </script>
+
+<svg id="mySvg" style="width: 600px; height: 300px;" />
+`} />
+
+### Svelte
+
+```
+ npm i @moonmoonbrothers/flutterjs @moonmoonbrothers/flutterjs-svelte
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ <script>
+  import { Container } from '@moonmoonbrothers/flutterjs';
+  import Widget from '@moonmoonbrothers/flutterjs-svelte';
+ </script>
+
+<div style="width: 600px; height: 300px;">
+  <Widget
+    width="100%"
+    height="100%"
+    widget={Container({
+      color: 'lightblue'
+    })}
+  />
+</div>
+`} />
+
+### React
+
+not supported yet...
+
+### Solid
+
+```
+ npm i @moonmoonbrothers/flutterjs @moonmoonbrothers/flutterjs-solid
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+import { Container } from '@moonmoonbrothers/flutterjs';
+import Widget from '@moonmoonbrothers/flutterjs-solid';
+
+const MyComponent = () => {
+  return(
+  <div style={{ width: '600px', height: '300px' }}>
+    <Widget
+      width="100%"
+      height="100%"
+      widget={Container({
+      color: 'lightblue'
+      })}
+    />
+  </div>
+)}
+
+export default MyComponent
+`}
+/>
+
+### See Result
+
+<div style={{ width: '600px', height: '300px', backgroundColor: 'lightblue' }} />
+
+## Description
+
+This framework use svg element unlike Flutter Web so I don't need to implement its own hit testing algorithm.
+
+By using svg, It can be rendered by Server side. (Ssr is possible!)
+
+I try to provide all important widget in Flutter. If there is no widget you want, you can create widget by yourself through RenderObjectWidget.
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ import SingleChildRenderObject from '../../renderobject/SingleChildRenderObject';
+ import { Size, Constraint } from '../../type';
+ import type { PaintContext } from '../../utils/type';
+ import SingleChildRenderObjectWidget from '../../widget/SingleChildRenderObjectWidget';
+ import type Widget from '../../widget/Widget';
+
+class CustomWidget extends SingleChildRenderObjectWidget {
+createRenderObject(): RenderCustom {
+return new RenderFlexible({ flex: this.flex, fit: this.fit });
+}
+
+  updateRenderObject(renderObject: RenderCustom): void {}
+
+}
+
+export class RenderFlexible extends SingleChildRenderObject {
+constructor({}: {}) {
+super({ isPainter: false });
+}
+
+  protected preformLayout(): void {
+   // you must call child's layout function and determine size of widget.
+   let size = Size.zero();
+   if (this.child != null) {
+    this.child.layout(childConstraint);
+    size = this.child.size;
+   }
+   this.size = this.constraint.constrain(size);
+  }
+
+}
+`}
+/>
+
+And you can also create your own component through ComponentWidget.
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
+ import {
+ ComponentWidget,
+ Padding,
+ Row,
+ Text,
+ Widget,
+ } from "@moonmoonbrothers/flutterjs"
+
+class YoutComponent extends ComponentWidget {
+
+  build(context: BuildContext): Widget {
+   return Row({
+    mainAxisAlignment: "spaceEvenly"
+    children: [
+     Padding({
+      padding: margin,
+      child: Text('It is Component Widget example'),
+     }),
+    ],
+   })
+  }
+
+}
+`}
+/>
+
+### To-do
+
+- [x] Provider
+- [ ] GesuterDetector
+- [ ] AnimationController
+- [x] Text
+- [x] Column, Row
+- [x] Container(SizedBox, DecoratedBox, ContraintBox, ...)
+- [x] Stack, Positioned
+- [] IndexedStack
+- [x] ClipPath
+- [x] ClipRect
+- [x] ClipOval
+- [ ] ClipRRect
+- [x] Transform.translate
+- [ ] CustomPaint
+
+For AminationController, I'm implementing my own animation library, <b>Moon-Animation</b>.
+
+Because I want very smooth animation transition considering not only continuous position but also continuous velocity.
+
+It is motivated by react-spring.
+[(moon-animation)](https://github.com/moonmoonbrothers/uglychart)
+
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+	<img style={{ width: '400px' }} src={MoonGif} />
+</div>
+
+<br />
+<br />
+
+## Github
+
+[https://github.com/moonmoonbrothers/uglychart](https://github.com/moonmoonbrothers/uglychart)

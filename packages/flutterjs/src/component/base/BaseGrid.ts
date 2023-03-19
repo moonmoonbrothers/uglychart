@@ -1,7 +1,6 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject"
 import type RenderObject from "../../renderobject/RenderObject"
-import { Constraint, Size, Offset } from "../../type"
-import Utils from "../../utils"
+import { Constraints, Size, Offset } from "../../type"
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
@@ -105,7 +104,7 @@ class RenderBaseGrid extends MultiChildRenderObject {
 
   protected preformLayout(): void {
     // stretch to fit parent
-    this.size = this.constraint.constrain(Size.infinite)
+    this.size = this.constraints.constrain(Size.infinite)
 
     const contentFitColumnWidths: number[] = Array.from(
       { length: this.columnCount },
@@ -120,14 +119,14 @@ class RenderBaseGrid extends MultiChildRenderObject {
       columnChildren.forEach((child, columnIndex) => {
         if (this.columns[columnIndex].type === "content-fit") {
           contentFitColumnWidths[columnIndex] = Math.max(
-            child.getIntrinsicWidth(),
+            child.getIntrinsicWidth(this.constraints.maxHeight),
             contentFitColumnWidths[columnIndex]
           )
         }
 
         if (this.rows[rowIndex].type === "content-fit") {
           contentFitRowHeights[rowIndex] = Math.max(
-            child.getIntrinsicHeight(),
+            child.getIntrinsicHeight(this.constraints.maxWidth),
             contentFitRowHeights[rowIndex]
           )
         }
@@ -198,8 +197,8 @@ class RenderBaseGrid extends MultiChildRenderObject {
 
     this.childrenByRow.forEach((columnChildren, rowIndex) => {
       columnChildren.forEach((child, columnIndex) => {
-        const childConstraint = new Constraint({
-          ...this.constraint,
+        const childConstraint = new Constraints({
+          ...this.constraints,
           maxHeight: heights[rowIndex],
           maxWidth: widths[columnIndex],
         })
@@ -212,36 +211,6 @@ class RenderBaseGrid extends MultiChildRenderObject {
         })
       })
     })
-  }
-
-  getIntrinsicWidth(): number {
-    return this.childrenByRow
-      .map((row) =>
-        row
-          .map((child, i) => {
-            const { type, value } =
-              i < this.templateColumns.length
-                ? this.templateColumns[i]
-                : this.autoColumn
-            return type === "px" ? value : child.getIntrinsicWidth()
-          })
-          .reduce(Utils.sumReducer, 0)
-      )
-      .reduce(Utils.maxReducer, 0)
-  }
-
-  getIntrinsicHeight(): number {
-    return this.childrenByRow
-      .map((row, i) =>
-        row
-          .map((child) => {
-            const { type, value } =
-              i < this.templateRows.length ? this.templateRows[i] : this.autoRow
-            return type === "px" ? value : child.getIntrinsicHeight()
-          })
-          .reduce(Utils.maxReducer, 0)
-      )
-      .reduce(Utils.sumReducer, 0)
   }
 }
 

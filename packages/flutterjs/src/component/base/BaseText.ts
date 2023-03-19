@@ -1,6 +1,6 @@
 import { getTextHeight, getTextWidth } from "../../utils"
 import RenderObject from "../../renderobject/RenderObject"
-import { Size } from "../../type"
+import { Offset, Size } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import RenderObjectWidget from "../../widget/RenderObjectWidget"
 
@@ -10,17 +10,15 @@ type TextBaseline =
   | "text-after-edge"
   | "alphabetic"
   | "ideographic"
-  | "central"
   | "middle"
   | "hanging"
   | "top"
   | "bottom"
-export type TextStyle = {
+type TextStyle = {
   fontFamily: string
   fontSize: string
   fontWeight: string
   fontColor: string
-  lineHeight: string
 }
 
 export type TextProps = {
@@ -44,13 +42,12 @@ class Text extends RenderObjectWidget {
         fontSize = "16px",
         fontWeight = "normal",
         fontColor = "black",
-        lineHeight = "2px",
       } = {},
     }: TextProps
   ) {
     super({ children: [] })
     this.text = text
-    this.style = { fontColor, fontFamily, fontSize, fontWeight, lineHeight }
+    this.style = { fontColor, fontFamily, fontSize, fontWeight }
     ;(this.textAlign = textAlign), (this.textBaseline = textBaseline)
   }
 
@@ -98,12 +95,12 @@ class RenderText extends RenderObject {
     return `${fontWeight} ${fontSize} ${fontFamily}`
   }
 
-  protected performPaint({
-    text: textEl,
-  }: {
-    [key: string]: SVGElement
-  }): void {
+  protected performPaint(
+    { text: textEl }: { [key: string]: SVGElement },
+    offset: Offset
+  ): void {
     const { fontFamily, fontColor, fontSize, fontWeight } = this.style
+    textEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`)
     textEl.setAttribute("id", this.id)
     textEl.setAttribute("text-anchor", this.textAlign)
     textEl.setAttribute("alignment-baseline", this.textBaseline)

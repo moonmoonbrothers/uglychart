@@ -1,52 +1,11 @@
-class Radius {
-  topLeft: number
-  topRight: number
-  bottomLeft: number
-  bottomRight: number
+export class Radius {
+  constructor(public x: number, public y: number) {}
 
-  constructor({
-    topLeft,
-    topRight,
-    bottomLeft,
-    bttomRight,
-  }: {
-    topLeft: number
-    topRight: number
-    bottomLeft: number
-    bttomRight: number
-  }) {
-    this.bottomLeft = bottomLeft
-    this.bottomRight = bttomRight
-    this.topLeft = topLeft
-    this.topRight = topRight
+  static circular(r: number) {
+    return Radius.elliptical({ x: r, y: r })
   }
-
-  static all(value: number) {
-    return new Radius({
-      topLeft: value,
-      topRight: value,
-      bottomLeft: value,
-      bttomRight: value,
-    })
-  }
-
-  static only({
-    topLeft = 0,
-    topRight = 0,
-    bottomLeft = 0,
-    bttomRight = 0,
-  }: {
-    topLeft?: number
-    topRight?: number
-    bottomLeft?: number
-    bttomRight?: number
-  }) {
-    return new Radius({
-      topLeft,
-      topRight,
-      bottomLeft,
-      bttomRight,
-    })
+  static elliptical({ x, y }: { x: number; y: number }) {
+    return new Radius(x, y)
   }
 }
 

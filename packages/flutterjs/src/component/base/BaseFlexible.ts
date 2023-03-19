@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Size, Constraint } from "../../type"
+import { Size, Constraints } from "../../type"
 import type { PaintContext } from "../../utils/type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
@@ -13,8 +13,7 @@ class Flexible extends SingleChildRenderObjectWidget {
     fit = "loose",
   }: { flex?: number; child?: Widget; fit?: "tight" | "loose" } = {}) {
     super({ child })
-    if (flex < 0)
-      throw { message: `flex must not be under zero (current: ${flex} }` }
+    if (flex <= 0) throw { message: "flex must be over zero" }
     this.flex = flex
     this.fit = fit
   }
@@ -35,7 +34,6 @@ export class RenderFlexible extends SingleChildRenderObject {
     fit,
   }: {
     flex: number
-
     fit: "tight" | "loose"
   }) {
     super({ isPainter: false })
@@ -44,19 +42,12 @@ export class RenderFlexible extends SingleChildRenderObject {
   }
 
   protected preformLayout(): void {
-    const childConstraint =
-      this.fit === "tight"
-        ? Constraint.tight({
-            width: this.constraint.maxWidth,
-            height: this.constraint.maxHeight,
-          })
-        : this.constraint.loosen()
     let size = Size.zero()
     if (this.child != null) {
-      this.child.layout(childConstraint)
+      this.child.layout(this.constraints)
       size = this.child.size
     }
-    this.size = this.constraint.constrain(size)
+    this.size = this.constraints.constrain(size)
   }
 }
 
