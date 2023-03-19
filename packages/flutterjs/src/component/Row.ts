@@ -1,22 +1,22 @@
-import type Widget from "../widget/Widget"
+import type Widget from "../widget/Widget";
 import Flex, {
   type CrossAxisAlignment,
   type MainAxisAlignment,
-} from "./base/BaseFlex"
+} from "./base/BaseFlex";
 
 export default function Row({
   children,
   mainAxisAlignment = "start",
   crossAxisAlignment = "center",
 }: {
-  children: Widget[]
-  mainAxisAlignment?: MainAxisAlignment
-  crossAxisAlignment?: CrossAxisAlignment
+  children: Widget[];
+  mainAxisAlignment?: MainAxisAlignment;
+  crossAxisAlignment?: CrossAxisAlignment;
 }) {
   return new Flex({
     children,
-    flexDirection: "row",
+    direction: "row",
     mainAxisAlignment,
     crossAxisAlignment,
-  })
+  });
 }
