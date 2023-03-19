@@ -38,6 +38,8 @@ export default function Flex({
     child: new BaseFlex({
       children,
       direction,
+      verticalDirection,
+      //mainAxisSize,
       mainAxisAlignment,
       crossAxisAlignment,
     }),

@@ -154,7 +154,7 @@ const VerticalDirection_upCode = dedent`
 				]
 			})
 		})
-`
+`;
 
 export const VerticalDirection_up: Story = {
 	args: {

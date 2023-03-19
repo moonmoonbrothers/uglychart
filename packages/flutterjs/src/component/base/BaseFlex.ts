@@ -20,21 +20,25 @@ class Flex extends MultiChildRenderObjectWidget {
   direction: Axis;
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
+  verticalDirection: VerticalDirection;
   constructor({
     children,
     direction,
     mainAxisAlignment = "start",
     crossAxisAlignment = "center",
+    verticalDirection = "down",
   }: {
     children: Widget[];
     direction: Axis;
     mainAxisAlignment?: MainAxisAlignment;
     crossAxisAlignment?: CrossAxisAlignment;
+    verticalDirection?: VerticalDirection;
   }) {
     super({ children });
     this.direction = direction;
     this.mainAxisAlignment = mainAxisAlignment;
     this.crossAxisAlignment = crossAxisAlignment;
+    this.verticalDirection = verticalDirection;
   }
 
   createRenderObject(): RenderFlex {
@@ -42,6 +46,7 @@ class Flex extends MultiChildRenderObjectWidget {
       direction: this.direction,
       mainAxisAlignment: this.mainAxisAlignment,
       crossAxisAlignment: this.crossAxisAlignment,
+      verticalDirection: this.verticalDirection,
     });
   }
 
@@ -49,6 +54,7 @@ class Flex extends MultiChildRenderObjectWidget {
     renderObject.direction = this.direction;
     renderObject.mainAxisAlignment = this.mainAxisAlignment;
     renderObject.crossAxisAlignment = this.crossAxisAlignment;
+    renderObject.verticalDirection = this.verticalDirection;
   }
 }
 
@@ -56,6 +62,7 @@ class RenderFlex extends MultiChildRenderObject {
   direction: Axis;
   mainAxisAlignment: MainAxisAlignment;
   crossAxisAlignment: CrossAxisAlignment;
+  verticalDirection: VerticalDirection;
   get mainAxisSizeName(): "width" | "height" {
     return this.direction === "horizontal" ? "width" : "height";
   }
@@ -78,23 +85,30 @@ class RenderFlex extends MultiChildRenderObject {
     direction,
     mainAxisAlignment,
     crossAxisAlignment,
+    verticalDirection,
   }: {
     direction: Axis;
     mainAxisAlignment: MainAxisAlignment;
     crossAxisAlignment: CrossAxisAlignment;
+    verticalDirection: VerticalDirection;
   }) {
     super({ isPainter: false });
     this.direction = direction;
     this.mainAxisAlignment = mainAxisAlignment;
     this.crossAxisAlignment = crossAxisAlignment;
+    this.verticalDirection = verticalDirection;
   }
   protected preformLayout(): void {
     let totalFlex = 0;
     let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0];
     const mainAxisValue = this.constraints.getMax(this.mainAxisSizeName);
+    const sortedChildren =
+      this.verticalDirection === "down"
+        ? this.children
+        : [...this.children].reverse();
 
     // 공통
-    this.children.forEach((child) => {
+    sortedChildren.forEach((child) => {
       child.layout(this.constraints);
       const flex = child instanceof RenderFlexible ? child.flex : 0;
       totalFlex += flex;
@@ -114,7 +128,7 @@ class RenderFlex extends MultiChildRenderObject {
     const flexUnitSize =
       (mainAxisValue - childIntrinsicMainAxisValue) / totalFlex;
 
-    this.children.forEach((child) => {
+    sortedChildren.forEach((child) => {
       let childConstraint: Constraints;
 
       if (!(child instanceof RenderFlexible)) {
@@ -132,10 +146,10 @@ class RenderFlex extends MultiChildRenderObject {
     });
 
     const mainAxisOffsets = this.getChildOffsetsOnMainAxis(
-      this.children.map(({ size }) => size[this.mainAxisSizeName])
+      sortedChildren.map(({ size }) => size[this.mainAxisSizeName])
     );
 
-    this.children.forEach((child, i) => {
+    sortedChildren.forEach((child, i) => {
       const [mainAxisOffset, crossAxisOffset]: ("x" | "y")[] =
         this.direction === "horizontal" ? ["x", "y"] : ["y", "x"];
 
