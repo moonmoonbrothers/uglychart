@@ -1542,8 +1542,8 @@ Rotate this matrix [angle] radians around [axis].
       m32 * argStorage[14] +
       m33 * argStorage[15];
   }
-   /// Multiply this with a transposed [arg].
-  multiplyTranspose(arg: Matrix4 ) {
+  /// Multiply this with a transposed [arg].
+  multiplyTranspose(arg: Matrix4) {
     const m00 = this._m4storage[0];
     const m01 = this._m4storage[4];
     const m02 = this._m4storage[8];
@@ -1561,70 +1561,315 @@ Rotate this matrix [angle] radians around [axis].
     const m32 = this._m4storage[11];
     const m33 = this._m4storage[15];
     const argStorage = arg._m4storage;
-    this._m4storage[0] = (m00 * argStorage[0]) +
-        (m01 * argStorage[4]) +
-        (m02 * argStorage[8]) +
-        (m03 * argStorage[12]);
-    this._m4storage[4] = (m00 * argStorage[1]) +
-        (m01 * argStorage[5]) +
-        (m02 * argStorage[9]) +
-        (m03 * argStorage[13]);
-    this._m4storage[8] = (m00 * argStorage[2]) +
-        (m01 * argStorage[6]) +
-        (m02 * argStorage[10]) +
-        (m03 * argStorage[14]);
-    this._m4storage[12] = (m00 * argStorage[3]) +
-        (m01 * argStorage[7]) +
-        (m02 * argStorage[11]) +
-        (m03 * argStorage[15]);
-    this._m4storage[1] = (m10 * argStorage[0]) +
-        (m11 * argStorage[4]) +
-        (m12 * argStorage[8]) +
-        (m13 * argStorage[12]);
-    this._m4storage[5] = (m10 * argStorage[1]) +
-        (m11 * argStorage[5]) +
-        (m12 * argStorage[9]) +
-        (m13 * argStorage[13]);
-    this._m4storage[9] = (m10 * argStorage[2]) +
-        (m11 * argStorage[6]) +
-        (m12 * argStorage[10]) +
-        (m13 * argStorage[14]);
-    this._m4storage[13] = (m10 * argStorage[3]) +
-        (m11 * argStorage[7]) +
-        (m12 * argStorage[11]) +
-        (m13 * argStorage[15]);
-    this._m4storage[2] = (m20 * argStorage[0]) +
-        (m21 * argStorage[4]) +
-        (m22 * argStorage[8]) +
-        (m23 * argStorage[12]);
-    this._m4storage[6] = (m20 * argStorage[1]) +
-        (m21 * argStorage[5]) +
-        (m22 * argStorage[9]) +
-        (m23 * argStorage[13]);
-    this._m4storage[10] = (m20 * argStorage[2]) +
-        (m21 * argStorage[6]) +
-        (m22 * argStorage[10]) +
-        (m23 * argStorage[14]);
-    this._m4storage[14] = (m20 * argStorage[3]) +
-        (m21 * argStorage[7]) +
-        (m22 * argStorage[11]) +
-        (m23 * argStorage[15]);
-    this._m4storage[3] = (m30 * argStorage[0]) +
-        (m31 * argStorage[4]) +
-        (m32 * argStorage[8]) +
-        (m33 * argStorage[12]);
-    this._m4storage[7] = (m30 * argStorage[1]) +
-        (m31 * argStorage[5]) +
-        (m32 * argStorage[9]) +
-        (m33 * argStorage[13]);
-    this._m4storage[11] = (m30 * argStorage[2]) +
-        (m31 * argStorage[6]) +
-        (m32 * argStorage[10]) +
-        (m33 * argStorage[14]);
-    this._m4storage[15] = (m30 * argStorage[3]) +
-        (m31 * argStorage[7]) +
-        (m32 * argStorage[11]) +
-        (m33 * argStorage[15]);
+    this._m4storage[0] =
+      m00 * argStorage[0] +
+      m01 * argStorage[4] +
+      m02 * argStorage[8] +
+      m03 * argStorage[12];
+    this._m4storage[4] =
+      m00 * argStorage[1] +
+      m01 * argStorage[5] +
+      m02 * argStorage[9] +
+      m03 * argStorage[13];
+    this._m4storage[8] =
+      m00 * argStorage[2] +
+      m01 * argStorage[6] +
+      m02 * argStorage[10] +
+      m03 * argStorage[14];
+    this._m4storage[12] =
+      m00 * argStorage[3] +
+      m01 * argStorage[7] +
+      m02 * argStorage[11] +
+      m03 * argStorage[15];
+    this._m4storage[1] =
+      m10 * argStorage[0] +
+      m11 * argStorage[4] +
+      m12 * argStorage[8] +
+      m13 * argStorage[12];
+    this._m4storage[5] =
+      m10 * argStorage[1] +
+      m11 * argStorage[5] +
+      m12 * argStorage[9] +
+      m13 * argStorage[13];
+    this._m4storage[9] =
+      m10 * argStorage[2] +
+      m11 * argStorage[6] +
+      m12 * argStorage[10] +
+      m13 * argStorage[14];
+    this._m4storage[13] =
+      m10 * argStorage[3] +
+      m11 * argStorage[7] +
+      m12 * argStorage[11] +
+      m13 * argStorage[15];
+    this._m4storage[2] =
+      m20 * argStorage[0] +
+      m21 * argStorage[4] +
+      m22 * argStorage[8] +
+      m23 * argStorage[12];
+    this._m4storage[6] =
+      m20 * argStorage[1] +
+      m21 * argStorage[5] +
+      m22 * argStorage[9] +
+      m23 * argStorage[13];
+    this._m4storage[10] =
+      m20 * argStorage[2] +
+      m21 * argStorage[6] +
+      m22 * argStorage[10] +
+      m23 * argStorage[14];
+    this._m4storage[14] =
+      m20 * argStorage[3] +
+      m21 * argStorage[7] +
+      m22 * argStorage[11] +
+      m23 * argStorage[15];
+    this._m4storage[3] =
+      m30 * argStorage[0] +
+      m31 * argStorage[4] +
+      m32 * argStorage[8] +
+      m33 * argStorage[12];
+    this._m4storage[7] =
+      m30 * argStorage[1] +
+      m31 * argStorage[5] +
+      m32 * argStorage[9] +
+      m33 * argStorage[13];
+    this._m4storage[11] =
+      m30 * argStorage[2] +
+      m31 * argStorage[6] +
+      m32 * argStorage[10] +
+      m33 * argStorage[14];
+    this._m4storage[15] =
+      m30 * argStorage[3] +
+      m31 * argStorage[7] +
+      m32 * argStorage[11] +
+      m33 * argStorage[15];
+  }
+  // /// Decomposes this into [translation], [rotation] and [scale] components.
+  // void decompose(Vector3 translation, Quaternion rotation, Vector3 scale) {
+  //   final v = _decomposeV ??= Vector3.zero();
+  //   var sx = (v..setValues(_m4storage[0], _m4storage[1], _m4storage[2])).length;
+  //   final sy =
+  //       (v..setValues(_m4storage[4], _m4storage[5], _m4storage[6])).length;
+  //   final sz =
+  //       (v..setValues(_m4storage[8], _m4storage[9], _m4storage[10])).length;
+
+  //   if (determinant() < 0) {
+  //     sx = -sx;
+  //   }
+
+  //   translation._v3storage[0] = _m4storage[12];
+  //   translation._v3storage[1] = _m4storage[13];
+  //   translation._v3storage[2] = _m4storage[14];
+
+  //   final invSX = 1.0 / sx;
+  //   final invSY = 1.0 / sy;
+  //   final invSZ = 1.0 / sz;
+
+  //   final m = _decomposeM ??= Matrix4.zero();
+  //   m.setFrom(this);
+  //   m._m4storage[0] *= invSX;
+  //   m._m4storage[1] *= invSX;
+  //   m._m4storage[2] *= invSX;
+  //   m._m4storage[4] *= invSY;
+  //   m._m4storage[5] *= invSY;
+  //   m._m4storage[6] *= invSY;
+  //   m._m4storage[8] *= invSZ;
+  //   m._m4storage[9] *= invSZ;
+  //   m._m4storage[10] *= invSZ;
+
+  //   final r = _decomposeR ??= Matrix3.zero();
+  //   m.copyRotation(r);
+  //   rotation.setFromRotation(r);
+
+  //   scale._v3storage[0] = sx;
+  //   scale._v3storage[1] = sy;
+  //   scale._v3storage[2] = sz;
+  // }
+
+  /// Rotate [arg] of type [Vector3] using the rotation defined by this.
+  rotate3(arg: Vector3): Vector3 {
+    const argStorage = arg._v3storage;
+    const x =
+      this._m4storage[0] * argStorage[0] +
+      this._m4storage[4] * argStorage[1] +
+      this._m4storage[8] * argStorage[2];
+    const y =
+      this._m4storage[1] * argStorage[0] +
+      this._m4storage[5] * argStorage[1] +
+      this._m4storage[9] * argStorage[2];
+    const z =
+      this._m4storage[2] * argStorage[0] +
+      this._m4storage[6] * argStorage[1] +
+      this._m4storage[10] * argStorage[2];
+    argStorage[0] = x;
+    argStorage[1] = y;
+    argStorage[2] = z;
+    return arg;
+  }
+
+  /// Transform [arg] of type [Vector4] using the transformation defined by
+  /// this.
+  transform(arg: Vector4): Vector4 {
+    const argStorage = arg._v4storage;
+    const x =
+      this._m4storage[0] * argStorage[0] +
+      this._m4storage[4] * argStorage[1] +
+      this._m4storage[8] * argStorage[2] +
+      this._m4storage[12] * argStorage[3];
+    const y =
+      this._m4storage[1] * argStorage[0] +
+      this._m4storage[5] * argStorage[1] +
+      this._m4storage[9] * argStorage[2] +
+      this._m4storage[13] * argStorage[3];
+    const z =
+      this._m4storage[2] * argStorage[0] +
+      this._m4storage[6] * argStorage[1] +
+      this._m4storage[10] * argStorage[2] +
+      this._m4storage[14] * argStorage[3];
+    const w =
+      this._m4storage[3] * argStorage[0] +
+      this._m4storage[7] * argStorage[1] +
+      this._m4storage[11] * argStorage[2] +
+      this._m4storage[15] * argStorage[3];
+    argStorage[0] = x;
+    argStorage[1] = y;
+    argStorage[2] = z;
+    argStorage[3] = w;
+    return arg;
+  }
+
+  /// Transform [arg] of type [Vector3] using the perspective transformation
+  /// defined by this.
+  perspectiveTransform(arg: Vector3): Vector3 {
+    const argStorage = arg._v3storage;
+    const x_ =
+      this._m4storage[0] * argStorage[0] +
+      this._m4storage[4] * argStorage[1] +
+      this._m4storage[8] * argStorage[2] +
+      this._m4storage[12];
+    const y_ =
+      this._m4storage[1] * argStorage[0] +
+      this._m4storage[5] * argStorage[1] +
+      this._m4storage[9] * argStorage[2] +
+      this._m4storage[13];
+    const z_ =
+      this._m4storage[2] * argStorage[0] +
+      this._m4storage[6] * argStorage[1] +
+      this._m4storage[10] * argStorage[2] +
+      this._m4storage[14];
+    const w_ =
+      1.0 /
+      (this._m4storage[3] * argStorage[0] +
+        this._m4storage[7] * argStorage[1] +
+        this._m4storage[11] * argStorage[2] +
+        this._m4storage[15]);
+    argStorage[0] = x_ * w_;
+    argStorage[1] = y_ * w_;
+    argStorage[2] = z_ * w_;
+    return arg;
+  }
+  // Copies this into [array] starting at [offset].
+  copyIntoArray(array: number[], offset: number = 0): void {
+    const i = offset;
+    array[i + 15] = this._m4storage[15];
+    array[i + 14] = this._m4storage[14];
+    array[i + 13] = this._m4storage[13];
+    array[i + 12] = this._m4storage[12];
+    array[i + 11] = this._m4storage[11];
+    array[i + 10] = this._m4storage[10];
+    array[i + 9] = this._m4storage[9];
+    array[i + 8] = this._m4storage[8];
+    array[i + 7] = this._m4storage[7];
+    array[i + 6] = this._m4storage[6];
+    array[i + 5] = this._m4storage[5];
+    array[i + 4] = this._m4storage[4];
+    array[i + 3] = this._m4storage[3];
+    array[i + 2] = this._m4storage[2];
+    array[i + 1] = this._m4storage[1];
+    array[i + 0] = this._m4storage[0];
+  }
+  /**
+   * Copies elements from `array` into this starting at `offset`.
+   */
+  copyFromArray(array: number[], offset = 0): void {
+    const i = offset;
+    this._m4storage[15] = array[i + 15];
+    this._m4storage[14] = array[i + 14];
+    this._m4storage[13] = array[i + 13];
+    this._m4storage[12] = array[i + 12];
+    this._m4storage[11] = array[i + 11];
+    this._m4storage[10] = array[i + 10];
+    this._m4storage[9] = array[i + 9];
+    this._m4storage[8] = array[i + 8];
+    this._m4storage[7] = array[i + 7];
+    this._m4storage[6] = array[i + 6];
+    this._m4storage[5] = array[i + 5];
+    this._m4storage[4] = array[i + 4];
+    this._m4storage[3] = array[i + 3];
+    this._m4storage[2] = array[i + 2];
+    this._m4storage[1] = array[i + 1];
+    this._m4storage[0] = array[i + 0];
+  }
+  get right(): Vector3 {
+    const x = this._m4storage[0];
+    const y = this._m4storage[1];
+    const z = this._m4storage[2];
+    return new Vector3(x, y, z);
+  }
+
+  get up(): Vector3 {
+    const x = this._m4storage[4];
+    const y = this._m4storage[5];
+    const z = this._m4storage[6];
+    return new Vector3(x, y, z);
+  }
+
+  get forward(): Vector3 {
+    const x = this._m4storage[8];
+    const y = this._m4storage[9];
+    const z = this._m4storage[10];
+    return new Vector3(x, y, z);
+  }
+  /// Is this the identity matrix?
+  isIdentity() {
+    return (
+      this._m4storage[0] == 1.0 && // col 1
+      this._m4storage[1] == 0.0 &&
+      this._m4storage[2] == 0.0 &&
+      this._m4storage[3] == 0.0 &&
+      this._m4storage[4] == 0.0 && // col 2
+      this._m4storage[5] == 1.0 &&
+      this._m4storage[6] == 0.0 &&
+      this._m4storage[7] == 0.0 &&
+      this._m4storage[8] == 0.0 && // col 3
+      this._m4storage[9] == 0.0 &&
+      this._m4storage[10] == 1.0 &&
+      this._m4storage[11] == 0.0 &&
+      this._m4storage[12] == 0.0 && // col 4
+      this._m4storage[13] == 0.0 &&
+      this._m4storage[14] == 0.0 &&
+      this._m4storage[15] == 1.0
+    );
+  }
+
+  /// Is this the zero matrix?
+  isZero() {
+    return (
+      this._m4storage[0] == 0.0 && // col 1
+      this._m4storage[1] == 0.0 &&
+      this._m4storage[2] == 0.0 &&
+      this._m4storage[3] == 0.0 &&
+      this._m4storage[4] == 0.0 && // col 2
+      this._m4storage[5] == 0.0 &&
+      this._m4storage[6] == 0.0 &&
+      this._m4storage[7] == 0.0 &&
+      this._m4storage[8] == 0.0 && // col 3
+      this._m4storage[9] == 0.0 &&
+      this._m4storage[10] == 0.0 &&
+      this._m4storage[11] == 0.0 &&
+      this._m4storage[12] == 0.0 && // col 4
+      this._m4storage[13] == 0.0 &&
+      this._m4storage[14] == 0.0 &&
+      this._m4storage[15] == 0.0
+    );
   }
 }
 
