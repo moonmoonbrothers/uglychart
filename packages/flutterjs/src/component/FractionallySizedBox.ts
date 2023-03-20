@@ -1,6 +1,6 @@
-import Alignment from "../type/_types/Alignment"
-import type Widget from "../widget/Widget"
-import BaseFractionallySizedBox from "./base/BaseFractionallySizedBox"
+import Alignment from "../type/_types/AAlignment";
+import type Widget from "../widget/Widget";
+import BaseFractionallySizedBox from "./base/BaseFractionallySizedBox";
 
 export default function FractionallySizedBox({
   child,
@@ -8,15 +8,15 @@ export default function FractionallySizedBox({
   widthFactor,
   heightFactor,
 }: {
-  child?: Widget
-  alignment?: Alignment
-  widthFactor?: number
-  heightFactor?: number
+  child?: Widget;
+  alignment?: Alignment;
+  widthFactor?: number;
+  heightFactor?: number;
 }) {
   return new BaseFractionallySizedBox({
     child,
     alignment,
     widthFactor,
     heightFactor,
-  })
+  });
 }
