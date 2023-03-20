@@ -1,6 +1,27 @@
 import Matrix2 from "./Matrix2";
+import Matrix3 from "./Matrix3";
 import Vector3 from "./Vector3";
 import Vector4 from "./Vector4";
+
+type Array16 = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number
+];
+
 
 class Matrix4 {
   // 4 x 4 matrix
@@ -907,25 +928,67 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[13] = y;
     this._m4storage[12] = x;
   }
+  /**
+   * Sets the translation vector in this homogeneous transformation matrix.
+   */
+  setTranslationRaw(x: number, y: number, z: number): void {
+    this._m4storage[14] = z;
+    this._m4storage[13] = y;
+    this._m4storage[12] = x;
+  }
+  /// Returns the rotation matrix from this homogeneous transformation matrix.
+  getRotation(): Matrix3 {
+    const r = Matrix3.zero();
+    this.copyRotation(r);
+    return r;
+  }
+  copyRotation(rotation: Matrix3) {
+    const rStorage = rotation._m3storage;
+    rStorage[0] = this._m4storage[0];
+    rStorage[1] = this._m4storage[1];
+    rStorage[2] = this._m4storage[2];
+    rStorage[3] = this._m4storage[4];
+    rStorage[4] = this._m4storage[5];
+    rStorage[5] = this._m4storage[6];
+    rStorage[6] = this._m4storage[8];
+    rStorage[7] = this._m4storage[9];
+    rStorage[8] = this._m4storage[10];
+  }
+  /// Sets the rotation matrix in this homogeneous transformation matrix.
+  setRotation(r: Matrix3) {
+    const rStorage = r._m3storage;
+    this._m4storage[0] = rStorage[0];
+    this._m4storage[1] = rStorage[1];
+    this._m4storage[2] = rStorage[2];
+    this._m4storage[4] = rStorage[3];
+    this._m4storage[5] = rStorage[4];
+    this._m4storage[6] = rStorage[5];
+    this._m4storage[8] = rStorage[6];
+    this._m4storage[9] = rStorage[7];
+    this._m4storage[10] = rStorage[8];
+  }
+  /**
+   * Returns the normal matrix from this homogeneous transformation matrix. The normal
+   * matrix is the transpose of the inverse of the top-left 3x3 part of this 4x4 matrix.
+   */
+  getNormalMatrix(): Matrix3 {
+    const normalMatrix = Matrix3.identity();
+    this.copyNormalMatrix(normalMatrix);
+    return normalMatrix;
+  }
+    /// Returns the max scale value of the 3 axes.
+  getMaxScaleOnAxis() {
+     const scaleXSq = this._m4storage[0] * this._m4storage[0] +
+        this._m4storage[1] *this. _m4storage[1] +
+        this._m4storage[2] * this._m4storage[2];
+    const scaleYSq = this._m4storage[4] * this._m4storage[4] +
+        this._m4storage[5] * this._m4storage[5] +
+        this._m4storage[6] *this. _m4storage[6];
+    const scaleZSq = this._m4storage[8] *this. _m4storage[8] +
+        this._m4storage[9] *this. _m4storage[9] +
+        this._m4storage[10] *this. _m4storage[10];
+    return Math.sqrt(Math.max(scaleXSq, Math.max(scaleYSq, scaleZSq)));
+  }
 }
-
-type Array16 = [
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number,
-  number
-];
 
 export default Matrix4;
