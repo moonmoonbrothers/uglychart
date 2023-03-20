@@ -1,5 +1,6 @@
 import Matrix2 from "./Matrix2";
 import Matrix3 from "./Matrix3";
+import Vector2 from "./Vector2";
 import Vector3 from "./Vector3";
 import Vector4 from "./Vector4";
 
@@ -34,6 +35,158 @@ class Matrix4 {
   }
   static copy(arg: Matrix4): Matrix4 {
     return new Matrix4(...arg._m4storage);
+  }
+  /**
+   * Solve [A] * [x] = [b].
+   */
+  static solve2(A: Matrix4, x: Vector2, b: Vector2): void {
+    const a11 = A.entry(0, 0);
+    const a12 = A.entry(0, 1);
+    const a21 = A.entry(1, 0);
+    const a22 = A.entry(1, 1);
+    const bx = b.x - A._m4storage[8];
+    const by = b.y - A._m4storage[9];
+    let det = a11 * a22 - a12 * a21;
+
+    if (det != 0.0) {
+      det = 1.0 / det;
+    }
+
+    x.x = det * (a22 * bx - a12 * by);
+    x.y = det * (a11 * by - a21 * bx);
+  }
+  /**
+   * Solve [A] * [x] = [b].
+   */
+  static solve3(A: Matrix4, x: Vector3, b: Vector3): void {
+    const A0x = A.entry(0, 0);
+    const A0y = A.entry(1, 0);
+    const A0z = A.entry(2, 0);
+    const A1x = A.entry(0, 1);
+    const A1y = A.entry(1, 1);
+    const A1z = A.entry(2, 1);
+    const A2x = A.entry(0, 2);
+    const A2y = A.entry(1, 2);
+    const A2z = A.entry(2, 2);
+    const bx = b.x - A._m4storage[12];
+    const by = b.y - A._m4storage[13];
+    const bz = b.z - A._m4storage[14];
+    let rx, ry, rz;
+    let det: number;
+
+    // Column1 cross Column 2
+    rx = A1y * A2z - A1z * A2y;
+    ry = A1z * A2x - A1x * A2z;
+    rz = A1x * A2y - A1y * A2x;
+
+    // A.getColumn(0).dot(x)
+    det = A0x * rx + A0y * ry + A0z * rz;
+    if (det !== 0.0) {
+      det = 1.0 / det;
+    }
+
+    // b dot [Column1 cross Column 2]
+    const x_ = det * (bx * rx + by * ry + bz * rz);
+
+    // Column2 cross b
+    rx = -(A2y * bz - A2z * by);
+    ry = -(A2z * bx - A2x * bz);
+    rz = -(A2x * by - A2y * bx);
+    // Column0 dot -[Column2 cross b (Column3)]
+    const y_ = det * (A0x * rx + A0y * ry + A0z * rz);
+
+    // b cross Column 1
+    rx = -(by * A1z - bz * A1y);
+    ry = -(bz * A1x - bx * A1z);
+    rz = -(bx * A1y - by * A1x);
+    // Column0 dot -[b cross Column 1]
+    const z_ = det * (A0x * rx + A0y * ry + A0z * rz);
+
+    x.x = x_;
+    x.y = y_;
+    x.z = z_;
+  }
+  /// Solve [A] * [x] = [b].
+  static solve(A: Matrix4, x: Vector4, b: Vector4) {
+    const a00 = A._m4storage[0];
+    const a01 = A._m4storage[1];
+    const a02 = A._m4storage[2];
+    const a03 = A._m4storage[3];
+    const a10 = A._m4storage[4];
+    const a11 = A._m4storage[5];
+    const a12 = A._m4storage[6];
+    const a13 = A._m4storage[7];
+    const a20 = A._m4storage[8];
+    const a21 = A._m4storage[9];
+    const a22 = A._m4storage[10];
+    const a23 = A._m4storage[11];
+    const a30 = A._m4storage[12];
+    const a31 = A._m4storage[13];
+    const a32 = A._m4storage[14];
+    const a33 = A._m4storage[15];
+    const b00 = a00 * a11 - a01 * a10;
+    const b01 = a00 * a12 - a02 * a10;
+    const b02 = a00 * a13 - a03 * a10;
+    const b03 = a01 * a12 - a02 * a11;
+    const b04 = a01 * a13 - a03 * a11;
+    const b05 = a02 * a13 - a03 * a12;
+    const b06 = a20 * a31 - a21 * a30;
+    const b07 = a20 * a32 - a22 * a30;
+    const b08 = a20 * a33 - a23 * a30;
+    const b09 = a21 * a32 - a22 * a31;
+    const b10 = a21 * a33 - a23 * a31;
+    const b11 = a22 * a33 - a23 * a32;
+
+    const bX = b.storage[0];
+    const bY = b.storage[1];
+    const bZ = b.storage[2];
+    const bW = b.storage[3];
+
+    var det =
+      b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+    if (det != 0.0) {
+      det = 1.0 / det;
+    }
+
+    x.x =
+      det *
+      ((a11 * b11 - a12 * b10 + a13 * b09) * bX -
+        (a10 * b11 - a12 * b08 + a13 * b07) * bY +
+        (a10 * b10 - a11 * b08 + a13 * b06) * bZ -
+        (a10 * b09 - a11 * b07 + a12 * b06) * bW);
+    x.y =
+      det *
+      -(
+        (a01 * b11 - a02 * b10 + a03 * b09) * bX -
+        (a00 * b11 - a02 * b08 + a03 * b07) * bY +
+        (a00 * b10 - a01 * b08 + a03 * b06) * bZ -
+        (a00 * b09 - a01 * b07 + a02 * b06) * bW
+      );
+    x.z =
+      det *
+      ((a31 * b05 - a32 * b04 + a33 * b03) * bX -
+        (a30 * b05 - a32 * b02 + a33 * b01) * bY +
+        (a30 * b04 - a31 * b02 + a33 * b00) * bZ -
+        (a30 * b03 - a31 * b01 + a32 * b00) * bW);
+    x.w =
+      det *
+      -(
+        (a21 * b05 - a22 * b04 + a23 * b03) * bX -
+        (a20 * b05 - a22 * b02 + a23 * b01) * bY +
+        (a20 * b04 - a21 * b02 + a23 * b00) * bZ -
+        (a20 * b03 - a21 * b01 + a22 * b00) * bW
+      );
+  }
+  /// Returns a matrix that is the inverse of [other] if [other] is invertible,
+  /// otherwise `null`.
+  static tryInvert(other: Matrix4): Matrix4 | null {
+    const r = Matrix4.zero();
+    const determinant = r.copyInverse(other);
+    if (determinant == 0.0) {
+      return null;
+    }
+    return r;
   }
 
   constructor(
@@ -897,7 +1050,8 @@ Rotate this matrix [angle] radians around [axis].
   }
   /// Returns relative error between this and [correct]
   relativeError(correct: Matrix4): number {
-    const diff = correct.subtract(this);
+    correct.sub(this);
+    const diff = correct;
     const correct_norm = correct.infinityNorm();
     const diff_norm = diff.infinityNorm();
     return diff_norm / correct_norm;
@@ -970,11 +1124,11 @@ Rotate this matrix [angle] radians around [axis].
    * Returns the normal matrix from this homogeneous transformation matrix. The normal
    * matrix is the transpose of the inverse of the top-left 3x3 part of this 4x4 matrix.
    */
-  getNormalMatrix(): Matrix3 {
-    const normalMatrix = Matrix3.identity();
-    this.copyNormalMatrix(normalMatrix);
-    return normalMatrix;
-  }
+  // getNormalMatrix(): Matrix3 {
+  //   const normalMatrix = Matrix3.identity();
+  //   this.copyNormalMatrix(normalMatrix);
+  //   return normalMatrix;
+  // }
   /// Returns the max scale value of the 3 axes.
   getMaxScaleOnAxis() {
     const scaleXSq =

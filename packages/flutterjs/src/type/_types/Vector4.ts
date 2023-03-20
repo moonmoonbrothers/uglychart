@@ -4,6 +4,9 @@ import Vector3 from "./Vector3";
 
 export class Vector4 implements Vector {
   _v4storage: [number, number, number, number];
+  get storage() {
+    return this._v4storage
+  }
   constructor(arg0: number, arg1: number, arg2: number, arg3: number) {
     this._v4storage = [arg0, arg1, arg2, arg3];
   }
