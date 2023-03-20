@@ -1322,7 +1322,7 @@ Rotate this matrix [angle] radians around [axis].
   }
 
   /// Adds [o] to this.
-  add( o: Matrix4) {
+  add(o: Matrix4) {
     const oStorage = o._m4storage;
     this._m4storage[0] = this._m4storage[0] + oStorage[0];
     this._m4storage[1] = this._m4storage[1] + oStorage[1];
@@ -1343,7 +1343,7 @@ Rotate this matrix [angle] radians around [axis].
   }
 
   /// Subtracts [o] from this.
-  sub( o: Matrix4) {
+  sub(o: Matrix4) {
     const oStorage = o._m4storage;
     this._m4storage[0] = this._m4storage[0] - oStorage[0];
     this._m4storage[1] = this._m4storage[1] - oStorage[1];
@@ -1384,7 +1384,7 @@ Rotate this matrix [angle] radians around [axis].
   }
 
   /// Multiply this by [arg].
-  multiply(arg: Matrix4 ) {
+  multiply(arg: Matrix4) {
     const m00 = this._m4storage[0];
     const m01 = this._m4storage[4];
     const m02 = this._m4storage[8];
@@ -1418,22 +1418,213 @@ Rotate this matrix [angle] radians around [axis].
     const n31 = argStorage[7];
     const n32 = argStorage[11];
     const n33 = argStorage[15];
-    this._m4storage[0] = (m00 * n00) + (m01 * n10) + (m02 * n20) + (m03 * n30);
-    this._m4storage[4] = (m00 * n01) + (m01 * n11) + (m02 * n21) + (m03 * n31);
-    this._m4storage[8] = (m00 * n02) + (m01 * n12) + (m02 * n22) + (m03 * n32);
-    this._m4storage[12] = (m00 * n03) + (m01 * n13) + (m02 * n23) + (m03 * n33);
-    this._m4storage[1] = (m10 * n00) + (m11 * n10) + (m12 * n20) + (m13 * n30);
-    this._m4storage[5] = (m10 * n01) + (m11 * n11) + (m12 * n21) + (m13 * n31);
-    this._m4storage[9] = (m10 * n02) + (m11 * n12) + (m12 * n22) + (m13 * n32);
-    this._m4storage[13] = (m10 * n03) + (m11 * n13) + (m12 * n23) + (m13 * n33);
-    this._m4storage[2] = (m20 * n00) + (m21 * n10) + (m22 * n20) + (m23 * n30);
-    this._m4storage[6] = (m20 * n01) + (m21 * n11) + (m22 * n21) + (m23 * n31);
-    this._m4storage[10] = (m20 * n02) + (m21 * n12) + (m22 * n22) + (m23 * n32);
-    this._m4storage[14] = (m20 * n03) + (m21 * n13) + (m22 * n23) + (m23 * n33);
-    this._m4storage[3] = (m30 * n00) + (m31 * n10) + (m32 * n20) + (m33 * n30);
-    this._m4storage[7] = (m30 * n01) + (m31 * n11) + (m32 * n21) + (m33 * n31);
-    this._m4storage[11] = (m30 * n02) + (m31 * n12) + (m32 * n22) + (m33 * n32);
-    this._m4storage[15] = (m30 * n03) + (m31 * n13) + (m32 * n23) + (m33 * n33);
+    this._m4storage[0] = m00 * n00 + m01 * n10 + m02 * n20 + m03 * n30;
+    this._m4storage[4] = m00 * n01 + m01 * n11 + m02 * n21 + m03 * n31;
+    this._m4storage[8] = m00 * n02 + m01 * n12 + m02 * n22 + m03 * n32;
+    this._m4storage[12] = m00 * n03 + m01 * n13 + m02 * n23 + m03 * n33;
+    this._m4storage[1] = m10 * n00 + m11 * n10 + m12 * n20 + m13 * n30;
+    this._m4storage[5] = m10 * n01 + m11 * n11 + m12 * n21 + m13 * n31;
+    this._m4storage[9] = m10 * n02 + m11 * n12 + m12 * n22 + m13 * n32;
+    this._m4storage[13] = m10 * n03 + m11 * n13 + m12 * n23 + m13 * n33;
+    this._m4storage[2] = m20 * n00 + m21 * n10 + m22 * n20 + m23 * n30;
+    this._m4storage[6] = m20 * n01 + m21 * n11 + m22 * n21 + m23 * n31;
+    this._m4storage[10] = m20 * n02 + m21 * n12 + m22 * n22 + m23 * n32;
+    this._m4storage[14] = m20 * n03 + m21 * n13 + m22 * n23 + m23 * n33;
+    this._m4storage[3] = m30 * n00 + m31 * n10 + m32 * n20 + m33 * n30;
+    this._m4storage[7] = m30 * n01 + m31 * n11 + m32 * n21 + m33 * n31;
+    this._m4storage[11] = m30 * n02 + m31 * n12 + m32 * n22 + m33 * n32;
+    this._m4storage[15] = m30 * n03 + m31 * n13 + m32 * n23 + m33 * n33;
+  }
+  /// Multiply a copy of this with [arg].
+  multiplied(arg: Matrix4) {
+    const result = this.clone();
+    result.multiply(arg);
+    return result;
+  }
+
+  /// Multiply a transposed this with [arg].
+  transposeMultiply(arg: Matrix4) {
+    const m00 = this._m4storage[0];
+    const m01 = this._m4storage[1];
+    const m02 = this._m4storage[2];
+    const m03 = this._m4storage[3];
+    const m10 = this._m4storage[4];
+    const m11 = this._m4storage[5];
+    const m12 = this._m4storage[6];
+    const m13 = this._m4storage[7];
+    const m20 = this._m4storage[8];
+    const m21 = this._m4storage[9];
+    const m22 = this._m4storage[10];
+    const m23 = this._m4storage[11];
+    const m30 = this._m4storage[12];
+    const m31 = this._m4storage[13];
+    const m32 = this._m4storage[14];
+    const m33 = this._m4storage[15];
+    const argStorage = arg._m4storage;
+    this._m4storage[0] =
+      m00 * argStorage[0] +
+      m01 * argStorage[1] +
+      m02 * argStorage[2] +
+      m03 * argStorage[3];
+    this._m4storage[4] =
+      m00 * argStorage[4] +
+      m01 * argStorage[5] +
+      m02 * argStorage[6] +
+      m03 * argStorage[7];
+    this._m4storage[8] =
+      m00 * argStorage[8] +
+      m01 * argStorage[9] +
+      m02 * argStorage[10] +
+      m03 * argStorage[11];
+    this._m4storage[12] =
+      m00 * argStorage[12] +
+      m01 * argStorage[13] +
+      m02 * argStorage[14] +
+      m03 * argStorage[15];
+    this._m4storage[1] =
+      m10 * argStorage[0] +
+      m11 * argStorage[1] +
+      m12 * argStorage[2] +
+      m13 * argStorage[3];
+    this._m4storage[5] =
+      m10 * argStorage[4] +
+      m11 * argStorage[5] +
+      m12 * argStorage[6] +
+      m13 * argStorage[7];
+    this._m4storage[9] =
+      m10 * argStorage[8] +
+      m11 * argStorage[9] +
+      m12 * argStorage[10] +
+      m13 * argStorage[11];
+    this._m4storage[13] =
+      m10 * argStorage[12] +
+      m11 * argStorage[13] +
+      m12 * argStorage[14] +
+      m13 * argStorage[15];
+    this._m4storage[2] =
+      m20 * argStorage[0] +
+      m21 * argStorage[1] +
+      m22 * argStorage[2] +
+      m23 * argStorage[3];
+    this._m4storage[6] =
+      m20 * argStorage[4] +
+      m21 * argStorage[5] +
+      m22 * argStorage[6] +
+      m23 * argStorage[7];
+    this._m4storage[10] =
+      m20 * argStorage[8] +
+      m21 * argStorage[9] +
+      m22 * argStorage[10] +
+      m23 * argStorage[11];
+    this._m4storage[14] =
+      m20 * argStorage[12] +
+      m21 * argStorage[13] +
+      m22 * argStorage[14] +
+      m23 * argStorage[15];
+    this._m4storage[3] =
+      m30 * argStorage[0] +
+      m31 * argStorage[1] +
+      m32 * argStorage[2] +
+      m33 * argStorage[3];
+    this._m4storage[7] =
+      m30 * argStorage[4] +
+      m31 * argStorage[5] +
+      m32 * argStorage[6] +
+      m33 * argStorage[7];
+    this._m4storage[11] =
+      m30 * argStorage[8] +
+      m31 * argStorage[9] +
+      m32 * argStorage[10] +
+      m33 * argStorage[11];
+    this._m4storage[15] =
+      m30 * argStorage[12] +
+      m31 * argStorage[13] +
+      m32 * argStorage[14] +
+      m33 * argStorage[15];
+  }
+   /// Multiply this with a transposed [arg].
+  multiplyTranspose(arg: Matrix4 ) {
+    const m00 = this._m4storage[0];
+    const m01 = this._m4storage[4];
+    const m02 = this._m4storage[8];
+    const m03 = this._m4storage[12];
+    const m10 = this._m4storage[1];
+    const m11 = this._m4storage[5];
+    const m12 = this._m4storage[9];
+    const m13 = this._m4storage[13];
+    const m20 = this._m4storage[2];
+    const m21 = this._m4storage[6];
+    const m22 = this._m4storage[10];
+    const m23 = this._m4storage[14];
+    const m30 = this._m4storage[3];
+    const m31 = this._m4storage[7];
+    const m32 = this._m4storage[11];
+    const m33 = this._m4storage[15];
+    const argStorage = arg._m4storage;
+    this._m4storage[0] = (m00 * argStorage[0]) +
+        (m01 * argStorage[4]) +
+        (m02 * argStorage[8]) +
+        (m03 * argStorage[12]);
+    this._m4storage[4] = (m00 * argStorage[1]) +
+        (m01 * argStorage[5]) +
+        (m02 * argStorage[9]) +
+        (m03 * argStorage[13]);
+    this._m4storage[8] = (m00 * argStorage[2]) +
+        (m01 * argStorage[6]) +
+        (m02 * argStorage[10]) +
+        (m03 * argStorage[14]);
+    this._m4storage[12] = (m00 * argStorage[3]) +
+        (m01 * argStorage[7]) +
+        (m02 * argStorage[11]) +
+        (m03 * argStorage[15]);
+    this._m4storage[1] = (m10 * argStorage[0]) +
+        (m11 * argStorage[4]) +
+        (m12 * argStorage[8]) +
+        (m13 * argStorage[12]);
+    this._m4storage[5] = (m10 * argStorage[1]) +
+        (m11 * argStorage[5]) +
+        (m12 * argStorage[9]) +
+        (m13 * argStorage[13]);
+    this._m4storage[9] = (m10 * argStorage[2]) +
+        (m11 * argStorage[6]) +
+        (m12 * argStorage[10]) +
+        (m13 * argStorage[14]);
+    this._m4storage[13] = (m10 * argStorage[3]) +
+        (m11 * argStorage[7]) +
+        (m12 * argStorage[11]) +
+        (m13 * argStorage[15]);
+    this._m4storage[2] = (m20 * argStorage[0]) +
+        (m21 * argStorage[4]) +
+        (m22 * argStorage[8]) +
+        (m23 * argStorage[12]);
+    this._m4storage[6] = (m20 * argStorage[1]) +
+        (m21 * argStorage[5]) +
+        (m22 * argStorage[9]) +
+        (m23 * argStorage[13]);
+    this._m4storage[10] = (m20 * argStorage[2]) +
+        (m21 * argStorage[6]) +
+        (m22 * argStorage[10]) +
+        (m23 * argStorage[14]);
+    this._m4storage[14] = (m20 * argStorage[3]) +
+        (m21 * argStorage[7]) +
+        (m22 * argStorage[11]) +
+        (m23 * argStorage[15]);
+    this._m4storage[3] = (m30 * argStorage[0]) +
+        (m31 * argStorage[4]) +
+        (m32 * argStorage[8]) +
+        (m33 * argStorage[12]);
+    this._m4storage[7] = (m30 * argStorage[1]) +
+        (m31 * argStorage[5]) +
+        (m32 * argStorage[9]) +
+        (m33 * argStorage[13]);
+    this._m4storage[11] = (m30 * argStorage[2]) +
+        (m31 * argStorage[6]) +
+        (m32 * argStorage[10]) +
+        (m33 * argStorage[14]);
+    this._m4storage[15] = (m30 * argStorage[3]) +
+        (m31 * argStorage[7]) +
+        (m32 * argStorage[11]) +
+        (m33 * argStorage[15]);
   }
 }
 
