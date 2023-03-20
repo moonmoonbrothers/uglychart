@@ -551,6 +551,362 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[10] = t11;
     this._m4storage[11] = t12;
   }
+  /// Rotate this [angle] radians around X
+  rotateX(angle: number): void {
+    const cosAngle = Math.cos(angle);
+    const sinAngle = Math.sin(angle);
+    const t1 = this._m4storage[4] * cosAngle + this._m4storage[8] * sinAngle;
+    const t2 = this._m4storage[5] * cosAngle + this._m4storage[9] * sinAngle;
+    const t3 = this._m4storage[6] * cosAngle + this._m4storage[10] * sinAngle;
+    const t4 = this._m4storage[7] * cosAngle + this._m4storage[11] * sinAngle;
+    const t5 = this._m4storage[4] * -sinAngle + this._m4storage[8] * cosAngle;
+    const t6 = this._m4storage[5] * -sinAngle + this._m4storage[9] * cosAngle;
+    const t7 = this._m4storage[6] * -sinAngle + this._m4storage[10] * cosAngle;
+    const t8 = this._m4storage[7] * -sinAngle + this._m4storage[11] * cosAngle;
+    this._m4storage[4] = t1;
+    this._m4storage[5] = t2;
+    this._m4storage[6] = t3;
+    this._m4storage[7] = t4;
+    this._m4storage[8] = t5;
+    this._m4storage[9] = t6;
+    this._m4storage[10] = t7;
+    this._m4storage[11] = t8;
+  }
+  /**
+   * Rotate this matrix [angle] radians around Y
+   */
+  rotateY(angle: number): void {
+    const cosAngle = Math.cos(angle);
+    const sinAngle = Math.sin(angle);
+    const t1 = this._m4storage[0] * cosAngle + this._m4storage[8] * -sinAngle;
+    const t2 = this._m4storage[1] * cosAngle + this._m4storage[9] * -sinAngle;
+    const t3 = this._m4storage[2] * cosAngle + this._m4storage[10] * -sinAngle;
+    const t4 = this._m4storage[3] * cosAngle + this._m4storage[11] * -sinAngle;
+    const t5 = this._m4storage[0] * sinAngle + this._m4storage[8] * cosAngle;
+    const t6 = this._m4storage[1] * sinAngle + this._m4storage[9] * cosAngle;
+    const t7 = this._m4storage[2] * sinAngle + this._m4storage[10] * cosAngle;
+    const t8 = this._m4storage[3] * sinAngle + this._m4storage[11] * cosAngle;
+    this._m4storage[0] = t1;
+    this._m4storage[1] = t2;
+    this._m4storage[2] = t3;
+    this._m4storage[3] = t4;
+    this._m4storage[8] = t5;
+    this._m4storage[9] = t6;
+    this._m4storage[10] = t7;
+    this._m4storage[11] = t8;
+  }
+
+  /**
+   * Rotate this matrix [angle] radians around Z
+   */
+  rotateZ(angle: number): void {
+    const cosAngle = Math.cos(angle);
+    const sinAngle = Math.sin(angle);
+    const t1 = this._m4storage[0] * cosAngle + this._m4storage[4] * sinAngle;
+    const t2 = this._m4storage[1] * cosAngle + this._m4storage[5] * sinAngle;
+    const t3 = this._m4storage[2] * cosAngle + this._m4storage[6] * sinAngle;
+    const t4 = this._m4storage[3] * cosAngle + this._m4storage[7] * sinAngle;
+    const t5 = this._m4storage[0] * -sinAngle + this._m4storage[4] * cosAngle;
+    const t6 = this._m4storage[1] * -sinAngle + this._m4storage[5] * cosAngle;
+    const t7 = this._m4storage[2] * -sinAngle + this._m4storage[6] * cosAngle;
+    const t8 = this._m4storage[3] * -sinAngle + this._m4storage[7] * cosAngle;
+    this._m4storage[0] = t1;
+    this._m4storage[1] = t2;
+    this._m4storage[2] = t3;
+    this._m4storage[3] = t4;
+    this._m4storage[4] = t5;
+    this._m4storage[5] = t6;
+    this._m4storage[6] = t7;
+    this._m4storage[7] = t8;
+  }
+  /**
+   * Scale this matrix by a Vector3, Vector4, or x,y,z
+   */
+  public scale(x: Vector3 | Vector4 | number, y?: number, z?: number): void {
+    let sx: number;
+    let sy: number;
+    let sz: number;
+    const sw = x instanceof Vector4 ? x.w : 1.0;
+    if (x instanceof Vector3) {
+      sx = x.x;
+      sy = x.y;
+      sz = x.z;
+    } else if (x instanceof Vector4) {
+      sx = x.x;
+      sy = x.y;
+      sz = x.z;
+    } else if (typeof x === "number") {
+      sx = x;
+      sy = y ?? x;
+      sz = z ?? x;
+    } else {
+      throw new Error("Unsupported type for scale operation");
+    }
+    this._m4storage[0] *= sx;
+    this._m4storage[1] *= sx;
+    this._m4storage[2] *= sx;
+    this._m4storage[3] *= sx;
+    this._m4storage[4] *= sy;
+    this._m4storage[5] *= sy;
+    this._m4storage[6] *= sy;
+    this._m4storage[7] *= sy;
+    this._m4storage[8] *= sz;
+    this._m4storage[9] *= sz;
+    this._m4storage[10] *= sz;
+    this._m4storage[11] *= sz;
+    this._m4storage[12] *= sw;
+    this._m4storage[13] *= sw;
+    this._m4storage[14] *= sw;
+    this._m4storage[15] *= sw;
+  }
+  /**
+   * Create a copy of this scaled by a [Vector3], [Vector4] or [x],[y], and [z].
+   */
+  public scaled(
+    x: Vector3 | Vector4 | number,
+    y?: number,
+    z?: number
+  ): Matrix4 {
+    const result = this.clone();
+    result.scale(x, y, z);
+    return result;
+  }
+  /// Zeros this.
+  setZero() {
+    this._m4storage[0] = 0.0;
+    this._m4storage[1] = 0.0;
+    this._m4storage[2] = 0.0;
+    this._m4storage[3] = 0.0;
+    this._m4storage[4] = 0.0;
+    this._m4storage[5] = 0.0;
+    this._m4storage[6] = 0.0;
+    this._m4storage[7] = 0.0;
+    this._m4storage[8] = 0.0;
+    this._m4storage[9] = 0.0;
+    this._m4storage[10] = 0.0;
+    this._m4storage[11] = 0.0;
+    this._m4storage[12] = 0.0;
+    this._m4storage[13] = 0.0;
+    this._m4storage[14] = 0.0;
+    this._m4storage[15] = 0.0;
+  }
+
+  /// Makes this into the identity matrix.
+  setIdentity() {
+    this._m4storage[0] = 1.0;
+    this._m4storage[1] = 0.0;
+    this._m4storage[2] = 0.0;
+    this._m4storage[3] = 0.0;
+    this._m4storage[4] = 0.0;
+    this._m4storage[5] = 1.0;
+    this._m4storage[6] = 0.0;
+    this._m4storage[7] = 0.0;
+    this._m4storage[8] = 0.0;
+    this._m4storage[9] = 0.0;
+    this._m4storage[10] = 1.0;
+    this._m4storage[11] = 0.0;
+    this._m4storage[12] = 0.0;
+    this._m4storage[13] = 0.0;
+    this._m4storage[14] = 0.0;
+    this._m4storage[15] = 1.0;
+  }
+  /// Returns the transpose of this.
+  transposed(): Matrix4 {
+    const result = this.clone();
+    result.transpose();
+    return result;
+  }
+
+  transpose(): void {
+    let temp: number;
+    temp = this._m4storage[4];
+    this._m4storage[4] = this._m4storage[1];
+    this._m4storage[1] = temp;
+    temp = this._m4storage[8];
+    this._m4storage[8] = this._m4storage[2];
+    this._m4storage[2] = temp;
+    temp = this._m4storage[12];
+    this._m4storage[12] = this._m4storage[3];
+    this._m4storage[3] = temp;
+    temp = this._m4storage[9];
+    this._m4storage[9] = this._m4storage[6];
+    this._m4storage[6] = temp;
+    temp = this._m4storage[13];
+    this._m4storage[13] = this._m4storage[7];
+    this._m4storage[7] = temp;
+    temp = this._m4storage[14];
+    this._m4storage[14] = this._m4storage[11];
+    this._m4storage[11] = temp;
+  }
+
+  /**
+   * Returns the component wise absolute value of this.
+   */
+  public absolute(): Matrix4 {
+    const r = Matrix4.zero();
+    const rStorage = r._m4storage;
+    rStorage[0] = Math.abs(this._m4storage[0]);
+    rStorage[1] = Math.abs(this._m4storage[1]);
+    rStorage[2] = Math.abs(this._m4storage[2]);
+    rStorage[3] = Math.abs(this._m4storage[3]);
+    rStorage[4] = Math.abs(this._m4storage[4]);
+    rStorage[5] = Math.abs(this._m4storage[5]);
+    rStorage[6] = Math.abs(this._m4storage[6]);
+    rStorage[7] = Math.abs(this._m4storage[7]);
+    rStorage[8] = Math.abs(this._m4storage[8]);
+    rStorage[9] = Math.abs(this._m4storage[9]);
+    rStorage[10] = Math.abs(this._m4storage[10]);
+    rStorage[11] = Math.abs(this._m4storage[11]);
+    rStorage[12] = Math.abs(this._m4storage[12]);
+    rStorage[13] = Math.abs(this._m4storage[13]);
+    rStorage[14] = Math.abs(this._m4storage[14]);
+    rStorage[15] = Math.abs(this._m4storage[15]);
+    return r;
+  }
+  determinant(): number {
+    const det2_01_01 =
+      this._m4storage[0] * this._m4storage[5] -
+      this._m4storage[1] * this._m4storage[4];
+    const det2_01_02 =
+      this._m4storage[0] * this._m4storage[6] -
+      this._m4storage[2] * this._m4storage[4];
+    const det2_01_03 =
+      this._m4storage[0] * this._m4storage[7] -
+      this._m4storage[3] * this._m4storage[4];
+    const det2_01_12 =
+      this._m4storage[1] * this._m4storage[6] -
+      this._m4storage[2] * this._m4storage[5];
+    const det2_01_13 =
+      this._m4storage[1] * this._m4storage[7] -
+      this._m4storage[3] * this._m4storage[5];
+    const det2_01_23 =
+      this._m4storage[2] * this._m4storage[7] -
+      this._m4storage[3] * this._m4storage[6];
+    const det3_201_012 =
+      this._m4storage[8] * det2_01_12 -
+      this._m4storage[9] * det2_01_02 +
+      this._m4storage[10] * det2_01_01;
+    const det3_201_013 =
+      this._m4storage[8] * det2_01_13 -
+      this._m4storage[9] * det2_01_03 +
+      this._m4storage[11] * det2_01_01;
+    const det3_201_023 =
+      this._m4storage[8] * det2_01_23 -
+      this._m4storage[10] * det2_01_03 +
+      this._m4storage[11] * det2_01_02;
+    const det3_201_123 =
+      this._m4storage[9] * det2_01_23 -
+      this._m4storage[10] * det2_01_13 +
+      this._m4storage[11] * det2_01_12;
+    return (
+      -det3_201_123 * this._m4storage[12] +
+      det3_201_023 * this._m4storage[13] -
+      det3_201_013 * this._m4storage[14] +
+      det3_201_012 * this._m4storage[15]
+    );
+  }
+  /** Returns the dot product of row [i] and [v]. */
+  dotRow(i: number, v: Vector4): number {
+    const vStorage = v._v4storage;
+    return (
+      this._m4storage[i] * vStorage[0] +
+      this._m4storage[4 + i] * vStorage[1] +
+      this._m4storage[8 + i] * vStorage[2] +
+      this._m4storage[12 + i] * vStorage[3]
+    );
+  }
+
+  /** Returns the dot product of column [j] and [v]. */
+  dotColumn(j: number, v: Vector4): number {
+    const vStorage = v._v4storage;
+    return (
+      this._m4storage[j * 4] * vStorage[0] +
+      this._m4storage[j * 4 + 1] * vStorage[1] +
+      this._m4storage[j * 4 + 2] * vStorage[2] +
+      this._m4storage[j * 4 + 3] * vStorage[3]
+    );
+  }
+
+  /** Returns the trace of the matrix. The trace of a matrix is the sum of the diagonal entries. */
+  trace(): number {
+    let t = 0.0;
+    t += this._m4storage[0];
+    t += this._m4storage[5];
+    t += this._m4storage[10];
+    t += this._m4storage[15];
+    return t;
+  }
+  /**
+   * Returns infinity norm of the matrix. Used for numerical analysis.
+   */
+  infinityNorm(): number {
+    let norm = 0.0;
+    {
+      let row_norm = 0.0;
+      row_norm += Math.abs(this._m4storage[0]);
+      row_norm += Math.abs(this._m4storage[1]);
+      row_norm += Math.abs(this._m4storage[2]);
+      row_norm += Math.abs(this._m4storage[3]);
+      norm = row_norm > norm ? row_norm : norm;
+    }
+    {
+      let row_norm = 0.0;
+      row_norm += Math.abs(this._m4storage[4]);
+      row_norm += Math.abs(this._m4storage[5]);
+      row_norm += Math.abs(this._m4storage[6]);
+      row_norm += Math.abs(this._m4storage[7]);
+      norm = row_norm > norm ? row_norm : norm;
+    }
+    {
+      let row_norm = 0.0;
+      row_norm += Math.abs(this._m4storage[8]);
+      row_norm += Math.abs(this._m4storage[9]);
+      row_norm += Math.abs(this._m4storage[10]);
+      row_norm += Math.abs(this._m4storage[11]);
+      norm = row_norm > norm ? row_norm : norm;
+    }
+    {
+      let row_norm = 0.0;
+      row_norm += Math.abs(this._m4storage[12]);
+      row_norm += Math.abs(this._m4storage[13]);
+      row_norm += Math.abs(this._m4storage[14]);
+      row_norm += Math.abs(this._m4storage[15]);
+      norm = row_norm > norm ? row_norm : norm;
+    }
+    return norm;
+  }
+  /// Returns relative error between this and [correct]
+  relativeError(correct: Matrix4): number {
+    const diff = correct.subtract(this);
+    const correct_norm = correct.infinityNorm();
+    const diff_norm = diff.infinityNorm();
+    return diff_norm / correct_norm;
+  }
+  /**
+   * Returns absolute error between this and [correct]
+   */
+  public absoluteError(correct: Matrix4): number {
+    const thisNorm = this.infinityNorm();
+    const correctNorm = correct.infinityNorm();
+    const diffNorm = Math.abs(thisNorm - correctNorm);
+    return diffNorm;
+  }
+  getTranslation(): Vector3 {
+    const z = this._m4storage[14];
+    const y = this._m4storage[13];
+    const x = this._m4storage[12];
+    return new Vector3(x, y, z);
+  }
+  /// Sets the translation vector in this homogeneous transformation matrix.
+  setTranslation(t: Vector3): void {
+    const tStorage = t._v3storage;
+    const z = tStorage[2];
+    const y = tStorage[1];
+    const x = tStorage[0];
+    this._m4storage[14] = z;
+    this._m4storage[13] = y;
+    this._m4storage[12] = x;
+  }
 }
 
 type Array16 = [
