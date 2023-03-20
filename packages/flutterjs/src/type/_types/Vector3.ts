@@ -9,6 +9,150 @@ export class Vector3 implements Vector {
     this._v3storage = [arg0, arg1, arg2];
   }
 
+  static copy(arg: Vector3) {
+    return new Vector3(...arg._v3storage);
+  }
+
+  setValues(x: number, y: number, z: number): void {
+    this._v3storage[0] = x;
+    this._v3storage[1] = y;
+    this._v3storage[2] = z;
+  }
+
+  setZero(): void {
+    this._v3storage[0] = 0.0;
+    this._v3storage[1] = 0.0;
+    this._v3storage[2] = 0.0;
+  }
+
+  setFrom(other: Vector3): void {
+    const otherStorage = other._v3storage;
+    this._v3storage[0] = otherStorage[0];
+    this._v3storage[1] = otherStorage[1];
+    this._v3storage[2] = otherStorage[2];
+  }
+
+  splat(arg: number): void {
+    this._v3storage[0] = arg;
+    this._v3storage[1] = arg;
+    this._v3storage[2] = arg;
+  }
+
+  toString(): string {
+    return `[${this._v3storage[0]},${this._v3storage[1]},${this._v3storage[2]}]`;
+  }
+  /**
+   * Set the length of the vector. A negative `value` will change the vectors
+   * orientation and a `value` of zero will set the vector to zero.
+   */
+  set length(value: number) {
+    if (value === 0.0) {
+      this.setZero();
+    } else {
+      let l = this.length;
+      if (l === 0.0) {
+        return;
+      }
+      l = value / l;
+      this._v3storage[0] *= l;
+      this._v3storage[1] *= l;
+      this._v3storage[2] *= l;
+    }
+  }
+
+  /**
+   * Length.
+   */
+  get length(): number {
+    return Math.sqrt(this.length2);
+  }
+
+  /**
+   * Length squared.
+   */
+  get length2(): number {
+    let sum = 0.0;
+    sum += this._v3storage[0] * this._v3storage[0];
+    sum += this._v3storage[1] * this._v3storage[1];
+    sum += this._v3storage[2] * this._v3storage[2];
+    return sum;
+  }
+
+  /**
+   * Normalizes this.
+   */
+  normalize(): number {
+    const l = this.length;
+    if (l === 0.0) {
+      return 0.0;
+    }
+    const d = 1.0 / l;
+    this._v3storage[0] *= d;
+    this._v3storage[1] *= d;
+    this._v3storage[2] *= d;
+    return l;
+  }
+  /// Normalizes copy of this.
+  normalized(): Vector3 {
+    const result = Vector3.copy(this);
+    result.normalize();
+    return result;
+  }
+
+  /// Normalize vector into [out].
+  normalizeInto(out: Vector3): Vector3 {
+    out.setFrom(this);
+    out.normalize();
+    return out;
+  }
+
+  /// Distance from this to [arg]
+  distanceTo(arg: Vector3): number {
+    return Math.sqrt(this.distanceToSquared(arg));
+  }
+
+  /// Squared distance from this to [arg]
+  distanceToSquared(arg: Vector3): number {
+    const argStorage = arg._v3storage;
+    const dx = this._v3storage[0] - argStorage[0];
+    const dy = this._v3storage[1] - argStorage[1];
+    const dz = this._v3storage[2] - argStorage[2];
+    return dx * dx + dy * dy + dz * dz;
+  }
+
+  /// Returns the angle between this vector and [other] in radians.
+  angleTo(other: Vector3): number {
+    const otherStorage = other._v3storage;
+    if (
+      this._v3storage[0] === otherStorage[0] &&
+      this._v3storage[1] === otherStorage[1] &&
+      this._v3storage[2] === otherStorage[2]
+    ) {
+      return 0.0;
+    }
+    const d = this.dot(other) / (this.length * other.length);
+    return Math.acos(Math.min(Math.max(d, -1.0), 1.0));
+  }
+
+  /// Returns the signed angle between this and [other] around [normal]
+  /// in radians.
+  angleToSigned(other: Vector3, normal: Vector3): number {
+    const angle = this.angleTo(other);
+    const c = this.cross(other);
+    const d = c.dot(normal);
+    return d < 0.0 ? -angle : angle;
+  }
+
+  /// Inner product.
+  dot(other: Vector3): number {
+    const otherStorage = other._v3storage;
+    let sum = 0.0;
+    sum += this._v3storage[0] * otherStorage[0];
+    sum += this._v3storage[1] * otherStorage[1];
+    sum += this._v3storage[2] * otherStorage[2];
+    return sum;
+  }
+
   set xy(arg: Vector2) {
     const argStorage = arg._v2storage;
     this._v3storage[0] = argStorage[0];
