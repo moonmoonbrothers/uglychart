@@ -22,7 +22,6 @@ type Array16 = [
   number
 ];
 
-
 class Matrix4 {
   // 4 x 4 matrix
   _m4storage: Array16;
@@ -976,18 +975,465 @@ Rotate this matrix [angle] radians around [axis].
     this.copyNormalMatrix(normalMatrix);
     return normalMatrix;
   }
-    /// Returns the max scale value of the 3 axes.
+  /// Returns the max scale value of the 3 axes.
   getMaxScaleOnAxis() {
-     const scaleXSq = this._m4storage[0] * this._m4storage[0] +
-        this._m4storage[1] *this. _m4storage[1] +
-        this._m4storage[2] * this._m4storage[2];
-    const scaleYSq = this._m4storage[4] * this._m4storage[4] +
-        this._m4storage[5] * this._m4storage[5] +
-        this._m4storage[6] *this. _m4storage[6];
-    const scaleZSq = this._m4storage[8] *this. _m4storage[8] +
-        this._m4storage[9] *this. _m4storage[9] +
-        this._m4storage[10] *this. _m4storage[10];
+    const scaleXSq =
+      this._m4storage[0] * this._m4storage[0] +
+      this._m4storage[1] * this._m4storage[1] +
+      this._m4storage[2] * this._m4storage[2];
+    const scaleYSq =
+      this._m4storage[4] * this._m4storage[4] +
+      this._m4storage[5] * this._m4storage[5] +
+      this._m4storage[6] * this._m4storage[6];
+    const scaleZSq =
+      this._m4storage[8] * this._m4storage[8] +
+      this._m4storage[9] * this._m4storage[9] +
+      this._m4storage[10] * this._m4storage[10];
     return Math.sqrt(Math.max(scaleXSq, Math.max(scaleYSq, scaleZSq)));
+  }
+  /// Transposes just the upper 3x3 rotation matrix.
+  transposeRotation() {
+    let temp: number;
+    temp = this._m4storage[1];
+    this._m4storage[1] = this._m4storage[4];
+    this._m4storage[4] = temp;
+    temp = this._m4storage[2];
+    this._m4storage[2] = this._m4storage[8];
+    this._m4storage[8] = temp;
+    temp = this._m4storage[4];
+    this._m4storage[4] = this._m4storage[1];
+    this._m4storage[1] = temp;
+    temp = this._m4storage[6];
+    this._m4storage[6] = this._m4storage[9];
+    this._m4storage[9] = temp;
+    temp = this._m4storage[8];
+    this._m4storage[8] = this._m4storage[2];
+    this._m4storage[2] = temp;
+    temp = this._m4storage[9];
+    this._m4storage[9] = this._m4storage[6];
+    this._m4storage[6] = temp;
+  }
+  /// Invert this.
+  invert() {
+    return this.copyInverse(this);
+  }
+
+  // Set this matrix to be the inverse of [arg]
+  copyInverse(arg: Matrix4): number {
+    const argStorage = arg._m4storage;
+    const a00 = argStorage[0];
+    const a01 = argStorage[1];
+    const a02 = argStorage[2];
+    const a03 = argStorage[3];
+    const a10 = argStorage[4];
+    const a11 = argStorage[5];
+    const a12 = argStorage[6];
+    const a13 = argStorage[7];
+    const a20 = argStorage[8];
+    const a21 = argStorage[9];
+    const a22 = argStorage[10];
+    const a23 = argStorage[11];
+    const a30 = argStorage[12];
+    const a31 = argStorage[13];
+    const a32 = argStorage[14];
+    const a33 = argStorage[15];
+    const b00 = a00 * a11 - a01 * a10;
+    const b01 = a00 * a12 - a02 * a10;
+    const b02 = a00 * a13 - a03 * a10;
+    const b03 = a01 * a12 - a02 * a11;
+    const b04 = a01 * a13 - a03 * a11;
+    const b05 = a02 * a13 - a03 * a12;
+    const b06 = a20 * a31 - a21 * a30;
+    const b07 = a20 * a32 - a22 * a30;
+    const b08 = a20 * a33 - a23 * a30;
+    const b09 = a21 * a32 - a22 * a31;
+    const b10 = a21 * a33 - a23 * a31;
+    const b11 = a22 * a33 - a23 * a32;
+    const det =
+      b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+    if (det == 0.0) {
+      this.setFrom(arg);
+      return 0.0;
+    }
+    const invDet = 1.0 / det;
+    this._m4storage[0] = (a11 * b11 - a12 * b10 + a13 * b09) * invDet;
+    this._m4storage[1] = (-a01 * b11 + a02 * b10 - a03 * b09) * invDet;
+    this._m4storage[2] = (a31 * b05 - a32 * b04 + a33 * b03) * invDet;
+    this._m4storage[3] = (-a21 * b05 + a22 * b04 - a23 * b03) * invDet;
+    this._m4storage[4] = (-a10 * b11 + a12 * b08 - a13 * b07) * invDet;
+    this._m4storage[5] = (a00 * b11 - a02 * b08 + a03 * b07) * invDet;
+    this._m4storage[6] = (-a30 * b05 + a32 * b02 - a33 * b01) * invDet;
+    this._m4storage[7] = (a20 * b05 - a22 * b02 + a23 * b01) * invDet;
+    this._m4storage[8] = (a10 * b10 - a11 * b08 + a13 * b06) * invDet;
+    this._m4storage[9] = (-a00 * b10 + a01 * b08 - a03 * b06) * invDet;
+    this._m4storage[10] = (a30 * b04 - a31 * b02 + a33 * b00) * invDet;
+    this._m4storage[11] = (-a20 * b04 + a21 * b02 - a23 * b00) * invDet;
+    this._m4storage[12] = (-a10 * b09 + a11 * b07 - a12 * b06) * invDet;
+    this._m4storage[13] = (a00 * b09 - a01 * b07 + a02 * b06) * invDet;
+    this._m4storage[14] = (-a30 * b03 + a31 * b01 - a32 * b00) * invDet;
+    this._m4storage[15] = (a20 * b03 - a21 * b01 + a22 * b00) * invDet;
+    return det;
+  }
+  invertRotation(): number {
+    const det = this.determinant();
+    if (det == 0.0) {
+      return 0.0;
+    }
+    const invDet = 1.0 / det;
+    let ix: number;
+    let iy: number;
+    let iz: number;
+    let jx: number;
+    let jy: number;
+    let jz: number;
+    let kx: number;
+    let ky: number;
+    let kz: number;
+    ix =
+      invDet *
+      (this._m4storage[5] * this._m4storage[10] -
+        this._m4storage[6] * this._m4storage[9]);
+    iy =
+      invDet *
+      (this._m4storage[2] * this._m4storage[9] -
+        this._m4storage[1] * this._m4storage[10]);
+    iz =
+      invDet *
+      (this._m4storage[1] * this._m4storage[6] -
+        this._m4storage[2] * this._m4storage[5]);
+    jx =
+      invDet *
+      (this._m4storage[6] * this._m4storage[8] -
+        this._m4storage[4] * this._m4storage[10]);
+    jy =
+      invDet *
+      (this._m4storage[0] * this._m4storage[10] -
+        this._m4storage[2] * this._m4storage[8]);
+    jz =
+      invDet *
+      (this._m4storage[2] * this._m4storage[4] -
+        this._m4storage[0] * this._m4storage[6]);
+    kx =
+      invDet *
+      (this._m4storage[4] * this._m4storage[9] -
+        this._m4storage[5] * this._m4storage[8]);
+    ky =
+      invDet *
+      (this._m4storage[1] * this._m4storage[8] -
+        this._m4storage[0] * this._m4storage[9]);
+    kz =
+      invDet *
+      (this._m4storage[0] * this._m4storage[5] -
+        this._m4storage[1] * this._m4storage[4]);
+    this._m4storage[0] = ix;
+    this._m4storage[1] = iy;
+    this._m4storage[2] = iz;
+    this._m4storage[4] = jx;
+    this._m4storage[5] = jy;
+    this._m4storage[6] = jz;
+    this._m4storage[8] = kx;
+    this._m4storage[9] = ky;
+    this._m4storage[10] = kz;
+    return det;
+  }
+
+  /// Sets the upper 3x3 to a rotation of [radians] around X
+  setRotationX(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+    this._m4storage[0] = 1.0;
+    this._m4storage[1] = 0.0;
+    this._m4storage[2] = 0.0;
+    this._m4storage[4] = 0.0;
+    this._m4storage[5] = c;
+    this._m4storage[6] = s;
+    this._m4storage[8] = 0.0;
+    this._m4storage[9] = -s;
+    this._m4storage[10] = c;
+    this._m4storage[3] = 0.0;
+    this._m4storage[7] = 0.0;
+    this._m4storage[11] = 0.0;
+  }
+
+  /// Sets the upper 3x3 to a rotation of [radians] around Y
+  setRotationY(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+    this._m4storage[0] = c;
+    this._m4storage[1] = 0.0;
+    this._m4storage[2] = -s;
+    this._m4storage[4] = 0.0;
+    this._m4storage[5] = 1.0;
+    this._m4storage[6] = 0.0;
+    this._m4storage[8] = s;
+    this._m4storage[9] = 0.0;
+    this._m4storage[10] = c;
+    this._m4storage[3] = 0.0;
+    this._m4storage[7] = 0.0;
+    this._m4storage[11] = 0.0;
+  }
+
+  /// Sets the upper 3x3 to a rotation of [radians] around Z
+  setRotationZ(radians: number) {
+    const c = Math.cos(radians);
+    const s = Math.sin(radians);
+    this._m4storage[0] = c;
+    this._m4storage[1] = s;
+    this._m4storage[2] = 0.0;
+    this._m4storage[4] = -s;
+    this._m4storage[5] = c;
+    this._m4storage[6] = 0.0;
+    this._m4storage[8] = 0.0;
+    this._m4storage[9] = 0.0;
+    this._m4storage[10] = 1.0;
+    this._m4storage[3] = 0.0;
+    this._m4storage[7] = 0.0;
+    this._m4storage[11] = 0.0;
+  }
+  /// Converts into Adjugate matrix and scales by [scale]
+  scaleAdjoint(scale: number) {
+    // Adapted from code by Richard Carling.
+    const a1 = this._m4storage[0];
+    const b1 = this._m4storage[4];
+    const c1 = this._m4storage[8];
+    const d1 = this._m4storage[12];
+    const a2 = this._m4storage[1];
+    const b2 = this._m4storage[5];
+    const c2 = this._m4storage[9];
+    const d2 = this._m4storage[13];
+    const a3 = this._m4storage[2];
+    const b3 = this._m4storage[6];
+    const c3 = this._m4storage[10];
+    const d3 = this._m4storage[14];
+    const a4 = this._m4storage[3];
+    const b4 = this._m4storage[7];
+    const c4 = this._m4storage[11];
+    const d4 = this._m4storage[15];
+    this._m4storage[0] =
+      (b2 * (c3 * d4 - c4 * d3) -
+        c2 * (b3 * d4 - b4 * d3) +
+        d2 * (b3 * c4 - b4 * c3)) *
+      scale;
+    this._m4storage[1] =
+      -(
+        a2 * (c3 * d4 - c4 * d3) -
+        c2 * (a3 * d4 - a4 * d3) +
+        d2 * (a3 * c4 - a4 * c3)
+      ) * scale;
+    this._m4storage[2] =
+      (a2 * (b3 * d4 - b4 * d3) -
+        b2 * (a3 * d4 - a4 * d3) +
+        d2 * (a3 * b4 - a4 * b3)) *
+      scale;
+    this._m4storage[3] =
+      -(
+        a2 * (b3 * c4 - b4 * c3) -
+        b2 * (a3 * c4 - a4 * c3) +
+        c2 * (a3 * b4 - a4 * b3)
+      ) * scale;
+    this._m4storage[4] =
+      -(
+        b1 * (c3 * d4 - c4 * d3) -
+        c1 * (b3 * d4 - b4 * d3) +
+        d1 * (b3 * c4 - b4 * c3)
+      ) * scale;
+    this._m4storage[5] =
+      (a1 * (c3 * d4 - c4 * d3) -
+        c1 * (a3 * d4 - a4 * d3) +
+        d1 * (a3 * c4 - a4 * c3)) *
+      scale;
+    this._m4storage[6] =
+      -(
+        a1 * (b3 * d4 - b4 * d3) -
+        b1 * (a3 * d4 - a4 * d3) +
+        d1 * (a3 * b4 - a4 * b3)
+      ) * scale;
+    this._m4storage[7] =
+      (a1 * (b3 * c4 - b4 * c3) -
+        b1 * (a3 * c4 - a4 * c3) +
+        c1 * (a3 * b4 - a4 * b3)) *
+      scale;
+    this._m4storage[8] =
+      (b1 * (c2 * d4 - c4 * d2) -
+        c1 * (b2 * d4 - b4 * d2) +
+        d1 * (b2 * c4 - b4 * c2)) *
+      scale;
+    this._m4storage[9] =
+      -(
+        a1 * (c2 * d4 - c4 * d2) -
+        c1 * (a2 * d4 - a4 * d2) +
+        d1 * (a2 * c4 - a4 * c2)
+      ) * scale;
+    this._m4storage[10] =
+      (a1 * (b2 * d4 - b4 * d2) -
+        b1 * (a2 * d4 - a4 * d2) +
+        d1 * (a2 * b4 - a4 * b2)) *
+      scale;
+    this._m4storage[11] =
+      -(
+        a1 * (b2 * c4 - b4 * c2) -
+        b1 * (a2 * c4 - a4 * c2) +
+        c1 * (a2 * b4 - a4 * b2)
+      ) * scale;
+    this._m4storage[12] =
+      -(
+        b1 * (c2 * d3 - c3 * d2) -
+        c1 * (b2 * d3 - b3 * d2) +
+        d1 * (b2 * c3 - b3 * c2)
+      ) * scale;
+    this._m4storage[13] =
+      (a1 * (c2 * d3 - c3 * d2) -
+        c1 * (a2 * d3 - a3 * d2) +
+        d1 * (a2 * c3 - a3 * c2)) *
+      scale;
+    this._m4storage[14] =
+      -(
+        a1 * (b2 * d3 - b3 * d2) -
+        b1 * (a2 * d3 - a3 * d2) +
+        d1 * (a2 * b3 - a3 * b2)
+      ) * scale;
+    this._m4storage[15] =
+      (a1 * (b2 * c3 - b3 * c2) -
+        b1 * (a2 * c3 - a3 * c2) +
+        c1 * (a2 * b3 - a3 * b2)) *
+      scale;
+  }
+  /// Rotates [arg] by the absolute rotation of this
+  /// Returns [arg].
+  /// Primarily used by AABB transformation code.
+  absoluteRotate(arg: Vector3): Vector3 {
+    const m00 = Math.abs(this._m4storage[0]);
+    const m01 = Math.abs(this._m4storage[4]);
+    const m02 = Math.abs(this._m4storage[8]);
+    const m10 = Math.abs(this._m4storage[1]);
+    const m11 = Math.abs(this._m4storage[5]);
+    const m12 = Math.abs(this._m4storage[9]);
+    const m20 = Math.abs(this._m4storage[2]);
+    const m21 = Math.abs(this._m4storage[6]);
+    const m22 = Math.abs(this._m4storage[10]);
+    const argStorage = arg._v3storage;
+    const x = argStorage[0];
+    const y = argStorage[1];
+    const z = argStorage[2];
+    argStorage[0] = x * m00 + y * m01 + z * m02 + 0.0 * 0.0;
+    argStorage[1] = x * m10 + y * m11 + z * m12 + 0.0 * 0.0;
+    argStorage[2] = x * m20 + y * m21 + z * m22 + 0.0 * 0.0;
+    return arg;
+  }
+
+  /// Adds [o] to this.
+  add( o: Matrix4) {
+    const oStorage = o._m4storage;
+    this._m4storage[0] = this._m4storage[0] + oStorage[0];
+    this._m4storage[1] = this._m4storage[1] + oStorage[1];
+    this._m4storage[2] = this._m4storage[2] + oStorage[2];
+    this._m4storage[3] = this._m4storage[3] + oStorage[3];
+    this._m4storage[4] = this._m4storage[4] + oStorage[4];
+    this._m4storage[5] = this._m4storage[5] + oStorage[5];
+    this._m4storage[6] = this._m4storage[6] + oStorage[6];
+    this._m4storage[7] = this._m4storage[7] + oStorage[7];
+    this._m4storage[8] = this._m4storage[8] + oStorage[8];
+    this._m4storage[9] = this._m4storage[9] + oStorage[9];
+    this._m4storage[10] = this._m4storage[10] + oStorage[10];
+    this._m4storage[11] = this._m4storage[11] + oStorage[11];
+    this._m4storage[12] = this._m4storage[12] + oStorage[12];
+    this._m4storage[13] = this._m4storage[13] + oStorage[13];
+    this._m4storage[14] = this._m4storage[14] + oStorage[14];
+    this._m4storage[15] = this._m4storage[15] + oStorage[15];
+  }
+
+  /// Subtracts [o] from this.
+  sub( o: Matrix4) {
+    const oStorage = o._m4storage;
+    this._m4storage[0] = this._m4storage[0] - oStorage[0];
+    this._m4storage[1] = this._m4storage[1] - oStorage[1];
+    this._m4storage[2] = this._m4storage[2] - oStorage[2];
+    this._m4storage[3] = this._m4storage[3] - oStorage[3];
+    this._m4storage[4] = this._m4storage[4] - oStorage[4];
+    this._m4storage[5] = this._m4storage[5] - oStorage[5];
+    this._m4storage[6] = this._m4storage[6] - oStorage[6];
+    this._m4storage[7] = this._m4storage[7] - oStorage[7];
+    this._m4storage[8] = this._m4storage[8] - oStorage[8];
+    this._m4storage[9] = this._m4storage[9] - oStorage[9];
+    this._m4storage[10] = this._m4storage[10] - oStorage[10];
+    this._m4storage[11] = this._m4storage[11] - oStorage[11];
+    this._m4storage[12] = this._m4storage[12] - oStorage[12];
+    this._m4storage[13] = this._m4storage[13] - oStorage[13];
+    this._m4storage[14] = this._m4storage[14] - oStorage[14];
+    this._m4storage[15] = this._m4storage[15] - oStorage[15];
+  }
+
+  /// Negate this.
+  negate() {
+    this._m4storage[0] = -this._m4storage[0];
+    this._m4storage[1] = -this._m4storage[1];
+    this._m4storage[2] = -this._m4storage[2];
+    this._m4storage[3] = -this._m4storage[3];
+    this._m4storage[4] = -this._m4storage[4];
+    this._m4storage[5] = -this._m4storage[5];
+    this._m4storage[6] = -this._m4storage[6];
+    this._m4storage[7] = -this._m4storage[7];
+    this._m4storage[8] = -this._m4storage[8];
+    this._m4storage[9] = -this._m4storage[9];
+    this._m4storage[10] = -this._m4storage[10];
+    this._m4storage[11] = -this._m4storage[11];
+    this._m4storage[12] = -this._m4storage[12];
+    this._m4storage[13] = -this._m4storage[13];
+    this._m4storage[14] = -this._m4storage[14];
+    this._m4storage[15] = -this._m4storage[15];
+  }
+
+  /// Multiply this by [arg].
+  multiply(arg: Matrix4 ) {
+    const m00 = this._m4storage[0];
+    const m01 = this._m4storage[4];
+    const m02 = this._m4storage[8];
+    const m03 = this._m4storage[12];
+    const m10 = this._m4storage[1];
+    const m11 = this._m4storage[5];
+    const m12 = this._m4storage[9];
+    const m13 = this._m4storage[13];
+    const m20 = this._m4storage[2];
+    const m21 = this._m4storage[6];
+    const m22 = this._m4storage[10];
+    const m23 = this._m4storage[14];
+    const m30 = this._m4storage[3];
+    const m31 = this._m4storage[7];
+    const m32 = this._m4storage[11];
+    const m33 = this._m4storage[15];
+    const argStorage = arg._m4storage;
+    const n00 = argStorage[0];
+    const n01 = argStorage[4];
+    const n02 = argStorage[8];
+    const n03 = argStorage[12];
+    const n10 = argStorage[1];
+    const n11 = argStorage[5];
+    const n12 = argStorage[9];
+    const n13 = argStorage[13];
+    const n20 = argStorage[2];
+    const n21 = argStorage[6];
+    const n22 = argStorage[10];
+    const n23 = argStorage[14];
+    const n30 = argStorage[3];
+    const n31 = argStorage[7];
+    const n32 = argStorage[11];
+    const n33 = argStorage[15];
+    this._m4storage[0] = (m00 * n00) + (m01 * n10) + (m02 * n20) + (m03 * n30);
+    this._m4storage[4] = (m00 * n01) + (m01 * n11) + (m02 * n21) + (m03 * n31);
+    this._m4storage[8] = (m00 * n02) + (m01 * n12) + (m02 * n22) + (m03 * n32);
+    this._m4storage[12] = (m00 * n03) + (m01 * n13) + (m02 * n23) + (m03 * n33);
+    this._m4storage[1] = (m10 * n00) + (m11 * n10) + (m12 * n20) + (m13 * n30);
+    this._m4storage[5] = (m10 * n01) + (m11 * n11) + (m12 * n21) + (m13 * n31);
+    this._m4storage[9] = (m10 * n02) + (m11 * n12) + (m12 * n22) + (m13 * n32);
+    this._m4storage[13] = (m10 * n03) + (m11 * n13) + (m12 * n23) + (m13 * n33);
+    this._m4storage[2] = (m20 * n00) + (m21 * n10) + (m22 * n20) + (m23 * n30);
+    this._m4storage[6] = (m20 * n01) + (m21 * n11) + (m22 * n21) + (m23 * n31);
+    this._m4storage[10] = (m20 * n02) + (m21 * n12) + (m22 * n22) + (m23 * n32);
+    this._m4storage[14] = (m20 * n03) + (m21 * n13) + (m22 * n23) + (m23 * n33);
+    this._m4storage[3] = (m30 * n00) + (m31 * n10) + (m32 * n20) + (m33 * n30);
+    this._m4storage[7] = (m30 * n01) + (m31 * n11) + (m32 * n21) + (m33 * n31);
+    this._m4storage[11] = (m30 * n02) + (m31 * n12) + (m32 * n22) + (m33 * n32);
+    this._m4storage[15] = (m30 * n03) + (m31 * n13) + (m32 * n23) + (m33 * n33);
   }
 }
 
