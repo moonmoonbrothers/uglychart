@@ -1,8 +1,13 @@
+import Matrix4 from "./Matrix4";
+import Matrix3 from "./Matrix3";
 import Vector from "./Vector";
 import Vector2 from "./Vector2";
 import Vector4 from "./Vector4";
 
 export class Vector3 implements Vector {
+  get storage() {
+    return this._v3storage;
+  }
   _v3storage: [number, number, number];
 
   constructor(arg0: number, arg1: number, arg2: number) {
@@ -153,6 +158,332 @@ export class Vector3 implements Vector {
     return sum;
   }
 
+  /**
+   * Transforms this into the product of this as a row vector,
+   * postmultiplied by matrix, [arg].
+   * If [arg] is a rotation matrix, this is a computational shortcut for applying,
+   * the inverse of the transformation.
+   */
+  postmultiply(arg: Matrix3): void {
+    const argStorage = arg.storage;
+    const v0 = this._v3storage[0];
+    const v1 = this._v3storage[1];
+    const v2 = this._v3storage[2];
+
+    this._v3storage[0] =
+      v0 * argStorage[0] + v1 * argStorage[1] + v2 * argStorage[2];
+    this._v3storage[1] =
+      v0 * argStorage[3] + v1 * argStorage[4] + v2 * argStorage[5];
+    this._v3storage[2] =
+      v0 * argStorage[6] + v1 * argStorage[7] + v2 * argStorage[8];
+  }
+
+  /// Cross product.
+  cross(other: Vector3): Vector3 {
+    const _x = this._v3storage[0];
+    const _y = this._v3storage[1];
+    const _z = this._v3storage[2];
+    const otherStorage = other._v3storage;
+    const ox = otherStorage[0];
+    const oy = otherStorage[1];
+    const oz = otherStorage[2];
+    return new Vector3(_y * oz - _z * oy, _z * ox - _x * oz, _x * oy - _y * ox);
+  }
+
+  /// Cross product. Stores result in [out].
+  crossInto(other: Vector3, out: Vector3): Vector3 {
+    const x = this._v3storage[0];
+    const y = this._v3storage[1];
+    const z = this._v3storage[2];
+    const otherStorage = other._v3storage;
+    const ox = otherStorage[0];
+    const oy = otherStorage[1];
+    const oz = otherStorage[2];
+    const outStorage = out._v3storage;
+    outStorage[0] = y * oz - z * oy;
+    outStorage[1] = z * ox - x * oz;
+    outStorage[2] = x * oy - y * ox;
+    return out;
+  }
+
+  reflected(normal: Vector3): Vector3 {
+    const result = this.clone();
+    result.reflect(normal);
+    return result;
+  }
+
+  clone(): Vector3 {
+    return Vector3.copy(this);
+  }
+
+  reflect(normal: Vector3): void {
+    this.sub(normal.scaled(2.0 * normal.dot(this)));
+  }
+
+  /// Projects this using the projection matrix [arg]
+  applyProjection(arg: Matrix4): void {
+    const argStorage = arg.storage;
+    const x = this._v3storage[0];
+    const y = this._v3storage[1];
+    const z = this._v3storage[2];
+    const d =
+      1.0 /
+      (argStorage[3] * x +
+        argStorage[7] * y +
+        argStorage[11] * z +
+        argStorage[15]);
+    this._v3storage[0] =
+      (argStorage[0] * x +
+        argStorage[4] * y +
+        argStorage[8] * z +
+        argStorage[12]) *
+      d;
+    this._v3storage[1] =
+      (argStorage[1] * x +
+        argStorage[5] * y +
+        argStorage[9] * z +
+        argStorage[13]) *
+      d;
+    this._v3storage[2] =
+      (argStorage[2] * x +
+        argStorage[6] * y +
+        argStorage[10] * z +
+        argStorage[14]) *
+      d;
+  }
+
+  // /// Applies a rotation specified by [axis] and [angle].
+  // void applyAxisAngle(Vector3 axis, double angle) {
+  //   applyQuaternion(Quaternion.axisAngle(axis, angle));
+  // }
+
+  // /// Applies a quaternion transform.
+  // void applyQuaternion(Quaternion arg) {
+  //   final argStorage = arg._qStorage;
+  //   final v0 = _v3storage[0];
+  //   final v1 = _v3storage[1];
+  //   final v2 = _v3storage[2];
+  //   final qx = argStorage[0];
+  //   final qy = argStorage[1];
+  //   final qz = argStorage[2];
+  //   final qw = argStorage[3];
+  //   final ix = qw * v0 + qy * v2 - qz * v1;
+  //   final iy = qw * v1 + qz * v0 - qx * v2;
+  //   final iz = qw * v2 + qx * v1 - qy * v0;
+  //   final iw = -qx * v0 - qy * v1 - qz * v2;
+  //   _v3storage[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
+  //   _v3storage[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
+  //   _v3storage[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
+  // }
+
+  /// Multiplies this by [arg].
+  applyMatrix3(arg: Matrix3): void {
+    const argStorage = arg.storage;
+    const v0 = this._v3storage[0];
+    const v1 = this._v3storage[1];
+    const v2 = this._v3storage[2];
+    this._v3storage[0] =
+      argStorage[0] * v0 + argStorage[3] * v1 + argStorage[6] * v2;
+    this._v3storage[1] =
+      argStorage[1] * v0 + argStorage[4] * v1 + argStorage[7] * v2;
+    this._v3storage[2] =
+      argStorage[2] * v0 + argStorage[5] * v1 + argStorage[8] * v2;
+  }
+
+  /// Multiplies this by a 4x3 subset of [arg]. Expects [arg] to be an affine
+  /// transformation matrix.
+  applyMatrix4(arg: Matrix4): void {
+    const argStorage = arg.storage;
+    const v0 = this._v3storage[0];
+    const v1 = this._v3storage[1];
+    const v2 = this._v3storage[2];
+    this._v3storage[0] =
+      argStorage[0] * v0 +
+      argStorage[4] * v1 +
+      argStorage[8] * v2 +
+      argStorage[12];
+    this._v3storage[1] =
+      argStorage[1] * v0 +
+      argStorage[5] * v1 +
+      argStorage[9] * v2 +
+      argStorage[13];
+    this._v3storage[2] =
+      argStorage[2] * v0 +
+      argStorage[6] * v1 +
+      argStorage[10] * v2 +
+      argStorage[14];
+  }
+  /// Relative error between this and [correct]
+  relativeError(correct: Vector3): number {
+    const correctNorm = correct.length;
+    const cloned = this.clone();
+    cloned.sub(correct);
+    const diffNorm = cloned.length;
+    return diffNorm / correctNorm;
+  }
+  /// Absolute error between this and [correct]
+  absoluteError(correct: Vector3): number {
+    const cloned = this.clone();
+    cloned.sub(correct);
+    return cloned.length;
+  }
+  /**
+   * Returns true if any component is infinite.
+   */
+  get isInfinite(): boolean {
+    let is_infinite = false;
+    is_infinite = is_infinite || !isFinite(this._v3storage[0]);
+    is_infinite = is_infinite || !isFinite(this._v3storage[1]);
+    is_infinite = is_infinite || !isFinite(this._v3storage[2]);
+    return is_infinite;
+  }
+
+  /**
+   * Returns true if any component is NaN.
+   */
+  get isNaN(): boolean {
+    let is_nan = false;
+    is_nan = is_nan || isNaN(this._v3storage[0]);
+    is_nan = is_nan || isNaN(this._v3storage[1]);
+    is_nan = is_nan || isNaN(this._v3storage[2]);
+    return is_nan;
+  }
+
+  /**
+   * Add `arg` to this vector.
+   */
+  add(arg: Vector3): void {
+    const argStorage = arg._v3storage;
+    this._v3storage[0] += argStorage[0];
+    this._v3storage[1] += argStorage[1];
+    this._v3storage[2] += argStorage[2];
+  }
+  /**
+   * Add [arg] scaled by [factor] to this.
+   */
+  addScaled(arg: Vector3, factor: number): void {
+    const argStorage = arg._v3storage;
+    this._v3storage[0] += argStorage[0] * factor;
+    this._v3storage[1] += argStorage[1] * factor;
+    this._v3storage[2] += argStorage[2] * factor;
+  }
+  sub(arg: Vector3): void {
+    const argStorage = arg._v3storage;
+    this._v3storage[0] -= argStorage[0];
+    this._v3storage[1] -= argStorage[1];
+    this._v3storage[2] -= argStorage[2];
+  }
+  /**
+   * Multiply entries in this with entries in [arg].
+   */
+  multiply(arg: Vector3): void {
+    const argStorage = arg._v3storage;
+    this._v3storage[0] = this._v3storage[0] * argStorage[0];
+    this._v3storage[1] = this._v3storage[1] * argStorage[1];
+    this._v3storage[2] = this._v3storage[2] * argStorage[2];
+  }
+  /**
+   * Divide entries in this with entries in [arg].
+   */
+  divide(arg: Vector3): void {
+    const argStorage = arg._v3storage;
+    this._v3storage[0] /= argStorage[0];
+    this._v3storage[1] /= argStorage[1];
+    this._v3storage[2] /= argStorage[2];
+  }
+  /**
+    Scale this.
+  */
+  scale(arg: number): void {
+    this._v3storage[2] *= arg;
+    this._v3storage[1] *= arg;
+    this._v3storage[0] *= arg;
+  }
+  /**
+
+Create a copy of this and scale it by [arg].
+*/
+  scaled(arg: number): Vector3 {
+    const result = this.clone();
+    result.scale(arg);
+    return result;
+  }
+  /**
+   * Negate each component of this vector.
+   */
+  negate(): void {
+    this._v3storage[2] = -this._v3storage[2];
+    this._v3storage[1] = -this._v3storage[1];
+    this._v3storage[0] = -this._v3storage[0];
+  }
+  /**
+   * Absolute value.
+   */
+  absolute(): void {
+    this._v3storage[0] = Math.abs(this._v3storage[0]);
+    this._v3storage[1] = Math.abs(this._v3storage[1]);
+    this._v3storage[2] = Math.abs(this._v3storage[2]);
+  }
+  /**
+
+Clamp each entry n in this in the range [min[n]]-[max[n]].
+*/
+  clamp(min: Vector3, max: Vector3): void {
+    const minStorage = min.storage;
+    const maxStorage = max.storage;
+    this._v3storage[0] = this._clamp(
+      this._v3storage[0],
+      minStorage[0],
+      maxStorage[0]
+    ) as number;
+    this._v3storage[1] = this._clamp(
+      this._v3storage[1],
+      minStorage[1],
+      maxStorage[1]
+    ) as number;
+    this._v3storage[2] = this._clamp(
+      this._v3storage[2],
+      minStorage[2],
+      maxStorage[2]
+    ) as number;
+  }
+  /**
+   * Clamp entries in this in the range [min]-[max].
+   */
+  clampScalar(min: number, max: number): void {
+    this._v3storage[0] = this._clamp(this._v3storage[0], min, max);
+    this._v3storage[1] = this._clamp(this._v3storage[1], min, max);
+    this._v3storage[2] = this._clamp(this._v3storage[2], min, max);
+  }
+  /**
+  Floor entries in this.
+  */
+  floor(): void {
+    this._v3storage[0] = Math.floor(this._v3storage[0]);
+    this._v3storage[1] = Math.floor(this._v3storage[1]);
+    this._v3storage[2] = Math.floor(this._v3storage[2]);
+  }
+  /**
+  
+  Ceil entries in this.
+  */
+  ceil(): void {
+    this._v3storage[0] = Math.ceil(this._v3storage[0]);
+    this._v3storage[1] = Math.ceil(this._v3storage[1]);
+    this._v3storage[2] = Math.ceil(this._v3storage[2]);
+  }
+  /**
+  Round entries in this.
+  */
+  round(): void {
+    this._v3storage[0] = Math.round(this._v3storage[0]);
+    this._v3storage[1] = Math.round(this._v3storage[1]);
+    this._v3storage[2] = Math.round(this._v3storage[2]);
+  }
+
+  private _clamp(target: number, min: number, max: number): number {
+    return Math.max(min, Math.min(max, target));
+  }
   set xy(arg: Vector2) {
     const argStorage = arg._v2storage;
     this._v3storage[0] = argStorage[0];

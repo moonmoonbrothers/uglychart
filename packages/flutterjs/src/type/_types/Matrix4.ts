@@ -89,6 +89,7 @@ class Matrix4 {
   }
 }
 
+
 type Array16 = [
   number,
   number,
@@ -107,3 +108,5 @@ type Array16 = [
   number,
   number
 ];
+
+export default Matrix4
