@@ -8,6 +8,10 @@ export class Vector4 implements Vector {
     this._v4storage = [arg0, arg1, arg2, arg3];
   }
 
+  static zero() {
+    return new Vector4(0,0,0,0)
+  }
+
   set xy(arg: Vector2) {
     const argStorage = arg._v2storage;
     this._v4storage[0] = argStorage[0];

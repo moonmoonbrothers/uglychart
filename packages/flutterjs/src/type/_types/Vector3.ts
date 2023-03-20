@@ -222,7 +222,7 @@ export class Vector3 implements Vector {
 
   /// Projects this using the projection matrix [arg]
   applyProjection(arg: Matrix4): void {
-    const argStorage = arg.storage;
+    const argStorage = arg._m4storage;
     const x = this._v3storage[0];
     const y = this._v3storage[1];
     const z = this._v3storage[2];
@@ -293,7 +293,7 @@ export class Vector3 implements Vector {
   /// Multiplies this by a 4x3 subset of [arg]. Expects [arg] to be an affine
   /// transformation matrix.
   applyMatrix4(arg: Matrix4): void {
-    const argStorage = arg.storage;
+    const argStorage = arg._m4storage;
     const v0 = this._v3storage[0];
     const v1 = this._v3storage[1];
     const v2 = this._v3storage[2];
