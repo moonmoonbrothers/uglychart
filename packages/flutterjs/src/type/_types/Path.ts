@@ -1,4 +1,4 @@
-import type Rect from "./ARect";
+import type Rect from "./Rect";
 import { RRect } from "./RRect";
 
 export class Path {

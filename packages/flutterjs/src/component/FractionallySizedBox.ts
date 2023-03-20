@@ -1,4 +1,4 @@
-import Alignment from "../type/_types/AAlignment";
+import Alignment from "../type/_types/Alignment";
 import type Widget from "../widget/Widget";
 import BaseFractionallySizedBox from "./base/BaseFractionallySizedBox";
 

@@ -1,5 +1,5 @@
-import Offset from "./AOffset";
-import Rect from "./ARect";
+import Offset from "./Offset";
+import Rect from "./Rect";
 import Size from "./Size";
 import TextDirection from "./TextDirection";
 

@@ -1,6 +1,6 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Size, Constraints, Offset } from "../../type";
-import { Path } from "../../type/_types/APath";
+import { Path } from "../../type/_types/Path";
 import { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";

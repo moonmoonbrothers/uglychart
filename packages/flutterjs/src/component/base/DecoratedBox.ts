@@ -1,6 +1,6 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Constraints, Size, Radius, BorderStyle, Offset } from "../../type";
-import type { Border } from "../../type/_types/ABorderstyle";
+import type { Border } from "../../type/_types/Borderstyle";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
