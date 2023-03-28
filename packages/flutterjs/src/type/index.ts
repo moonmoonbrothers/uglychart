@@ -11,6 +11,7 @@ import Rect from "./_types/Rect";
 import RRect from "./_types/RRect";
 import TextDirection from "./_types/TextDirection";
 export * from "./_types/etc";
+import Matrix4 from './_types/Matrix4'
 
 export {
   Offset,
@@ -25,4 +26,5 @@ export {
   RRect,
   Rect,
   TextDirection,
+  Matrix4
 };

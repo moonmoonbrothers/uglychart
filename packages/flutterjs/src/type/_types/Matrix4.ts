@@ -26,6 +26,9 @@ type Array16 = [
 class Matrix4 {
   // 4 x 4 matrix
   _m4storage: Array16;
+  get storage() {
+    return this._m4storage
+  }
 
   get dimension() {
     return 4;
@@ -187,6 +190,65 @@ class Matrix4 {
       return null;
     }
     return r;
+  }
+
+  static identity() {
+    const m = Matrix4.zero()
+    m.setIdentity()
+    return m
+  }
+
+  static translation(translation: Vector3) {
+    const m = Matrix4.zero()
+    m.setIdentity()
+    m.setTranslation(translation)
+    return m
+  }
+
+  static translationValues(x: number, y: number, z: number) {
+    const m = Matrix4.zero()
+    m.setIdentity()
+    m.setTranslationRaw(x, y, z)
+    return m
+  }
+
+  static diagonal3(scale: Vector3) {
+    const m = Matrix4.zero()
+    const mStorage = m._m4storage
+    const scaleStorage = scale._v3storage
+    mStorage[15] = 1
+    mStorage[10] = scaleStorage[2]
+    mStorage[5] = scaleStorage[1]
+    mStorage[0] = scaleStorage[0]
+    return m
+  }
+
+  static diagonal3Values(x: number, y: number, z: number) {
+    const m = Matrix4.zero()
+    m._m4storage[15] = 1
+    m._m4storage[10] = z
+    m._m4storage[5] = y
+    m._m4storage[0] = x
+    return m
+  }
+
+  static skewX(alpha: number) {
+    const m = Matrix4.identity()
+    m._m4storage[4] = Math.tan(alpha)
+    return m
+  }
+
+  static skewY(beta: number) {
+    const m = Matrix4.identity()
+    m._m4storage[1] = Math.tan(beta)
+    return m
+  }
+
+  static skew(alpha: number, beta: number) {
+    const m = Matrix4.identity()
+    m._m4storage[1] = Math.tan(beta)
+    m._m4storage[4] = Math.tan(alpha)
+    return m
   }
 
   constructor(
@@ -549,7 +611,7 @@ Sets the entire matrix to the matrix in [arg].
    * @param y the y coordinate or undefined if `x` is a Vector3/Vector4.
    * @param z the z coordinate or undefined if `x` is a Vector3/Vector4.
    */
-  translate(x: Vector3 | Vector4 | number, y?: number, z?: number): void {
+  translate(x: Vector3 | Vector4 | number, y?: number, z?: number) {
     let tx: number, ty: number, tz: number;
     const tw = x instanceof Vector4 ? x.w : 1.0;
     if (x instanceof Vector3) {
@@ -591,12 +653,14 @@ Sets the entire matrix to the matrix in [arg].
     this._m4storage[13] = t2;
     this._m4storage[14] = t3;
     this._m4storage[15] = t4;
+
+    return this
   }
   /**
    * Multiplies this matrix by a translation from the left.
    * The translation can be specified with a [Vector3], [Vector4], or x, y, z.
    */
-  leftTranslate(x: Vector3 | Vector4 | number, y = 0.0, z = 0.0): void {
+  leftTranslate(x: Vector3 | Vector4 | number, y = 0.0, z = 0.0) {
     let tx, ty, tz;
     const tw = x instanceof Vector4 ? x.w : 1.0;
 
@@ -639,12 +703,14 @@ Sets the entire matrix to the matrix in [arg].
     this._m4storage[13] += ty * this._m4storage[15];
     this._m4storage[14] += tz * this._m4storage[15];
     this._m4storage[15] = tw * this._m4storage[15];
+
+    return this
   }
   /**
 
 Rotate this matrix [angle] radians around [axis].
 */
-  rotate(axis: Vector3, angle: number): void {
+  rotate(axis: Vector3, angle: number) {
     const len = axis.length;
     const axisStorage = axis._v3storage;
     const x = axisStorage[0] / len;
@@ -723,9 +789,11 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[9] = t10;
     this._m4storage[10] = t11;
     this._m4storage[11] = t12;
+
+    return this
   }
   /// Rotate this [angle] radians around X
-  rotateX(angle: number): void {
+  rotateX(angle: number) {
     const cosAngle = Math.cos(angle);
     const sinAngle = Math.sin(angle);
     const t1 = this._m4storage[4] * cosAngle + this._m4storage[8] * sinAngle;
@@ -744,11 +812,13 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[9] = t6;
     this._m4storage[10] = t7;
     this._m4storage[11] = t8;
+
+    return this
   }
   /**
    * Rotate this matrix [angle] radians around Y
    */
-  rotateY(angle: number): void {
+  rotateY(angle: number) {
     const cosAngle = Math.cos(angle);
     const sinAngle = Math.sin(angle);
     const t1 = this._m4storage[0] * cosAngle + this._m4storage[8] * -sinAngle;
@@ -767,12 +837,14 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[9] = t6;
     this._m4storage[10] = t7;
     this._m4storage[11] = t8;
+
+    return this
   }
 
   /**
    * Rotate this matrix [angle] radians around Z
    */
-  rotateZ(angle: number): void {
+  rotateZ(angle: number) {
     const cosAngle = Math.cos(angle);
     const sinAngle = Math.sin(angle);
     const t1 = this._m4storage[0] * cosAngle + this._m4storage[4] * sinAngle;
@@ -791,11 +863,13 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[5] = t6;
     this._m4storage[6] = t7;
     this._m4storage[7] = t8;
+
+    return this
   }
   /**
    * Scale this matrix by a Vector3, Vector4, or x,y,z
    */
-  public scale(x: Vector3 | Vector4 | number, y?: number, z?: number): void {
+  public scale(x: Vector3 | Vector4 | number, y?: number, z?: number) {
     let sx: number;
     let sy: number;
     let sz: number;
@@ -831,6 +905,8 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[13] *= sw;
     this._m4storage[14] *= sw;
     this._m4storage[15] *= sw;
+
+    return this
   }
   /**
    * Create a copy of this scaled by a [Vector3], [Vector4] or [x],[y], and [z].
