@@ -33,7 +33,8 @@ class RenderObject {
     context: PaintContext,
     offset: Offset,
     clipId?: string,
-    matrix4: Matrix4 = Matrix4.identity()
+    matrix4: Matrix4 = Matrix4.identity(),
+    opacity: number = 1
   ) {
     const totalOffset = offset.plus(this.offset);
     if (this.isPainter) {
@@ -42,17 +43,23 @@ class RenderObject {
       if (clipId) {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
+      container.setAttribute("opacity", `${opacity}`);
       this.performPaint(svgEls, totalOffset, matrix4);
     }
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(matrix4);
+    const childOpacity = this.getChildOpacity(opacity);
     this.children.forEach((child) =>
-      child.paint(context, totalOffset, childClipId, childMatrix4)
+      child.paint(context, totalOffset, childClipId, childMatrix4, childOpacity)
     );
   }
 
   getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
     return parentMatrix;
+  }
+
+  getChildOpacity(parentOpacity: number): number {
+    return parentOpacity;
   }
 
   setSvgTransform(el: SVGElement, offset: Offset, matrix: Matrix4) {
