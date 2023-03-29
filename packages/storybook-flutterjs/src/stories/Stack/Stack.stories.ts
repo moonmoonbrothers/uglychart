@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
-import { Container, Alignment, Stack, Positioned } from '@moonmoonbrothers/flutterjs';
+import { Container, Alignment, Stack, Positioned, StackFit } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Container, Alignment, Stack, Positioned } from '@moonmoonbrothers/flutterjs';
 \n\n`;
@@ -52,13 +52,15 @@ const Case1Code = dedent`
 		})
 	})
 `;
-export const Case1: Story = {
+export const Basic: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
 		height: '300px',
 		widget: Container({
 			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
 			alignment: Alignment.center,
 			child: Stack({
 				children: [
@@ -106,7 +108,7 @@ const Case2Code = dedent`
 	})
 `;
 
-export const Case2: Story = {
+export const HasPositioned: Story = {
 	args: {
 		ssrSize: { width: 600, height: 300 },
 		width: '600px',
@@ -136,5 +138,169 @@ export const Case2: Story = {
 			})
 		}),
 		code: ImportWidgetCode + Case2Code
+	}
+};
+const WithoutNonPositionedCode = dedent`
+		Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				children: [
+					Positioned({
+						top: 0,
+						left: 0,
+						child: Container({
+							width: 100,
+							height: 100,
+							color: 'green'
+						})
+					}),
+					Positioned({
+						top: 0,
+						left: 0,
+						child: Container({
+							width: 50,
+							height: 50,
+							color: 'red'
+						})
+					})
+				]
+			})
+		}),
+`;
+
+export const WithoutNonPositioned: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				children: [
+					Positioned({
+						top: 0,
+						left: 0,
+						child: Container({
+							width: 100,
+							height: 100,
+							color: 'green'
+						})
+					}),
+					Positioned({
+						top: 0,
+						left: 0,
+						child: Container({
+							width: 50,
+							height: 50,
+							color: 'red'
+						})
+					})
+				]
+			})
+		}),
+		code: ImportWidgetCode + WithoutNonPositionedCode
+	}
+};
+
+const FitExpandCode = dedent`
+		Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				fit: StackFit.expand,
+				children: [
+					Container({
+						width: 0,
+						height: 0,
+						color: 'green'
+					})
+				]
+			})
+		}),
+`;
+
+export const FitExpand: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				fit: StackFit.expand,
+				children: [
+					Container({
+						width: 0,
+						height: 0,
+						color: 'green'
+					})
+				]
+			})
+		}),
+		code: ImportWidgetCode + FitExpandCode
+	}
+};
+
+const AlignmentCenterCode = dedent`
+	Container({
+		color: 'lightgrey',
+		width: Infinity,
+		height: Infinity,
+		alignment: Alignment.center,
+		child: Stack({
+			alignment: Alignment.center,
+			children: [
+				Container({
+					width: 100,
+					height: 100,
+					color: 'green'
+				}),
+				Container({
+					width: 50,
+					height: 50,
+					color: 'red'
+				})
+			]
+		})
+	}),
+`;
+export const AlignmentCenter: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightgrey',
+			width: Infinity,
+			height: Infinity,
+			alignment: Alignment.center,
+			child: Stack({
+				alignment: Alignment.center,
+				children: [
+					Container({
+						width: 100,
+						height: 100,
+						color: 'green'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					})
+				]
+			})
+		}),
+		code: ImportWidgetCode + AlignmentCenterCode
 	}
 };

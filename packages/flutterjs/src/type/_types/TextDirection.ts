@@ -1,6 +1,6 @@
 enum TextDirection {
-  rtl,
-  ltr
+  rtl = 'rtl',
+  ltr = 'ltr',
 }
 
 export default TextDirection
