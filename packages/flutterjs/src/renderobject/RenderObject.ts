@@ -1,98 +1,108 @@
-import type RenderObjectElement from "../element/RenderObjectElement"
-import { Size, Offset, Constraints } from "../type"
-import type { PaintContext } from "../utils/type"
-import ShortUniqueId from "short-unique-id"
+import type RenderObjectElement from "../element/RenderObjectElement";
+import { Size, Offset, Constraints, Matrix4 } from "../type";
+import type { PaintContext } from "../utils/type";
+import ShortUniqueId from "short-unique-id";
 
-const uid = new ShortUniqueId({ dictionary: "hex" })
+const uid = new ShortUniqueId({ dictionary: "hex" });
 
 /*
   It does more things than flutters' RenderObject 
   Actually, It is more like RenderShiftedBox
 */
 class RenderObject {
-  isPainter: boolean
-  id = uid.randomUUID(6)
-  ownerElement!: RenderObjectElement
+  isPainter: boolean;
+  id = uid.randomUUID(6);
+  ownerElement!: RenderObjectElement;
   constructor({ isPainter }: { isPainter: boolean }) {
-    this.isPainter = isPainter
+    this.isPainter = isPainter;
   }
-  type = this.constructor.name
+  type = this.constructor.name;
   get children(): RenderObject[] {
-    return this.ownerElement.children.map((child) => child.renderObject)
+    return this.ownerElement.children.map((child) => child.renderObject);
   }
-  size: Size = Size.zero()
-  constraints: Constraints = Constraints.loose(Size.maximum())
-  offset: Offset = Offset.zero()
+  size: Size = Size.zero();
+  constraints: Constraints = Constraints.loose(Size.maximum());
+  offset: Offset = Offset.zero();
 
   layout(constraint: Constraints) {
-    this.constraints = constraint.normalize()
-    this.preformLayout()
+    this.constraints = constraint.normalize();
+    this.preformLayout();
   }
 
-  paint(context: PaintContext, offset: Offset, clipId?: string) {
-    const totalOffset = offset.plus(this.offset)
+  paint(
+    context: PaintContext,
+    offset: Offset,
+    clipId?: string,
+    matrix4: Matrix4 = Matrix4.identity()
+  ) {
+    const totalOffset = offset.plus(this.offset);
     if (this.isPainter) {
       // this line should be refactored.. It always return only one svgEl.
-      const { svgEls, container } = this.findOrAppendSvgEl(context)
+      const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
-        container.setAttribute("clip-path", `url(#${clipId})`)
+        container.setAttribute("clip-path", `url(#${clipId})`);
       }
-      this.performPaint(svgEls, totalOffset)
+      this.performPaint(svgEls, totalOffset);
     }
-    const childClipId = this.getChildClipId(clipId)
+    const childClipId = this.getChildClipId(clipId);
+    const childMatrix4 = this.getChildMatrix4(totalOffset, matrix4);
     this.children.forEach((child) =>
-      child.paint(context, totalOffset, childClipId)
-    )
+      child.paint(context, totalOffset, childClipId, childMatrix4)
+    );
+  }
+
+  getChildMatrix4(totalOffset: Offset, parentMatrix: Matrix4): Matrix4 {
+    return parentMatrix;
   }
 
   attach(ownerElement: RenderObjectElement) {
-    this.ownerElement = ownerElement
+    this.ownerElement = ownerElement;
   }
 
   dispose(context: PaintContext) {
     if (this.isPainter) {
-      context.findSvgEl(this.id)?.remove()
+      context.findSvgEl(this.id)?.remove();
     }
-    this.children.forEach((child) => child.dispose(context))
+    this.children.forEach((child) => child.dispose(context));
   }
 
   //It is like computeIntrinsicMinWidth on Flutter
   getIntrinsicWidth(height: number) {
-    return 0
+    return 0;
   }
 
   //It is like computeIntrinsicMinHeight on Flutter
   getIntrinsicHeight(width: number) {
-    return 0
+    return 0;
   }
 
   private findOrAppendSvgEl(context: PaintContext) {
-    const { findSvgEl, appendSvgEl } = context
-    const oldEl = findSvgEl(this.id)
-    let svgEls: { [key: string]: SVGElement } = {}
-    let container: SVGElement
+    const { findSvgEl, appendSvgEl } = context;
+    const oldEl = findSvgEl(this.id);
+    let svgEls: { [key: string]: SVGElement } = {};
+    let container: SVGElement;
     if (oldEl) {
-      container = oldEl
+      container = oldEl;
       if (oldEl.nodeName === "g") {
         for (const child of oldEl.children) {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const name = child.getAttribute("data-render-name")!
-          svgEls[name] = child as unknown as SVGElement
+          const name = child.getAttribute("data-render-name")!;
+          svgEls[name] = child as unknown as SVGElement;
         }
         /*
         This must be clip path element!
       */
       } else {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const name = oldEl.getAttribute("data-render-name")!
-        svgEls[name] = oldEl
+        const name = oldEl.getAttribute("data-render-name")!;
+        svgEls[name] = oldEl;
       }
     } else {
-      svgEls = this.createDefaultSvgEl(context)
+      svgEls = this.createDefaultSvgEl(context);
       Object.entries(svgEls).forEach(([name, value]) => {
-        value.setAttribute("data-render-name", name)
-      })
-      const values = Object.values(svgEls)
+        value.setAttribute("data-render-name", name);
+      });
+      const values = Object.values(svgEls);
       /*
        For absolute Clip coordinate, 
        svg element should be wrapped g tag and g tags must have only one attribute clip-path="url(...)" .
@@ -104,30 +114,30 @@ class RenderObject {
        I don't know it is intended behavior in svg 2.0 specification.
       */
       if (values.length === 1 && values[0].nodeName === "CLIPPATH") {
-        const svgEl = values[0]
-        container = svgEl
-        context.setId(svgEl, this.id)
-        svgEl.setAttribute("data-render-type", this.type)
-        appendSvgEl(svgEl)
+        const svgEl = values[0];
+        container = svgEl;
+        context.setId(svgEl, this.id);
+        svgEl.setAttribute("data-render-type", this.type);
+        appendSvgEl(svgEl);
       } else {
-        const svgG = context.createSvgEl("g")
-        container = svgG
-        context.setId(svgG, this.id)
-        appendSvgEl(svgG)
-        svgG.setAttribute("data-render-type", this.type)
+        const svgG = context.createSvgEl("g");
+        container = svgG;
+        context.setId(svgG, this.id);
+        appendSvgEl(svgG);
+        svgG.setAttribute("data-render-type", this.type);
         values.forEach((value) => {
-          svgG.appendChild(value)
-        })
+          svgG.appendChild(value);
+        });
       }
     }
-    return { svgEls, container }
+    return { svgEls, container };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected createDefaultSvgEl(paintContext: PaintContext): {
-    [key: string]: SVGElement
+    [key: string]: SVGElement;
   } {
-    throw { message: "not implemented defaultSvgEl" }
+    throw { message: "not implemented defaultSvgEl" };
   }
 
   /*
@@ -135,7 +145,7 @@ class RenderObject {
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected preformLayout(): void {
-    throw { message: "not implemented performLayout" }
+    throw { message: "not implemented performLayout" };
   }
 
   /*
@@ -148,8 +158,8 @@ class RenderObject {
   ): void {}
 
   protected getChildClipId(parentClipId?: string) {
-    return parentClipId
+    return parentClipId;
   }
 }
 
-export default RenderObject
+export default RenderObject;

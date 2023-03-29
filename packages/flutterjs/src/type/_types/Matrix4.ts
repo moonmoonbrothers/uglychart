@@ -33,9 +33,11 @@ class Matrix4 {
   get dimension() {
     return 4;
   }
+
   static zero(): Matrix4 {
     return new Matrix4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
+
   static copy(arg: Matrix4): Matrix4 {
     return new Matrix4(...arg._m4storage);
   }

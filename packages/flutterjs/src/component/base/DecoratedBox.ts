@@ -14,7 +14,7 @@ export type Decoration = {
 class DecoratedBox extends SingleChildRenderObjectWidget {
   decoration: Required<Decoration>;
   constructor({
-    decoraiton: {
+    decoration: {
       color = "transparent",
       border = BorderStyle.all({
         color: "rgba(0,0,0,0)",
@@ -24,7 +24,7 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
     },
     child,
   }: {
-    decoraiton: Decoration;
+    decoration: Decoration;
     child?: Widget;
   }) {
     super({ child });
@@ -35,16 +35,16 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
     };
   }
 
-  override createRenderObject(): RenderDocoratedBox {
-    return new RenderDocoratedBox(this.decoration);
+  override createRenderObject(): RenderDecoratedBox {
+    return new RenderDecoratedBox(this.decoration);
   }
 
-  updateRenderObject(renderObject: RenderDocoratedBox): void {
+  updateRenderObject(renderObject: RenderDecoratedBox): void {
     renderObject.decoration = this.decoration;
   }
 }
 
-class RenderDocoratedBox extends SingleChildRenderObject {
+class RenderDecoratedBox extends SingleChildRenderObject {
   decoration: Required<Decoration>;
   constructor(decoration: Required<Decoration>) {
     super({ isPainter: true });

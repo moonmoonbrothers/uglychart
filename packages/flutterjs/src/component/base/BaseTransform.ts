@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Alignment, Matrix4 } from "../../type";
+import { Alignment, Matrix4, Offset, TextDirection } from "../../type";
 import { assert } from "../../utils";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
@@ -134,22 +134,58 @@ class Transform extends SingleChildRenderObjectWidget {
 }
 
 class RenderTransform extends SingleChildRenderObject {
-  origin?: Offset;
+  origin: Offset;
   alignment?: Alignment;
   transform: Matrix4;
+  textDirection: TextDirection;
   constructor({
-    origin,
+    origin = { x: 0, y: 0 },
     alignment,
     transform,
+    textDirection = TextDirection.ltr,
   }: {
     transform: Matrix4;
     origin?: Offset;
     alignment?: Alignment;
+    textDirection?: TextDirection;
   }) {
     super({ isPainter: false });
     this.transform = transform;
     this.origin = origin;
     this.alignment = alignment;
+    this.textDirection = textDirection;
+  }
+
+  private getEffectiveTransform(totalOffset: Offset): Matrix4 {
+    const resolvedAlignment = this.alignment?.resolve(this.textDirection);
+    const effectiveOrigin = {
+      x: this.origin.x + totalOffset.x,
+      y: this.origin.y + totalOffset.y,
+    };
+    const result = Matrix4.identity();
+    result.translate(effectiveOrigin.x, effectiveOrigin.y);
+
+    let translation: Offset;
+
+    if (resolvedAlignment != null) {
+      translation = resolvedAlignment.alongSize(this.size);
+      result.translate(translation.x, translation.y);
+    }
+
+    result.multiply(this.transform);
+
+    if (resolvedAlignment != null) {
+      result.translate(-translation!.x, -translation!.y);
+    }
+
+    result.translate(-effectiveOrigin.x, -effectiveOrigin.y);
+
+    return result;
+  }
+
+  override getChildMatrix4(totalOffset: Offset, parentMatrix: Matrix4): Matrix4 {
+     const transform = this.getEffectiveTransform(totalOffset)
+     return parentMatrix.multiplied(transform)
   }
 
   protected override preformLayout(): void {
