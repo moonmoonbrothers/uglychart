@@ -1,10 +1,10 @@
-import { getTextHeight, getTextWidth } from "../../utils"
-import RenderObject from "../../renderobject/RenderObject"
-import { Offset, Size } from "../../type"
-import type { PaintContext } from "../../utils/type"
-import RenderObjectWidget from "../../widget/RenderObjectWidget"
+import { getTextHeight, getTextWidth } from "../../utils";
+import RenderObject from "../../renderobject/RenderObject";
+import { Matrix4, Offset, Size } from "../../type";
+import type { PaintContext } from "../../utils/type";
+import RenderObjectWidget from "../../widget/RenderObjectWidget";
 
-type TextAlign = "middle" | "end" | "start"
+type TextAlign = "middle" | "end" | "start";
 type TextBaseline =
   | "text-before-edge"
   | "text-after-edge"
@@ -13,25 +13,25 @@ type TextBaseline =
   | "middle"
   | "hanging"
   | "top"
-  | "bottom"
+  | "bottom";
 type TextStyle = {
-  fontFamily: string
-  fontSize: string
-  fontWeight: string
-  fontColor: string
-}
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: string;
+  fontColor: string;
+};
 
 export type TextProps = {
-  style?: Partial<TextStyle>
-  textAlign?: TextAlign
-  textBaseline?: TextBaseline
-}
+  style?: Partial<TextStyle>;
+  textAlign?: TextAlign;
+  textBaseline?: TextBaseline;
+};
 
 class Text extends RenderObjectWidget {
-  text: string
-  style: TextStyle
-  textAlign: TextAlign
-  textBaseline: TextBaseline
+  text: string;
+  style: TextStyle;
+  textAlign: TextAlign;
+  textBaseline: TextBaseline;
   constructor(
     text: string,
     {
@@ -45,10 +45,10 @@ class Text extends RenderObjectWidget {
       } = {},
     }: TextProps
   ) {
-    super({ children: [] })
-    this.text = text
-    this.style = { fontColor, fontFamily, fontSize, fontWeight }
-    ;(this.textAlign = textAlign), (this.textBaseline = textBaseline)
+    super({ children: [] });
+    this.text = text;
+    this.style = { fontColor, fontFamily, fontSize, fontWeight };
+    (this.textAlign = textAlign), (this.textBaseline = textBaseline);
   }
 
   createRenderObject(): RenderObject {
@@ -57,58 +57,59 @@ class Text extends RenderObjectWidget {
       style: this.style,
       textAlign: this.textAlign,
       textBaseline: this.textBaseline,
-    })
+    });
   }
 
   updateRenderObject(renderObject: RenderText): void {
-    renderObject.text = this.text
-    renderObject.style = this.style
-    renderObject.textAlign = this.textAlign
-    renderObject.textBaseline = this.textBaseline
+    renderObject.text = this.text;
+    renderObject.style = this.style;
+    renderObject.textAlign = this.textAlign;
+    renderObject.textBaseline = this.textBaseline;
   }
 }
 
 class RenderText extends RenderObject {
-  text: string
-  textBaseline: TextBaseline
-  textAlign: TextAlign
-  style: TextStyle
+  text: string;
+  textBaseline: TextBaseline;
+  textAlign: TextAlign;
+  style: TextStyle;
   constructor({
     text,
     textAlign,
     textBaseline,
     style,
   }: {
-    text: string
-    textBaseline: TextBaseline
-    textAlign: TextAlign
-    style: TextStyle
+    text: string;
+    textBaseline: TextBaseline;
+    textAlign: TextAlign;
+    style: TextStyle;
   }) {
-    super({ isPainter: true })
-    this.text = text
-    this.style = style
-    this.textBaseline = textBaseline
-    this.textAlign = textAlign
+    super({ isPainter: true });
+    this.text = text;
+    this.style = style;
+    this.textBaseline = textBaseline;
+    this.textAlign = textAlign;
   }
   get font(): string {
-    const { fontWeight, fontSize, fontFamily } = this.style
-    return `${fontWeight} ${fontSize} ${fontFamily}`
+    const { fontWeight, fontSize, fontFamily } = this.style;
+    return `${fontWeight} ${fontSize} ${fontFamily}`;
   }
 
   protected performPaint(
     { text: textEl }: { [key: string]: SVGElement },
-    offset: Offset
+    offset: Offset,
+    matrix: Matrix4
   ): void {
-    const { fontFamily, fontColor, fontSize, fontWeight } = this.style
-    textEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`)
-    textEl.setAttribute("id", this.id)
-    textEl.setAttribute("text-anchor", this.textAlign)
-    textEl.setAttribute("alignment-baseline", this.textBaseline)
-    textEl.setAttribute("fill", fontColor)
-    textEl.setAttribute("font-size", fontSize)
-    textEl.setAttribute("font-family", fontFamily)
-    textEl.setAttribute("font-weight", fontWeight)
-    textEl.textContent = this.text
+    const { fontFamily, fontColor, fontSize, fontWeight } = this.style;
+    textEl.setAttribute("id", this.id);
+    textEl.setAttribute("text-anchor", this.textAlign);
+    textEl.setAttribute("alignment-baseline", this.textBaseline);
+    textEl.setAttribute("fill", fontColor);
+    textEl.setAttribute("font-size", fontSize);
+    textEl.setAttribute("font-family", fontFamily);
+    textEl.setAttribute("font-weight", fontWeight);
+    textEl.textContent = this.text;
+    this.setSvgTransform(textEl, offset, matrix);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -116,25 +117,25 @@ class RenderText extends RenderObject {
     const size = new Size({
       width: getTextWidth({ text: this.text, font: this.font }),
       height: getTextHeight({ text: this.text, font: this.font }),
-    })
-    this.size = size
+    });
+    this.size = size;
   }
 
   override getIntrinsicHeight(): number {
-    return getTextHeight({ text: this.text, font: this.font })
+    return getTextHeight({ text: this.text, font: this.font });
   }
 
   override getIntrinsicWidth(): number {
-    return getTextWidth({ text: this.text, font: this.font })
+    return getTextWidth({ text: this.text, font: this.font });
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {
-    [key: string]: SVGElement
+    [key: string]: SVGElement;
   } {
     return {
       text: createSvgEl("text"),
-    }
+    };
   }
 }
 
-export default Text
+export default Text;
