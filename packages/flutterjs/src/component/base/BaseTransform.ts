@@ -61,14 +61,18 @@ class Transform extends SingleChildRenderObjectWidget {
     scale,
     scaleX,
     scaleY,
+    origin,
+    alignment = Alignment.center,
   }: {
     child?: Widget;
+    alignment?: Alignment;
+    origin?: Offset;
     scale?: number;
     scaleX?: number;
     scaleY?: number;
   }) {
     assert(
-      !((scale == null && scaleX == null) || scaleY == null),
+      !(scale == null && scaleX == null && scaleY == null),
       "At least one of 'scale', 'scaleX' and 'scaleY' is required to be non-null"
     );
     assert(
@@ -77,6 +81,8 @@ class Transform extends SingleChildRenderObjectWidget {
     );
     return new Transform({
       child,
+      origin,
+      alignment,
       transform: Matrix4.diagonal3Values(
         scale ?? scaleX ?? 1,
         scale ?? scaleY ?? 1,
@@ -134,12 +140,12 @@ class Transform extends SingleChildRenderObjectWidget {
 }
 
 class RenderTransform extends SingleChildRenderObject {
-  origin: Offset;
+  origin?: Offset;
   alignment?: Alignment;
   transform: Matrix4;
   textDirection: TextDirection;
   constructor({
-    origin = { x: 0, y: 0 },
+    origin,
     alignment,
     transform,
     textDirection = TextDirection.ltr,
@@ -158,34 +164,30 @@ class RenderTransform extends SingleChildRenderObject {
 
   private getEffectiveTransform(totalOffset: Offset): Matrix4 {
     const resolvedAlignment = this.alignment?.resolve(this.textDirection);
+    const translation = resolvedAlignment?.alongSize(this.size) ?? {
+      x: 0,
+      y: 0,
+    };
+    const origin = this.origin ?? { x: 0, y: 0 };
     const effectiveOrigin = {
-      x: this.origin.x + totalOffset.x,
-      y: this.origin.y + totalOffset.y,
+      x: origin.x + translation.x,
+      y: origin.y + translation.y,
     };
     const result = Matrix4.identity();
+
     result.translate(effectiveOrigin.x, effectiveOrigin.y);
-
-    let translation: Offset;
-
-    if (resolvedAlignment != null) {
-      translation = resolvedAlignment.alongSize(this.size);
-      result.translate(translation.x, translation.y);
-    }
-
     result.multiply(this.transform);
-
-    if (resolvedAlignment != null) {
-      result.translate(-translation!.x, -translation!.y);
-    }
-
     result.translate(-effectiveOrigin.x, -effectiveOrigin.y);
 
     return result;
   }
 
-  override getChildMatrix4(totalOffset: Offset, parentMatrix: Matrix4): Matrix4 {
-     const transform = this.getEffectiveTransform(totalOffset)
-     return parentMatrix.multiplied(transform)
+  override getChildMatrix4(
+    totalOffset: Offset,
+    parentMatrix: Matrix4
+  ): Matrix4 {
+    const transform = this.getEffectiveTransform(totalOffset);
+    return parentMatrix.multiplied(transform);
   }
 
   protected override preformLayout(): void {
