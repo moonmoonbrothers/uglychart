@@ -26,6 +26,7 @@ import FractionallySizedBox from "./FractionallySizedBox";
 import Flex from "./Flex";
 import IntrinsicHeight from "./IntrinsicHeight";
 import IntrinsicWidth from "./IntrinsicWidth";
+import FractionalTranslation from "./FactionalTranslation";
 
 export {
   ConstrainedBox,
@@ -56,4 +57,5 @@ export {
   Spacer,
   FractionallySizedBox,
   Flex,
+  FractionalTranslation,
 };
