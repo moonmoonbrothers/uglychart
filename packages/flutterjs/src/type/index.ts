@@ -12,6 +12,7 @@ import RRect from "./_types/RRect";
 import TextDirection from "./_types/TextDirection";
 export * from "./_types/etc";
 import Matrix4 from './_types/Matrix4'
+import StackFit from './_types/StackFit'
 
 export {
   Offset,
@@ -26,5 +27,6 @@ export {
   RRect,
   Rect,
   TextDirection,
-  Matrix4
+  Matrix4,
+  StackFit
 };
