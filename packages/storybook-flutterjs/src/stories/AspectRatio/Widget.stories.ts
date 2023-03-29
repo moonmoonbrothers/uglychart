@@ -1,10 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { dedent } from 'ts-dedent';
-import { Container, Column, Opacity, Center, Alignment } from '@moonmoonbrothers/flutterjs';
+import {
+	Container,
+	Column,
+	Opacity,
+	Center,
+	Alignment,
+	AspectRatio
+} from '@moonmoonbrothers/flutterjs';
 
 const meta = {
-	title: 'Widget/Opacity',
+	title: 'Widget/AspectRatio',
 	component: Widget
 } satisfies Meta<Widget>;
 
@@ -12,141 +19,39 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const BasicCode = dedent`
-		Container({
-			color: 'lightblue',
-			child: Column({
-				children: [
-					Opacity({
-						opacity: 1,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					}),
-					Opacity({
-						opacity: 0.5,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					}),
-					Opacity({
-						opacity: 0.25,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					})
-				]
+	Container({
+		width: Infinity,
+		height: 150,
+		color: 'orange',
+		alignment: Alignment.center,
+		child: AspectRatio({
+			aspectRatio: 16 / 9,
+			child: Container({
+				color: 'purple'
 			})
 		})
+	})
 `;
 
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 600, height: 300 },
+		ssrSize: { width: 400, height: 300 },
 		width: '400px',
-		height: '400px',
+		height: '300px',
 		code:
 			dedent`import {  Container, Column, Opacity } from '@moonmoonbrothers/flutterjs';'\n\n\n` +
 			BasicCode,
 		widget: Container({
-			color: 'lightblue',
-			child: Column({
-				children: [
-					Opacity({
-						opacity: 1,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					}),
-					Opacity({
-						opacity: 0.5,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					}),
-					Opacity({
-						opacity: 0.25,
-						child: Container({
-							width: 400,
-							height: 60,
-							color: 'orange'
-						})
-					})
-				]
+			width: Infinity,
+			height: 150,
+			color: 'orange',
+			alignment: Alignment.center,
+			child: AspectRatio({
+				aspectRatio: 16 / 9,
+				child: Container({
+					color: 'purple'
+				})
 			})
-		})
-	}
-};
-
-const NestCode = dedent`
-		Column({
-			children: [
-				Opacity({
-					opacity: 0.5,
-					child: Container({
-						width: 400,
-						height: 60,
-						color: 'blue'
-					})
-				}),
-				Opacity({
-					opacity: 0.5,
-					child: Container({
-						child: Opacity({
-							opacity: 0.5,
-							child: Container({
-								width: 400,
-								height: 60,
-								color: 'blue'
-							})
-						})
-					})
-				})
-			]
-		})
-`;
-
-export const Nest: Story = {
-	args: {
-		ssrSize: { width: 600, height: 300 },
-		width: '400px',
-		height: '400px',
-		code:
-			dedent`import {  Container, Column, Opacity, Column } from '@moonmoonbrothers/flutterjs';'\n\n\n` +
-			NestCode,
-		widget: Column({
-			children: [
-				Opacity({
-					opacity: 0.5,
-					child: Container({
-						width: 400,
-						height: 60,
-						color: 'blue'
-					})
-				}),
-				Opacity({
-					opacity: 0.5,
-					child: Container({
-						child: Opacity({
-							opacity: 0.5,
-							child: Container({
-								width: 400,
-								height: 60,
-								color: 'blue'
-							})
-						})
-					})
-				})
-			]
 		})
 	}
 };
