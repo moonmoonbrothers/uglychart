@@ -162,7 +162,7 @@ class RenderTransform extends SingleChildRenderObject {
     this.textDirection = textDirection;
   }
 
-  private getEffectiveTransform(totalOffset: Offset): Matrix4 {
+  private get _effectiveTransform(): Matrix4 {
     const resolvedAlignment = this.alignment?.resolve(this.textDirection);
     const translation = resolvedAlignment?.alongSize(this.size) ?? {
       x: 0,
@@ -183,11 +183,9 @@ class RenderTransform extends SingleChildRenderObject {
   }
 
   override getChildMatrix4(
-    totalOffset: Offset,
     parentMatrix: Matrix4
   ): Matrix4 {
-    const transform = this.getEffectiveTransform(totalOffset);
-    return parentMatrix.multiplied(transform);
+    return parentMatrix.multiplied(this._effectiveTransform);
   }
 
   protected override preformLayout(): void {

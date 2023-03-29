@@ -45,13 +45,13 @@ class RenderObject {
       this.performPaint(svgEls, totalOffset, matrix4);
     }
     const childClipId = this.getChildClipId(clipId);
-    const childMatrix4 = this.getChildMatrix4(totalOffset, matrix4);
+    const childMatrix4 = this.getChildMatrix4(matrix4);
     this.children.forEach((child) =>
       child.paint(context, totalOffset, childClipId, childMatrix4)
     );
   }
 
-  getChildMatrix4(totalOffset: Offset, parentMatrix: Matrix4): Matrix4 {
+  getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
     return parentMatrix;
   }
 
