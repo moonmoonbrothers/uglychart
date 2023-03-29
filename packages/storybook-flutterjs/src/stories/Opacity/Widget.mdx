@@ -3,17 +3,27 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# FractionalTranslation
+# Opacity
 
-This widget motivated by FractionalTranslation in Flutter.
+This widget motivated by Opacity in Flutter.
 
-> Applies a translation transformation before painting its child.
+>A widget that makes its child partially transparent.
 >
-> The translation is expressed as a Offset scaled to the child's size. For example, an Offset with a dx of 0.25 will result in a horizontal translation of one quarter the width of the child.
+>This class paints its child into an intermediate buffer and then blends the child back into the scene partially transparent.
 >
-> Hit tests will only be detected inside the bounds of the FractionalTranslation, even if the contents are offset such that they overflow.
->
-> See: [https://api.flutter.dev/flutter/widgets/FractionalTranslation-class.html](https://api.flutter.dev/flutter/widgets/FractionalTranslation-class.html)
+>For values of opacity other than 0.0 and 1.0, this class is relatively expensive because it requires painting the child into an intermediate buffer. For the value 0.0, the child is simply not painted at all. For the value 1.0, the child is painted immediately without an intermediate buffer.
+
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/9hltevOHQBw"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+></iframe>
+
+See: [https://api.flutter.dev/flutter/widgets/Opacity-class.html](https://api.flutter.dev/flutter/widgets/Opacity-class.html)
 
 ## Props
 

@@ -28,6 +28,7 @@ import IntrinsicHeight from "./IntrinsicHeight";
 import IntrinsicWidth from "./IntrinsicWidth";
 import FractionalTranslation from "./FractionalTranslation";
 import Opacity from "./Opacity";
+import AspectRatio from "./AspectRatio";
 
 export {
   ConstrainedBox,
@@ -59,5 +60,6 @@ export {
   FractionallySizedBox,
   Flex,
   FractionalTranslation,
-  Opacity
+  Opacity,
+  AspectRatio
 };
