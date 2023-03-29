@@ -1,7 +1,7 @@
-import type RenderObjectElement from "../element/RenderObjectElement";
 import { Size, Offset, Constraints, Matrix4 } from "../type";
 import type { PaintContext } from "../utils/type";
 import ShortUniqueId from "short-unique-id";
+import { RenderObjectElement } from "../element";
 
 const uid = new ShortUniqueId({ dictionary: "hex" });
 
@@ -42,7 +42,7 @@ class RenderObject {
       if (clipId) {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
-      this.performPaint(svgEls, totalOffset);
+      this.performPaint(svgEls, totalOffset, matrix4);
     }
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(totalOffset, matrix4);
@@ -53,6 +53,22 @@ class RenderObject {
 
   getChildMatrix4(totalOffset: Offset, parentMatrix: Matrix4): Matrix4 {
     return parentMatrix;
+  }
+
+  setSvgTransform(el: SVGElement, offset: Offset, matrix: Matrix4) {
+    const style = el.getAttribute("style") || "";
+    el.setAttribute(
+      "style",
+      `${style} transform: translate(${offset.x}px, ${
+        offset.y
+      }px) matrix3d(${matrix.storage.join(",")});`
+    );
+    // el.setAttribute(
+    //   "transform",
+    //   `translate(${offset.x} ${offset.y}) matrix3d(${matrix.storage.join(
+    //     " "
+    //   )})`
+    // );
   }
 
   attach(ownerElement: RenderObjectElement) {
@@ -154,7 +170,8 @@ class RenderObject {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   protected performPaint(
     svgEls: { [key: string]: SVGElement },
-    offset: Offset
+    offset: Offset,
+    matrix: Matrix4
   ): void {}
 
   protected getChildClipId(parentClipId?: string) {

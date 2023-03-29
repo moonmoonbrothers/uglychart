@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Constraints, Size, Radius, BorderStyle, Offset } from "../../type";
+import { Constraints, Size, Radius, BorderStyle, Offset, Matrix4 } from "../../type";
 import type { Border } from "../../type/_types/Borderstyle";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
@@ -92,7 +92,8 @@ class RenderDecoratedBox extends SingleChildRenderObject {
     }: {
       [key: string]: SVGElement;
     },
-    offset: Offset
+    offset: Offset,
+    matrix: Matrix4
   ): void {
     const {
       color,
@@ -131,12 +132,11 @@ class RenderDecoratedBox extends SingleChildRenderObject {
     this.assertEqualBorder(borderBottom, borderLeft);
     this.assertEqualBorder(borderLeft, borderRight);
 
-    rectEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`);
-
     rectEl.setAttribute(
       "style",
-      `fill:${color};stroke-width:${borderTop.thickness}px;stroke:${borderTop.color}`
+      `fill:${color};stroke-width:${borderTop.thickness}px;stroke:${borderTop.color};`
     );
+    this.setSvgTransform(rectEl, offset, matrix)
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {
