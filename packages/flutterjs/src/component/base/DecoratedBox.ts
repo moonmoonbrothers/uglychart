@@ -1,5 +1,12 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Constraints, Size, Radius, BorderStyle, Offset, Matrix4 } from "../../type";
+import {
+  Constraints,
+  Size,
+  Radius,
+  BorderStyle,
+  Offset,
+  Matrix4,
+} from "../../type";
 import type { Border } from "../../type/_types/Borderstyle";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
@@ -8,7 +15,6 @@ import type Widget from "../../widget/Widget";
 export type Decoration = {
   color?: string;
   border?: BorderStyle;
-  radius?: Radius;
 };
 
 class DecoratedBox extends SingleChildRenderObjectWidget {
@@ -20,7 +26,7 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
         color: "rgba(0,0,0,0)",
         thickness: 0,
       }),
-      radius = Radius.all(0),
+      // radius = Radius.all(0),
     },
     child,
   }: {
@@ -31,7 +37,7 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
     this.decoration = {
       color,
       border,
-      radius,
+      //radius,
     };
   }
 
@@ -103,12 +109,6 @@ class RenderDecoratedBox extends SingleChildRenderObject {
         right: borderRight,
         bottom: borderBottom,
       },
-      radius: {
-        topLeft: topLeftRadius,
-        topRight: topRightRadius,
-        bottomLeft: bottomLeftRadius,
-        bottomRight: bottomRightRadius,
-      },
     } = this.decoration;
     rectEl.setAttribute(
       "width",
@@ -121,12 +121,12 @@ class RenderDecoratedBox extends SingleChildRenderObject {
     rectEl.setAttribute("x", `${borderLeft.thickness / 2}`);
     rectEl.setAttribute("y", `${borderTop.thickness / 2}`);
 
-    this.assertEqualRadius(topLeftRadius, topRightRadius);
-    this.assertEqualRadius(topRightRadius, bottomLeftRadius);
-    this.assertEqualRadius(bottomLeftRadius, bottomRightRadius);
+    // this.assertEqualRadius(topLeftRadius, topRightRadius);
+    // this.assertEqualRadius(topRightRadius, bottomLeftRadius);
+    // this.assertEqualRadius(bottomLeftRadius, bottomRightRadius);
 
-    rectEl.setAttribute("rx", `${topLeftRadius}`);
-    rectEl.setAttribute("ry", `${topRightRadius}`);
+    // rectEl.setAttribute("rx", `${topLeftRadius}`);
+    // rectEl.setAttribute("ry", `${topRightRadius}`);
 
     this.assertEqualBorder(borderTop, borderBottom);
     this.assertEqualBorder(borderBottom, borderLeft);
@@ -136,7 +136,7 @@ class RenderDecoratedBox extends SingleChildRenderObject {
       "style",
       `fill:${color};stroke-width:${borderTop.thickness}px;stroke:${borderTop.color};`
     );
-    this.setSvgTransform(rectEl, offset, matrix)
+    this.setSvgTransform(rectEl, offset, matrix);
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {

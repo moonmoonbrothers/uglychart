@@ -11,8 +11,10 @@ import Rect from "./_types/Rect";
 import RRect from "./_types/RRect";
 import TextDirection from "./_types/TextDirection";
 export * from "./_types/etc";
-import Matrix4 from './_types/Matrix4'
-import StackFit from './_types/StackFit'
+import Matrix4 from "./_types/Matrix4";
+import StackFit from "./_types/StackFit";
+import BorderRadius from "./_types/BorderRadius";
+import Radius from "./_types/Radius";
 
 export {
   Offset,
@@ -21,12 +23,14 @@ export {
   Constraints,
   EdgeInsets,
   Gap,
-  BorderRadiusGeometry as Radius,
   Size,
   Path,
   RRect,
   Rect,
   TextDirection,
   Matrix4,
-  StackFit
+  StackFit,
+  BorderRadius,
+  Radius,
+  BorderRadiusGeometry
 };

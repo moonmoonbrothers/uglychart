@@ -1,53 +1,27 @@
+import Radius from "./Radius";
+
 class BorderRadiusGeometry {
-  topLeft: number
-  topRight: number
-  bottomLeft: number
-  bottomRight: number
+  topLeft: Radius;
+  topRight: Radius;
+  bottomLeft: Radius;
+  bottomRight: Radius;
 
   constructor({
     topLeft,
     topRight,
     bottomLeft,
-    bttomRight,
+    bottomRight,
   }: {
-    topLeft: number
-    topRight: number
-    bottomLeft: number
-    bttomRight: number
+    topLeft: Radius;
+    topRight: Radius;
+    bottomLeft: Radius;
+    bottomRight: Radius;
   }) {
-    this.bottomLeft = bottomLeft
-    this.bottomRight = bttomRight
-    this.topLeft = topLeft
-    this.topRight = topRight
-  }
-
-  static all(value: number) {
-    return new BorderRadiusGeometry({
-      topLeft: value,
-      topRight: value,
-      bottomLeft: value,
-      bttomRight: value,
-    })
-  }
-
-  static only({
-    topLeft = 0,
-    topRight = 0,
-    bottomLeft = 0,
-    bttomRight = 0,
-  }: {
-    topLeft?: number
-    topRight?: number
-    bottomLeft?: number
-    bttomRight?: number
-  }) {
-    return new BorderRadiusGeometry({
-      topLeft,
-      topRight,
-      bottomLeft,
-      bttomRight,
-    })
+    this.bottomLeft = bottomLeft;
+    this.bottomRight = bottomRight;
+    this.topLeft = topLeft;
+    this.topRight = topRight;
   }
 }
 
-export default BorderRadiusGeometry
+export default BorderRadiusGeometry;
