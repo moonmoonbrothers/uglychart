@@ -1,5 +1,7 @@
 import Radius from "./Radius";
 import BorderRadiusGeometry from "./BorderRadiusGeometry";
+import RRect from "./RRect";
+import Rect from "./Rect";
 
 export default class BorderRadius extends BorderRadiusGeometry {
   static all(radius: Radius) {
@@ -32,7 +34,7 @@ export default class BorderRadius extends BorderRadiusGeometry {
 
   static left({
     left = Radius.zero,
-    right= Radius.zero,
+    right = Radius.zero,
   }: {
     left?: Radius;
     right?: Radius;
@@ -68,7 +70,7 @@ export default class BorderRadius extends BorderRadiusGeometry {
     topLeft = this.topLeft,
     topRight = this.topRight,
     bottomLeft = this.bottomLeft,
-    bottomRight = this.bottomRight
+    bottomRight = this.bottomRight,
   }: {
     topLeft?: Radius;
     topRight?: Radius;
@@ -79,11 +81,19 @@ export default class BorderRadius extends BorderRadiusGeometry {
       topLeft,
       topRight,
       bottomLeft,
-      bottomRight
-    })
+      bottomRight,
+    });
   }
 
-  static zero() {
-    return this.all(Radius.zero)
+  static zero = this.all(Radius.zero);
+
+  toRRect(rect: Rect): RRect {
+    return RRect.fromRectAndCorners({
+      rect,
+      topLeft: this.topLeft.clamp({ minimum: Radius.zero }),
+      topRight: this.topRight.clamp({ minimum: Radius.zero }),
+      bottomLeft: this.bottomLeft.clamp({ minimum: Radius.zero }),
+      bottomRight: this.bottomRight.clamp({ minimum: Radius.zero }),
+    });
   }
 }

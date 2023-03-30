@@ -23,7 +23,6 @@ export {
   Constraints,
   EdgeInsets,
   Gap,
-  BorderRadiusGeometry as Radius,
   Size,
   Path,
   RRect,
@@ -32,5 +31,6 @@ export {
   Matrix4,
   StackFit,
   BorderRadius,
-  Radius
+  Radius,
+  BorderRadiusGeometry
 };

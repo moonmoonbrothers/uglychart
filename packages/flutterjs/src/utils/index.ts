@@ -16,4 +16,8 @@ export default class Utils {
   static repeat<T>(value: T, count: number) {
     return Array.from({ length: count }, () => value);
   }
+
+  static clampDouble(value: number, min: number, max: number) {
+    return Math.min(max, Math.max(min, value));
+  }
 }

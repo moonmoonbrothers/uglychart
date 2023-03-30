@@ -76,8 +76,59 @@ export class Path {
       .close();
   }
 
-  addRRect(rect: RRect) {
-    throw new Error("addRRect is not implemented");
+  addRRect({
+    left,
+    right,
+    top,
+    bottom,
+    tlRadiusX,
+    tlRadiusY,
+    trRadiusX,
+    trRadiusY,
+    blRadiusX,
+    blRadiusY,
+    brRadiusX,
+    brRadiusY,
+  }: RRect) {
+    const common = {
+      rotation: 0,
+      // radius: { x: rect.width / 2, y: rect.height / 2 },
+      largeArc: false,
+      clockwise: true,
+    };
+
+    return this.moveTo({
+      x: left,
+      y: tlRadiusY,
+    })
+      .arcToPoint({
+        ...common,
+        radius: { x: tlRadiusX, y: tlRadiusY },
+        endPoint: { x: tlRadiusX, y: top },
+      })
+      .lineTo({ x: right - trRadiusX, y: top })
+      .arcToPoint({
+        ...common,
+        radius: { x: trRadiusX, y: trRadiusY },
+        endPoint: { x: right, y: trRadiusY },
+      })
+      .lineTo({ x: right, y: bottom - brRadiusY })
+      .arcToPoint({
+        ...common,
+        radius: { x: brRadiusX, y: brRadiusY },
+        endPoint: { x: right - brRadiusX, y: bottom },
+      })
+      .lineTo({ x: blRadiusX, y: bottom })
+      .arcToPoint({
+        ...common,
+        radius: { x: blRadiusX, y: blRadiusY },
+        endPoint: { x: left, y: bottom - blRadiusY },
+      })
+      .lineTo({
+        x: left,
+        y: tlRadiusY,
+      })
+      .close();
   }
 
   addOval(rect: Rect) {
