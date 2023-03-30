@@ -29,6 +29,7 @@ import IntrinsicWidth from "./IntrinsicWidth";
 import FractionalTranslation from "./FractionalTranslation";
 import Opacity from "./Opacity";
 import AspectRatio from "./AspectRatio";
+import IndexedStack from "./IndexedStack";
 
 export {
   ConstrainedBox,
@@ -61,5 +62,6 @@ export {
   Flex,
   FractionalTranslation,
   Opacity,
-  AspectRatio
+  AspectRatio,
+  IndexedStack
 };
