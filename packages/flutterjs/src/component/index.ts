@@ -30,6 +30,7 @@ import FractionalTranslation from "./FractionalTranslation";
 import Opacity from "./Opacity";
 import AspectRatio from "./AspectRatio";
 import IndexedStack from "./IndexedStack";
+import ColoredBox from "./ColoredBox";
 
 export {
   ConstrainedBox,
@@ -63,5 +64,6 @@ export {
   FractionalTranslation,
   Opacity,
   AspectRatio,
-  IndexedStack
+  IndexedStack, 
+  ColoredBox,
 };
