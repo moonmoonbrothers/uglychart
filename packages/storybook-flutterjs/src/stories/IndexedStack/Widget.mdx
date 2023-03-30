@@ -3,37 +3,49 @@ import * as Stories from './Widget.stories';
 
 <Meta of={Stories} />
 
-# Opacity
+# IndexedWidget
 
-This widget motivated by Opacity in Flutter.
+This widget motivated by IndexedWidget in Flutter.
 
->A widget that makes its child partially transparent.
+>A Stack that shows a single child from a list of children.
 >
->This class paints its child into an intermediate buffer and then blends the child back into the scene partially transparent.
+>The displayed child is the one with the given index. The stack is always as big as the largest child.
 >
->For values of opacity other than 0.0 and 1.0, this class is relatively expensive because it requires painting the child into an intermediate buffer. For the value 0.0, the child is simply not painted at all. For the value 1.0, the child is painted immediately without an intermediate buffer.
+>If value is null, then nothing is displayed.
 
 <iframe
 	width="560"
 	height="315"
-	src="https://www.youtube.com/embed/9hltevOHQBw"
+	src="https://www.youtube.com/embed/_O0PPD1Xfbk"
 	title="YouTube video player"
 	frameborder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowfullscreen
 ></iframe>
 
-See: [https://api.flutter.dev/flutter/widgets/Opacity-class.html](https://api.flutter.dev/flutter/widgets/Opacity-class.html)
+See: [https://api.flutter.dev/flutter/widgets/IndexedWidget-class.html](https://api.flutter.dev/flutter/widgets/IndexedWidget-class.html)
 
 ## Props
 
-### translation
+### index
 
-**Value: Offset**
+**Value: number**(default: **0**)
 
-### child
+### alignment
 
-**Value: Widget | undefined**
+**Value: Alignment**(default: **Alignment.topLeft**)
+
+### clipped
+
+**Value: boolean**(default: **true**)
+
+### sizing
+
+**Value: StackFit**(default: **StackFit.loose**)
+
+### children
+
+**Value: Widget[]**
 
 ## Examples
 

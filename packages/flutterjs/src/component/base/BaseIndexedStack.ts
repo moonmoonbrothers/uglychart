@@ -3,7 +3,8 @@ import { assert } from "../../utils";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import Stack, { RenderStack, type StackFit } from "./BaseStack";
 import type Widget from "../../widget/Widget";
-import { Alignment } from "../../type";
+import { Alignment, Matrix4, Offset } from "../../type";
+import { PaintContext } from "../../utils/type";
 
 class IndexedStack extends Stack {
   index: number;
@@ -49,6 +50,26 @@ class RenderIndexedStack extends RenderStack {
   }) {
     super({ alignment, fit });
     this.index = index;
+  }
+
+  paintChildren(
+    context: PaintContext,
+    {
+      offset,
+      clipId,
+      matrix4,
+      opacity,
+    }: {
+      offset: Offset;
+      clipId?: string | undefined;
+      matrix4: Matrix4;
+      opacity: number;
+    }
+  ): void {
+    this.children.forEach((child) => child.dispose(context));
+    const child = this.children[this.index];
+    assert(child != null);
+    child.paint(context, offset, clipId, matrix4, opacity);
   }
 }
 
