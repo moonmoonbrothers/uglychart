@@ -49,8 +49,30 @@ class RenderObject {
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(matrix4);
     const childOpacity = this.getChildOpacity(opacity);
+    this.paintChildren(context, {
+      offset: totalOffset,
+      clipId: childClipId,
+      matrix4: childMatrix4,
+      opacity: childOpacity,
+    });
+  }
+
+  paintChildren(
+    context: PaintContext,
+    {
+      offset,
+      clipId,
+      matrix4,
+      opacity,
+    }: {
+      offset: Offset;
+      clipId?: string;
+      matrix4: Matrix4;
+      opacity: number;
+    }
+  ) {
     this.children.forEach((child) =>
-      child.paint(context, totalOffset, childClipId, childMatrix4, childOpacity)
+      child.paint(context, offset, clipId, matrix4, opacity)
     );
   }
 

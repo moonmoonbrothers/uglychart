@@ -20,10 +20,22 @@ const meta = {
 
 					See: https://api.flutter.dev/flutter/widgets/Stack-class.html
 
-					## Props
-				  ### children
-				  **Value: Widget[]**
-				`
+					### alignment
+
+					**Value: Alignment**(default: **Alignment.topLeft**)
+
+					### clipped
+
+					**Value: boolean**(default: **true**)
+
+					### sizing
+
+					**Value: StackFit**(default: **StackFit.loose**)
+
+					### children
+
+					**Value: Widget[]**
+					`
 			}
 		}
 	}

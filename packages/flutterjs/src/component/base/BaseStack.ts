@@ -43,7 +43,7 @@ export default class BaseStack extends MultiChildRenderObjectWidget {
   }
 }
 
-class RenderStack extends MultiChildRenderObject {
+export class RenderStack extends MultiChildRenderObject {
   alignment: Alignment;
   fit: StackFit;
   textDirection: TextDirection;
