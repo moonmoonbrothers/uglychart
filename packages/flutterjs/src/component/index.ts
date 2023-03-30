@@ -31,6 +31,7 @@ import Opacity from "./Opacity";
 import AspectRatio from "./AspectRatio";
 import IndexedStack from "./IndexedStack";
 import ColoredBox from "./ColoredBox";
+import ClipRRect from './ClipRRect'
 
 export {
   ConstrainedBox,
@@ -66,4 +67,5 @@ export {
   AspectRatio,
   IndexedStack, 
   ColoredBox,
+  ClipRRect,
 };
