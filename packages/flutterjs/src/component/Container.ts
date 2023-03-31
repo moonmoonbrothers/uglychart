@@ -8,7 +8,7 @@ import {
 import type Widget from "../widget/Widget";
 import Align from "./Align";
 import ConstrainedBox from "./base/BaseConstrainedBox";
-import DecoratedBox from "./base/DecoratedBox";
+import DecoratedBox from "./base/BaseDecoratedBox";
 import Padding from "./Padding";
 import SizedBox from "./SizedBox";
 
@@ -58,8 +58,6 @@ export default function Container({
     current = new DecoratedBox({
       decoration: {
         color,
-        border,
-        radius,
       },
       child: current,
     });
