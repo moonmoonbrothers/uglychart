@@ -1,7 +1,34 @@
 import Radius from "./Radius";
-import BorderRadiusGeometry from "./BorderRadiusGeometry";
 import RRect from "./RRect";
 import Rect from "./Rect";
+
+export class BorderRadiusGeometry {
+  topLeft: Radius;
+  topRight: Radius;
+  bottomLeft: Radius;
+  bottomRight: Radius;
+
+  constructor({
+    topLeft,
+    topRight,
+    bottomLeft,
+    bottomRight,
+  }: {
+    topLeft: Radius;
+    topRight: Radius;
+    bottomLeft: Radius;
+    bottomRight: Radius;
+  }) {
+    this.bottomLeft = bottomLeft;
+    this.bottomRight = bottomRight;
+    this.topLeft = topLeft;
+    this.topRight = topRight;
+  }
+
+  toRRect(rect: Rect): RRect {
+    throw new Error("Not implemented")
+  }
+}
 
 export default class BorderRadius extends BorderRadiusGeometry {
   static all(radius: Radius) {
@@ -97,3 +124,4 @@ export default class BorderRadius extends BorderRadiusGeometry {
     });
   }
 }
+
