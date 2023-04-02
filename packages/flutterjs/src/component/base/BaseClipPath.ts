@@ -46,8 +46,6 @@ class RenderClipPath extends SingleChildRenderObject {
   ): void {
     const pathEl = clipPath.getElementsByTagName("path")[0];
     const d = this.clipper(this.size).getD();
-
-    pathEl.setAttribute("transform", `translate(${offset.x} ${offset.y})`);
     pathEl.setAttribute("d", d);
   }
 

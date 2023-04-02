@@ -109,7 +109,6 @@ class RenderText extends RenderObject {
     textEl.setAttribute("font-family", fontFamily);
     textEl.setAttribute("font-weight", fontWeight);
     textEl.textContent = this.text;
-    this.setSvgTransform(textEl, offset, matrix);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

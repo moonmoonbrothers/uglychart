@@ -52,11 +52,6 @@ class RenderDecoratedBox extends SingleChildRenderObject {
     const painter = this.decoration.createBoxPainter();
 
     painter.paint(svgEls, this.size);
-
-    // 옮길거임
-    Object.values(svgEls).forEach((el) => {
-      this.setSvgTransform(el, offset, matrix);
-    });
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {

@@ -44,6 +44,9 @@ class RenderObject {
       }
       container.setAttribute("opacity", `${opacity}`);
       this.performPaint(svgEls, totalOffset, matrix4);
+      Object.values(svgEls).forEach((el) =>
+        this.setSvgTransform(el, totalOffset, matrix4)
+      );
     }
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(matrix4);
