@@ -7,6 +7,7 @@ import {
 	Radius,
 	Center,
 	DecoratedBox,
+	BoxDecoration,
 	SizedBox
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
@@ -31,9 +32,7 @@ export const Basic: Story = {
 		height: '400px',
 		widget: Center({
 			child: DecoratedBox({
-				decoration: {
-					color: 'red'
-				},
+				decoration: new BoxDecoration({ color: 'red' }),
 				child: SizedBox({
 					width: 200,
 					height: 200

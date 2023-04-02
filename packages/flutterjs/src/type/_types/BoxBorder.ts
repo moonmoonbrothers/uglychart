@@ -2,6 +2,10 @@ import { BorderSide, BorderStyle, ShapeBorder } from "./borders";
 import EdgeInsets, { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
+import BorderRadius from "./BorderRadius";
+import { assert } from "../../utils";
+import { BoxShape } from "./BoxDecoration";
+import BorderRadiusGeometry from "./BorderRadiusGeometry";
 
 export class BoxBorder implements ShapeBorder {
   get dimensions(): EdgeInsetsGeometry {
@@ -12,6 +16,40 @@ export class BoxBorder implements ShapeBorder {
   }
   getOuterPath(rect: Rect): Path {
     return new Path().addRect(rect);
+  }
+  paint(
+    svgEls: BorderPathEls,
+    _: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
+  ): void {
+    throw new Error("Method not implemented.");
+  }
+
+  protected static paintUniformBorderWidthRadius(
+    paths: BorderPathEls,
+    {}: { side: BorderSide; borderRadius: BorderRadius; rect: Rect }
+  ) {
+    paths.left.setAttribute("stroke-width", "0");
+    paths.right.setAttribute("stroke-width", "0");
+    paths.bottom.setAttribute("stroke-width", "0");
+    //
+  }
+
+  protected static paintUniformBorderWidthCircle(
+    paths: BorderPathEls,
+    {}: { side: BorderSide; rect: Rect }
+  ) {
+    paths.left.setAttribute("stroke-width", "0");
+    paths.right.setAttribute("stroke-width", "0");
+    paths.bottom.setAttribute("stroke-width", "0");
+  }
+
+  protected static paintUniformBorderWidthRectangle(
+    paths: BorderPathEls,
+    {}: { side: BorderSide; rect: Rect }
+  ) {
+    paths.left.setAttribute("stroke-width", "0");
+    paths.right.setAttribute("stroke-width", "0");
+    paths.bottom.setAttribute("stroke-width", "0");
   }
 }
 
@@ -94,6 +132,44 @@ class Border extends BoxBorder {
     );
   }
 
+  paint(
+    paths: BorderPathEls,
+    {
+      rect,
+      borderRadius,
+      shape = "rectangle",
+    }: { rect: Rect; borderRadius?: BorderRadius; shape?: BoxShape }
+  ): void {
+    if (this.isUniform) {
+      switch (this.top.style) {
+        case "none":
+          Object.values(paths).forEach((path) => {
+            path.setAttribute("stroke-width", "0");
+            path.setAttribute("fill", "none");
+            path.setAttribute("d", "");
+          });
+          return;
+        case "solid":
+          switch (shape) {
+            case "circle":
+              assert(
+                borderRadius == null,
+                "A borderRadius can only be given for rectangular boxes."
+              );
+              BoxBorder.paintUniformBorderWidthCircle(paths, {
+                side: this.top,
+                rect,
+              });
+              break;
+            case "rectangle":
+              break;
+          }
+          return;
+      }
+    }
+    ("A borderRadius can only be given for rectangular boxes.");
+  }
+
   private get _colorIsUniform(): boolean {
     const topColor = this.top.color;
     return (
@@ -131,5 +207,12 @@ class Border extends BoxBorder {
     );
   }
 }
+
+type BorderPathEls = {
+  top: SVGPathElement;
+  bottom: SVGPathElement;
+  left: SVGPathElement;
+  right: SVGPathElement;
+};
 
 export default Border;

@@ -38,7 +38,6 @@ class RenderObject {
   ) {
     const totalOffset = offset.plus(this.offset);
     if (this.isPainter) {
-      // this line should be refactored.. It always return only one svgEl.
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
         container.setAttribute("clip-path", `url(#${clipId})`);
@@ -130,15 +129,13 @@ class RenderObject {
       container = oldEl;
       if (oldEl.nodeName === "g") {
         for (const child of oldEl.children) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const name = child.getAttribute("data-render-name")!;
           svgEls[name] = child as unknown as SVGElement;
         }
+      } else {
         /*
         This must be clip path element!
-      */
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        */
         const name = oldEl.getAttribute("data-render-name")!;
         svgEls[name] = oldEl;
       }

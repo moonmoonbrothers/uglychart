@@ -7,8 +7,7 @@ export interface ShapeBorder {
 
   getInnerPath(rect: Rect): Path;
   getOuterPath(rect: Rect): Path;
-
-  //paint
+  paint(svgEls: Record<string, SVGElement> ,_: {rect: Rect}): void
 }
 
 export class BorderSide {
