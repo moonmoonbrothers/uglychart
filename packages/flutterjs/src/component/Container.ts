@@ -4,6 +4,7 @@ import {
   Constraints,
   Decoration,
   BoxDecoration,
+  Matrix4,
 } from "../type";
 import { assert } from "../utils";
 import type Widget from "../widget/Widget";
@@ -14,6 +15,7 @@ import DecoratedBox from "./DecoratedBox";
 import LimitedBox from "./LimitedBox";
 import Padding from "./Padding";
 import { EdgeInsetsGeometry } from "../type/_types/EdgeInsets";
+import Transform from "./Transform";
 
 type ContainerProps = {
   padding?: EdgeInsets;
@@ -26,6 +28,8 @@ type ContainerProps = {
   alignment?: Alignment;
   clipped?: boolean;
   constraints?: Constraints;
+  transform?: Matrix4,
+  transformAlignment?: Alignment;
 };
 
 export default function Container({
@@ -39,6 +43,7 @@ export default function Container({
   decoration,
   constraints,
   clipped = false,
+  transform, transformAlignment
 }: ContainerProps = {}) {
   constraints =
     width != null || height != null
@@ -77,7 +82,6 @@ export default function Container({
   if (paddingIncludingDecoration != null) {
     current = Padding({ padding: paddingIncludingDecoration, child: current });
   }
-
 
   if (color != null) {
     current = ColoredBox({
@@ -118,7 +122,13 @@ export default function Container({
     });
   }
 
-  // transform
+  if(transform != null) {
+    current = Transform({
+      transform: transform,
+      alignment: transformAlignment, 
+      child: current,
+    }) 
+  }
 
   return current;
 }
