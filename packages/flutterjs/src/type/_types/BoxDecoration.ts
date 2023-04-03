@@ -1,10 +1,9 @@
 import { BoxBorder } from "./Border";
-import BorderRadius, { BorderRadiusGeometry } from "./BorderRadius";
+import { BorderRadiusGeometry } from "./BorderRadius";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 import Size from "./Size";
-import { assert } from "../../utils";
 import RRect from "./RRect";
 import BoxShadow from "./BoxShadow";
 
@@ -16,13 +15,16 @@ export interface Decoration {
 
 export default class BoxDecoration implements Decoration {
   color?: string;
-  //image?: DecorationImage
   border?: BoxBorder;
   borderRadius?: BorderRadiusGeometry;
   boxShadow?: BoxShadow[];
-  //gradient?: Gradient
-  //blendMode?: BlendMode
   shape: BoxShape;
+  /*
+    Those are not implemented
+    gradient?: Gradient
+    blendMode?: BlendMode
+    image?: DecorationImage
+  */
 
   constructor({
     color,
@@ -108,7 +110,10 @@ class BoxDecorationPainter implements BoxPainter {
   }
 
   private paintShadows(box: SVGPathElement) {
-    if (this.decoration.boxShadow == null || this.decoration.boxShadow.length === 0) {
+    if (
+      this.decoration.boxShadow == null ||
+      this.decoration.boxShadow.length === 0
+    ) {
       box.removeAttribute("filter");
       return;
     }
@@ -145,10 +150,6 @@ class BoxDecorationPainter implements BoxPainter {
         )
         .getD()
     );
-  }
-
-  private paintBackgroundImage(svgEls: BoxDecorationSvgEls, rect: Rect) {
-    // Not Implemented yet!!
   }
 }
 
