@@ -220,6 +220,171 @@ class Border extends BoxBorder {
           return;
       }
     }
+
+    assert(
+      (() => {
+        if (borderRadius != null) {
+          const errorMessage = `
+          A borderRadius can only be given for a uniform Border.
+          The following is not uniform: `;
+
+          this._colorIsUniform || new Error(errorMessage + "BorderSide.color");
+          this._widthIsUniform || new Error(errorMessage + "BorderSide.width");
+          this._styleIsUniform || new Error(errorMessage + "BorderSide.style");
+          this._strokeAlignIsUniform ||
+            new Error(errorMessage + "BorderSide.strokeAlign");
+        }
+        return true;
+      })()
+    );
+
+    assert(
+      (() => {
+        if (shape != "rectangle") {
+          const errorMessage = `
+          A Border can only be drawn as a circle if it is uniform.
+          The following is not uniform: `;
+
+          this._colorIsUniform || new Error(errorMessage + "BorderSide.color");
+          this._widthIsUniform || new Error(errorMessage + "BorderSide.width");
+          this._styleIsUniform || new Error(errorMessage + "BorderSide.style");
+          this._strokeAlignIsUniform ||
+            new Error(errorMessage + "BorderSide.strokeAlign");
+        }
+        return true;
+      })()
+    );
+
+    assert(
+      (() => {
+        this._strokeAlignIsUniform ||
+          this.top.strokeAlign != BorderSide.strokeAlignInside;
+        new Error(
+          "A Border can only draw strokeAlign different than BorderSide.strokeAlignInside on uniform borders."
+        );
+        return true;
+      })()
+    );
+
+    this.paintBorder(paths, { rect });
+  }
+
+  private paintBorder(pathEls: BorderPathEls, { rect }: { rect: Rect }): void {
+    // We draw the borders as filled shapes, unless the borders are hairline
+    // borders, in which case we use PaintingStyle.stroke, with the stroke width
+    // specified here.
+    pathEls.bottom.setAttribute("stroke-width", "0");
+    pathEls.top.setAttribute("stroke-width", "0");
+    pathEls.left.setAttribute("stroke-width", "0");
+    pathEls.right.setAttribute("stroke-width", "0");
+
+    switch (this.top.style) {
+      case "solid":
+        pathEls.top.setAttribute("fill", this.top.color);
+        const topPath = new Path();
+        topPath.moveTo({ x: rect.left, y: rect.top });
+        topPath.lineTo({ x: rect.right, y: rect.top });
+        if (this.top.width === 0) {
+          pathEls.top.setAttribute("fill", "none");
+          pathEls.top.setAttribute("stroke", "none");
+        } else {
+          topPath.lineTo({
+            x: rect.right - this.right.width,
+            y: rect.top + this.top.width,
+          });
+          topPath.lineTo({
+            x: rect.left + this.left.width,
+            y: rect.top + this.top.width,
+          });
+        }
+        topPath.close();
+        pathEls.top.setAttribute("d", topPath.getD());
+        break;
+      case "none":
+        pathEls.top.setAttribute("d", "");
+        break;
+    }
+
+    switch (this.right.style) {
+      case "solid":
+        pathEls.right.setAttribute("fill", this.right.color);
+        const rightPath = new Path();
+        rightPath.moveTo({ x: rect.right, y: rect.top });
+        rightPath.lineTo({ x: rect.right, y: rect.bottom });
+        if (this.right.width === 0) {
+          pathEls.right.setAttribute("fill", "none");
+          pathEls.right.setAttribute("stroke", "none");
+        } else {
+          rightPath.lineTo({
+            x: rect.right - this.right.width,
+            y: rect.bottom - this.bottom.width,
+          });
+          rightPath.lineTo({
+            x: rect.right - this.right.width,
+            y: rect.top + this.top.width,
+          });
+        }
+        rightPath.close();
+        pathEls.right.setAttribute("d", rightPath.getD());
+        break;
+      case "none":
+        pathEls.right.setAttribute("d", "");
+        break;
+    }
+
+    switch (this.bottom.style) {
+      case "solid":
+        pathEls.bottom.setAttribute("fill", this.bottom.color);
+        const bottomPath = new Path();
+        bottomPath.moveTo({ x: rect.right, y: rect.bottom });
+        bottomPath.lineTo({ x: rect.left, y: rect.bottom });
+        if (this.bottom.width === 0) {
+          pathEls.bottom.setAttribute("fill", "none");
+          pathEls.bottom.setAttribute("stroke", "none");
+        } else {
+          bottomPath.lineTo({
+            x: rect.left + this.left.width,
+            y: rect.bottom - this.bottom.width,
+          });
+          bottomPath.lineTo({
+            x: rect.right - this.right.width,
+            y: rect.bottom - this.bottom.width,
+          });
+        }
+        bottomPath.close();
+        pathEls.bottom.setAttribute("d", bottomPath.getD());
+        break;
+      case "none":
+        pathEls.bottom.setAttribute("d", "");
+        break;
+    }
+
+    switch (this.left.style) {
+      case "solid":
+        pathEls.left.setAttribute("fill", this.left.color);
+        const leftPath = new Path();
+        leftPath.moveTo({ x: rect.left, y: rect.bottom });
+        leftPath.lineTo({ x: rect.left, y: rect.top });
+        if (this.left.width === 0) {
+          pathEls.left.setAttribute("fill", "none");
+          pathEls.left.setAttribute("stroke", "none");
+        } else {
+          leftPath.lineTo({
+            x: rect.left + this.left.width,
+            y: rect.top + this.top.width,
+          });
+          leftPath.lineTo({
+            x: rect.left + this.left.width,
+            y: rect.bottom - this.bottom.width,
+          });
+        }
+        leftPath.close();
+        pathEls.left.setAttribute("d", leftPath.getD());
+        break;
+      case "none":
+        pathEls.left.setAttribute("d", "");
+        break;
+    }
   }
 
   private get _colorIsUniform(): boolean {

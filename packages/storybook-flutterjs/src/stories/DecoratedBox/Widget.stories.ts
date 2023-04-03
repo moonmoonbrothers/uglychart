@@ -197,3 +197,78 @@ export const WithBorderRadius: Story = {
 			BasicCode
 	}
 };
+
+const BorderTopCode = dedent`
+`;
+export const BorderTop: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		widget: Center({
+			child: Stack({
+				clipped: false,
+				children: [
+					Container({
+						width: 200,
+						height: 200,
+						color: 'white'
+					}),
+					DecoratedBox({
+						decoration: new BoxDecoration({
+							border: new Border({
+								top: new BorderSide({ width: 10, color: 'black' })
+							})
+						}),
+						child: SizedBox({
+							width: 200,
+							height: 200
+						})
+					})
+				]
+			})
+		}),
+		code:
+			dedent`import { SizedBox, Center, BoxDecoration, DecoratedBox } from '@moonmoonbrothers/flutterjs';\n\n\n` +
+			BasicCode
+	}
+};
+
+const UnuniformedBorderCode= dedent`
+`;
+export const UnuniformedBorder: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		widget: Center({
+			child: Stack({
+				clipped: false,
+				children: [
+					Container({
+						width: 200,
+						height: 200,
+						color: 'white'
+					}),
+					DecoratedBox({
+						decoration: new BoxDecoration({
+							border: new Border({
+								top: new BorderSide({ width: 10, color: 'blue' }),
+								left: new BorderSide({ width: 5, color: 'green' }),
+								right: new BorderSide({ width: 20, color: 'red' }),
+								bottom: new BorderSide({ width: 15, color: 'purple' }),
+							})
+						}),
+						child: SizedBox({
+							width: 200,
+							height: 200
+						})
+					})
+				]
+			})
+		}),
+		code:
+			dedent`import { SizedBox, Center, BoxDecoration, DecoratedBox } from '@moonmoonbrothers/flutterjs';\n\n\n` +
+			BasicCode
+	}
+};
