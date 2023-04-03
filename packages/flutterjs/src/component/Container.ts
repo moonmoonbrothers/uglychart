@@ -4,11 +4,14 @@ import {
   type BorderStyle,
   type Alignment,
   Constraints,
+  Decoration,
+  BoxDecoration,
 } from "../type";
+import { assert } from "../utils";
 import type Widget from "../widget/Widget";
 import Align from "./Align";
 import ConstrainedBox from "./base/BaseConstrainedBox";
-import DecoratedBox from "./base/DecoratedBox";
+import DecoratedBox from "./base/BaseDecoratedBox";
 import Padding from "./Padding";
 import SizedBox from "./SizedBox";
 
@@ -18,8 +21,7 @@ type ContainerProps = {
   width?: number;
   height?: number;
   color?: string;
-  border?: BorderStyle;
-  radius?: Radius;
+  decoration?: Decoration;
   child?: Widget;
   alignment?: Alignment;
 };
@@ -32,8 +34,7 @@ export default function Container({
   width,
   height,
   alignment,
-  radius,
-  border,
+  decoration,
 }: ContainerProps = {}) {
   const constraint = Constraints.tightFor({ width, height });
 
@@ -54,21 +55,31 @@ export default function Container({
     current = Padding({ child: current, padding });
   }
 
-  if (color != null || border != null || radius != null) {
-    current = new DecoratedBox({
-      decoration: {
-        color,
-        border,
-        radius,
-      },
-      child: current,
-    });
-  }
 
   current = new ConstrainedBox({
     child: current,
     constraints: constraint,
   });
+
+  if (color != null || decoration != null) {
+    assert(
+      color == null || decoration == null,
+      "Color must be null when decoration is defined"
+    );
+    if (color != null) {
+      current = new DecoratedBox({
+        decoration: new BoxDecoration({
+          color,
+        }),
+        child: current,
+      });
+    } else {
+      current = new DecoratedBox({
+        decoration: decoration!,
+        child: current,
+      });
+    }
+  }
 
   if (margin != null) {
     current = Padding({

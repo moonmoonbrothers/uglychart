@@ -95,11 +95,11 @@ class RenderText extends RenderObject {
     return `${fontWeight} ${fontSize} ${fontFamily}`;
   }
 
-  protected performPaint(
-    { text: textEl }: { [key: string]: SVGElement },
-    offset: Offset,
-    matrix: Matrix4
-  ): void {
+  protected performPaint({
+    text: textEl,
+  }: {
+    [key: string]: SVGElement;
+  }): void {
     const { fontFamily, fontColor, fontSize, fontWeight } = this.style;
     textEl.setAttribute("id", this.id);
     textEl.setAttribute("text-anchor", this.textAlign);
@@ -109,7 +109,6 @@ class RenderText extends RenderObject {
     textEl.setAttribute("font-family", fontFamily);
     textEl.setAttribute("font-weight", fontWeight);
     textEl.textContent = this.text;
-    this.setSvgTransform(textEl, offset, matrix);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

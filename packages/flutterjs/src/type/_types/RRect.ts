@@ -206,6 +206,27 @@ export class RRect {
       brRadiusY
     );
   }
+
+  inflate(delta: number) {
+    return RRect.raw({
+      left: this.left - delta,
+      top: this.top - delta,
+      right: this.right + delta,
+      bottom: this.bottom + delta,
+      tlRadiusX: Math.max(0, this.tlRadiusX + delta),
+      trRadiusX: Math.max(0, this.trRadiusX + delta),
+      blRadiusX: Math.max(0, this.blRadiusX + delta),
+      brRadiusX: Math.max(0, this.brRadiusX + delta),
+      tlRadiusY: Math.max(0, this.tlRadiusY + delta),
+      trRadiusY: Math.max(0, this.trRadiusY + delta),
+      blRadiusY: Math.max(0, this.blRadiusY + delta),
+      brRadiusY: Math.max(0, this.brRadiusY + delta),
+    });
+  }
+
+  deflate(delta: number) {
+    return this.inflate(-delta);
+  }
 }
 
 export default RRect;

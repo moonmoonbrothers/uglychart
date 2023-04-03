@@ -76,59 +76,81 @@ export class Path {
       .close();
   }
 
-  addRRect({
-    left,
-    right,
-    top,
-    bottom,
-    tlRadiusX,
-    tlRadiusY,
-    trRadiusX,
-    trRadiusY,
-    blRadiusX,
-    blRadiusY,
-    brRadiusX,
-    brRadiusY,
-  }: RRect) {
+  addRRect(
+    {
+      left,
+      right,
+      top,
+      bottom,
+      tlRadiusX,
+      tlRadiusY,
+      trRadiusX,
+      trRadiusY,
+      blRadiusX,
+      blRadiusY,
+      brRadiusX,
+      brRadiusY,
+    }: RRect,
+    { clockwise = true }: { clockwise?: boolean } = {}
+  ) {
     const common = {
       rotation: 0,
       // radius: { x: rect.width / 2, y: rect.height / 2 },
       largeArc: false,
-      clockwise: true,
+      clockwise,
     };
 
-    return this.moveTo({
-      x: left,
-      y: tlRadiusY,
-    })
+    const points = [
+      { x: left, y: top + tlRadiusY },
+      { x: tlRadiusX, y: top },
+      { x: right - trRadiusX, y: top },
+      { x: right, y: top + trRadiusY },
+      { x: right, y: bottom - brRadiusY },
+      { x: right - brRadiusX, y: bottom },
+      { x: left + blRadiusX, y: bottom },
+      { x: left, y: bottom - blRadiusY },
+    ];
+    const radiuses = [
+      { x: tlRadiusX, y: tlRadiusY },
+      { x: trRadiusX, y: trRadiusY },
+      { x: brRadiusX, y: brRadiusY },
+      { x: blRadiusX, y: blRadiusY },
+    ];
+
+    if (!clockwise) {
+      points.reverse();
+      radiuses.reverse();
+    }
+
+    return this.moveTo(points[0])
       .arcToPoint({
         ...common,
-        radius: { x: tlRadiusX, y: tlRadiusY },
-        endPoint: { x: tlRadiusX, y: top },
+        radius: radiuses[0],
+        endPoint: points[1],
       })
-      .lineTo({ x: right - trRadiusX, y: top })
+      .lineTo(points[2])
       .arcToPoint({
         ...common,
-        radius: { x: trRadiusX, y: trRadiusY },
-        endPoint: { x: right, y: trRadiusY },
+        radius: radiuses[1],
+        endPoint: points[3],
       })
-      .lineTo({ x: right, y: bottom - brRadiusY })
+      .lineTo(points[4])
       .arcToPoint({
         ...common,
-        radius: { x: brRadiusX, y: brRadiusY },
-        endPoint: { x: right - brRadiusX, y: bottom },
+        radius: radiuses[2],
+        endPoint: points[5],
       })
-      .lineTo({ x: blRadiusX, y: bottom })
+      .lineTo(points[6])
       .arcToPoint({
         ...common,
-        radius: { x: blRadiusX, y: blRadiusY },
-        endPoint: { x: left, y: bottom - blRadiusY },
-      })
-      .lineTo({
-        x: left,
-        y: tlRadiusY,
+        radius: radiuses[3],
+        endPoint: points[7],
       })
       .close();
+  }
+
+  addDRRect({ inner, outer }: { inner: RRect; outer: RRect }) {
+    return new Path().addRRect(outer).addRRect(inner, { clockwise: false });
   }
 
   addOval(rect: Rect) {

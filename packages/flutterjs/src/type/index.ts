@@ -1,6 +1,5 @@
 import Offset from "./_types/Offset";
 import Alignment from "./_types/Alignment";
-import BorderStyle from "./_types/Borderstyle";
 import Constraints from "./_types/Constraints";
 import EdgeInsets from "./_types/EdgeInsets";
 import Gap from "./_types/Gap";
@@ -15,6 +14,10 @@ import Matrix4 from "./_types/Matrix4";
 import StackFit from "./_types/StackFit";
 import BorderRadius from "./_types/BorderRadius";
 import Radius from "./_types/Radius";
+import BorderStyle from "./_types/BorderStyle";
+import Border, { type BoxBorder } from "./_types/Border";
+import BoxDecoration, { type Decoration } from "./_types/BoxDecoration";
+import BoxShadow from './_types/BoxShadow'
 
 export {
   Offset,
@@ -32,5 +35,10 @@ export {
   StackFit,
   BorderRadius,
   Radius,
-  BorderRadiusGeometry
+  BorderRadiusGeometry,
+  Border,
+  BoxBorder,
+  BoxDecoration,
+  type Decoration,
+  BoxShadow,
 };

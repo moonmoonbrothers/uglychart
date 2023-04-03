@@ -1,6 +1,6 @@
 import Radius from "./Radius";
 
-class BorderRadiusGeometry {
+ class BorderRadiusGeometry {
   topLeft: Radius;
   topRight: Radius;
   bottomLeft: Radius;

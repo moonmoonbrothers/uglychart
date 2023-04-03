@@ -38,13 +38,15 @@ class RenderObject {
   ) {
     const totalOffset = offset.plus(this.offset);
     if (this.isPainter) {
-      // this line should be refactored.. It always return only one svgEl.
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
       container.setAttribute("opacity", `${opacity}`);
-      this.performPaint(svgEls, totalOffset, matrix4);
+      this.performPaint(svgEls);
+      Object.values(svgEls).forEach((el) =>
+        this.setSvgTransform(el, totalOffset, matrix4)
+      );
     }
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(matrix4);
@@ -130,15 +132,13 @@ class RenderObject {
       container = oldEl;
       if (oldEl.nodeName === "g") {
         for (const child of oldEl.children) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const name = child.getAttribute("data-render-name")!;
           svgEls[name] = child as unknown as SVGElement;
         }
+      } else {
         /*
         This must be clip path element!
-      */
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        */
         const name = oldEl.getAttribute("data-render-name")!;
         svgEls[name] = oldEl;
       }
@@ -197,11 +197,7 @@ class RenderObject {
    * Do not call this method directly. instead call paint
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(
-    svgEls: { [key: string]: SVGElement },
-    offset: Offset,
-    matrix: Matrix4
-  ): void {}
+  protected performPaint(svgEls: { [key: string]: SVGElement }): void {}
 
   protected getChildClipId(parentClipId?: string) {
     return parentClipId;
