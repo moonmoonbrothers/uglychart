@@ -64,10 +64,6 @@ export default function Container({
     current = Align({ child: current, alignment });
   }
 
-  if (padding != null) {
-    current = Padding({ child: current, padding });
-  }
-
   let paddingIncludingDecoration: EdgeInsetsGeometry | undefined;
 
   if (decoration == null || decoration.padding == null) {
