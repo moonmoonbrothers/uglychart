@@ -1,7 +1,5 @@
 import {
   type EdgeInsets,
-  type Radius,
-  type BorderStyle,
   type Alignment,
   Constraints,
   Decoration,
@@ -11,7 +9,8 @@ import { assert } from "../utils";
 import type Widget from "../widget/Widget";
 import Align from "./Align";
 import ConstrainedBox from "./base/BaseConstrainedBox";
-import DecoratedBox from "./base/BaseDecoratedBox";
+import ColoredBox from "./ColoredBox";
+import DecoratedBox from "./DecoratedBox";
 import Padding from "./Padding";
 import SizedBox from "./SizedBox";
 
@@ -55,11 +54,17 @@ export default function Container({
     current = Padding({ child: current, padding });
   }
 
-
   current = new ConstrainedBox({
     child: current,
     constraints: constraint,
   });
+
+  if(color != null) {
+    current = ColoredBox({
+      color,
+      child: current
+    })
+  }
 
   if (color != null || decoration != null) {
     assert(
@@ -67,14 +72,14 @@ export default function Container({
       "Color must be null when decoration is defined"
     );
     if (color != null) {
-      current = new DecoratedBox({
+      current = DecoratedBox({
         decoration: new BoxDecoration({
           color,
         }),
         child: current,
       });
     } else {
-      current = new DecoratedBox({
+      current = DecoratedBox({
         decoration: decoration!,
         child: current,
       });
