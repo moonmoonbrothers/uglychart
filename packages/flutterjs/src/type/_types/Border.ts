@@ -40,11 +40,8 @@ export class BoxBorder implements ShapeBorder {
     const borderRect = borderRadius.toRRect(rect);
     const inner = borderRect.deflate(side.strokeInset);
     const outer = borderRect.inflate(side.strokeOutset);
-    console.log(inner)
 
-    console.log(inner)
-
-    border.setAttribute("d", new Path().addRRect(inner).getD());
+    border.setAttribute("d", new Path().addDRRect({ inner, outer }).getD());
 
     [("left" as const, "right" as const, "bottom" as const)].forEach((key) => {
       const path = paths[key];
