@@ -28,6 +28,18 @@ class Constraints {
     this.maxHeight = maxHeight;
   }
 
+  static expand({
+    width = Infinity,
+    height = Infinity,
+  }: { width?: number; height?: number } = {}) {
+    return new Constraints({
+      maxHeight: height,
+      minHeight: height,
+      maxWidth: width,
+      minWidth: width,
+    });
+  }
+
   static zero() {
     return new Constraints({
       minHeight: 0,

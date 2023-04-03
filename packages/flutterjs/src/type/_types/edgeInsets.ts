@@ -28,6 +28,15 @@ export class EdgeInsetsGeometry {
       right: rect.right - this.right,
     });
   }
+
+  add(outer: EdgeInsetsGeometry) {
+    return new EdgeInsetsGeometry({
+      left: this.left + outer.left,
+      right: this.right + outer.right,
+      bottom: this.bottom + outer.bottom,
+      top: this.top + outer.top,
+    });
+  }
 }
 
 class EdgeInsets extends EdgeInsetsGeometry {

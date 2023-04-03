@@ -7,7 +7,7 @@ export default function ClipPath({
   clipper,
   clipped = true,
 }: {
-  child: Widget;
+  child?: Widget;
   clipper: (size: Size) => Path;
   clipped?: boolean;
 }) {

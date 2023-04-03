@@ -1,17 +1,9 @@
 import { BoxBorder } from "./Border";
-<<<<<<< HEAD
-import BorderRadius, { BorderRadiusGeometry } from "./BorderRadius";
-=======
 import { BorderRadiusGeometry } from "./BorderRadius";
->>>>>>> feature-14-decoratedbox
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 import Size from "./Size";
-<<<<<<< HEAD
-import { assert } from "../../utils";
-=======
->>>>>>> feature-14-decoratedbox
 import RRect from "./RRect";
 import BoxShadow from "./BoxShadow";
 
@@ -23,15 +15,6 @@ export interface Decoration {
 
 export default class BoxDecoration implements Decoration {
   color?: string;
-<<<<<<< HEAD
-  //image?: DecorationImage
-  border?: BoxBorder;
-  borderRadius?: BorderRadiusGeometry;
-  boxShadow?: BoxShadow[];
-  //gradient?: Gradient
-  //blendMode?: BlendMode
-  shape: BoxShape;
-=======
   border?: BoxBorder;
   borderRadius?: BorderRadiusGeometry;
   boxShadow?: BoxShadow[];
@@ -42,7 +25,6 @@ export default class BoxDecoration implements Decoration {
     blendMode?: BlendMode
     image?: DecorationImage
   */
->>>>>>> feature-14-decoratedbox
 
   constructor({
     color,
@@ -128,14 +110,10 @@ class BoxDecorationPainter implements BoxPainter {
   }
 
   private paintShadows(box: SVGPathElement) {
-<<<<<<< HEAD
-    if (this.decoration.boxShadow == null || this.decoration.boxShadow.length === 0) {
-=======
     if (
       this.decoration.boxShadow == null ||
       this.decoration.boxShadow.length === 0
     ) {
->>>>>>> feature-14-decoratedbox
       box.removeAttribute("filter");
       return;
     }
@@ -173,13 +151,6 @@ class BoxDecorationPainter implements BoxPainter {
         .getD()
     );
   }
-<<<<<<< HEAD
-
-  private paintBackgroundImage(svgEls: BoxDecorationSvgEls, rect: Rect) {
-    // Not Implemented yet!!
-  }
-=======
->>>>>>> feature-14-decoratedbox
 }
 
 interface BoxPainter {

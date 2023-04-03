@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Alignment, Matrix4, TextDirection } from "../../type";
+import { Alignment, Matrix4, Size, TextDirection } from "../../type";
 import { assert } from "../../utils";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
@@ -189,10 +189,8 @@ class RenderTransform extends SingleChildRenderObject {
   }
 
   protected override preformLayout(): void {
-    if (this.child != null) {
-      this.child.layout(this.constraints);
-      this.size = this.child.size;
-    }
+    this.child?.layout(this.constraints);
+    this.size = this.constraints.constrain(this.child?.size ?? Size.zero());
   }
 }
 

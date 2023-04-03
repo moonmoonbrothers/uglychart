@@ -1,9 +1,6 @@
-import Container from "./Container";
 import type Widget from "../widget/Widget";
-import SizedBox from "./SizedBox";
+import _ColoredBox from "./base/BaseColoredBox";
 
-// It's different from flutter's implementation
-// But behaviors are same
 export default function ColoredBox({
   child,
   color,
@@ -11,11 +8,7 @@ export default function ColoredBox({
   child?: Widget;
   color: string;
 }) {
-  if (child == null) {
-    return SizedBox.shrink();
-  }
-
-  return Container({
+  return new _ColoredBox({
     child,
     color,
   });

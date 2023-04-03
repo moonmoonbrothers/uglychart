@@ -1,6 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
-import { Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
+import {
+	Container,
+	Text,
+	Alignment,
+	EdgeInsets,
+	Matrix4,
+	BoxDecoration,
+	BorderRadius,
+	Radius
+} from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
 \n\n`;
@@ -157,5 +166,69 @@ export const Case4: Story = {
 			})
 		}),
 		code: ImportWidgetCode + Case4Code
+	}
+};
+
+const WithTransformCode = dedent`
+	Container({
+		color: 'lightblue',
+		width: 300,
+		height: 300,
+		transform: Matrix4.translationValues(10, 10, 0)
+	})
+`;
+export const WithTransform: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			transform: Matrix4.translationValues(10, 10, 0)
+		}),
+		code: ImportWidgetCode + WithTransformCode
+	}
+};
+
+const WithClipDecorationCode = dedent`
+		Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			clipped: true,
+			decoration: new BoxDecoration({
+				borderRadius: BorderRadius.all(Radius.circular(20))
+			}),
+			alignment: Alignment.topLeft,
+			child: Container({
+				width: 100,
+				height: 100,
+				color: 'red'
+			})
+		}),
+`;
+export const WithClipDecoration: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			width: 300,
+			height: 300,
+			clipped: true,
+			decoration: new BoxDecoration({
+				borderRadius: BorderRadius.all(Radius.circular(20)),
+				color: 'lightblue'
+			}),
+			alignment: Alignment.topLeft,
+			child: Container({
+				width: 100,
+				height: 100,
+				color: 'red'
+			})
+		}),
+		code: ImportWidgetCode + WithClipDecorationCode
 	}
 };
