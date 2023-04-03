@@ -5,6 +5,8 @@ import {
   Decoration,
   BoxDecoration,
   Matrix4,
+  Path,
+  Rect,
 } from "../type";
 import { assert } from "../utils";
 import type Widget from "../widget/Widget";
@@ -16,6 +18,7 @@ import LimitedBox from "./LimitedBox";
 import Padding from "./Padding";
 import { EdgeInsetsGeometry } from "../type/_types/EdgeInsets";
 import Transform from "./Transform";
+import ClipPath from "./ClipPath";
 
 type ContainerProps = {
   padding?: EdgeInsets;
@@ -28,7 +31,7 @@ type ContainerProps = {
   alignment?: Alignment;
   clipped?: boolean;
   constraints?: Constraints;
-  transform?: Matrix4,
+  transform?: Matrix4;
   transformAlignment?: Alignment;
 };
 
@@ -43,7 +46,8 @@ export default function Container({
   decoration,
   constraints,
   clipped = false,
-  transform, transformAlignment
+  transform,
+  transformAlignment,
 }: ContainerProps = {}) {
   constraints =
     width != null || height != null
@@ -90,7 +94,25 @@ export default function Container({
     });
   }
 
-  // clip
+  if (clipped) {
+    assert(
+      decoration != null,
+      "Decoration must not be null when clipped is true"
+    );
+    current = ClipPath({
+      clipper: (size) =>
+        decoration!.getClipPath(
+          Rect.fromLTWH({
+            width: size.width,
+            height: size.height,
+            left: 0,
+            top: 0,
+          })
+        ),
+      clipped,
+      child: current,
+    });
+  }
 
   if (color != null || decoration != null) {
     if (color != null) {
@@ -122,12 +144,12 @@ export default function Container({
     });
   }
 
-  if(transform != null) {
+  if (transform != null) {
     current = Transform({
       transform: transform,
-      alignment: transformAlignment, 
+      alignment: transformAlignment,
       child: current,
-    }) 
+    });
   }
 
   return current;
