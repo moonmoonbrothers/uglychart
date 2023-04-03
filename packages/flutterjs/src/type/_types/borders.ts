@@ -2,19 +2,21 @@ import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 
+export type StrokeAlign = -1 | 0 | 1
+
 export interface ShapeBorder {
   get dimensions(): EdgeInsetsGeometry;
 
   getInnerPath(rect: Rect): Path;
   getOuterPath(rect: Rect): Path;
-  paint(svgEls: Record<string, SVGElement> ,_: {rect: Rect}): void
+  paint(svgEls: Record<string, SVGElement>, _: { rect: Rect }): void;
 }
 
 export class BorderSide {
   color: string;
   width: number;
   style: BorderStyle;
-  strokeAlign: number;
+  strokeAlign: StrokeAlign
   constructor({
     style = "solid",
     width = 1,
@@ -24,8 +26,8 @@ export class BorderSide {
     color?: string;
     width?: number;
     style?: BorderStyle;
-    strokeAlign?: number;
-  }) {
+    strokeAlign?: StrokeAlign;
+  } = {}) {
     this.color = color;
     this.style = style;
     this.width = width;
@@ -47,6 +49,18 @@ export class BorderSide {
 
   get strokeOffset() {
     return this.width * this.strokeAlign;
+  }
+
+  paint(path: SVGPathElement) {
+    if (this.style === "none") {
+      path.setAttribute("stroke-width", "0");
+      path.setAttribute("stroke", "transparent");
+    } else {
+      path.setAttribute("stroke-width", `${this.width}`);
+      path.setAttribute("stroke", `${this.color}`);
+    }
+
+    path.setAttribute("fill", "none");
   }
 }
 

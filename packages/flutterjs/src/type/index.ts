@@ -15,7 +15,7 @@ import StackFit from "./_types/StackFit";
 import BorderRadius from "./_types/BorderRadius";
 import Radius from "./_types/Radius";
 import BorderStyle from "./_types/BorderStyle";
-import Border, { type BoxBorder } from "./_types/BoxBorder";
+import Border, { type BoxBorder } from "./_types/Border";
 import BoxDecoration, { type Decoration } from "./_types/BoxDecoration";
 
 export {

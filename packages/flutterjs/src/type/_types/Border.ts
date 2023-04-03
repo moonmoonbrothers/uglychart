@@ -1,4 +1,4 @@
-import { BorderSide, BorderStyle, ShapeBorder } from "./borders";
+import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./borders";
 import EdgeInsets, { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
@@ -26,30 +26,73 @@ export class BoxBorder implements ShapeBorder {
 
   protected static paintUniformBorderWidthRadius(
     paths: BorderPathEls,
-    {}: { side: BorderSide; borderRadius: BorderRadius; rect: Rect }
+    {
+      side,
+      borderRadius,
+      rect,
+    }: { side: BorderSide; borderRadius: BorderRadius; rect: Rect }
   ) {
-    paths.left.setAttribute("stroke-width", "0");
-    paths.right.setAttribute("stroke-width", "0");
-    paths.bottom.setAttribute("stroke-width", "0");
-    //
+    assert(side.style !== "none");
+    const border = paths.top;
+    border.setAttribute("stroke-width", "0");
+    border.setAttribute("fill", side.color);
+
+    const borderRect = borderRadius.toRRect(rect);
+    const inner = borderRect.deflate(side.strokeInset);
+    const outer = borderRect.inflate(side.strokeOutset);
+    console.log(inner)
+
+    console.log(inner)
+
+    border.setAttribute("d", new Path().addRRect(inner).getD());
+
+    [("left" as const, "right" as const, "bottom" as const)].forEach((key) => {
+      const path = paths[key];
+      BorderSide.none.paint(path);
+    });
   }
 
   protected static paintUniformBorderWidthCircle(
     paths: BorderPathEls,
-    {}: { side: BorderSide; rect: Rect }
+    { side, rect }: { side: BorderSide; rect: Rect }
   ) {
-    paths.left.setAttribute("stroke-width", "0");
-    paths.right.setAttribute("stroke-width", "0");
-    paths.bottom.setAttribute("stroke-width", "0");
+    assert(side.style !== "none");
+    const border = paths.top;
+    side.paint(border);
+    border.setAttribute(
+      "d",
+      new Path()
+        .addOval(
+          Rect.fromCircle({
+            center: rect.center,
+            radius: (rect.shortestSide + side.strokeOffset) / 2,
+          })
+        )
+        .getD()
+    );
+
+    [("left" as const, "right" as const, "bottom" as const)].forEach((key) => {
+      const path = paths[key];
+      BorderSide.none.paint(path);
+    });
   }
 
   protected static paintUniformBorderWidthRectangle(
     paths: BorderPathEls,
-    {}: { side: BorderSide; rect: Rect }
+    { side, rect }: { side: BorderSide; rect: Rect }
   ) {
-    paths.left.setAttribute("stroke-width", "0");
-    paths.right.setAttribute("stroke-width", "0");
-    paths.bottom.setAttribute("stroke-width", "0");
+    assert(side.style !== "none");
+    const border = paths.top;
+    side.paint(border);
+    border.setAttribute(
+      "d",
+      new Path().addRect(rect.inflate(side.strokeOffset / 2)).getD()
+    );
+
+    [("left" as const, "right" as const, "bottom" as const)].forEach((key) => {
+      const path = paths[key];
+      BorderSide.none.paint(path);
+    });
   }
 }
 
@@ -104,8 +147,8 @@ class Border extends BoxBorder {
     color?: string;
     width?: number;
     style?: BorderStyle;
-    strokeAlign?: number;
-  }) {
+    strokeAlign?: StrokeAlign;
+  } = {}) {
     const side = new BorderSide({ strokeAlign, style, color, width });
     return Border.fromBorderSide(side);
   }
@@ -162,12 +205,24 @@ class Border extends BoxBorder {
               });
               break;
             case "rectangle":
+              if (borderRadius != null && borderRadius != BorderRadius.zero) {
+                BoxBorder.paintUniformBorderWidthRadius(paths, {
+                  side: this.top,
+                  borderRadius,
+                  rect,
+                });
+
+                return;
+              }
+              BoxBorder.paintUniformBorderWidthRectangle(paths, {
+                side: this.top,
+                rect,
+              });
               break;
           }
           return;
       }
     }
-    ("A borderRadius can only be given for rectangular boxes.");
   }
 
   private get _colorIsUniform(): boolean {

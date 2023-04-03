@@ -105,6 +105,19 @@ export class Rect {
       bottom: Math.max(a.y, b.y),
     });
   }
+
+  inflate(delta: number) {
+    return Rect.fromLTRB({
+      left: this.left - delta,
+      top: this.top - delta,
+      right: this.right + delta,
+      bottom: this.bottom + delta,
+    });
+  }
+
+  deflate(delta: number) {
+    return this, this.inflate(-delta);
+  }
 }
 
 export default Rect;

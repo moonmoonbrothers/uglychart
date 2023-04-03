@@ -1,4 +1,4 @@
-import { BoxBorder } from "./BoxBorder";
+import { BoxBorder } from "./Border";
 import BorderRadius, { BorderRadiusGeometry } from "./BorderRadius";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
