@@ -29,14 +29,12 @@ class RenderColoredBox extends SingleChildRenderObject {
 
   protected override preformLayout(): void {
     this.child?.layout(this.constraints);
-    this.size = this.child?.size ?? Size.zero();
+    this.size = this.constraints.constrain(this.child?.size ?? Size.zero());
   }
-  protected performPaint({rect}: {
-    rect: SVGElement;
-  }): void {
-    rect.setAttribute("fill", this.color)
-    rect.setAttribute("width", `${this.size.width}`) 
-    rect.setAttribute("height", `${this.size.height}`) 
+  protected performPaint({ rect }: { rect: SVGElement }): void {
+    rect.setAttribute("fill", this.color);
+    rect.setAttribute("width", `${this.size.width}`);
+    rect.setAttribute("height", `${this.size.height}`);
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {

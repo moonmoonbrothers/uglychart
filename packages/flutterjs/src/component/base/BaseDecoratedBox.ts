@@ -35,7 +35,7 @@ class RenderDecoratedBox extends SingleChildRenderObject {
 
   protected override preformLayout(): void {
     this.child?.layout(this.constraints);
-    this.size = this.child?.size ?? Size.zero();
+    this.size = this.constraints.constrain(this.child?.size ?? Size.zero());
   }
   protected performPaint(
     svgEls: {
