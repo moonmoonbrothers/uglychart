@@ -43,7 +43,7 @@ class RenderObject {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
       container.setAttribute("opacity", `${opacity}`);
-      this.performPaint(svgEls, totalOffset, matrix4);
+      this.performPaint(svgEls);
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, totalOffset, matrix4)
       );
@@ -197,11 +197,7 @@ class RenderObject {
    * Do not call this method directly. instead call paint
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(
-    svgEls: { [key: string]: SVGElement },
-    offset: Offset,
-    matrix: Matrix4
-  ): void {}
+  protected performPaint(svgEls: { [key: string]: SVGElement }): void {}
 
   protected getChildClipId(parentClipId?: string) {
     return parentClipId;

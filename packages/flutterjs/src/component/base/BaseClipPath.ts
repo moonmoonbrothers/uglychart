@@ -42,7 +42,6 @@ class RenderClipPath extends SingleChildRenderObject {
 
   protected performPaint(
     { clipPath }: { [key: string]: SVGElement },
-    offset: Offset
   ): void {
     const pathEl = clipPath.getElementsByTagName("path")[0];
     const d = this.clipper(this.size).getD();

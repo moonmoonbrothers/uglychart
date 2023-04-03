@@ -6,6 +6,7 @@ import Rect from "./Rect";
 import Size from "./Size";
 import { assert } from "../../utils";
 import RRect from "./RRect";
+import BoxShadow from "./BoxShadow";
 
 export interface Decoration {
   get padding(): EdgeInsetsGeometry | undefined;
@@ -18,7 +19,7 @@ export default class BoxDecoration implements Decoration {
   //image?: DecorationImage
   border?: BoxBorder;
   borderRadius?: BorderRadiusGeometry;
-  //boxShadow?: BoxShadow[]
+  boxShadow?: BoxShadow[];
   //gradient?: Gradient
   //blendMode?: BlendMode
   shape: BoxShape;
@@ -28,16 +29,19 @@ export default class BoxDecoration implements Decoration {
     border,
     borderRadius,
     shape = "rectangle",
+    boxShadow,
   }: {
     color?: string;
     border?: BoxBorder;
     borderRadius?: BorderRadiusGeometry;
     shape?: BoxShape;
+    boxShadow?: BoxShadow[];
   }) {
     this.color = color;
     this.border = border;
     this.borderRadius = borderRadius;
     this.shape = shape;
+    this.boxShadow = boxShadow;
   }
 
   get padding(): EdgeInsetsGeometry | undefined {
@@ -86,6 +90,7 @@ class BoxDecorationPainter implements BoxPainter {
     });
 
     this.paintBackgroundColor(svgEls.box, rect);
+    this.paintShadows(svgEls.box);
 
     this.decoration.border?.paint(
       {
@@ -102,7 +107,20 @@ class BoxDecorationPainter implements BoxPainter {
     );
   }
 
-  private paintShadows(box: SVGPathElement, rect: Rect) {}
+  private paintShadows(box: SVGPathElement) {
+    if (this.decoration.boxShadow == null || this.decoration.boxShadow.length === 0) {
+      box.removeAttribute("filter");
+      return;
+    }
+
+    const filter = this.decoration.boxShadow.reduce(
+      (acc, shadow) =>
+        acc +
+        ` drop-shadow(${shadow.offset.x} ${shadow.offset.y} ${shadow.blurRadius} ${shadow.color})`,
+      ""
+    );
+    box.setAttribute("filter", filter);
+  }
 
   private paintBackgroundColor(box: SVGPathElement, rect: Rect) {
     box.setAttribute("stroke-width", "0");

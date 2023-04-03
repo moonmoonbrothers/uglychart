@@ -10,7 +10,9 @@ import {
 	BoxDecoration,
 	SizedBox,
 	Border,
-	Stack
+	Stack,
+	BoxShadow,
+	Offset
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 import { BorderSide } from '@moonmoonbrothers/flutterjs/src/type/_types/borders';
@@ -234,9 +236,9 @@ export const BorderTop: Story = {
 	}
 };
 
-const UnuniformedBorderCode= dedent`
+const UnuniformedBorderCode = dedent`
 `;
-export const UnuniformedBorder: Story = {
+export const UnUniformBorder: Story = {
 	args: {
 		ssrSize: { width: 400, height: 400 },
 		width: '400px',
@@ -256,8 +258,53 @@ export const UnuniformedBorder: Story = {
 								top: new BorderSide({ width: 10, color: 'blue' }),
 								left: new BorderSide({ width: 5, color: 'green' }),
 								right: new BorderSide({ width: 20, color: 'red' }),
-								bottom: new BorderSide({ width: 15, color: 'purple' }),
+								bottom: new BorderSide({ width: 15, color: 'purple' })
 							})
+						}),
+						child: SizedBox({
+							width: 200,
+							height: 200
+						})
+					})
+				]
+			})
+		}),
+		code:
+			dedent`import { SizedBox, Center, BoxDecoration, DecoratedBox } from '@moonmoonbrothers/flutterjs';\n\n\n` +
+			BasicCode
+	}
+};
+
+const WithBoxShadowCode = dedent`
+`;
+export const WithBoxShadow: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		widget: Center({
+			child: Stack({
+				clipped: false,
+				children: [
+					Container({
+						width: 200,
+						height: 200,
+						color: 'white'
+					}),
+					DecoratedBox({
+						decoration: new BoxDecoration({
+							color: 'gray',
+							boxShadow: [
+								new BoxShadow({
+									blurRadius: 10,
+									offset: new Offset({ x: 10, y: 10 })
+								}),
+								new BoxShadow({
+									blurRadius: 10,
+									color: 'blue',
+									offset: new Offset({ x: -10, y: -10 })
+								})
+							]
 						}),
 						child: SizedBox({
 							width: 200,

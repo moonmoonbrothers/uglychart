@@ -45,8 +45,6 @@ class RenderDecoratedBox extends SingleChildRenderObject {
       leftBorder: SVGElement;
       rightBorder: SVGElement;
     },
-    offset: Offset,
-    matrix: Matrix4
   ): void {
 
     const painter = this.decoration.createBoxPainter();
