@@ -5,6 +5,8 @@ enum TextOverflow {
   /// Render overflowing text outside of its container.
   visible = "visible",
 
+  ellipsis = "ellipsis",
+
   /*
     Not implemented yet
     /// Fade the overflowing text to transparent.

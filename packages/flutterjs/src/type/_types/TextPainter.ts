@@ -2,7 +2,7 @@ import InlineSpan from "./InlineSpan";
 import { getTextHeight, getTextWidth } from "../../utils";
 import { TextDirection, TextAlign, TextWidthBasis } from "../../type";
 
-class TextPainter {
+export default class TextPainter {
   text?: InlineSpan;
   textAlign: TextAlign;
   textDirection?: TextDirection;
