@@ -17,11 +17,11 @@ import Radius from "./_types/Radius";
 import BorderStyle from "./_types/BorderStyle";
 import Border, { type BoxBorder } from "./_types/Border";
 import BoxDecoration, { type Decoration } from "./_types/BoxDecoration";
-import BoxShadow from './_types/BoxShadow'
-import TextAlign from './_types/TextAlign'
-import TextOverflow from './_types/TextOverflow'
-import TextWidthBasis from './_types/TextWidthBasis'
-
+import BoxShadow from "./_types/BoxShadow";
+import TextAlign from "./_types/TextAlign";
+import TextOverflow from "./_types/TextOverflow";
+import TextWidthBasis from "./_types/TextWidthBasis";
+import TextBaseline from "./_types/TextBaseline";
 
 export {
   Offset,
@@ -47,5 +47,6 @@ export {
   BoxShadow,
   TextAlign,
   TextOverflow,
-  TextWidthBasis
+  TextWidthBasis,
+  TextBaseline,
 };

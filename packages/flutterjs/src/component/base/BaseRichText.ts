@@ -1,27 +1,12 @@
 import { getTextHeight, getTextWidth } from "../../utils";
 import RenderObject from "../../renderobject/RenderObject";
-import { Matrix4, Offset, Size, TextDirection, TextAlign } from "../../type";
+import { Matrix4, Offset, Size, TextDirection, TextAlign, TextBaseline, TextWidthBasis, TextOverflow, } from "../../type";
 import type { PaintContext } from "../../utils/type";
 import RenderObjectWidget from "../../widget/RenderObjectWidget";
 
-type TextBaseline =
-  | "text-before-edge"
-  | "text-after-edge"
-  | "alphabetic"
-  | "ideographic"
-  | "middle"
-  | "hanging"
-  | "top"
-  | "bottom";
-type TextStyle = {
-  fontFamily: string;
-  fontSize: string;
-  fontWeight: string;
-  fontColor: string;
-};
 
 export type TextProps = {
-  style?: Partial<TextStyle>;
+  style?: TextStyle;
   textAlign?: TextAlign;
   textBaseline?: TextBaseline;
 };
