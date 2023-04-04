@@ -22,6 +22,8 @@ import TextAlign from "./_types/TextAlign";
 import TextOverflow from "./_types/TextOverflow";
 import TextWidthBasis from "./_types/TextWidthBasis";
 import TextBaseline from "./_types/TextBaseline";
+import TextStyle from "./_types/TextStyle";
+import TextSpan from "./_types/TextSpan";
 
 export {
   Offset,
@@ -49,4 +51,6 @@ export {
   TextOverflow,
   TextWidthBasis,
   TextBaseline,
+  TextStyle,
+  TextSpan,
 };

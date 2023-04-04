@@ -1,74 +1,109 @@
 import { getTextHeight, getTextWidth } from "../../utils";
 import RenderObject from "../../renderobject/RenderObject";
-import { Matrix4, Offset, Size, TextDirection, TextAlign, TextBaseline, TextWidthBasis, TextOverflow, } from "../../type";
+import {
+  TextDirection,
+  TextAlign,
+  TextWidthBasis,
+  TextOverflow,
+} from "../../type";
 import type { PaintContext } from "../../utils/type";
 import RenderObjectWidget from "../../widget/RenderObjectWidget";
+import InlineSpan from "../../type/_types/InlineSpan";
 
-
-export type TextProps = {
-  style?: TextStyle;
+type RichTextProps = {
+  text: InlineSpan;
   textAlign?: TextAlign;
-  textBaseline?: TextBaseline;
+  textDirection?: TextDirection;
+  softWrap?: boolean;
+  overflow?: TextOverflow;
+  textScaleFactor?: number;
+  maxLines?: number;
+  textWidthBasis?: TextWidthBasis;
 };
 
-class Text extends RenderObjectWidget {
-  text: string;
-  style: TextStyle;
-  constructor(
-    text: string,
-    {
-      textAlign = "start",
-      textBaseline = "text-before-edge",
-      style: {
-        fontFamily = "serif",
-        fontSize = "16px",
-        fontWeight = "normal",
-        fontColor = "black",
-      } = {},
-    }: TextProps
-  ) {
+class RichText extends RenderObjectWidget {
+  text: InlineSpan;
+  textAlign: TextAlign;
+  textDirection?: TextDirection;
+  softWrap: boolean;
+  overflow: TextOverflow;
+  textScaleFactor: number;
+  maxLines?: number;
+  textWidthBasis: TextWidthBasis;
+  constructor({
+    text,
+    textAlign = TextAlign.start,
+    textDirection,
+    softWrap = true,
+    overflow = TextOverflow.clip,
+    textScaleFactor = 1,
+    maxLines,
+    textWidthBasis = TextWidthBasis.parent,
+  }: RichTextProps) {
     super({ children: [] });
     this.text = text;
+    this.textAlign = textAlign;
+    this.textDirection = textDirection;
+    this.softWrap = softWrap;
+    this.overflow = overflow;
+    this.textScaleFactor = textScaleFactor;
+    this.maxLines = maxLines;
+    this.textWidthBasis = textWidthBasis;
   }
 
   createRenderObject(): RenderObject {
-    return new RenderText({
+    return new RenderParagraph({
       text: this.text,
-      style: this.style,
       textAlign: this.textAlign,
-      textBaseline: this.textBaseline,
+      textDirection: this.textDirection || TextDirection.ltr,
+      softWrap: this.softWrap,
+      overflow: this.overflow,
+      textScaleFactor: this.textScaleFactor,
+      maxLines: this.maxLines,
+      textWidthBasis: this.textWidthBasis,
     });
   }
 
-  updateRenderObject(renderObject: RenderText): void {
+  updateRenderObject(renderObject: RenderParagraph): void {
     renderObject.text = this.text;
-    renderObject.style = this.style;
     renderObject.textAlign = this.textAlign;
-    renderObject.textBaseline = this.textBaseline;
+    renderObject.textDirection = this.textDirection || TextDirection.ltr;
+    renderObject.softWrap = this.softWrap;
+    renderObject.overflow = this.overflow;
+    renderObject.textScaleFactor = this.textScaleFactor;
+    renderObject.maxLines = this.maxLines;
+    renderObject.textWidthBasis = this.textWidthBasis;
   }
 }
 
-class RenderText extends RenderObject {
-  text: string;
-  textBaseline: TextBaseline;
+class RenderParagraph extends RenderObject {
+  text: InlineSpan;
   textAlign: TextAlign;
-  style: TextStyle;
+  textDirection?: TextDirection;
+  softWrap: boolean;
+  overflow: TextOverflow;
+  textScaleFactor: number;
+  maxLines?: number;
+  textWidthBasis: TextWidthBasis;
   constructor({
     text,
-    textAlign,
-    textBaseline,
-    style,
-  }: {
-    text: string;
-    textBaseline: TextBaseline;
-    textAlign: TextAlign;
-    style: TextStyle;
-  }) {
+    textAlign = TextAlign.start,
+    textDirection,
+    softWrap = true,
+    overflow = TextOverflow.clip,
+    textScaleFactor = 1,
+    maxLines,
+    textWidthBasis = TextWidthBasis.parent,
+  }: RichTextProps) {
     super({ isPainter: true });
     this.text = text;
-    this.style = style;
-    this.textBaseline = textBaseline;
     this.textAlign = textAlign;
+    this.textDirection = textDirection;
+    this.softWrap = softWrap;
+    this.overflow = overflow;
+    this.textScaleFactor = textScaleFactor;
+    this.maxLines = maxLines;
+    this.textWidthBasis = textWidthBasis;
   }
   get font(): string {
     const { fontWeight, fontSize, fontFamily } = this.style;
@@ -80,32 +115,32 @@ class RenderText extends RenderObject {
   }: {
     [key: string]: SVGElement;
   }): void {
-    const { fontFamily, fontColor, fontSize, fontWeight } = this.style;
-    textEl.setAttribute("id", this.id);
-    textEl.setAttribute("text-anchor", this.textAlign);
-    textEl.setAttribute("alignment-baseline", this.textBaseline);
-    textEl.setAttribute("fill", fontColor);
-    textEl.setAttribute("font-size", fontSize);
-    textEl.setAttribute("font-family", fontFamily);
-    textEl.setAttribute("font-weight", fontWeight);
-    textEl.textContent = this.text;
+    // textEl.setAttribute("id", this.id);
+    // textEl.setAttribute("text-anchor", this.textAlign);
+    // textEl.setAttribute("alignment-baseline", this.textBaseline);
+    // textEl.setAttribute("fill", fontColor);
+    // textEl.setAttribute("font-size", fontSize);
+    // textEl.setAttribute("font-family", fontFamily);
+    // textEl.setAttribute("font-weight", fontWeight);
+    // textEl.textContent = this.text;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected preformLayout(): void {
-    const size = new Size({
-      width: getTextWidth({ text: this.text, font: this.font }),
-      height: getTextHeight({ text: this.text, font: this.font }),
-    });
-    this.size = size;
+    // const size = new Size({
+    //   width: getTextWidth({ text: this.text, font: this.font }),
+    //   height: getTextHeight({ text: this.text, font: this.font }),
+    // });
+    // this.size = size;
   }
 
-  override getIntrinsicHeight(): number {
-    return getTextHeight({ text: this.text, font: this.font });
+  override getIntrinsicHeight(width: number): number {
+    // return getTextHeight({ text: this.text, font: this.font });
+    return 0
   }
 
-  override getIntrinsicWidth(): number {
-    return getTextWidth({ text: this.text, font: this.font });
+  override getIntrinsicWidth(height: number): number {
+    // return getTextWidth({ text: this.text, font: this.font });
+    return 0
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {
@@ -117,4 +152,4 @@ class RenderText extends RenderObject {
   }
 }
 
-export default Text;
+export default RichText;
