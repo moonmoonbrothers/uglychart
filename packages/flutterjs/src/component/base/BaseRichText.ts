@@ -98,14 +98,8 @@ class RenderParagraph extends RenderObject {
     textWidthBasis = TextWidthBasis.parent,
   }: RichTextProps) {
     super({ isPainter: true });
-    // this.text = text;
-    // this.textAlign = textAlign;
-    // this.textDirection = textDirection;
     this.softWrap = softWrap;
     this.overflow = overflow;
-    // this.textScaleFactor = textScaleFactor;
-    // this.maxLines = maxLines;
-    // this.textWidthBasis = textWidthBasis;
     this.textPainter = new TextPainter({
       text,
       textAlign,

@@ -41,5 +41,7 @@ export default class TextPainter {
   get plainText(): string {
     return this.text?.toPlainText() || "";
   }
+
+  
 }
 
