@@ -1,4 +1,5 @@
 import TextStyle from "./TextStyle";
+import { Paragraph } from "./TextPainter";
 
 class InlineSpan {
   style?: TextStyle;
@@ -11,8 +12,16 @@ class InlineSpan {
     throw new Error("Not implemented: computeToPlainText");
   }
 
+  build(paragraph: Paragraph) {
+    throw new Error("Not implemented: build");
+  }
+
+  visitChildren(visitor: (span: InlineSpan) => void) {
+    throw new Error("Not implemented: visitChildren");
+  }
+
   toPlainText(): string {
-    return this.computeToPlainText()
+    return this.computeToPlainText();
   }
 }
 

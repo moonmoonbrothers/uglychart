@@ -10,7 +10,6 @@ class TextStyle {
   fontFamily?: string;
   textBaseline?: string;
   fontStyle?: FontStyle;
-  overflow?: TextOverflow;
   height?: number;
 
   constructor({
@@ -23,14 +22,13 @@ class TextStyle {
     overflow,
     fontStyle,
     height,
-  }: TextStyleProps) {
+  }: TextStyleProps = {}) {
     this.inherit = inherit;
     this.color = color;
     this.fontSize = fontSize;
     this.fontWeight = fontWeight;
     this.fontFamily = fontFamily;
     this.textBaseline = textBaseline;
-    this.overflow = overflow;
     this.fontStyle = fontStyle;
     this.height = height;
   }
@@ -42,7 +40,6 @@ class TextStyle {
     fontWeight = this.fontWeight,
     fontFamily = this.fontFamily,
     textBaseline = this.textBaseline,
-    overflow = this.overflow,
     fontStyle = this.fontStyle,
     height = this.height,
   }: TextStyleProps): TextStyle {
@@ -50,7 +47,6 @@ class TextStyle {
       inherit,
       color,
       fontFamily,
-      overflow,
       fontSize,
       fontWeight,
       textBaseline,
