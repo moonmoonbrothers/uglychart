@@ -7,7 +7,7 @@ class TextSpan extends InlineSpan {
   children: TextSpan[];
 
   constructor({
-    style,
+    style = new TextStyle(),
     text,
     children = [],
   }: {

@@ -10,6 +10,13 @@ class TextStyle {
   fontFamily?: string;
   textBaseline?: string;
   fontStyle?: FontStyle;
+  /// The height of this text span, as a multiple of the font size.
+  ///
+  /// When [height] is null or omitted, the line height will be determined
+  /// by the font's metrics directly, which may differ from the fontSize.
+  /// When [height] is non-null, the line height of the span of text will be a
+  /// multiple of [fontSize] and be exactly `fontSize * height` logical pixels
+  /// tall.
   height?: number;
 
   constructor({
@@ -19,7 +26,6 @@ class TextStyle {
     fontWeight,
     fontFamily,
     textBaseline,
-    overflow,
     fontStyle,
     height,
   }: TextStyleProps = {}) {
@@ -109,7 +115,6 @@ type TextStyleProps = {
   fontWeight?: string;
   textBaseline?: string;
   fontFamily?: string;
-  overflow?: TextOverflow;
   fontStyle?: FontStyle;
   height?: number;
 };

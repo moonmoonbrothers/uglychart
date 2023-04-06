@@ -33,6 +33,7 @@ import IndexedStack from "./IndexedStack";
 import ColoredBox from "./ColoredBox";
 import ClipRRect from "./ClipRRect";
 import DecoratedBox from "./DecoratedBox";
+import RichText from "./RichText";
 
 export {
   ConstrainedBox,
@@ -70,4 +71,5 @@ export {
   ColoredBox,
   ClipRRect,
   DecoratedBox,
+  RichText
 };

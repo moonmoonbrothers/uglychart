@@ -1,17 +1,17 @@
-import { getTextHeight, getTextWidth } from "../../utils";
 import RenderObject from "../../renderobject/RenderObject";
 import {
   TextDirection,
   TextAlign,
   TextWidthBasis,
   TextOverflow,
+  Size,
 } from "../../type";
 import type { PaintContext } from "../../utils/type";
 import RenderObjectWidget from "../../widget/RenderObjectWidget";
 import InlineSpan from "../../type/_types/InlineSpan";
 import TextPainter from "../../type/_types/TextPainter";
 
-type RichTextProps = {
+export type RichTextProps = {
   text: InlineSpan;
   textAlign?: TextAlign;
   textDirection?: TextDirection;
@@ -159,37 +159,39 @@ class RenderParagraph extends RenderObject {
     this.textPainter.maxLines = value;
   }
 
-  protected performPaint({
-    text: textEl,
-  }: {
-    [key: string]: SVGElement;
-  }): void {
-    // textEl.setAttribute("id", this.id);
-    // textEl.setAttribute("text-anchor", this.textAlign);
-    // textEl.setAttribute("alignment-baseline", this.textBaseline);
-    // textEl.setAttribute("fill", fontColor);
-    // textEl.setAttribute("font-size", fontSize);
-    // textEl.setAttribute("font-family", fontFamily);
-    // textEl.setAttribute("font-weight", fontWeight);
-    // textEl.textContent = this.text;
+  protected performPaint(
+    {
+      text: textEl,
+    }: {
+      text: SVGTextElement;
+    },
+    context: PaintContext
+  ): void {
+    this.textPainter.paint(textEl, context);
   }
 
   protected preformLayout(): void {
-    // const size = new Size({
-    //   width: getTextWidth({ text: this.text, font: this.font }),
-    //   height: getTextHeight({ text: this.text, font: this.font }),
-    // });
-    // this.size = size;
+    this.textPainter.layout({
+      minWidth: this.constraints.minWidth,
+      maxWidth: this.constraints.maxWidth,
+    });
+
+    this.size = this.constraints.constrain(
+      new Size({
+        width: this.textPainter.width,
+        height: this.textPainter.height,
+      })
+    );
   }
 
-  override getIntrinsicHeight(width: number): number {
-    // return getTextHeight({ text: this.text, font: this.font });
-    return 0;
+  override getIntrinsicHeight(): number {
+    this.textPainter.layout();
+    return this.textPainter.intrinsicHeight;
   }
 
-  override getIntrinsicWidth(height: number): number {
-    // return getTextWidth({ text: this.text, font: this.font });
-    return 0;
+  override getIntrinsicWidth(): number {
+    this.textPainter.layout();
+    return this.textPainter.intrinsicHeight;
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {
