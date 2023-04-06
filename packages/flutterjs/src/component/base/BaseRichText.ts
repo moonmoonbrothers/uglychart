@@ -171,9 +171,9 @@ class RenderParagraph extends RenderObject {
   }
 
   protected preformLayout(): void {
-    this.textPainter.layout({
-      minWidth: this.constraints.minWidth,
+    this.layoutText({
       maxWidth: this.constraints.maxWidth,
+      minWidth: this.constraints.minWidth,
     });
 
     this.size = this.constraints.constrain(
@@ -182,6 +182,21 @@ class RenderParagraph extends RenderObject {
         height: this.textPainter.height,
       })
     );
+  }
+
+  private layoutText({
+    maxWidth = Infinity,
+    minWidth = 0,
+  }: {
+    minWidth?: number;
+    maxWidth?: number;
+  }) {
+    const widthMatters =
+      this.softWrap || this.overflow === TextOverflow.ellipsis;
+    this.textPainter.layout({
+      minWidth: minWidth,
+      maxWidth: widthMatters ? maxWidth : Infinity,
+    });
   }
 
   override getIntrinsicHeight(): number {

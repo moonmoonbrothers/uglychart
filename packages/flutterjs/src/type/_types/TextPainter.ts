@@ -1,5 +1,5 @@
 import InlineSpan from "./InlineSpan";
-import { assert, getTextWidth } from "../../utils";
+import Utils, { assert, getTextWidth } from "../../utils";
 import { PaintContext } from "../../utils/type";
 
 function getTextHeight({ fontSize }: { fontSize: number }) {
@@ -131,7 +131,7 @@ export default class TextPainter {
     this.layoutParagraph({ minWidth, maxWidth });
   }
 
-  layoutParagraph({
+  private layoutParagraph({
     minWidth = 0,
     maxWidth = Infinity,
   }: {
@@ -139,6 +139,23 @@ export default class TextPainter {
     maxWidth?: number;
   }) {
     this.paragraph!.layout(maxWidth);
+
+    if (minWidth !== maxWidth) {
+      let newWidth: number;
+      switch (this.textWidthBasis) {
+        case TextWidthBasis.longestLine:
+          newWidth = this.paragraph!.longestLine;
+          break;
+        case TextWidthBasis.parent:
+          newWidth = this.intrinsicWidth;
+          break;
+      }
+      newWidth = Utils.clampDouble(newWidth, minWidth, maxWidth);
+
+      if (newWidth !== this.paragraph!.width) {
+        this.paragraph!.layout(newWidth);
+      }
+    }
   }
 }
 
@@ -205,29 +222,32 @@ export class Paragraph {
         const words = content.split(" ");
 
         let currentText = "";
-        let currentWidth = currentLine.width;
+        let currentWidth = 0;
         const currentHeight = getTextHeight({ fontSize });
-
+        const font = `${fontWeight} ${fontSize}px ${fontFamily}`;
         words.forEach((word) => {
           const isNewLine = word.includes("\n");
           if (isNewLine) {
             word = word.replace("\n", "");
           }
 
-          word = currentLine.spanBoxes.length > 0 ? " " : "" + word;
+          word = (currentText.length > 0 ? " " : "") + word;
 
           const wordWidth = getTextWidth({
             text: word,
-            font: `${fontWeight} ${fontSize}px ${fontFamily}`,
+            font,
           });
 
-          if (currentWidth + wordWidth > this.width || isNewLine) {
+          if (
+            currentLine.width + currentWidth + wordWidth > this.width ||
+            isNewLine
+          ) {
             addSpanBox();
             this.lines.push(currentLine);
 
             currentLine = new ParagraphLine();
-            currentText = word;
-            currentWidth = wordWidth;
+            currentText = word.replace(" ", "");
+            currentWidth = wordWidth - getTextWidth({ text: " ", font });
           } else {
             currentText += word;
             currentWidth += wordWidth;
@@ -258,6 +278,8 @@ export class Paragraph {
 
     this.lines.push(currentLine);
     this.align();
+
+    console.log(this.lines);
   }
 
   private align() {
@@ -367,7 +389,7 @@ class ParagraphLine {
 
   get height() {
     return this.spanBoxes.reduce(
-      (acc, { size, height }) => acc + size.height * height,
+      (acc, { size, height }) => Math.max(acc, size.height * height),
       0
     );
   }
@@ -381,7 +403,7 @@ class ParagraphLine {
     { paragraphWidth, offsetY }: { offsetY: number; paragraphWidth: number }
   ) {
     this.spanBoxes.forEach((spanBox) => {
-      spanBox.offset.y = offsetY + this.height - spanBox.size.height; // - 아래 여백을 추가하자!! 0;
+      spanBox.offset.y = offsetY + this.height - spanBox.size.height
     });
 
     switch (textAlign) {
