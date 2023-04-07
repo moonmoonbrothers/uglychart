@@ -75,24 +75,13 @@ class Chart extends ComponentWidget {
         children: [
           Container({
             child: Grid({
-              // YAxis({
-              //   labels: yLabels,
-              //   type: direction === "horizontal" ? "index" : "value",
-              // }),
               childrenByRow: [
                 [
                   YAxis({
                     labels: yLabels,
                     type: direction === "horizontal" ? "index" : "value",
                   }),
-                  Opacity({
-                    opacity: 0.1,
-                    child: Container({
-                      width: Infinity,
-                      height: Infinity,
-                      color: "black",
-                    }),
-                  }),
+                  Plot({ direction, scale }),
                 ],
                 [
                   null,

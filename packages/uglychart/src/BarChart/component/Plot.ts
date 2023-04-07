@@ -7,7 +7,10 @@ import {
   Row,
   BoxDecoration,
   Border,
-  BuildContext
+  BuildContext,
+  Spacer,
+  Flex,
+  Alignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
@@ -46,9 +49,11 @@ class Plot extends ComponentWidget {
           width: 2,
         }),
       }),
-      child: (this.props.direction === "horizontal" ? Column : Row)({
+      alignment: Alignment.topLeft,
+      child: Flex({
+        direction: "vertical", //this.props.direction,
         children: [
-          Flexible({ flex: 0.5 }),
+          Spacer({ flex: 0.5 }),
           ...labels
             .map((label, index) => [
               Flexible({
@@ -61,7 +66,7 @@ class Plot extends ComponentWidget {
               }),
             ])
             .flat(),
-          Flexible({ flex: 0.5 }),
+          Spacer({ flex: 0.5 }),
         ],
       }),
     });

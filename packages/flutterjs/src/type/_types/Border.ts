@@ -152,7 +152,7 @@ class Border extends BoxBorder {
 
   get dimensions(): EdgeInsetsGeometry {
     if (this._widthIsUniform) {
-      return EdgeInsets.all(this.top.strokeAlign);
+      return EdgeInsets.all(this.top.strokeInset);
     }
 
     return EdgeInsets.fromLTRB({
