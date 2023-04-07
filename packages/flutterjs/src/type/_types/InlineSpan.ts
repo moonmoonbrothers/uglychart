@@ -12,7 +12,7 @@ class InlineSpan {
     throw new Error("Not implemented: computeToPlainText");
   }
 
-  build(paragraph: Paragraph) {
+  build(paragraph: Paragraph, inheritedStyle?: TextStyle) {
     throw new Error("Not implemented: build");
   }
 

@@ -4,7 +4,7 @@ import TextStyle from "./TextStyle";
 
 class TextSpan extends InlineSpan {
   text?: string;
-  children: TextSpan[];
+  children: InlineSpan[];
 
   constructor({
     style = new TextStyle(),
@@ -13,7 +13,7 @@ class TextSpan extends InlineSpan {
   }: {
     style?: TextStyle;
     text?: string;
-    children?: TextSpan[];
+    children?: InlineSpan[];
   }) {
     super({ style });
     this.children = children;

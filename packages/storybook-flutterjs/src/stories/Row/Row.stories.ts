@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
-import { Text, Row, Container, Flexible, VerticalDirection, Alignment } from '@moonmoonbrothers/flutterjs';
+import { Text, Row, Container, Flexible, VerticalDirection, Alignment, TextStyle } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Row, Container, Flexible } from '@moonmoonbrothers/flutterjs';
 \n\n`;
@@ -675,21 +675,21 @@ export const VerticalDirection_up: Story = {
 						height: 50,
 						color: 'red',
 						alignment: Alignment.center,
-						child: Text('1', { style: { fontColor: 'white', fontSize: '30px' } })
+						child: Text('1', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
 					}),
 					Container({
 						width: 50,
 						height: 50,
 						color: 'blue',
 						alignment: Alignment.center,
-						child: Text('2', { style: { fontColor: 'white', fontSize: '30px' } })
+						child: Text('2', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
 					}),
 					Container({
 						width: 50,
 						height: 50,
 						color: 'green',
 						alignment: Alignment.center,
-						child: Text('3', { style: { fontColor: 'white', fontSize: '30px' } })
+						child: Text('3', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
 					})
 				]
 			})

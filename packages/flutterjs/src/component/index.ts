@@ -71,5 +71,5 @@ export {
   ColoredBox,
   ClipRRect,
   DecoratedBox,
-  RichText
+  RichText,
 };
