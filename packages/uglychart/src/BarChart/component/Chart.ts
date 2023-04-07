@@ -11,6 +11,7 @@ import {
   Widget,
   BuildContext,
   Text,
+  Opacity,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxis from "./XAxis";
@@ -73,34 +74,36 @@ class Chart extends ComponentWidget {
         clipped: false,
         children: [
           Container({
-            child: Container({
-              color: "red",
-              child: XAxis({
-                labels: xLabels,
-                type: direction === "vertical" ? "index" : "value",
-              }),
+            child: Grid({
               // YAxis({
               //   labels: yLabels,
               //   type: direction === "horizontal" ? "index" : "value",
               // }),
-              // childrenByRow: [
-              //   [
-              //     YAxis({
-              //       labels: yLabels,
-              //       type: direction === "horizontal" ? "index" : "value",
-              //     }),
-              //     Container({
-              //       width: Infinity,
-              //       height: Infinity,
-              //       color: "red",
-              //     }),
-              //   ],
-              //   [
-              //     null,
-              //   ],
-              // ],
-              // templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-              // templateRows: [Grid.Fr(1), Grid.ContentFit()],
+              childrenByRow: [
+                [
+                  YAxis({
+                    labels: yLabels,
+                    type: direction === "horizontal" ? "index" : "value",
+                  }),
+                  Opacity({
+                    opacity: 0.1,
+                    child: Container({
+                      width: Infinity,
+                      height: Infinity,
+                      color: "black",
+                    }),
+                  }),
+                ],
+                [
+                  null,
+                  XAxis({
+                    labels: xLabels,
+                    type: direction === "vertical" ? "index" : "value",
+                  }),
+                ],
+              ],
+              templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
+              templateRows: [Grid.Fr(1), Grid.ContentFit()],
             }),
           }),
           // ...additions.map(({ position, Custom }) =>

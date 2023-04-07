@@ -39,7 +39,6 @@
 				height: 500
 			}}
 			height="500px"
-			width="500px"
 			widget={BarChart({
 				custom: {
 					barGroup: {

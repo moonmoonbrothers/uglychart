@@ -206,7 +206,7 @@ class RenderParagraph extends RenderObject {
 
   override getIntrinsicWidth(): number {
     this.textPainter.layout();
-    return this.textPainter.intrinsicHeight;
+    return this.textPainter.intrinsicWidth;
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext): {

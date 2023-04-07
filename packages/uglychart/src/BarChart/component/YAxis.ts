@@ -45,7 +45,7 @@ class YAxis extends ComponentWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               YAxisLabel({ text: label, index }),
-              SizedBox({ width: 2 }),
+              SizedBox.shrink({ width: 2 }),
               Container({
                 width: 10,
                 height: 2,
