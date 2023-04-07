@@ -73,33 +73,34 @@ class Chart extends ComponentWidget {
         clipped: false,
         children: [
           Container({
-            child: IntrinsicHeight({
-              child: IntrinsicWidth({
-                child: Grid({
-                  childrenByRow: [
-                    [
-                      YAxis({
-                        labels: yLabels,
-                        type: direction === "horizontal" ? "index" : "value",
-                      }),
-                      Container({
-                        width: Infinity,
-                        height: Infinity,
-                        color: "red",
-                      }),
-                    ],
-                    [
-                      null,
-                      XAxis({
-                        labels: xLabels,
-                        type: direction === "vertical" ? "index" : "value",
-                      }),
-                    ],
-                  ],
-                  templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-                  templateRows: [Grid.Fr(1), Grid.ContentFit()],
-                }),
+            child: Container({
+              color: 'red',
+              child: YAxis({
+                labels: yLabels,
+                type: direction === "horizontal" ? "index" : "value",
               }),
+              // childrenByRow: [
+              //   [
+              //     YAxis({
+              //       labels: yLabels,
+              //       type: direction === "horizontal" ? "index" : "value",
+              //     }),
+              //     Container({
+              //       width: Infinity,
+              //       height: Infinity,
+              //       color: "red",
+              //     }),
+              //   ],
+              //   [
+              //     null,
+              //     XAxis({
+              //       labels: xLabels,
+              //       type: direction === "vertical" ? "index" : "value",
+              //     }),
+              //   ],
+              // ],
+              // templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
+              // templateRows: [Grid.Fr(1), Grid.ContentFit()],
             }),
           }),
           // ...additions.map(({ position, Custom }) =>

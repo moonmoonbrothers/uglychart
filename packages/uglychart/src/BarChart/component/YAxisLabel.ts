@@ -9,6 +9,11 @@ import {
   TextStyle,
   Widget,
   BuildContext,
+  IntrinsicWidth,
+  FractionalTranslation,
+  Offset,
+  ConstraintsTransformBox,
+  Constraints,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 
@@ -32,14 +37,17 @@ class YAxisLabel extends ComponentWidget {
     }
     const { font, margin } = yAxisLabel;
 
-    return Padding({
-      padding: margin,
-      child: Container({
-        height: 0,
-        padding: EdgeInsets.only({ top: 1 }),
-        alignment: Alignment.center,
+    return Container({
+      height: 0,
+      margin,
+      child: ConstraintsTransformBox({
+        constraintsTransform(constraints) {
+          return new Constraints({
+            minWidth: constraints.minWidth,
+            maxWidth: constraints.maxWidth,
+          });
+        },
         child: Text(text, {
-          overflow: TextOverflow.visible,
           style: new TextStyle({
             fontFamily: font?.fontFamily ?? theme.text.fontFamily,
             fontSize: font?.fontSize ?? theme.text.fontSize,
