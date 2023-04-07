@@ -11,7 +11,8 @@ import {
 	TextWidthBasis,
 	TextOverflow,
 	ConstrainedBox,
-	Constraints
+	Constraints,
+	Text
 } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -292,8 +293,7 @@ export const NoWrapped: Story = {
 				})
 			})
 		}),
-		code:
-			dedent`import { Container, Center, RichText, TextSpan } from '@moonmoonbrothers/flutterjs'
+		code: dedent`import { Container, Center, RichText, TextSpan } from '@moonmoonbrothers/flutterjs'
 			
 		Center({
 			child: Container({
@@ -307,6 +307,6 @@ export const NoWrapped: Story = {
 				})
 			})
 		})
-	` 
+	`
 	}
 };

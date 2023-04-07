@@ -257,6 +257,7 @@ export class Paragraph {
         addSpanBox();
 
         function addSpanBox() {
+          if(!currentText) return
           currentLine.addSpanBox(
             new SpanBox({
               content: currentText,

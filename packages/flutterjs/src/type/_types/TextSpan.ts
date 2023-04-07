@@ -43,7 +43,7 @@ class TextSpan extends InlineSpan {
       fontStyle,
       color,
       height,
-      content: this.text,
+      content: this.computeToPlainText(),
     });
 
     this.children.forEach((child) => {

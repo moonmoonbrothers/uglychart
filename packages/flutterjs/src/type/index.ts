@@ -24,6 +24,7 @@ import TextWidthBasis from "./_types/TextWidthBasis";
 import TextBaseline from "./_types/TextBaseline";
 import TextStyle from "./_types/TextStyle";
 import TextSpan from "./_types/TextSpan";
+export * from './_types/borders'
 
 export {
   Offset,

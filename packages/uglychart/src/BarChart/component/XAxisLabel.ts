@@ -33,6 +33,14 @@ class XAxisLabel extends ComponentWidget {
 
     return Container({
       width: 0,
+      child: Text(text, {
+        overflow: TextOverflow.visible,
+        style: new TextStyle({
+          fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+          fontSize: font?.fontSize ?? theme.text.fontSize,
+          color: font?.color ?? theme.text.color,
+        }),
+      }),
     });
   }
 }

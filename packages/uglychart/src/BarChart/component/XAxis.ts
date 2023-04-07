@@ -10,6 +10,7 @@ import {
   Widget,
   SizedBox,
   BuildContext,
+  MainAxisSize,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";
@@ -33,29 +34,22 @@ class XAxis extends ComponentWidget {
       return xAxis.Custom({ XAxisLabel }, { theme, data });
     }
 
-    return Column({
-      children: [
-        Row({
-          mainAxisAlignment: "spaceBetween",
-          crossAxisAlignment: "end",
-          children: this.props.labels.map((label, index) =>
-            IntrinsicHeight({
-              child: Column({
-                children: [
-                  /* tick */
-                  Container({
-                    width: 2,
-                    height: 10,
-                    color: "black",
-                  }),
-                  XAxisLabel({ text: `${label}`, index }),
-                  SizedBox.shrink({ width: 2 }),
-                ],
-              }),
-            })
-          ),
-        }),
-      ],
+    return Row({
+      mainAxisAlignment: "spaceBetween",
+      crossAxisAlignment: "end",
+      children: this.props.labels.map((label, index) =>
+        Column({
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Container({
+            //   width: 2,
+            //   height: 10,
+            //   color: "black",
+            // }),
+            XAxisLabel({ text: `${label}`, index }),
+          ],
+        })
+      ),
     });
   }
 }
