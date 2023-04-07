@@ -211,7 +211,7 @@ export const VerticalDirection_up: Story = {
 						height: 50,
 						color: 'green',
 						alignment: Alignment.center,
-						child: Text('1', {style: new TextStyle({color: 'white', fontSize: 30})} )
+						child: Text('2', {style: new TextStyle({color: 'white', fontSize: 30})} )
 					})
 				]
 			})
