@@ -233,7 +233,7 @@ export class Paragraph {
 
           word = (currentText.length > 0 ? " " : "") + word;
 
-          const wordWidth = getTextWidth({
+          let wordWidth = getTextWidth({
             text: word,
             font,
           });
@@ -243,11 +243,18 @@ export class Paragraph {
             isNewLine
           ) {
             addSpanBox();
-            this.lines.push(currentLine);
+            this.addLine(currentLine);
 
             currentLine = new ParagraphLine();
+
+            //라인 첫 단어에 띄어쓰기 방지
+            if (word.includes(" ")) {
+              wordWidth -= getTextWidth({ text: " ", font });
+              word = word.replace(" ", "");
+            }
+
+            currentWidth = wordWidth;
             currentText = word.replace(" ", "");
-            currentWidth = wordWidth - getTextWidth({ text: " ", font });
           } else {
             currentText += word;
             currentWidth += wordWidth;
@@ -257,7 +264,7 @@ export class Paragraph {
         addSpanBox();
 
         function addSpanBox() {
-          if(!currentText) return
+          if (!currentText) return;
           currentLine.addSpanBox(
             new SpanBox({
               content: currentText,
@@ -277,8 +284,13 @@ export class Paragraph {
       }
     );
 
-    this.lines.push(currentLine);
+    this.addLine(currentLine);
     this.align();
+  }
+
+  private addLine(line: ParagraphLine) {
+    if (line.spanBoxes.length === 0) return;
+    this.lines.push(line);
   }
 
   private align() {
@@ -402,7 +414,7 @@ class ParagraphLine {
     { paragraphWidth, offsetY }: { offsetY: number; paragraphWidth: number }
   ) {
     this.spanBoxes.forEach((spanBox) => {
-      spanBox.offset.y = offsetY + this.height - spanBox.size.height
+      spanBox.offset.y = offsetY + this.height - spanBox.size.height;
     });
 
     switch (textAlign) {

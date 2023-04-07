@@ -32,9 +32,11 @@ class XAxisLabel extends ComponentWidget {
     const { font, margin } = xAxisLabel;
 
     return Container({
+      margin,
       width: 0,
       child: Text(text, {
         overflow: TextOverflow.visible,
+        textAlign: TextAlign.center,
         style: new TextStyle({
           fontFamily: font?.fontFamily ?? theme.text.fontFamily,
           fontSize: font?.fontSize ?? theme.text.fontSize,
