@@ -8,9 +8,9 @@ import {
   IntrinsicHeight,
   Row,
   Widget,
+  SizedBox,
+  BuildContext
 } from "@moonmoonbrothers/flutterjs"
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import XAxisLabel from "./XAxisLabel"
 
@@ -84,7 +84,7 @@ class XAxis extends ComponentWidget {
                         color: "black",
                       }),
                       XAxisLabel({ text: `${label}`, index }),
-                      SizeBox({ width: 2 }), //이건 뭐지??
+                      SizedBox({ width: 2 }), //이건 뭐지??
                     ],
                   }),
                 })

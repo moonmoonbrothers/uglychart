@@ -2,14 +2,13 @@ import {
   Container,
   ComponentWidget,
   Widget,
-  BorderStyle,
   Column,
   Flexible,
   Row,
   BoxDecoration,
   Border,
+  BuildContext
 } from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
 import BarGroup from "./BarGroup";

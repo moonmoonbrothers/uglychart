@@ -40,6 +40,7 @@ class _Text extends ComponentWidget {
     textDirection,
     textWidthBasis,
     style,
+    overflow
   }: TextProps & { data?: string; textSpan?: InlineSpan }) {
     super();
     this.softWrap = softWrap;
@@ -47,6 +48,7 @@ class _Text extends ComponentWidget {
     this.textDirection = textDirection;
     this.textWidthBasis = textWidthBasis;
     this.style = style;
+    this.overflow = overflow;
 
     this.data = data;
     this.textSpan = textSpan;

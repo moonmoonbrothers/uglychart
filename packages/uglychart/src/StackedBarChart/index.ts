@@ -8,9 +8,9 @@ import {
   Row,
   Spacer,
   Widget,
+  SizedBox,
+BuildContext 
 } from "@moonmoonbrothers/flutterjs";
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import BarChart from "../BarChart";
 import { BarProps } from "../BarChart/component/Bar";
 import { BarGroupProps } from "../BarChart/component/BarGroup";
@@ -168,7 +168,7 @@ export class StackedBarChart extends ComponentWidget {
                     children: Widget[];
                   }) => {
                     const flex = barGroupRatio[type];
-                    if (flex === 0) return SizeBox({ width: 0, height: 0 });
+                    if (flex === 0) return SizedBox({ width: 0, height: 0 });
 
                     return Flexible({
                       flex,

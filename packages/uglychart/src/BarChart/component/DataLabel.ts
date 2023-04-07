@@ -4,8 +4,8 @@ import {
   Positioned,
   Text,
   Widget,
+  BuildContext
 } from "@moonmoonbrothers/flutterjs"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import {
   CustomProvider as CustomProvider,
   DataProvider,

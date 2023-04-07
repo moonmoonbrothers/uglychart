@@ -4,7 +4,7 @@ import BaseStack, { type StackFit } from "./base/BaseStack";
 import ClipRect from "./ClipRect";
 
 export default function Stack({
-  clipped = true,
+  clipped = false,
   children,
   alignment = Alignment.topLeft,
   fit = "loose",

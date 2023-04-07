@@ -10,9 +10,9 @@ import {
   Alignment,
   Padding,
   EdgeInsets,
+  SizedBox,
+BuildContext 
 } from "@moonmoonbrothers/flutterjs"
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import YAxisLabel from "./YAxisLabel"
 
@@ -49,7 +49,7 @@ class YAxis extends ComponentWidget {
                       child: Row({
                         children: [
                           YAxisLabel({ text: label, index }),
-                          SizeBox({ width: 2 }),
+                          SizedBox({ width: 2 }),
                           Container({
                             width: 10,
                             height: 2,
@@ -81,7 +81,7 @@ class YAxis extends ComponentWidget {
                         child: Row({
                           children: [
                             YAxisLabel({ text: label, index }),
-                            SizeBox({ width: 2 }),
+                            SizedBox({ width: 2 }),
                             Container({
                               width: 10,
                               height: 2,

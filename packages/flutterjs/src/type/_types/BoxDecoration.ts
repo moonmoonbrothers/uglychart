@@ -27,7 +27,7 @@ export default class BoxDecoration implements Decoration {
   */
 
   constructor({
-    color,
+    color = "transparent",
     border,
     borderRadius,
     shape = "rectangle",

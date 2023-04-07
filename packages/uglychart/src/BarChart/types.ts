@@ -134,7 +134,7 @@ export type XAxis =
       tick?: Tick;
     }
   | ({ axis: "data" | "label" } & CustomWidget<
-      { XAxisLabel: (props: { index: number; text: number }) => Widget },
+      { XAxisLabel: (props: { index: number; text: string }) => Widget },
       { data: Data }
     >);
 

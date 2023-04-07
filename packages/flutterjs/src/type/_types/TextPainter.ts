@@ -278,8 +278,6 @@ export class Paragraph {
 
     this.lines.push(currentLine);
     this.align();
-
-    console.log(this.lines);
   }
 
   private align() {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
-	import { EdgeInsets, Text, Container, Row } from '@moonmoonbrothers/flutterjs';
+	import { EdgeInsets, Text, Container, Row, TextStyle } from '@moonmoonbrothers/flutterjs';
 	import { BarChart, StackedBarChart } from '@moonmoonbrothers/uglychart';
 
 	const data = {
@@ -25,9 +25,22 @@
 
 <div class="container">
 	<div class="chart">
-		<Widget
+		<!-- <Widget
 			height="500px"
-			widget={StackedBarChart({
+			widget={Container({
+				width: 100,
+				height: 100,
+				color: 'red'
+			})}
+		/> -->
+		<Widget
+			ssrSize={{
+				width: 500,
+				height: 500
+			}}
+			height="500px"
+			width="500px"
+			widget={BarChart({
 				custom: {
 					barGroup: {
 						type: 'config',
@@ -53,7 +66,7 @@
 									color: 'black',
 									padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
 									child: Text('made by moon', {
-										style: { fontSize: '12px', fontColor: 'white' }
+										style: new TextStyle({ fontSize: 12, color: 'white' })
 									})
 								})
 						}
@@ -62,9 +75,7 @@
 						type: 'config',
 						alignment: 'center',
 						font: {
-							style: {
-								fontSize: '40px'
-							}
+							fontSize: 40
 						}
 					}
 				},
@@ -72,7 +83,7 @@
 			})}
 		/>
 
-		<Widget
+		<!-- 	<Widget
 			height="400px"
 			widget={BarChart({
 				custom: {
@@ -83,7 +94,7 @@
 					},
 					chart: {
 						type: 'config',
-						direction: 'vertical',
+						direction: 'vertical'
 					},
 					bar: {
 						type: 'config',
@@ -105,7 +116,7 @@
 									color: 'black',
 									padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
 									child: Text('made by moon', {
-										style: { fontSize: '12px', fontColor: 'white' }
+										style: new TextStyle({ fontSize: 12, color: 'white' })
 									})
 								})
 						}
@@ -114,15 +125,13 @@
 						type: 'config',
 						alignment: 'center',
 						font: {
-							style: {
-								fontSize: '40px'
-							}
+							fontSize: 40
 						}
 					}
 				},
 				data
 			})}
-		/>
+		/> -->
 	</div>
 </div>
 

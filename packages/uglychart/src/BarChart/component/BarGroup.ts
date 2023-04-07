@@ -2,16 +2,15 @@ import {
   Column,
   ComponentWidget,
   EdgeInsets,
-  Expanded,
   Flexible,
   Padding,
   Row,
   Spacer,
   Stack,
   Widget,
+  SizedBox,
+  BuildContext, 
 } from "@moonmoonbrothers/flutterjs"
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
 import { Scale } from "../util"
 import Bar from "./Bar"
@@ -76,7 +75,7 @@ class BarGroup extends ComponentWidget {
       children: Widget[]
     }) => {
       const flex = barGroupRatio[type]
-      if (flex === 0) return SizeBox({ width: 0, height: 0 })
+      if (flex === 0) return SizedBox({ width: 0, height: 0 })
 
       return Flexible({
         flex,

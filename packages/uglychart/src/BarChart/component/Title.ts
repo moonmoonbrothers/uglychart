@@ -5,8 +5,8 @@ import {
   Text,
   TextStyle,
   Widget,
+  BuildContext,
 } from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 
 class Title extends ComponentWidget {

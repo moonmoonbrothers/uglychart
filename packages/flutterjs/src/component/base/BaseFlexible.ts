@@ -1,6 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Size, Constraints } from "../../type"
-import type { PaintContext } from "../../utils/type"
+import { Size, } from "../../type"
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
 import type Widget from "../../widget/Widget"
 
@@ -13,7 +12,7 @@ class Flexible extends SingleChildRenderObjectWidget {
     fit = "loose",
   }: { flex?: number; child?: Widget; fit?: "tight" | "loose" } = {}) {
     super({ child })
-    if (flex <= 0) throw { message: "flex must be over zero" }
+    if (flex < 0) throw { message: "flex must not be under zero" }
     this.flex = flex
     this.fit = fit
   }
