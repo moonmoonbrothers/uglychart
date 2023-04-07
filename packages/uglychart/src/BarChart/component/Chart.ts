@@ -74,11 +74,15 @@ class Chart extends ComponentWidget {
         children: [
           Container({
             child: Container({
-              color: 'red',
-              child: YAxis({
-                labels: yLabels,
-                type: direction === "horizontal" ? "index" : "value",
+              color: "red",
+              child: XAxis({
+                labels: xLabels,
+                type: direction === "vertical" ? "index" : "value",
               }),
+              // YAxis({
+              //   labels: yLabels,
+              //   type: direction === "horizontal" ? "index" : "value",
+              // }),
               // childrenByRow: [
               //   [
               //     YAxis({
@@ -93,10 +97,6 @@ class Chart extends ComponentWidget {
               //   ],
               //   [
               //     null,
-              //     XAxis({
-              //       labels: xLabels,
-              //       type: direction === "vertical" ? "index" : "value",
-              //     }),
               //   ],
               // ],
               // templateColumns: [Grid.ContentFit(), Grid.Fr(1)],

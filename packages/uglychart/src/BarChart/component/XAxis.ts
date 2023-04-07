@@ -9,92 +9,55 @@ import {
   Row,
   Widget,
   SizedBox,
-  BuildContext
-} from "@moonmoonbrothers/flutterjs"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
-import XAxisLabel from "./XAxisLabel"
+  BuildContext,
+} from "@moonmoonbrothers/flutterjs";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import XAxisLabel from "./XAxisLabel";
 
 export type XAxisProps = {
-  type: "index" | "value"
-  labels: string[]
-}
+  type: "index" | "value";
+  labels: string[];
+};
 
 class XAxis extends ComponentWidget {
   constructor(private props: XAxisProps) {
-    super()
+    super();
   }
 
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context)
-    const data = DataProvider.of(context)
-    const { xAxis } = CustomProvider.of(context)
+    const theme = ThemeProvider.of(context);
+    const data = DataProvider.of(context);
+    const { xAxis } = CustomProvider.of(context);
 
     if (xAxis.type === "custom") {
-      return xAxis.Custom({ XAxisLabel }, { theme, data })
+      return xAxis.Custom({ XAxisLabel }, { theme, data });
     }
 
-    if (this.props.type === "index") {
-      return Column({
-        children: [
-          Row({
-            mainAxisAlignment: "spaceBetween",
-            crossAxisAlignment: "end",
-            children: [
-              Flexible({ flex: 0.5 }),
-              ...this.props.labels.map((label, index) =>
-                Flexible({
-                  child: Align({
-                    alignment: Alignment.topCenter,
-                    child: IntrinsicHeight({
-                      child: Column({
-                        children: [
-                          /* tick */
-                          Container({
-                            width: 2,
-                            height: 10,
-                            color: "black",
-                          }),
-                          XAxisLabel({ text: `${label}`, index }),
-                        ],
-                      }),
-                    }),
+    return Column({
+      children: [
+        Row({
+          mainAxisAlignment: "spaceBetween",
+          crossAxisAlignment: "end",
+          children: this.props.labels.map((label, index) =>
+            IntrinsicHeight({
+              child: Column({
+                children: [
+                  /* tick */
+                  Container({
+                    width: 2,
+                    height: 10,
+                    color: "black",
                   }),
-                })
-              ),
-              Flexible({ flex: 0.5 }),
-            ],
-          }),
-        ],
-      })
-    } else {
-      return Column({
-        children: [
-          Row({
-            mainAxisAlignment: "spaceBetween",
-            crossAxisAlignment: "end",
-            children: [
-              ...this.props.labels.map((label, index) =>
-                IntrinsicHeight({
-                  child: Column({
-                    children: [
-                      /* tick */
-                      Container({
-                        width: 2,
-                        height: 10,
-                        color: "black",
-                      }),
-                      XAxisLabel({ text: `${label}`, index }),
-                      SizedBox({ width: 2 }), //이건 뭐지??
-                    ],
-                  }),
-                })
-              ),
-            ],
-          }),
-        ],
-      })
-    }
+                  XAxisLabel({ text: `${label}`, index }),
+                  SizedBox.shrink({ width: 2 }),
+                ],
+              }),
+            })
+          ),
+        }),
+      ],
+    });
   }
 }
 
-export default (props: XAxisProps) => new XAxis(props)
+export default (props: XAxisProps) => new XAxis(props);

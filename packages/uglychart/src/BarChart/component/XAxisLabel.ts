@@ -31,20 +31,8 @@ class XAxisLabel extends ComponentWidget {
     }
     const { font, margin } = xAxisLabel;
 
-    return Padding({
-      padding: margin,
-      child: Container({
-        width: 0,
-        child: Text(text, {
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.visible,
-          style: new TextStyle({
-            fontFamily: font?.fontFamily ?? theme.text.fontFamily,
-            fontSize: font?.fontSize ?? theme.text.fontSize,
-            color: font?.color ?? theme.text.color,
-          }),
-        }),
-      }),
+    return Container({
+      width: 0,
     });
   }
 }
