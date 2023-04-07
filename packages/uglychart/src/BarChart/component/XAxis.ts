@@ -41,11 +41,11 @@ class XAxis extends ComponentWidget {
         Column({
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Container({
-            //   width: 2,
-            //   height: 10,
-            //   color: "black",
-            // }),
+            Container({
+              width: 2,
+              height: 10,
+              color: "black",
+            }),
             XAxisLabel({ text: `${label}`, index }),
           ],
         })
