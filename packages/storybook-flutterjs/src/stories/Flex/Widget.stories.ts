@@ -10,7 +10,8 @@ import {
 	MainAxisAlignment,
 	Text,
 	Alignment,
-	Flexible
+	Flexible,
+	TextStyle
 } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -203,14 +204,14 @@ export const VerticalDirection_up: Story = {
 						height: 50,
 						color: 'red',
 						alignment: Alignment.center,
-						child: Text('1', { style: { fontColor: 'white', fontSize: '30px' } })
+						child: Text('1', {style: new TextStyle({color: 'white', fontSize: 30})} )
 					}),
 					Container({
 						width: 50,
 						height: 50,
 						color: 'green',
 						alignment: Alignment.center,
-						child: Text('2', { style: { fontColor: 'white', fontSize: '30px' } })
+						child: Text('2', {style: new TextStyle({color: 'white', fontSize: 30})} )
 					})
 				]
 			})

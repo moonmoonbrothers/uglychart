@@ -152,5 +152,5 @@ export default function Container({
     });
   }
 
-  return current;
+  return current!;
 }

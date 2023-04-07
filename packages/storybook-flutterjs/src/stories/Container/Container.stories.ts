@@ -8,7 +8,8 @@ import {
 	Matrix4,
 	BoxDecoration,
 	BorderRadius,
-	Radius
+	Radius,
+	TextStyle
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import { Container, Text, Alignment, EdgeInsets } from '@moonmoonbrothers/flutterjs';
@@ -100,7 +101,7 @@ export const Case2: Story = {
 		height: '300px',
 		widget: Container({
 			color: 'lightblue',
-			child: Text('text', { style: { fontSize: '30px' } })
+			child: Text('text', { style: new TextStyle({ fontSize: 30 }) })
 		}),
 		code: ImportWidgetCode + Case2Code
 	}
