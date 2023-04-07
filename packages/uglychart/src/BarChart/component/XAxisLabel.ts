@@ -2,40 +2,51 @@ import {
   ComponentWidget,
   Container,
   Padding,
-  SizedBox,
   Text,
+  TextAlign,
+  TextOverflow,
+  TextStyle,
   Widget,
-} from "@moonmoonbrothers/flutterjs"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, ThemeProvider } from "../provider"
+} from "@moonmoonbrothers/flutterjs";
+import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 
 export type XAxisLabelProps = {
-  index: number
-  text: string
-}
+  index: number;
+  text: string;
+};
 
 class XAxisLabel extends ComponentWidget {
   constructor(private props: XAxisLabelProps) {
-    super()
+    super();
   }
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context)
-    const { xAxisLabel } = CustomProvider.of(context)
+    const data = DataProvider.of(context);
+    const theme = ThemeProvider.of(context);
+    const { xAxisLabel } = CustomProvider.of(context);
 
-    const { text, index } = this.props
+    const { text, index } = this.props;
     if (xAxisLabel.type === "custom") {
-      return xAxisLabel.Custom({}, { theme, text, index })
+      return xAxisLabel.Custom({}, { theme, text, index, data });
     }
-    const { font, margin } = xAxisLabel
+    const { font, margin } = xAxisLabel;
 
     return Padding({
       padding: margin,
       child: Container({
         width: 0,
-        child: Text(text, { ...theme.text, ...font, textAlign: "middle" }),
+        child: Text(text, {
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.visible,
+          style: new TextStyle({
+            fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+            fontSize: font?.fontSize ?? theme.text.fontSize,
+            color: font?.color ?? theme.text.color,
+          }),
+        }),
       }),
-    })
+    });
   }
 }
 
-export default (props: XAxisLabelProps) => new XAxisLabel(props)
+export default (props: XAxisLabelProps) => new XAxisLabel(props);

@@ -5,13 +5,11 @@ import {
   Flexible,
   IntrinsicWidth,
   Row,
-  Text,
   Align,
   Widget,
   Alignment,
   Padding,
   EdgeInsets,
-  IntrinsicHeight,
 } from "@moonmoonbrothers/flutterjs"
 import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"

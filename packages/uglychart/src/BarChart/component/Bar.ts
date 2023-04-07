@@ -2,44 +2,36 @@ import {
   Column,
   ComponentWidget,
   Container,
-  EdgeInsets,
-  Expanded,
   Flexible,
-  Positioned,
   Row,
+  Spacer,
   Stack,
-  Text,
   Widget,
-} from "@moonmoonbrothers/flutterjs"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import {
-  CustomProvider as CustomProvider,
-  DataProvider,
-  ThemeProvider,
-} from "../provider"
-import { Utils } from "../../utils"
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
-import DataLabel from "./DataLabel"
+} from "@moonmoonbrothers/flutterjs";
+import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import DataLabel from "./DataLabel";
 
 export type BarProps = {
-  backgroundColor: string
-  index: number
-  ratio: number
-  value: number
-  reverse?: boolean
-  label: string
-  legend: string
-  direction: "horizontal" | "vertical"
-}
+  backgroundColor: string;
+  index: number;
+  ratio: number;
+  value: number;
+  reverse?: boolean;
+  label: string;
+  legend: string;
+  direction: "horizontal" | "vertical";
+};
+
 export class Bar extends ComponentWidget {
   constructor(private props: BarProps) {
-    super()
+    super();
   }
 
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context)
-    const data = DataProvider.of(context)
-    const { bar } = CustomProvider.of(context)
+    const theme = ThemeProvider.of(context);
+    const data = DataProvider.of(context);
+    const { bar } = CustomProvider.of(context);
 
     const {
       backgroundColor,
@@ -50,7 +42,7 @@ export class Bar extends ComponentWidget {
       value,
       direction,
       reverse = false,
-    } = this.props
+    } = this.props;
 
     if (bar.type === "custom") {
       return bar.Custom(
@@ -66,14 +58,13 @@ export class Bar extends ComponentWidget {
           direction,
           reverse,
         }
-      )
+      );
     }
 
-    const { thickness = 2 } = bar
+    const { thickness = 2 } = bar;
 
     const BarWrapper = ({ children }: { children: Widget[] }) =>
-      direction === "horizontal" ? Row({ children }) : Column({ children })
-
+      direction === "horizontal" ? Row({ children }) : Column({ children });
 
     const Bar = () =>
       Flexible({
@@ -97,9 +88,9 @@ export class Bar extends ComponentWidget {
             }),
           ],
         }),
-      })
+      });
 
-    const Vacant = () => Expanded({ flex: 1 - ratio })
+    const Vacant = () => Spacer({ flex: 1 - ratio });
 
     return BarWrapper({
       children:
@@ -107,8 +98,8 @@ export class Bar extends ComponentWidget {
         (direction === "vertical" && reverse)
           ? [Bar(), Vacant()]
           : [Vacant(), Bar()],
-    })
+    });
   }
 }
 
-export default (props: BarProps) => new Bar(props)
+export default (props: BarProps) => new Bar(props);

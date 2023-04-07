@@ -6,6 +6,7 @@ import {
   Flexible,
   Padding,
   Row,
+  Spacer,
   Stack,
   Widget,
 } from "@moonmoonbrothers/flutterjs"
@@ -104,7 +105,7 @@ class BarGroup extends ComponentWidget {
             /**
              * mainAxisAlignment: center가 없어서 임시로 Expanded로 구현;
              */
-            Expanded(),
+            Spacer(),
             ...datasets.map(({ data, legend }, index) => {
               const value = data[this.props.index]
               const reverse = type === "negative"
@@ -127,7 +128,7 @@ class BarGroup extends ComponentWidget {
                 }),
               })
             }),
-            Expanded(),
+            Spacer(),
           ],
         })
       ),
