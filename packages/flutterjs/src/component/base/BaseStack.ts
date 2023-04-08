@@ -91,7 +91,7 @@ export class RenderStack extends MultiChildRenderObject {
     }
 
     this.children.forEach((child) => {
-      if ((child instanceof RenderPositioned && child.isPositioned)) return;
+      if (child instanceof RenderPositioned && child.isPositioned) return;
       hasNonPositionedChildren = true;
       child.layout(nonPositionedConstraints);
 
@@ -103,7 +103,7 @@ export class RenderStack extends MultiChildRenderObject {
     if (hasNonPositionedChildren) {
       size = new Size({ width, height });
       assert(size.width === constraints.constrainWidth(width));
-      assert(size.height === constraints.constrainWidth(height));
+      assert(size.height === constraints.constrainHeight(height));
     } else {
       size = constraints.biggest;
     }

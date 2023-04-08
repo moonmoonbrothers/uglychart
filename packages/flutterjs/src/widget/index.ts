@@ -1,4 +1,4 @@
-import ComponentWidget from './ComponentWidget';
+import ComponentWidget, {BuildContext} from './ComponentWidget';
 import MultiChildRenderObjectWidget from './MultiChildRenderObjectWidget';
 import SingleChildRenderObjectWidget from './SingleChildRenderObjectWidget';
 import RenderObjectToWidgetAdapter from './RenderObjectToWidgetAdapter';
@@ -11,5 +11,6 @@ export {
 	SingleChildRenderObjectWidget,
 	Widget,
 	RenderObjectToWidgetAdapter,
-	RenderObjectWidget
+	RenderObjectWidget,
+	BuildContext,
 };

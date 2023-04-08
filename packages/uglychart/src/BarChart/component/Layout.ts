@@ -5,8 +5,8 @@ import {
   Container,
   Flexible,
   Widget,
+  BuildContext
 } from "@moonmoonbrothers/flutterjs"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
 import Title from "./Title"
 import Chart from "./Chart"
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider"

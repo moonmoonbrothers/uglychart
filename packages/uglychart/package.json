@@ -1,12 +1,12 @@
 {
   "name": "@moonmoonbrothers/uglychart",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
   "main": "src/index.ts",
+  "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build .",
+    "build": "rm -rf package && tsc --build .",
     "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && npm pkg set 'main'='index.js'"
+    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set exports='{\".\": \"./index.js\"}' --json"
   }
 }

@@ -5,104 +5,68 @@ import {
   Flexible,
   IntrinsicWidth,
   Row,
-  Text,
   Align,
   Widget,
   Alignment,
   Padding,
   EdgeInsets,
-  IntrinsicHeight,
-} from "@moonmoonbrothers/flutterjs"
-import SizeBox from "@moonmoonbrothers/flutterjs/src/component/SizedBox"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
-import YAxisLabel from "./YAxisLabel"
+  SizedBox,
+  BuildContext,
+  MainAxisSize,
+  MainAxisAlignment,
+  CrossAxisAlignment,
+} from "@moonmoonbrothers/flutterjs";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import YAxisLabel from "./YAxisLabel";
 
 export type YAxisProps = {
-  type: "index" | "value"
-  labels: string[]
-}
+  type: "index" | "value";
+  labels: string[];
+};
 
 class YAxis extends ComponentWidget {
   constructor(private props: YAxisProps) {
-    super()
+    super();
   }
 
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context)
-    const data = DataProvider.of(context)
-    const { yAxis } = CustomProvider.of(context)
+    const theme = ThemeProvider.of(context);
+    const data = DataProvider.of(context);
+    const { yAxis } = CustomProvider.of(context);
 
     if (yAxis.type === "custom") {
-      return yAxis.Custom({ YAxisLabel }, { theme, data })
+      return yAxis.Custom({ YAxisLabel }, { theme, data });
     }
 
-    if (this.props.type === "value") {
-      return Row({
-        children: [
-          Padding({
-            child: Column({
-              mainAxisAlignment: "spaceBetween",
-              crossAxisAlignment: "end",
-              children: [
-                ...this.props.labels
-                  .map((label, index) =>
-                    IntrinsicWidth({
-                      child: Row({
-                        children: [
-                          YAxisLabel({ text: label, index }),
-                          SizeBox({ width: 2 }),
-                          Container({
-                            width: 10,
-                            height: 2,
-                            color: "black",
-                          }),
-                        ],
-                      }),
-                    })
-                  )
-                  .reverse(),
-              ],
-            }),
+    let sortedLabels =
+      this.props.type === "index"
+        ? this.props.labels
+        : [...this.props.labels].reverse();
+
+    return Column({
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment:
+        this.props.type === "index"
+          ? MainAxisAlignment.spaceEvenly
+          : MainAxisAlignment.spaceBetween,
+      children: sortedLabels.map((label, index) =>
+        Flexible({
+          child: Row({
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              YAxisLabel({ text: label, index }),
+              SizedBox.shrink({ width: 2 }),
+              Container({
+                width: 10,
+                height: 2,
+                color: "black",
+              }),
+            ],
           }),
-        ],
-      })
-    } else {
-      return Row({
-        children: [
-          Padding({
-            padding: EdgeInsets.symmetric({ vertical: 2 }),
-            child: Column({
-              children: [
-                Flexible({ flex: 0.5 }),
-                ...this.props.labels.map((label, index) =>
-                  Flexible({
-                    child: Align({
-                      alignment: Alignment.centerRight,
-                      child: IntrinsicWidth({
-                        child: Row({
-                          children: [
-                            YAxisLabel({ text: label, index }),
-                            SizeBox({ width: 2 }),
-                            Container({
-                              width: 10,
-                              height: 2,
-                              color: "black",
-                            }),
-                          ],
-                        }),
-                      }),
-                    }),
-                  })
-                ),
-                Flexible({ flex: 0.5 }),
-              ],
-            }),
-          }),
-        ],
-      })
-    }
+        })
+      ),
+    });
   }
 }
 
-export default (props: YAxisProps) => new YAxis(props)
+export default (props: YAxisProps) => new YAxis(props);

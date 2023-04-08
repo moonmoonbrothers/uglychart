@@ -5,7 +5,6 @@ import {
   Decoration,
   BoxDecoration,
   Matrix4,
-  Path,
   Rect,
 } from "../type";
 import { assert } from "../utils";

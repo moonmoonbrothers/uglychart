@@ -11,10 +11,10 @@ import {
 	Border,
 	Stack,
 	BoxShadow,
-	Offset
+	Offset,
+	BorderSide
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
-import { BorderSide } from '@moonmoonbrothers/flutterjs/src/type/_types/borders';
 
 const meta = {
 	title: 'Widget/DecoratedBox',

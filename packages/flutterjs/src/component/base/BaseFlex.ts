@@ -329,10 +329,11 @@ class RenderFlex extends MultiChildRenderObject {
     const childIntrinsicWidths = this.children.map((child) =>
       child.getIntrinsicWidth(height)
     );
+
     return this.direction === "vertical"
       ? childIntrinsicWidths.reduce(max, 0)
       : childIntrinsicWidths.reduce(sum, 0);
   }
 }
 
-export default Flex
+export default Flex;

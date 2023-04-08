@@ -1,7 +1,5 @@
 enum BorderStyle {
-  loose = "loose",
-  expand = "expand",
-  passthrough = "passthrough",
+  normal= "normal",
 }
 
 export default BorderStyle
