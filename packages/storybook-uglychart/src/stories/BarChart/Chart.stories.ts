@@ -5,7 +5,7 @@ import { TextStyle, Text, Container, EdgeInsets } from '@moonmoonbrothers/flutte
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
 const meta = {
-	title: 'Widget/RichText',
+	title: 'Widget/BarChart',
 	component: Widget
 } satisfies Meta<Widget>;
 

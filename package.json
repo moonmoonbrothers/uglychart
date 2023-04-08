@@ -11,7 +11,8 @@
     "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/storybook-uglychart",
     "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
     "build-storybook:flutter": "npm run build-storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
-    "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/storybook-flutterjs"
+    "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/storybook-flutterjs",
+    "chromatic:chart": "npm run chromatic -workspace=@moonmoonbrothers/storybook-uglychart"
   },
   "repository": {
     "type": "git",
