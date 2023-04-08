@@ -90,7 +90,6 @@ type Bar =
       {
         backgroundColor: string;
         index: number;
-        ratio: number;
         label: string;
         legend: string;
         reverse: boolean;

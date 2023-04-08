@@ -13,6 +13,10 @@ import {
   MainAxisAlignment,
   CrossAxisAlignment,
   Flex,
+  MainAxisSize,
+  Expanded,
+  Alignment,
+  FractionallySizedBox,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../util";
@@ -69,7 +73,7 @@ class BarGroup extends ComponentWidget {
 
     type AreaType = "negative" | "positive";
 
-    const BarGroup = ({
+    const Bars = ({
       type,
       children,
     }: {
@@ -77,11 +81,11 @@ class BarGroup extends ComponentWidget {
       children: Widget[];
     }) => {
       const flex = barGroupRatio[type];
-      if (flex === 0) return SizedBox({ width: 0, height: 0 });
 
-      return Flexible({
+      return Expanded({
         flex,
         child: Flex({
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment:
             direction === "horizontal"
               ? CrossAxisAlignment.start
@@ -103,37 +107,57 @@ class BarGroup extends ComponentWidget {
         ? ["negative", "positive"]
         : ["positive", "negative"];
 
+    const getBarAlignment = (
+      type: AreaType,
+      direction: "vertical" | "horizontal"
+    ) => {
+      if (type === "negative") {
+        if (direction === "vertical") {
+          return Alignment.topLeft;
+        } else {
+          return Alignment.topRight;
+        }
+      } else {
+        if (direction === "vertical") {
+          return Alignment.bottomLeft;
+        } else {
+          return Alignment.bottomLeft;
+        }
+      }
+    };
+
     return Flex({
       direction,
       children: areas.map((type) =>
-        BarGroup({
-          type,
-          children: [
-            Spacer(),
-            ...datasets.map(({ data, legend }, index) => {
+        Expanded({
+          flex: barGroupRatio[type],
+          child: Flex({
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            direction: direction === "horizontal" ? "vertical" : "horizontal",
+            children: datasets.map(({ data, legend }, index) => {
               const value = data[this.props.index];
-              const reverse = type === "negative";
+              const ratio = barRatio[type](value);
               return Padding({
                 padding: barGap,
-                child: Stack({
-                  children: [
-                    Bar({
-                      direction,
-                      backgroundColor:
-                        backgroundColors[index % backgroundColors.length],
-                      index,
-                      label,
-                      legend,
-                      value,
-                      reverse,
-                      ratio: barRatio[type](value),
-                    }),
-                  ],
+                child: FractionallySizedBox({
+                  alignment: getBarAlignment(type, direction),
+                  widthFactor: direction === "horizontal" ? ratio : undefined,
+                  heightFactor: direction === "vertical" ? ratio : undefined,
+                  child: Bar({
+                    direction,
+                    backgroundColor:
+                      backgroundColors[index % backgroundColors.length],
+                    index,
+                    label,
+                    legend,
+                    value,
+                    reverse: type === "negative",
+                  }),
                 }),
               });
             }),
-            Spacer(),
-          ],
+          }),
         })
       ),
     });

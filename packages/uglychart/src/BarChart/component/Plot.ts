@@ -10,6 +10,7 @@ import {
   Spacer,
   Flex,
   Alignment,
+  MainAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
@@ -40,8 +41,8 @@ class Plot extends ComponentWidget {
     const { labels } = data;
 
     return Container({
-      width: width ?? Infinity,
-      height: height ?? Infinity,
+      width: width,
+      height: height,
       decoration: new BoxDecoration({
         border: Border.all({
           color: "black",
@@ -52,22 +53,14 @@ class Plot extends ComponentWidget {
       child: Flex({
         direction:
           this.props.direction === "vertical" ? "horizontal" : "vertical",
-        children: [
-          Spacer({ flex: 0.5 }),
-          ...labels
-            .map((label, index) => [
-              Flexible({
-                child: BarGroup({
-                  index,
-                  scale: this.props.scale,
-                  label,
-                  direction: this.props.direction,
-                }),
-              }),
-            ])
-            .flat(),
-          Spacer({ flex: 0.5 }),
-        ],
+        children: labels.map((label, index) =>
+          BarGroup({
+            index,
+            scale: this.props.scale,
+            label,
+            direction: this.props.direction,
+          })
+        ),
       }),
     });
   }

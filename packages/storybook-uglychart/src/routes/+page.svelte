@@ -9,7 +9,7 @@
 		datasets: [
 			{
 				legend: 'A',
-				data: [-30, 40.5, 50.12, 30.5, 40]
+				data: [30, 40.5, 50.12, 30.5, 40]
 			},
 			{
 				legend: 'B',
@@ -17,7 +17,7 @@
 			},
 			{
 				legend: 'C',
-				data: [6, -10.5, 20.2, -12.5, 1]
+				data: [6, 10.5, 20.2, 12.5, -1]
 			}
 		]
 	};
@@ -82,7 +82,7 @@
 			})}
 		/>
 
-			<Widget
+		<Widget
 			height="400px"
 			widget={BarChart({
 				custom: {

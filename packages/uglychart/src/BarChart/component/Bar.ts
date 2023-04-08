@@ -17,7 +17,6 @@ import DataLabel from "./DataLabel";
 export type BarProps = {
   backgroundColor: string;
   index: number;
-  ratio: number;
   value: number;
   reverse?: boolean;
   label: string;
@@ -39,7 +38,6 @@ export class Bar extends ComponentWidget {
       backgroundColor,
       index,
       label,
-      ratio,
       legend,
       value,
       direction,
@@ -52,7 +50,6 @@ export class Bar extends ComponentWidget {
         {
           backgroundColor,
           index,
-          ratio,
           theme,
           label,
           legend,
@@ -66,16 +63,10 @@ export class Bar extends ComponentWidget {
     const { thickness = 2 } = bar;
 
     return Container({
-      child: FractionallySizedBox({
-        widthFactor: direction === "horizontal" ? ratio : undefined,
-        heightFactor: direction === "vertical" ? ratio : undefined,
-        child: Container({
-          color: backgroundColor,
-          ...(direction === "horizontal"
-            ? { height: thickness }
-            : { width: thickness }),
-        }),
-      }),
+      color: backgroundColor,
+      ...(direction === "horizontal"
+        ? { height: thickness }
+        : { width: thickness }),
     });
   }
 }
