@@ -41,13 +41,13 @@
 	.widget {
 		width: fit-content;
 		position: relative;
-		background-color: #f8f8f8;
-		color: white;
+		background-color: 	#F0F0F0;
+		color: gray;
 	}
 	.size {
 		position: absolute;
 		margin: 0px;
-		bottom: 4px;
+		top: 4px;
 		right: 4px;
 	}
 	h3 {
