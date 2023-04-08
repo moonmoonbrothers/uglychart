@@ -11,6 +11,8 @@ import {
   Flex,
   Alignment,
   MainAxisAlignment,
+  MainAxisSize,
+  OverflowBox,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
@@ -49,16 +51,26 @@ class Plot extends ComponentWidget {
           width: 2,
         }),
       }),
-      alignment: Alignment.topLeft,
       child: Flex({
         direction:
           this.props.direction === "vertical" ? "horizontal" : "vertical",
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: labels.map((label, index) =>
-          BarGroup({
-            index,
-            scale: this.props.scale,
-            label,
-            direction: this.props.direction,
+          Container({
+            width: this.props.direction === "vertical" ? 0 : undefined,
+            height: this.props.direction === "horizontal" ? 0 : undefined,
+            child: OverflowBox({
+              maxWidth:
+                this.props.direction === "vertical" ? Infinity : undefined,
+              maxHeight:
+                this.props.direction === "horizontal" ? Infinity : undefined,
+              child: BarGroup({
+                index,
+                scale: this.props.scale,
+                label,
+                direction: this.props.direction,
+              }),
+            }),
           })
         ),
       }),
