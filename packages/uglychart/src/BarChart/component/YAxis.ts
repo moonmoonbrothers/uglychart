@@ -14,6 +14,7 @@ import {
   BuildContext,
   MainAxisSize,
   MainAxisAlignment,
+  CrossAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import YAxisLabel from "./YAxisLabel";
@@ -37,9 +38,18 @@ class YAxis extends ComponentWidget {
       return yAxis.Custom({ YAxisLabel }, { theme, data });
     }
 
+    let sortedLabels =
+      this.props.type === "index"
+        ? this.props.labels
+        : [...this.props.labels].reverse();
+
     return Column({
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: this.props.labels.map((label, index) =>
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment:
+        this.props.type === "index"
+          ? MainAxisAlignment.spaceEvenly
+          : MainAxisAlignment.spaceBetween,
+      children: sortedLabels.map((label, index) =>
         Flexible({
           child: Row({
             mainAxisSize: MainAxisSize.min,

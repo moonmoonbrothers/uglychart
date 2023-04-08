@@ -11,6 +11,8 @@ import {
   SizedBox,
   BuildContext,
   MainAxisSize,
+  MainAxisAlignment,
+  CrossAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";
@@ -35,8 +37,11 @@ class XAxis extends ComponentWidget {
     }
 
     return Row({
-      mainAxisAlignment: "spaceBetween",
-      crossAxisAlignment: "end",
+      mainAxisAlignment:
+        this.props.type === "index"
+          ? MainAxisAlignment.spaceEvenly
+          : MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: this.props.labels.map((label, index) =>
         Column({
           mainAxisSize: MainAxisSize.min,

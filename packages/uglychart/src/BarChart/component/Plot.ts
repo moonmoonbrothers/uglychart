@@ -2,9 +2,7 @@ import {
   Container,
   ComponentWidget,
   Widget,
-  Column,
   Flexible,
-  Row,
   BoxDecoration,
   Border,
   BuildContext,
@@ -51,7 +49,8 @@ class Plot extends ComponentWidget {
       }),
       alignment: Alignment.topLeft,
       child: Flex({
-        direction: "vertical", //this.props.direction,
+        direction:
+          this.props.direction === "vertical" ? "horizontal" : "vertical",
         children: [
           Spacer({ flex: 0.5 }),
           ...labels

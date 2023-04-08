@@ -5,7 +5,7 @@
 
 	const data = {
 		title: 'Title',
-		labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
+		labels: ['label1_123_', 'label2', 'label3', 'label4', 'label5'],
 		datasets: [
 			{
 				legend: 'A',
@@ -82,7 +82,7 @@
 			})}
 		/>
 
-		<!-- 	<Widget
+			<Widget
 			height="400px"
 			widget={BarChart({
 				custom: {
@@ -130,7 +130,7 @@
 				},
 				data
 			})}
-		/> -->
+		/>
 	</div>
 </div>
 
