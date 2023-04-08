@@ -8,7 +8,7 @@
     "start:flutter": "npm run dev -workspace=@moonmoonbrothers/like-flutter",
     "start:chart": "npm run dev -workspace=@moonmoonbrothers/storybook-uglychart",
     "start:flutter-svelte": "npm run dev -workspace=@moonmoonbrothers/flutterjs-svelte",
-    "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/uglychart",
+    "storybook:chart": "npm run storybook -workspace=@moonmoonbrothers/storybook-uglychart",
     "storybook:flutter": "npm run storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
     "build-storybook:flutter": "npm run build-storybook -workspace=@moonmoonbrothers/storybook-flutterjs",
     "chromatic:flutter": "npm run chromatic -workspace=@moonmoonbrothers/storybook-flutterjs"

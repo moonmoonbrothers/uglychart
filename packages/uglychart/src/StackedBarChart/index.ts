@@ -9,7 +9,7 @@ import {
   Spacer,
   Widget,
   SizedBox,
-BuildContext 
+  BuildContext,
 } from "@moonmoonbrothers/flutterjs";
 import BarChart from "../BarChart";
 import { BarProps } from "../BarChart/component/Bar";
@@ -195,7 +195,6 @@ export class StackedBarChart extends ComponentWidget {
                       label,
                       legend,
                       value,
-                      ratio: 1,
                     });
 
                   const StackedBars = ({ type }: { type: AreaType }) => {

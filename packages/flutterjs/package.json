@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build .",
     "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && npm pkg set exports='{\".\": \"./index.js\"}' --json"
+    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set exports='{\".\": \"./index.js\"}' --json"
   },
   "repository": {
     "type": "git",
@@ -25,9 +25,5 @@
   "bugs": {
     "url": "https://github.com/moonmoonbrothers/uglychart/issues"
   },
-  "homepage": "https://github.com/moonmoonbrothers/uglychart#readme",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  }
+  "homepage": "https://github.com/moonmoonbrothers/uglychart#readme"
 }

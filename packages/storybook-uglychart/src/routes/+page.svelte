@@ -40,6 +40,7 @@
 			}}
 			height="500px"
 			widget={BarChart({
+				data,
 				custom: {
 					barGroup: {
 						type: 'config',
@@ -77,9 +78,9 @@
 							fontSize: 40
 						}
 					}
-				},
-				data
-			})}
+				}
+			})
+			}
 		/>
 
 		<Widget
