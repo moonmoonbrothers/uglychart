@@ -1,14 +1,14 @@
-import { ThemeProvider, DataProvider, CustomProvider } from "./provider"
-import { BarChartProps, BarChartType, XAxis, YAxis } from "./types"
-import Layout from "./component/Layout"
-import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs"
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget"
-import { Custom, Data, Theme } from "./types"
+import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
+import { BarChartProps, BarChartType, XAxis, YAxis } from "./types";
+import Layout from "./component/Layout";
+import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs";
+import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import { Custom, Data, Theme } from "./types";
 
 class BarChart extends ComponentWidget {
-  custom: Required<Custom>
-  data: Data
-  theme: Required<Theme>
+  custom: Required<Custom>;
+  data: Data;
+  theme: Required<Theme>;
 
   constructor({
     custom: {
@@ -34,19 +34,11 @@ class BarChart extends ComponentWidget {
     } = {},
     data,
     theme: {
-      text: {
-        style: {
-          fontColor = "black",
-          fontFamily = "sans",
-          fontSize = "16px",
-          fontWeight = "500",
-          lineHeight = "2px",
-        } = {},
-      } = {},
+      text: { color = "black", fontFamily = "sans", fontSize = 16 } = {},
       borderColor = "lightblue",
     } = {},
   }: BarChartProps) {
-    super()
+    super();
 
     this.custom = {
       layout,
@@ -61,22 +53,18 @@ class BarChart extends ComponentWidget {
       dataLabel,
       additions,
       title,
-    }
+    };
 
-    this.data = data
+    this.data = data;
 
     this.theme = {
       borderColor,
       text: {
-        style: {
-          fontFamily,
-          fontSize,
-          fontWeight,
-          lineHeight,
-          fontColor,
-        },
+        fontSize,
+        color,
+        fontFamily,
       },
-    }
+    };
   }
 
   override build(context: BuildContext): Widget {
@@ -89,8 +77,8 @@ class BarChart extends ComponentWidget {
           child: Layout(),
         }),
       }),
-    })
+    });
   }
 }
 
-export default (props: BarChartProps) => new BarChart(props)
+export default (props: BarChartProps) => new BarChart(props);

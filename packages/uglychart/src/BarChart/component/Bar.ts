@@ -1,8 +1,10 @@
 import {
+  Alignment,
   Column,
   ComponentWidget,
   Container,
   Flexible,
+  FractionallySizedBox,
   Row,
   Spacer,
   Stack,
@@ -63,43 +65,29 @@ export class Bar extends ComponentWidget {
 
     const { thickness = 2 } = bar;
 
-    const BarWrapper = ({ children }: { children: Widget[] }) =>
-      direction === "horizontal" ? Row({ children }) : Column({ children });
-
-    const Bar = () =>
-      Flexible({
-        flex: ratio,
-        child: Stack({
-          children: [
-            Container({
-              color: backgroundColor,
-              ...(direction === "horizontal"
-                ? { height: thickness }
-                : { width: thickness }),
-            }),
-            // It is wrapped by Positioned Widget
-            DataLabel({
-              value,
-              index,
-              label,
-              legend,
-              direction,
-              reverse,
-            }),
-          ],
+    return Container({
+      child: FractionallySizedBox({
+        widthFactor: direction === "horizontal" ? ratio : undefined,
+        heightFactor: direction === "vertical" ? ratio : undefined,
+        child: Container({
+          color: backgroundColor,
+          ...(direction === "horizontal"
+            ? { height: thickness }
+            : { width: thickness }),
         }),
-      });
-
-    const Vacant = () => Spacer({ flex: 1 - ratio });
-
-    return BarWrapper({
-      children:
-        (direction === "horizontal" && !reverse) ||
-        (direction === "vertical" && reverse)
-          ? [Bar(), Vacant()]
-          : [Vacant(), Bar()],
+      }),
     });
   }
 }
 
 export default (props: BarProps) => new Bar(props);
+
+// // It is wrapped by Positioned Widget
+// DataLabel({
+//   value,
+//   index,
+//   label,
+//   legend,
+//   direction,
+//   reverse,
+// }),

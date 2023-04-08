@@ -3,6 +3,7 @@ import {
   ComponentWidget,
   Widget,
   Flexible,
+  Row,
   BoxDecoration,
   Border,
   BuildContext,
