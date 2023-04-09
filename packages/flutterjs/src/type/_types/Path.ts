@@ -122,31 +122,42 @@ export class Path {
       radiuses.reverse();
     }
 
-    return this.moveTo(points[0])
-      .arcToPoint({
+    this.moveTo(points[0]);
+    if (radiuses[0].x !== 0 && radiuses[0].y !== 0) {
+      this.arcToPoint({
         ...common,
         radius: radiuses[0],
         endPoint: points[1],
-      })
-      .lineTo(points[2])
-      .arcToPoint({
+      });
+    }
+    this.lineTo(points[2]);
+
+    if (radiuses[1].x !== 0 && radiuses[1].y !== 0) {
+      this.arcToPoint({
         ...common,
         radius: radiuses[1],
         endPoint: points[3],
-      })
-      .lineTo(points[4])
-      .arcToPoint({
+      });
+    }
+    this.lineTo(points[4]);
+    if (radiuses[2].x !== 0 && radiuses[2].y !== 0) {
+      this.arcToPoint({
         ...common,
         radius: radiuses[2],
         endPoint: points[5],
-      })
-      .lineTo(points[6])
-      .arcToPoint({
+      });
+    }
+    this.lineTo(points[6]);
+    if (radiuses[3].x !== 0 && radiuses[3].y !== 0) {
+      this.arcToPoint({
         ...common,
         radius: radiuses[3],
         endPoint: points[7],
-      })
-      .close();
+      });
+    }
+    this.close();
+
+    return this;
   }
 
   addDRRect({ inner, outer }: { inner: RRect; outer: RRect }) {
