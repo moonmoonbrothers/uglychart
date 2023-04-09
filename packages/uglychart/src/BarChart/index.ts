@@ -1,5 +1,5 @@
 import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
-import { BarChartProps, BarChartType, XAxis, YAxis } from "./types";
+import { BarChartProps } from "./types";
 import Layout from "./component/Layout";
 import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
@@ -19,7 +19,9 @@ class BarChart extends ComponentWidget {
         type: "config" as const,
       },
       xAxis = { type: "config" as const },
-      yAxis = { type: "config" as const },
+      yAxis = {
+        type: "config" as const,
+      },
       xAxisLabel = {
         type: "config" as const,
         font: {},
@@ -34,8 +36,13 @@ class BarChart extends ComponentWidget {
     } = {},
     data,
     theme: {
-      text: { color = "black", fontFamily = "sans", fontSize = 16 } = {},
-      borderColor = "lightblue",
+      text: {
+        color = "black",
+        fontFamily = "Noto Sans KR, sans-serif",
+        fontSize = 16,
+        lineHeight = 1.2,
+      } = {},
+      border: { width: borderWidth = 2, color: borderColor = "black" } = {},
     } = {},
   }: BarChartProps) {
     super();
@@ -58,11 +65,15 @@ class BarChart extends ComponentWidget {
     this.data = data;
 
     this.theme = {
-      borderColor,
+      border: {
+        width: borderWidth,
+        color: borderColor
+      },
       text: {
         fontSize,
         color,
         fontFamily,
+        lineHeight
       },
     };
   }

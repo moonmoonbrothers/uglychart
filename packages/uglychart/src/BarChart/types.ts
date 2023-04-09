@@ -1,16 +1,17 @@
 import {
   Alignment,
-  BorderStyle,
   EdgeInsets,
   Radius,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
-import { BarProps } from "./component/Bar";
-import { BarGroupProps } from "./component/BarGroup";
-import { PlotProps } from "./component/Plot";
+import { TitleConfig } from "./component/Title";
+import { BarProps, BarConfig } from "./component/Bar";
+import { BarGroupProps, BarGroupConfig } from "./component/BarGroup";
+import { PlotProps, PlotConfig } from "./component/Plot";
 import { XAxisProps } from "./component/XAxis";
 import { YAxisProps } from "./component/YAxis";
 import { YAxisLabelProps } from "./component/YAxisLabel";
+import { LayoutConfig } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
 
 export type Scale = _Scale;
@@ -65,12 +66,7 @@ export type CustomWidget<
 };
 
 type BarGroup =
-  | {
-      type: "config";
-      barBackgroundColors?: string[];
-      barBorderColors?: string[];
-      gap?: number;
-    }
+  | BarGroupConfig
   | CustomWidget<
       {
         Bar: (props: BarProps) => Widget;
@@ -79,12 +75,7 @@ type BarGroup =
     >;
 
 type Bar =
-  | {
-      type: "config";
-      thickness?: number;
-      thicknessPercentage?: number;
-      colors?: string[];
-    }
+  | BarConfig
   | CustomWidget<
       {},
       {
@@ -99,39 +90,20 @@ type Bar =
       }
     >;
 
-type Title =
-  | {
-      type: "config";
-      margin?: EdgeInsets;
-      alignment?: "start" | "end" | "center";
-      font?: Font;
-    }
-  | CustomWidget<{}, { text: string }>;
+type Title = TitleConfig | CustomWidget<{}, { text: string }>;
 
-type XAxisLabel =
-  | {
-      type: "config";
-      margin?: EdgeInsets;
-      font?: Font;
-    }
-  | CustomWidget<{}, { text: string; index: number }>;
+type AxisLabel = {
+  type: "config";
+  margin?: EdgeInsets;
+  font?: Font;
+};
 
-type YAxisLabel =
-  | {
-      type: "config";
-      margin?: EdgeInsets;
-      font?: Font;
-    }
-  | CustomWidget<{}, { text: string; index: number }>;
+type XAxisLabel = AxisLabel | CustomWidget<{}, { text: string; index: number }>;
+
+type YAxisLabel = AxisLabel | CustomWidget<{}, { text: string; index: number }>;
 
 export type XAxis =
   | Axis
-  | {
-      type: "config";
-      color?: string;
-      thickness?: number;
-      tick?: Tick;
-    }
   | ({ axis: "data" | "label" } & CustomWidget<
       { XAxisLabel: (props: { index: number; text: string }) => Widget },
       { data: Data }
@@ -144,18 +116,12 @@ export type YAxis =
       { data: Data }
     >;
 
-type Layout =
-  | {
-      type: "config";
-      padding?: EdgeInsets;
-    }
-  | CustomWidget<"Title" | "Chart">;
+type Layout = LayoutConfig | CustomWidget<"Title" | "Chart">;
 
 type Tick = {
-  type: "config";
   color?: string;
-  width?: number;
-  height?: number;
+  thickness?: number;
+  length?: number;
 };
 
 type Axis = {
@@ -188,22 +154,7 @@ type DataLabel =
     >;
 
 type Plot =
-  | {
-      type: "config";
-      width?: number;
-      height?: number;
-      border?: BorderStyle;
-      verticalLine?: {
-        color?: string;
-        width?: string;
-        count?: number;
-      };
-      horizontalLine?: {
-        color?: string;
-        width?: string;
-        count?: number;
-      };
-    }
+  | PlotConfig
   | CustomWidget<
       {
         BarGroup: (props: BarGroupProps) => Widget;
@@ -228,13 +179,17 @@ export type Chart =
 
 export type Theme = {
   text?: Font;
-  borderColor?: string;
+  border?: {
+    color?: string;
+    width?: number;
+  };
 };
 
 export type Font = {
   fontSize?: number;
   color?: string;
   fontFamily?: string;
+  lineHeight?: number;
 };
 
 export type Addition = {

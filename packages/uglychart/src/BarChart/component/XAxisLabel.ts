@@ -41,6 +41,7 @@ class XAxisLabel extends ComponentWidget {
           fontFamily: font?.fontFamily ?? theme.text.fontFamily,
           fontSize: font?.fontSize ?? theme.text.fontSize,
           color: font?.color ?? theme.text.color,
+          height: font?.lineHeight ?? theme.text.lineHeight,
         }),
       }),
     });

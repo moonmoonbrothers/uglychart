@@ -6,8 +6,17 @@ import {
   TextStyle,
   Widget,
   BuildContext,
+  EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import { Font } from "../types";
+
+export type TitleConfig = {
+  type: "config";
+  margin?: EdgeInsets;
+  alignment?: "start" | "end" | "center";
+  font?: Font;
+};
 
 class Title extends ComponentWidget {
   build(context: BuildContext): Widget {

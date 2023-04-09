@@ -1,16 +1,9 @@
 import {
-  Column,
   ComponentWidget,
   EdgeInsets,
-  Flexible,
   Padding,
-  Row,
-  Spacer,
-  Stack,
   Widget,
-  SizedBox,
   BuildContext,
-  MainAxisAlignment,
   CrossAxisAlignment,
   Flex,
   MainAxisSize,
@@ -27,6 +20,13 @@ export type BarGroupProps = {
   index: number;
   label: string;
   scale: Scale;
+};
+
+export type BarGroupConfig = {
+  type: "config";
+  barBackgroundColors?: string[];
+  barBorderColors?: string[];
+  gap?: number;
 };
 
 class BarGroup extends ComponentWidget {

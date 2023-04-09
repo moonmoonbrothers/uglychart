@@ -18,6 +18,26 @@ export type PlotProps = {
   scale: Scale;
 };
 
+export type PlotConfig = {
+  type: "config";
+  width?: number;
+  height?: number;
+  border?: {
+    width?: number;
+    color?: string;
+  };
+  verticalLine?: {
+    color?: string;
+    width?: string;
+    count?: number;
+  };
+  horizontalLine?: {
+    color?: string;
+    width?: string;
+    count?: number;
+  };
+};
+
 class Plot extends ComponentWidget {
   constructor(private props: PlotProps) {
     super();
@@ -52,9 +72,10 @@ class Plot extends ComponentWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: labels.map((label, index) =>
           Container({
-            width: this.props.direction === "vertical" ? 0 : undefined,
+            width: this.props.direction === "vertical" ? 2 : undefined,
             height: this.props.direction === "horizontal" ? 0 : undefined,
             child: OverflowBox({
+              minWidth: 0,
               maxWidth:
                 this.props.direction === "vertical" ? Infinity : undefined,
               maxHeight:

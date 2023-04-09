@@ -13,6 +13,7 @@ import {
   MainAxisSize,
   MainAxisAlignment,
   CrossAxisAlignment,
+  EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";
@@ -21,6 +22,13 @@ export type XAxisProps = {
   type: "index" | "value";
   labels: string[];
 };
+
+export const defaultXAxisConfig = {
+  tick: {
+    thickness: 2,
+    length: 10,
+  }
+}
 
 class XAxis extends ComponentWidget {
   constructor(private props: XAxisProps) {
@@ -36,25 +44,29 @@ class XAxis extends ComponentWidget {
       return xAxis.Custom({ XAxisLabel }, { theme, data });
     }
 
-    return Row({
-      mainAxisAlignment:
-        this.props.type === "index"
-          ? MainAxisAlignment.spaceEvenly
-          : MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: this.props.labels.map((label, index) =>
-        Column({
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container({
-              width: 2,
-              height: 10,
-              color: "black",
-            }),
-            XAxisLabel({ text: `${label}`, index }),
-          ],
-        })
-      ),
+    return Container({
+      padding: EdgeInsets.symmetric({ horizontal: 2 }),
+      child: Row({
+        mainAxisAlignment:
+          this.props.type === "index"
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: this.props.labels.map((label, index) =>
+          Column({
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container({
+                width: 2,
+                height: 10,
+                color: "black",
+              }),
+              XAxisLabel({ text: `${label}`, index }),
+            ],
+          })
+        ),
+      }),
     });
   }
 }

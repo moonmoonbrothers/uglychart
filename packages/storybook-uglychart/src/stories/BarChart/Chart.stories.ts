@@ -199,11 +199,11 @@ export const Vertical: Story = {
 					type: 'custom',
 					Custom: () =>
 						Container({
-							width: 12,
+							width: 2,
 							decoration: new BoxDecoration({
 								color: '#00308F',
 								borderRadius: BorderRadius.vertical({
-									top: Radius.circular(6)
+									// top: Radius.circular(6)
 								})
 							})
 						})

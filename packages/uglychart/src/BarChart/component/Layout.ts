@@ -5,21 +5,27 @@ import {
   Container,
   Flexible,
   Widget,
-  BuildContext
-} from "@moonmoonbrothers/flutterjs"
-import Title from "./Title"
-import Chart from "./Chart"
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider"
+  BuildContext,
+  EdgeInsets,
+} from "@moonmoonbrothers/flutterjs";
+import Title from "./Title";
+import Chart from "./Chart";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+
+export type LayoutConfig = {
+  type: "config";
+  padding?: EdgeInsets;
+};
 
 class Layout extends ComponentWidget {
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context)
-    const data = DataProvider.of(context)
-    const { layout } = CustomProvider.of(context)
+    const theme = ThemeProvider.of(context);
+    const data = DataProvider.of(context);
+    const { layout } = CustomProvider.of(context);
     if (layout.type === "custom")
-      return layout.Custom({ Title, Chart }, { theme, data })
+      return layout.Custom({ Title, Chart }, { theme, data });
 
-    const { padding } = layout
+    const { padding } = layout;
     return Container({
       width: Infinity,
       height: Infinity,
@@ -33,8 +39,8 @@ class Layout extends ComponentWidget {
           }),
         ],
       }),
-    })
+    });
   }
 }
 
-export default () => new Layout()
+export default () => new Layout();

@@ -1,17 +1,10 @@
 import {
-  Alignment,
   ComponentWidget,
   Container,
-  EdgeInsets,
-  Padding,
   Text,
-  TextOverflow,
   TextStyle,
   Widget,
   BuildContext,
-  IntrinsicWidth,
-  FractionalTranslation,
-  Offset,
   ConstraintsTransformBox,
   Constraints,
 } from "@moonmoonbrothers/flutterjs";
@@ -52,6 +45,7 @@ class YAxisLabel extends ComponentWidget {
             fontFamily: font?.fontFamily ?? theme.text.fontFamily,
             fontSize: font?.fontSize ?? theme.text.fontSize,
             color: font?.color ?? theme.text.color,
+            height: font?.lineHeight ?? theme.text.lineHeight
           }),
         }),
       }),

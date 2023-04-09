@@ -3,18 +3,17 @@ import {
   ComponentWidget,
   Container,
   Flexible,
-  IntrinsicWidth,
   Row,
-  Align,
   Widget,
-  Alignment,
-  Padding,
-  EdgeInsets,
   SizedBox,
   BuildContext,
   MainAxisSize,
   MainAxisAlignment,
   CrossAxisAlignment,
+  DecoratedBox,
+  BoxDecoration,
+  Border,
+  BorderSide,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import YAxisLabel from "./YAxisLabel";
@@ -22,6 +21,13 @@ import YAxisLabel from "./YAxisLabel";
 export type YAxisProps = {
   type: "index" | "value";
   labels: string[];
+};
+
+export const defaultYAxisConfig = {
+  tick: {
+    thickness: 2,
+    length: 10,
+  },
 };
 
 class YAxis extends ComponentWidget {
@@ -43,28 +49,38 @@ class YAxis extends ComponentWidget {
         ? this.props.labels
         : [...this.props.labels].reverse();
 
-    return Column({
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment:
-        this.props.type === "index"
-          ? MainAxisAlignment.spaceEvenly
-          : MainAxisAlignment.spaceBetween,
-      children: sortedLabels.map((label, index) =>
-        Flexible({
-          child: Row({
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              YAxisLabel({ text: label, index }),
-              SizedBox.shrink({ width: 2 }),
-              Container({
-                width: 10,
-                height: 2,
-                color: "black",
-              }),
-            ],
+    return DecoratedBox({
+      decoration: new BoxDecoration({
+        border: new Border({
+          right: new BorderSide({
+            color: yAxis.color ?? theme.border.color,
+            width: yAxis.thickness ?? theme.border.width,
           }),
-        })
-      ),
+        }),
+      }),
+      child: Column({
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment:
+          this.props.type === "index"
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.spaceBetween,
+        children: sortedLabels.map((label, index) =>
+          Flexible({
+            child: Row({
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                YAxisLabel({ text: label, index }),
+                Container({
+                  width: yAxis.tick?.length ?? defaultYAxisConfig.tick.length,
+                  height:
+                    yAxis.tick?.thickness ?? defaultYAxisConfig.tick.thickness,
+                  color: yAxis.color ?? theme.border.color,
+                }),
+              ],
+            }),
+          })
+        ),
+      }),
     });
   }
 }
