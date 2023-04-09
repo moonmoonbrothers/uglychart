@@ -18,6 +18,13 @@ export type TitleConfig = {
   font?: Font;
 };
 
+const defaultTitleConfig = {
+  font: {
+    fontSize: 24,
+  },
+  alignment: "start" as const,
+};
+
 class Title extends ComponentWidget {
   build(context: BuildContext): Widget {
     const data = DataProvider.of(context);
@@ -29,17 +36,18 @@ class Title extends ComponentWidget {
       return title.Custom({}, { theme, data, text });
     }
 
-    const { alignment, font = theme.text, margin } = title;
+    const { alignment, font, margin } = title;
     return Row({
-      mainAxisAlignment: alignment === "center" ? "spaceEvenly" : alignment,
+      mainAxisAlignment: alignment ?? defaultTitleConfig.alignment,
       children: [
         Padding({
           padding: margin,
           child: Text(text, {
             style: new TextStyle({
-              color: font.color,
-              fontFamily: font.fontFamily,
-              fontSize: font.fontSize,
+              fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+              fontSize: font?.fontSize ?? defaultTitleConfig.font.fontSize,
+              color: font?.color ?? theme.text.color,
+              height: font?.lineHeight ?? theme.text.lineHeight,
             }),
           }),
         }),

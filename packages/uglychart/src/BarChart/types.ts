@@ -18,7 +18,6 @@ export type Scale = _Scale;
 
 export type BarChartProps = {
   data: Data;
-  scale?: Partial<Scale>;
   theme?: Theme;
   padding?: EdgeInsets;
   custom?: Custom;
@@ -127,6 +126,8 @@ type Tick = {
 type Axis = {
   type: "config";
   tick?: Tick;
+  thickness?: number;
+  color?: string;
 };
 
 type DataLabel =
