@@ -91,7 +91,7 @@ export const Case1: Story = {
 const Case2Code = dedent`
 	Container({
 		color: 'lightblue',
-		child: Text('text', { style: { fontSize: '30px' } })
+		child: Text('text', { style: new TextStyle({ fontSize: 30 }) })
 	})
 `;
 export const Case2: Story = {
