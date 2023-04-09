@@ -51,18 +51,19 @@ class YAxis extends ComponentWidget {
     const axisColor = yAxis.color ?? theme.border.color;
     return Container({
       decoration: new BoxDecoration({
-        border: new Border({
-          right: new BorderSide({
-            color: axisColor,
-            width: axisThickness,
-          }),
-        }),
+        color: "gray",
+        // border: new Border({
+        //   left: new BorderSide({
+        //     color: axisColor,
+        //     width: axisThickness,
+        //   }),
+        // }),
       }),
       child: Column({
-        verticalDirection:
-          this.props.type === "value"
-            ? VerticalDirection.up
-            : VerticalDirection.down,
+        // verticalDirection:
+        //   this.props.type === "value"
+        //     ? VerticalDirection.up
+        //     : VerticalDirection.down,
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
           this.props.type === "index"
@@ -74,27 +75,27 @@ class YAxis extends ComponentWidget {
             children: [
               YAxisLabel({ text: label, index }),
               Container({
-                height: 0,
-                width: yAxis.tick?.length ?? defaultYAxisConfig.tick.length,
-                child: OverflowBox({
-                  alignment:
-                    this.props.type === "index"
-                      ? Alignment.center
-                      : index === 0
-                      ? Alignment.topCenter
-                      : index === this.props.labels.length - 1
-                      ? Alignment.topCenter
-                      : Alignment.center,
-                  maxHeight: Infinity,
-                  child: Container({
-                    width: yAxis.tick?.length ?? defaultYAxisConfig.tick.length,
-                    height:
-                      yAxis.tick?.thickness ??
-                      axisThickness ??
-                      defaultYAxisConfig.tick.thickness,
-                    color: yAxis.tick?.color ?? axisColor,
-                  }),
-                }),
+                height: 10,
+                color: "black",
+                width: 120, // yAxis.tick?.length ?? defaultYAxisConfig.tick.length,
+                // child: OverflowBox({
+                //   alignment:
+                //     this.props.type === "index"
+                //       ? Alignment.center
+                //       : index === 0
+                //       ? Alignment.topCenter
+                //       : index === this.props.labels.length - 1
+                //       ? Alignment.topCenter
+                //       : Alignment.center,
+                //   maxHeight: Infinity,
+                //   child: Container({
+                //     height:
+                //       yAxis.tick?.thickness ??
+                //       axisThickness ??
+                //       defaultYAxisConfig.tick.thickness,
+                //     color: yAxis.tick?.color ?? axisColor,
+                //   }),
+                // }),
               }),
             ],
           })

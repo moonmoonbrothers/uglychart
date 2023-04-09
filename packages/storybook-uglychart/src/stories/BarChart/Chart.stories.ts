@@ -11,6 +11,7 @@ import {
 	Radius
 } from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
+import { tick } from 'svelte';
 
 const meta = {
 	title: 'Widget/BarChart',
@@ -152,7 +153,7 @@ export const Basic: Story = {
 export const Vertical: Story = {
 	args: {
 		ssrSize: { width: 800, height: 450 },
-		width: '1000px',
+		width: '900px',
 		height: '450px',
 		widget: BarChart({
 			data: {
@@ -199,7 +200,7 @@ export const Vertical: Story = {
 					type: 'custom',
 					Custom: () =>
 						Container({
-							width: 2,
+							width: 12,
 							decoration: new BoxDecoration({
 								color: '#00308F',
 								borderRadius: BorderRadius.vertical({
@@ -208,8 +209,20 @@ export const Vertical: Story = {
 							})
 						})
 				},
+				xAxis: {
+					type: 'config',
+					color: 'blue',
+					tick: {
+						color: 'black'
+					}
+				},
 				yAxis: {
-					type: 'config'
+					type: 'config',
+					color: 'transparent',
+					tick: {
+						color: 'black',
+						thickness: 10
+					}
 				},
 				plot: {
 					type: 'config'
@@ -240,6 +253,9 @@ export const Vertical: Story = {
 			theme: {
 				text: {
 					fontFamily: 'Noto Sans KR, sans-serif'
+				},
+				border: {
+					width: 10
 				}
 			}
 		}),

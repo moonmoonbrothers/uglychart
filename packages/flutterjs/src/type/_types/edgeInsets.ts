@@ -13,6 +13,14 @@ export class EdgeInsetsGeometry {
   left: number;
   right: number;
 
+  get horizontal(): number {
+    return this.left + this.right
+  }
+
+  get vertical(): number {
+    return this.top + this.bottom
+  }
+
   constructor({ top, bottom, left, right }: EdgeInsetsProps) {
     this.top = top;
     this.bottom = bottom;
