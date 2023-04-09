@@ -126,8 +126,6 @@ type Tick = {
 
 type Axis = {
   type: "config";
-  color?: string;
-  thickness?: number;
   tick?: Tick;
 };
 
