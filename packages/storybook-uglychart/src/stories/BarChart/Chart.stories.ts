@@ -1,7 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { dedent } from 'ts-dedent';
-import { TextStyle, Text, Container, EdgeInsets } from '@moonmoonbrothers/flutterjs';
+import {
+	TextStyle,
+	Text,
+	Container,
+	EdgeInsets,
+	BoxDecoration,
+	BorderRadius,
+	Radius,
+	Positioned,
+	Column,
+	CrossAxisAlignment,
+	Expanded,
+	Border,
+	BorderSide,
+	Row,
+	MainAxisSize,
+	SizedBox
+} from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
 const meta = {
@@ -41,6 +58,27 @@ export const Basic: Story = {
 					type: 'config',
 					barBackgroundColors: ['black', 'grey', 'brown', 'black']
 				},
+				chart: {
+					type: 'config',
+					additions: [
+						Positioned({
+							bottom: -20,
+							right: -15,
+							child: Text('%ile')
+						}),
+						Positioned({
+							bottom: -25,
+							left: 20,
+							child: Container({
+								color: 'black',
+								padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
+								child: Text('made by moon', {
+									style: new TextStyle({ fontSize: 12, color: 'white' })
+								})
+							})
+						})
+					]
+				},
 				bar: {
 					type: 'config',
 					thickness: 15
@@ -49,23 +87,6 @@ export const Basic: Story = {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
 				},
-				additions: [
-					{
-						position: { bottom: -20, right: -15 },
-						Custom: () => Text('%ile')
-					},
-					{
-						position: { bottom: -25, left: 20 },
-						Custom: () =>
-							Container({
-								color: 'black',
-								padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
-								child: Text('made by moon', {
-									style: new TextStyle({ fontSize: 12, color: 'white' })
-								})
-							})
-					}
-				],
 				title: {
 					type: 'config',
 					alignment: 'center',
@@ -137,6 +158,354 @@ export const Basic: Story = {
 				}
 			}
 		})
+	`
+	}
+};
+
+export const Vertical: Story = {
+	args: {
+		ssrSize: { width: 800, height: 450 },
+		width: '900px',
+		height: '450px',
+		widget: BarChart({
+			data: {
+				title: '단어 검사 자음 정확도',
+				labels: [
+					'음절',
+					'모음',
+					'자음',
+					'초성',
+					'종성',
+					'*ㅂㄷㄱ',
+					'ㅁㄴㅇ',
+					'ㅈㅉㅊ',
+					'ㅅㅆ',
+					'ㄹ',
+					'양순음 (자질)',
+					'치경음 (자질)',
+					'연구개음 (자질)',
+					'비음 (자질)',
+					'기식음 (자질)'
+				],
+				datasets: [
+					{
+						legend: '%',
+						data: [40, 85, 50, 40, 85, 40, 85, 50, 50, 50, 40, 85, 50, 50, 40]
+					}
+				]
+			},
+			custom: {
+				layout: {
+					type: 'config',
+					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
+				},
+				chart: {
+					type: 'config',
+					direction: 'vertical',
+					scale: {
+						max: 100,
+						min: 0,
+						step: 20
+					},
+					additions: [
+						Positioned({
+							right: 0,
+							top: -20,
+							child: Row({
+								mainAxisSize: MainAxisSize.min,
+								children: [
+									Container({
+										decoration: new BoxDecoration({
+											borderRadius: BorderRadius.all(Radius.circular(8)),
+											color: 'blue'
+										}),
+										width: 16,
+										height: 16
+									}),
+									SizedBox({ width: 3 }),
+									Text('%', {
+										style: new TextStyle({
+											fontFamily: 'Noto Sans KR, sans-serif',
+											height: 1
+										})
+									}),
+									SizedBox({ width: 10 }),
+									Container({
+										decoration: new BoxDecoration({
+											borderRadius: BorderRadius.all(Radius.circular(8)),
+											color: 'orange'
+										}),
+										width: 16,
+										height: 16
+									}),
+									SizedBox({ width: 3 }),
+									Text('%ile', {
+										style: new TextStyle({
+											fontFamily: 'Noto Sans KR, sans-serif',
+											height: 1
+										})
+									})
+								]
+							})
+						})
+					]
+				},
+				bar: {
+					type: 'custom',
+					Custom: () =>
+						Container({
+							width: 12,
+							decoration: new BoxDecoration({
+								color: '#00308F',
+								borderRadius: BorderRadius.vertical({
+									top: Radius.circular(6)
+								})
+							})
+						})
+				},
+				xAxis: {
+					type: 'config',
+					tick: {
+						length: 0
+					}
+				},
+				xAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ top: 5 })
+				},
+				yAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ right: 5 })
+				},
+				yAxis: {
+					type: 'config',
+					thickness: 0,
+					tick: {
+						length: 0
+					}
+				},
+				plot: {
+					type: 'config',
+					additions: [
+						Column({
+							crossAxisAlignment: CrossAxisAlignment.stretch,
+							children: Array.from({ length: 5 }, () =>
+								Expanded({
+									child: Container({
+										decoration: new BoxDecoration({
+											border: new Border({
+												top: new BorderSide({
+													color: '#E8E8E8',
+													width: 2
+												})
+											})
+										})
+									})
+								})
+							)
+						})
+					]
+				},
+				title: {
+					type: 'config',
+					alignment: 'start',
+					font: {
+						fontSize: 24,
+						color: '#00308F',
+						fontFamily: 'Noto Sans KR, sans-serif'
+					},
+					margin: EdgeInsets.only({ bottom: 20 })
+				}
+			},
+			theme: {
+				text: {
+					fontFamily: 'Noto Sans KR, sans-serif'
+				},
+				border: {
+					color: '#E8E8E8'
+				}
+			}
+		}),
+		code: dedent`
+	import { BarChart } from '@moonmoonbrothers/uglychart';
+	import {
+		TextStyle,
+		Text,
+		Container,
+		EdgeInsets,
+		BoxDecoration,
+		BorderRadius,
+		Radius,
+		Positioned,
+		Column,
+		CrossAxisAlignment,
+		Expanded,
+		Border,
+		BorderSide,
+		Row,
+		MainAxisSize,
+		SizedBox
+	} from '@moonmoonbrothers/flutterjs';
+
+	BarChart({
+		data: {
+			title: '단어 검사 자음 정확도',
+			labels: [
+				'음절',
+				'모음',
+				'자음',
+				'초성',
+				'종성',
+				'*ㅂㄷㄱ',
+				'ㅁㄴㅇ',
+				'ㅈㅉㅊ',
+				'ㅅㅆ',
+				'ㄹ',
+				'양순음 (자질)',
+				'치경음 (자질)',
+				'연구개음 (자질)',
+				'비음 (자질)',
+				'기식음 (자질)'
+			],
+			datasets: [
+				{
+					legend: '%',
+					data: [40, 85, 50, 40, 85, 40, 85, 50, 50, 50, 40, 85, 50, 50, 40]
+				}
+			]
+		},
+		custom: {
+			layout: {
+				type: 'config',
+				padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
+			},
+			chart: {
+				type: 'config',
+				direction: 'vertical',
+				scale: {
+					max: 100,
+					min: 0,
+					step: 20
+				},
+				additions: [
+					Positioned({
+						right: 0,
+						top: -20,
+						child: Row({
+							mainAxisSize: MainAxisSize.min,
+							children: [
+								Container({
+									decoration: new BoxDecoration({
+										borderRadius: BorderRadius.all(Radius.circular(8)),
+										color: 'blue'
+									}),
+									width: 16,
+									height: 16
+								}),
+								SizedBox({ width: 3 }),
+								Text('%', {
+									style: new TextStyle({
+										fontFamily: 'Noto Sans KR, sans-serif',
+										height: 1
+									})
+								}),
+								SizedBox({ width: 10 }),
+								Container({
+									decoration: new BoxDecoration({
+										borderRadius: BorderRadius.all(Radius.circular(8)),
+										color: 'orange'
+									}),
+									width: 16,
+									height: 16
+								}),
+								SizedBox({ width: 3 }),
+								Text('%ile', {
+									style: new TextStyle({
+										fontFamily: 'Noto Sans KR, sans-serif',
+										height: 1
+									})
+								})
+							]
+						})
+					})
+				]
+			},
+			bar: {
+				type: 'custom',
+				Custom: () =>
+					Container({
+						width: 12,
+						decoration: new BoxDecoration({
+							color: '#00308F',
+							borderRadius: BorderRadius.vertical({
+								top: Radius.circular(6)
+							})
+						})
+					})
+			},
+			xAxis: {
+				type: 'config',
+				tick: {
+					length: 0
+				}
+			},
+			xAxisLabel: {
+				type: 'config',
+				margin: EdgeInsets.only({ top: 5 })
+			},
+			yAxisLabel: {
+				type: 'config',
+				margin: EdgeInsets.only({ right: 5 })
+			},
+			yAxis: {
+				type: 'config',
+				thickness: 0,
+				tick: {
+					length: 0
+				}
+			},
+			plot: {
+				type: 'config',
+				additions: [
+					Column({
+						crossAxisAlignment: CrossAxisAlignment.stretch,
+						children: Array.from({ length: 5 }, () =>
+							Expanded({
+								child: Container({
+									decoration: new BoxDecoration({
+										border: new Border({
+											top: new BorderSide({
+												color: '#E8E8E8',
+												width: 2
+											})
+										})
+									})
+								})
+							})
+						)
+					})
+				]
+			},
+			title: {
+				type: 'config',
+				alignment: 'start',
+				font: {
+					fontSize: 24,
+					color: '#00308F',
+					fontFamily: 'Noto Sans KR, sans-serif'
+				},
+				margin: EdgeInsets.only({ bottom: 20 })
+			}
+		},
+		theme: {
+			text: {
+				fontFamily: 'Noto Sans KR, sans-serif'
+			},
+			border: {
+				color: '#E8E8E8'
+			}
+		}
+	}),
 	`
 	}
 };

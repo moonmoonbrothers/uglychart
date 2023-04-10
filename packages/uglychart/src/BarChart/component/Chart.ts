@@ -12,6 +12,9 @@ import {
   BuildContext,
   Text,
   Opacity,
+  BoxDecoration,
+  Border,
+  BorderSide,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxis from "./XAxis";
@@ -24,7 +27,7 @@ class Chart extends ComponentWidget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { labels, datasets } = DataProvider.of(context);
-    const { chart, additions } = CustomProvider.of(context);
+    const { chart, yAxis, xAxis } = CustomProvider.of(context);
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
@@ -46,7 +49,11 @@ class Chart extends ComponentWidget {
 
     const suggestedScale = getScale(roughScale);
 
-    const { direction = "horizontal", scale: scaleOption } = chart;
+    const {
+      direction = "horizontal",
+      scale: scaleOption,
+      additions = [],
+    } = chart;
 
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,
@@ -84,7 +91,43 @@ class Chart extends ComponentWidget {
                   Plot({ direction, scale }),
                 ],
                 [
-                  null,
+                  Container({
+                    alignment: Alignment.topRight,
+                    child: Container({
+                      width:
+                        (yAxis.type === "config"
+                          ? yAxis.thickness
+                          : undefined) ?? theme.border.width,
+                      height:
+                        (xAxis.type === "config"
+                          ? xAxis.thickness
+                          : undefined) ?? theme.border.width,
+                      decoration: new BoxDecoration({
+                        border: new Border({
+                          left: new BorderSide({
+                            color:
+                              (yAxis.type === "config"
+                                ? yAxis.color
+                                : undefined) ?? theme.border.color,
+                            width:
+                              (yAxis.type === "config"
+                                ? yAxis.thickness
+                                : undefined) ?? theme.border.width,
+                          }),
+                          bottom: new BorderSide({
+                            color:
+                              (xAxis.type === "config"
+                                ? xAxis.color
+                                : undefined) ?? theme.border.color,
+                            width:
+                              (xAxis.type === "config"
+                                ? xAxis.thickness
+                                : undefined) ?? theme.border.width,
+                          }),
+                        }),
+                      }),
+                    }),
+                  }),
                   XAxis({
                     labels: xLabels,
                     type: direction === "vertical" ? "index" : "value",
@@ -95,9 +138,7 @@ class Chart extends ComponentWidget {
               templateRows: [Grid.Fr(1), Grid.ContentFit()],
             }),
           }),
-          ...additions.map(({ position, Custom }) =>
-            Positioned({ ...position, child: Custom() })
-          ),
+          ...additions,
         ],
       }),
     });

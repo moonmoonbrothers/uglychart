@@ -1,3 +1,4 @@
+import EdgeInsets from "./EdgeInsets";
 import Size from "./Size";
 
 type ConstraintsProps = {
@@ -164,6 +165,20 @@ class Constraints {
       maxHeight: maxHeight ?? this.maxHeight,
       minWidth: minWidth ?? this.minWidth,
       maxWidth: maxWidth ?? this.maxWidth,
+    });
+  }
+
+  // Return new box constraints that are smaller by the given dimensions.
+  deflate(edge: EdgeInsets) {
+    const horizontal = edge.horizontal;
+    const vertical = edge.vertical;
+    const deflatedMinWidth = Math.max(0, this.minWidth - horizontal);
+    const deflatedMinHeight = Math.max(0, this.minHeight - vertical);
+    return new Constraints({
+      minWidth: deflatedMinWidth,
+      maxWidth: Math.max(deflatedMinWidth, this.maxWidth - horizontal),
+      minHeight: deflatedMinHeight,
+      maxHeight: Math.max(deflatedMinHeight, this.maxHeight - vertical),
     });
   }
 

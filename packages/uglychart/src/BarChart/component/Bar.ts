@@ -1,18 +1,10 @@
 import {
-  Alignment,
-  Column,
   ComponentWidget,
   Container,
-  Flexible,
-  FractionallySizedBox,
-  Row,
-  Spacer,
-  Stack,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import DataLabel from "./DataLabel";
 
 export type BarProps = {
   backgroundColor: string;
@@ -22,6 +14,15 @@ export type BarProps = {
   label: string;
   legend: string;
   direction: "horizontal" | "vertical";
+};
+
+export type BarConfig = {
+  type: "config";
+  thickness?: number;
+};
+
+const defaultBarConfig = {
+  thickness: 2,
 };
 
 export class Bar extends ComponentWidget {
@@ -39,7 +40,6 @@ export class Bar extends ComponentWidget {
       index,
       label,
       legend,
-      value,
       direction,
       reverse = false,
     } = this.props;
@@ -60,7 +60,8 @@ export class Bar extends ComponentWidget {
       );
     }
 
-    const { thickness = 2 } = bar;
+    const { thickness = theme.border.width ?? defaultBarConfig.thickness } =
+      bar;
 
     return Container({
       color: backgroundColor,
@@ -72,13 +73,3 @@ export class Bar extends ComponentWidget {
 }
 
 export default (props: BarProps) => new Bar(props);
-
-// // It is wrapped by Positioned Widget
-// DataLabel({
-//   value,
-//   index,
-//   label,
-//   legend,
-//   direction,
-//   reverse,
-// }),

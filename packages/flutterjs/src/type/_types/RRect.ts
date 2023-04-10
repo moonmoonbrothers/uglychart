@@ -15,6 +15,14 @@ type RRectProps = {
   brRadiusY: number;
 };
 export class RRect {
+  get width() {
+    return this.right - this.left
+  }
+
+  get height() {
+    return this.bottom - this.top
+  }
+
   static fromLTRBXY({
     left,
     top,

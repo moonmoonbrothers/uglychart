@@ -2,20 +2,36 @@ import {
   Container,
   ComponentWidget,
   Widget,
-  BoxDecoration,
-  Border,
   BuildContext,
   Flex,
   MainAxisAlignment,
   OverflowBox,
+  Stack,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import { Scale } from "../types";
+import { Addition, Scale } from "../types";
 import BarGroup from "./BarGroup";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
   scale: Scale;
+};
+
+export type PlotConfig = {
+  type: "config";
+  width?: number;
+  height?: number;
+  verticalLine?: {
+    color?: string;
+    width?: string;
+    getCount?: (xLabelCount: number) => number;
+  };
+  horizontalLine?: {
+    color?: string;
+    width?: string;
+    getCount?: (yLabelCount: number) => number;
+  };
+  additions?: Widget[];
 };
 
 class Plot extends ComponentWidget {
@@ -25,7 +41,7 @@ class Plot extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
-    const { plot } = CustomProvider.of(context);
+    const { plot, yAxis, xAxis } = CustomProvider.of(context);
     if (plot.type === "custom") {
       return plot.Custom(
         {
@@ -34,41 +50,46 @@ class Plot extends ComponentWidget {
         { data, theme }
       );
     }
-    const { height, width, horizontalLine, verticalLine } = plot;
+    const {
+      height,
+      width,
+      horizontalLine,
+      verticalLine,
+      additions = [],
+    } = plot;
     const { labels } = data;
 
-    return Container({
-      width: width,
-      height: height,
-      decoration: new BoxDecoration({
-        border: Border.all({
-          color: "black",
-          width: 2,
-        }),
-      }),
-      child: Flex({
-        direction:
-          this.props.direction === "vertical" ? "horizontal" : "vertical",
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: labels.map((label, index) =>
-          Container({
-            width: this.props.direction === "vertical" ? 0 : undefined,
-            height: this.props.direction === "horizontal" ? 0 : undefined,
-            child: OverflowBox({
-              maxWidth:
-                this.props.direction === "vertical" ? Infinity : undefined,
-              maxHeight:
-                this.props.direction === "horizontal" ? Infinity : undefined,
-              child: BarGroup({
-                index,
-                scale: this.props.scale,
-                label,
-                direction: this.props.direction,
+    const Plot = () =>
+      Container({
+        width: width,
+        height: height,
+        child: Flex({
+          direction:
+            this.props.direction === "vertical" ? "horizontal" : "vertical",
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: labels.map((label, index) =>
+            Container({
+              width: this.props.direction === "vertical" ? 0 : undefined,
+              height: this.props.direction === "horizontal" ? 0 : undefined,
+              child: OverflowBox({
+                maxWidth:
+                  this.props.direction === "vertical" ? Infinity : undefined,
+                maxHeight:
+                  this.props.direction === "horizontal" ? Infinity : undefined,
+                child: BarGroup({
+                  index,
+                  scale: this.props.scale,
+                  label,
+                  direction: this.props.direction,
+                }),
               }),
-            }),
-          })
-        ),
-      }),
+            })
+          ),
+        }),
+      });
+
+    return Stack({
+      children: [...additions, Plot()],
     });
   }
 }

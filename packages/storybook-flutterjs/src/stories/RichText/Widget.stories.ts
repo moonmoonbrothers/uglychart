@@ -310,3 +310,40 @@ export const NoWrapped: Story = {
 	`
 	}
 };
+
+export const LineChangeAtN: Story = {
+	storyName: 'Line Change At \n',
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Center({
+			child: Container({
+				color: 'orange',
+				child: RichText({
+					text: new TextSpan({
+						text: 'Hello\nLine Changed!!'
+					})
+				})
+			})
+		}),
+		code: dedent`
+import { Container, Center, ConstrainedBox, RichText, TextSpan } from '@moonmoonbrothers/flutterjs'
+
+Center({
+	child: Container({
+		color: 'orange',
+		width: 300,
+		child: ConstrainedBox({
+			constraints: new Constraints({ maxWidth: 300 }),
+			child: RichText({
+				text: new TextSpan({
+					text: Hello\\n\ Line Changed!!'
+				})
+			})
+		})
+	})
+})
+		`
+	}
+};

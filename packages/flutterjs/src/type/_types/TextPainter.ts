@@ -219,20 +219,13 @@ export class Paragraph {
         color,
         height,
       }) => {
-        const words = content.split(" ");
+        const words = content.split(/(\s|\n)/);
 
         let currentText = "";
         let currentWidth = 0;
         const currentHeight = getTextHeight({ fontSize });
         const font = `${fontWeight} ${fontSize}px ${fontFamily}`;
         words.forEach((word) => {
-          const isNewLine = word.includes("\n");
-          if (isNewLine) {
-            word = word.replace("\n", "");
-          }
-
-          word = (currentText.length > 0 ? " " : "") + word;
-
           let wordWidth = getTextWidth({
             text: word,
             font,
@@ -240,21 +233,19 @@ export class Paragraph {
 
           if (
             currentLine.width + currentWidth + wordWidth > this.width ||
-            isNewLine
+            word === "\n"
           ) {
             addSpanBox();
             this.addLine(currentLine);
-
             currentLine = new ParagraphLine();
-
-            //라인 첫 단어에 띄어쓰기 방지
-            if (word.includes(" ")) {
-              wordWidth -= getTextWidth({ text: " ", font });
-              word = word.replace(" ", "");
+            //prevent space on new line
+            if ([" ", "\n"].includes(word)) {
+              currentWidth = 0;
+              currentText = "";
+            } else {
+              currentWidth = wordWidth;
+              currentText = word;
             }
-
-            currentWidth = wordWidth;
-            currentText = word.replace(" ", "");
           } else {
             currentText += word;
             currentWidth += wordWidth;

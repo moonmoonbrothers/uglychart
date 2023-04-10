@@ -76,8 +76,12 @@ export class Path {
       .close();
   }
 
-  addRRect(
-    {
+  addRRect(rRect: RRect, { clockwise = true }: { clockwise?: boolean } = {}) {
+    if (rRect.width == 0 || rRect.height == 0) {
+      return this;
+    }
+
+    const {
       left,
       right,
       top,
@@ -90,12 +94,10 @@ export class Path {
       blRadiusY,
       brRadiusX,
       brRadiusY,
-    }: RRect,
-    { clockwise = true }: { clockwise?: boolean } = {}
-  ) {
+    } = rRect;
+
     const common = {
       rotation: 0,
-      // radius: { x: rect.width / 2, y: rect.height / 2 },
       largeArc: false,
       clockwise,
     };
