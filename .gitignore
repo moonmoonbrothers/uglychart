@@ -10,3 +10,5 @@ node_modules
 .idea
 packages/storybook-flutterjs/build-storybook.log
 packages/storybook-flutterjs/storybook-static
+packages/storybook-uglychart/build-storybook.log
+packages/storybook-uglychart/build-storybook.log
