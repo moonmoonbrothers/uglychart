@@ -58,30 +58,36 @@ export class RenderCustomPaint<
     this.painter = painter;
     this.preferredSize = preferredSize;
   }
+
   protected computeSizeForNoChild(constraints: Constraints): Size {
-    return constraints.constrain(this.preferredSize)
+    return constraints.constrain(this.preferredSize);
   }
 
+  protected performPaint(svgEls: T, context: PaintContext): void {
+    this.painter.paint(svgEls, this.size);
+  }
 
-  protected performPaint(
-    svgEls: { [key: string]: SVGElement },
-    context: PaintContext
-  ): void {}
-
-  protected createDefaultSvgEl(paintContext: PaintContext): {
-    [key: string]: SVGElement;
-  } {
-    return {};
+  protected createDefaultSvgEl(paintContext: PaintContext): T {
+    return this.painter.createDefaultSvgEl(paintContext);
   }
 
   override getIntrinsicWidth(height: number): number {
-    return 0;
-    return this.child?.getIntrinsicWidth(height) || 0;
+    if (this.child == null) {
+      return Number.isFinite(this.preferredSize.width)
+        ? this.preferredSize.width
+        : 0;
+    }
+    return super.getIntrinsicWidth(height);
   }
 
   override getIntrinsicHeight(width: number): number {
-    return 0;
-    return this.child?.getIntrinsicHeight(width) || 0;
+    if (this.child == null) {
+      return Number.isFinite(this.preferredSize.height)
+        ? this.preferredSize.height
+        : 0;
+    }
+
+    return super.getIntrinsicHeight(width);
   }
 }
 

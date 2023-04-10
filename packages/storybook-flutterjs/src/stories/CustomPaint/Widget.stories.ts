@@ -1,15 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { dedent } from 'ts-dedent';
-import {
-	Container,
-	Align,
-	Alignment,
-	Row,
-	Spacer,
-	Center,
-	CustomPaint
-} from '@moonmoonbrothers/flutterjs';
+import { Center, CustomPaint, Size } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
 	title: 'Widget/CustomPaint',
@@ -25,9 +17,46 @@ export const Basic: Story = {
 		width: '400px',
 		height: '400px',
 		widget: Center({
-			child: CustomPaint()
+			child: CustomPaint({
+				size: Size.infinite,
+				painter: {
+					createDefaultSvgEl({ createSvgEl }) {
+						const rect = createSvgEl('rect');
+						return {
+							rect
+						};
+					},
+					paint({ rect }, size) {
+						rect.setAttribute('fill', 'red');
+						rect.setAttribute('width', `${size.width}`);
+						rect.setAttribute('height', `${size.height}`);
+					}
+				}
+			})
 		}),
 		code: dedent`
+		import { Center, CustomPaint, Size } from '@moonmoonbrothers/flutterjs';
+
+		Center({
+			child: CustomPaint({
+				size: Size.infinite,
+				painter: {
+					paint({ rect }, size) {
+						rect.setAttribute('fill', 'red');
+						rect.setAttribute('width', \`\${size.width}\`);
+						rect.setAttribute('height', \`\${size.height}\`);
+					},
+
+					createDefaultSvgEl({ createSvgEl }) {
+						const rect = createSvgEl('rect');
+
+						return {
+							rect
+						};
+					},
+				}
+			})
+		})
 		`
 	}
 };

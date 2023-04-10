@@ -1,10 +1,21 @@
+import { Size } from "../type";
 import type Widget from "../widget/Widget";
-import Container from "./Container";
-import BaseCustomPaint from "./base/BaseCustomPaint";
+import BaseCustomPaint, { type Painter } from "./base/BaseCustomPaint";
 
-function CustomPaint() {
- // return new BaseCustomPaint({});
- return Container()
+function CustomPaint<T extends Record<string, SVGElement>>({
+  size = Size.zero,
+  painter,
+  child
+}: {
+  painter: Painter<T>;
+  size?: Size;
+  child?: Widget
+}) {
+  return new BaseCustomPaint({
+    child,
+    painter,
+    size,
+  });
 }
 
 export default CustomPaint;
