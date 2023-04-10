@@ -7,16 +7,14 @@ type SizeProps = {
 };
 
 class Size {
-  width: number;
-  height: number;
+  readonly width: number;
+  readonly height: number;
   constructor({ width, height }: SizeProps) {
     this.width = width;
     this.height = height;
   }
 
-  static zero(): Size {
-    return new Size({ width: 0, height: 0 });
-  }
+  static zero = new Size({ width: 0, height: 0 });
 
   static maximum(): Size {
     return new Size({ width: Infinity, height: Infinity });

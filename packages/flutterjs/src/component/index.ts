@@ -34,6 +34,7 @@ import ColoredBox from "./ColoredBox";
 import ClipRRect from "./ClipRRect";
 import DecoratedBox from "./DecoratedBox";
 import RichText from "./RichText";
+import CustomPaint from "./CustomPaint";
 
 export {
   ConstrainedBox,
@@ -72,4 +73,5 @@ export {
   ClipRRect,
   DecoratedBox,
   RichText,
+  CustomPaint,
 };

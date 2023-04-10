@@ -20,7 +20,7 @@ class RenderObject {
   get children(): RenderObject[] {
     return this.ownerElement.children.map((child) => child.renderObject);
   }
-  size: Size = Size.zero();
+  size: Size = Size.zero;
   constraints: Constraints = Constraints.loose(Size.maximum());
   offset: Offset = Offset.zero();
 
@@ -197,7 +197,10 @@ class RenderObject {
    * Do not call this method directly. instead call paint
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  protected performPaint(svgEls: { [key: string]: SVGElement }, context: PaintContext): void {}
+  protected performPaint(
+    svgEls: { [key: string]: SVGElement },
+    context: PaintContext
+  ): void {}
 
   protected getChildClipId(parentClipId?: string) {
     return parentClipId;
