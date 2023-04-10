@@ -218,7 +218,6 @@ export const Vertical: Story = {
 				},
 				yAxis: {
 					type: 'config',
-					color: 'transparent',
 					tick: {
 						color: 'black',
 						thickness: 10

@@ -110,6 +110,16 @@ class Chart extends ComponentWidget {
                                 ? yAxis.thickness
                                 : undefined) ?? theme.border.width,
                           }),
+                          bottom: new BorderSide({
+                            color:
+                              (xAxis.type === "config"
+                                ? xAxis.color
+                                : undefined) ?? theme.border.color,
+                            width:
+                              (xAxis.type === "config"
+                                ? xAxis.thickness
+                                : undefined) ?? theme.border.width,
+                          }),
                         }),
                       }),
                     }),

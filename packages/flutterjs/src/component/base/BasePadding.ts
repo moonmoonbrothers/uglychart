@@ -33,6 +33,7 @@ class RenderPadding extends SingleChildRenderObject {
     super({ isPainter: false });
     this.padding = padding;
   }
+
   protected preformLayout(): void {
     if (this.child == null) return;
     const { top, left, right, bottom } = this.padding;
@@ -49,5 +50,13 @@ class RenderPadding extends SingleChildRenderObject {
     );
 
     this.child.offset = new Offset({ x: left, y: top });
+  }
+
+  getIntrinsicWidth(height: number): number {
+    return super.getIntrinsicWidth(height) + this.padding.horizontal;
+  }
+
+  getIntrinsicHeight(width: number): number {
+    return super.getIntrinsicHeight(width) + this.padding.vertical;
   }
 }
