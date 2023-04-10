@@ -27,7 +27,7 @@ class Chart extends ComponentWidget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { labels, datasets } = DataProvider.of(context);
-    const { chart, additions, yAxis, xAxis } = CustomProvider.of(context);
+    const { chart, yAxis, xAxis } = CustomProvider.of(context);
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
@@ -49,7 +49,11 @@ class Chart extends ComponentWidget {
 
     const suggestedScale = getScale(roughScale);
 
-    const { direction = "horizontal", scale: scaleOption } = chart;
+    const {
+      direction = "horizontal",
+      scale: scaleOption,
+      additions = [],
+    } = chart;
 
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,

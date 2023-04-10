@@ -37,7 +37,6 @@ export type Custom = {
   plot?: Plot;
   chart?: Chart;
   dataLabel?: DataLabel;
-  additions?: Widget[];
 };
 
 export type Data = {
@@ -169,7 +168,7 @@ export type Chart =
       scale?: Partial<Scale>;
       direction?: "horizontal" | "vertical";
       alignment?: Alignment;
-      additions: Addition[]
+      additions?: Widget[]
     }
   | CustomWidget<{
       Plot: (props: PlotProps) => Widget;

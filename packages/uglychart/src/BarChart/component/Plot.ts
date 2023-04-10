@@ -31,7 +31,7 @@ export type PlotConfig = {
     width?: string;
     getCount?: (yLabelCount: number) => number;
   };
-  additions?: Widget[]
+  additions?: Widget[];
 };
 
 class Plot extends ComponentWidget {
@@ -50,7 +50,13 @@ class Plot extends ComponentWidget {
         { data, theme }
       );
     }
-    const { height, width, horizontalLine, verticalLine } = plot;
+    const {
+      height,
+      width,
+      horizontalLine,
+      verticalLine,
+      additions = [],
+    } = plot;
     const { labels } = data;
 
     const Plot = () =>
@@ -83,7 +89,7 @@ class Plot extends ComponentWidget {
       });
 
     return Stack({
-      children: [Plot()],
+      children: [...additions, Plot()],
     });
   }
 }
