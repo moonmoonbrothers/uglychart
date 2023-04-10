@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Size, Constraints } from "../type"
-import type { PaintContext } from "../utils/type"
 import RenderObject from "./RenderObject"
 
 class RenderView extends RenderObject {

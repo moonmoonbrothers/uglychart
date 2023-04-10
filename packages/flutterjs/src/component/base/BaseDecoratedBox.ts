@@ -33,20 +33,13 @@ class RenderDecoratedBox extends SingleChildRenderObject {
     this.decoration = decoration;
   }
 
-  protected override preformLayout(): void {
-    this.child?.layout(this.constraints);
-    this.size = this.constraints.constrain(this.child?.size ?? Size.zero());
-  }
-  protected performPaint(
-    svgEls: {
-      box: SVGElement;
-      topBorder: SVGElement;
-      bottomBorder: SVGElement;
-      leftBorder: SVGElement;
-      rightBorder: SVGElement;
-    },
-  ): void {
-
+  protected performPaint(svgEls: {
+    box: SVGElement;
+    topBorder: SVGElement;
+    bottomBorder: SVGElement;
+    leftBorder: SVGElement;
+    rightBorder: SVGElement;
+  }): void {
     const painter = this.decoration.createBoxPainter();
 
     painter.paint(svgEls, this.size);

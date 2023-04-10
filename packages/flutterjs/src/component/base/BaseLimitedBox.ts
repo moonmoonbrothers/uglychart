@@ -1,63 +1,63 @@
-import RenderObject from "../../renderobject/RenderObject"
-import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject"
-import { Constraints, Size } from "../../type"
-import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget"
-import Widget from "../../widget/Widget"
+import RenderObject from "../../renderobject/RenderObject";
+import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
+import { Constraints, Size } from "../../type";
+import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
+import Widget from "../../widget/Widget";
 
 class BaseLimitedBox extends SingleChildRenderObjectWidget {
-  maxWidth: number
-  maxHeight: number
+  maxWidth: number;
+  maxHeight: number;
 
   constructor({
     child,
     maxHeight = Infinity,
     maxWidth = Infinity,
   }: {
-    child?: Widget
-    maxWidth?: number
-    maxHeight?: number
+    child?: Widget;
+    maxWidth?: number;
+    maxHeight?: number;
   }) {
-    super({ child })
-    this.maxHeight = maxHeight
-    this.maxWidth = maxWidth
+    super({ child });
+    this.maxHeight = maxHeight;
+    this.maxWidth = maxWidth;
   }
 
   override createRenderObject(): RenderLimitedBox {
     return new RenderLimitedBox({
       maxHeight: this.maxHeight,
       maxWidth: this.maxWidth,
-    })
+    });
   }
 
   override updateRenderObject(renderObject: RenderLimitedBox): void {
-    renderObject.maxHeight = this.maxHeight
-    renderObject.maxWidth = this.maxWidth
+    renderObject.maxHeight = this.maxHeight;
+    renderObject.maxWidth = this.maxWidth;
   }
 }
 
 class RenderLimitedBox extends SingleChildRenderObject {
-  maxWidth: number
-  maxHeight: number
+  maxWidth: number;
+  maxHeight: number;
 
   constructor({
     maxHeight = Infinity,
     maxWidth = Infinity,
   }: {
-    maxWidth?: number
-    maxHeight?: number
+    maxWidth?: number;
+    maxHeight?: number;
   }) {
-    super({ isPainter: false })
-    this.maxHeight = maxHeight
-    this.maxWidth = maxWidth
+    super({ isPainter: false });
+    this.maxHeight = maxHeight;
+    this.maxWidth = maxWidth;
   }
 
   protected override preformLayout(): void {
     if (this.child == null) {
-      this.size = this.limitConstraints(this.constraints).constrain(Size.zero())
-      return
+      this.size = this.limitConstraints(this.constraints).constrain(Size.zero);
+      return;
     }
-    this.child.layout(this.limitConstraints(this.constraints))
-    this.size = this.child.size
+    this.child.layout(this.limitConstraints(this.constraints));
+    this.size = this.child.size;
   }
 
   private limitConstraints(constraints: Constraints): Constraints {
@@ -70,8 +70,8 @@ class RenderLimitedBox extends SingleChildRenderObject {
       maxHeight: constraints.hasBoundedHeight
         ? constraints.maxHeight
         : constraints.constrainHeight(this.maxHeight),
-    })
+    });
   }
 }
 
-export default BaseLimitedBox
+export default BaseLimitedBox;

@@ -182,15 +182,8 @@ class RenderTransform extends SingleChildRenderObject {
     return result;
   }
 
-  override getChildMatrix4(
-    parentMatrix: Matrix4
-  ): Matrix4 {
+  override getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
     return parentMatrix.multiplied(this._effectiveTransform);
-  }
-
-  protected override preformLayout(): void {
-    this.child?.layout(this.constraints);
-    this.size = this.constraints.constrain(this.child?.size ?? Size.zero());
   }
 }
 

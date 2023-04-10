@@ -99,15 +99,6 @@ export class RenderPositioned extends SingleChildRenderObject {
     );
   }
 
-  protected preformLayout(): void {
-    let size = Size.zero();
-    if (this.child) {
-      this.child.layout(this.constraints);
-      size = this.child.size;
-    }
-    this.size = this.constraints.constrain(size);
-  }
-
   override getIntrinsicWidth(height: number): number {
     return this.child?.getIntrinsicWidth(height) || 0;
   }

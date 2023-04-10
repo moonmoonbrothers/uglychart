@@ -35,14 +35,7 @@ class RenderClipPath extends SingleChildRenderObject {
     return this.id;
   }
 
-  protected override preformLayout(): void {
-    this.child?.layout(this.constraints);
-    this.size = this.child?.size ?? Size.zero();
-  }
-
-  protected performPaint(
-    { clipPath }: { [key: string]: SVGElement },
-  ): void {
+  protected performPaint({ clipPath }: { [key: string]: SVGElement }): void {
     const pathEl = clipPath.getElementsByTagName("path")[0];
     const d = this.clipper(this.size).getD();
     pathEl.setAttribute("d", d);
