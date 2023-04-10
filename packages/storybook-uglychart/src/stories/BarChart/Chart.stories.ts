@@ -204,40 +204,36 @@ export const Vertical: Story = {
 							decoration: new BoxDecoration({
 								color: '#00308F',
 								borderRadius: BorderRadius.vertical({
-									// top: Radius.circular(6)
+									top: Radius.circular(6)
 								})
 							})
 						})
 				},
 				xAxis: {
 					type: 'config',
-					color: 'blue',
 					tick: {
-						color: 'black'
+						length: 0
 					}
+				},
+				xAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ top: 5 })
+				},
+				yAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ right: 5 })
 				},
 				yAxis: {
 					type: 'config',
+					thickness: 0,
 					tick: {
-						color: 'black',
-						thickness: 10
+						length: 0
 					}
 				},
 				plot: {
 					type: 'config'
 				},
-
-				additions: [
-					{
-						position: {
-							top: -20,
-							right: 0
-						},
-						Custom() {
-							return Text('a');
-						}
-					}
-				],
+				additions: [Text('a')],
 				title: {
 					type: 'config',
 					alignment: 'start',
@@ -254,7 +250,7 @@ export const Vertical: Story = {
 					fontFamily: 'Noto Sans KR, sans-serif'
 				},
 				border: {
-					width: 10
+					color: '#E8E8E8'
 				}
 			}
 		}),

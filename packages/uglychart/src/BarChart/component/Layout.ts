@@ -29,6 +29,7 @@ class Layout extends ComponentWidget {
     return Container({
       width: Infinity,
       height: Infinity,
+      color: "white",
       padding,
       alignment: Alignment.topLeft,
       child: Column({

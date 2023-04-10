@@ -2,19 +2,15 @@ import {
   Container,
   ComponentWidget,
   Widget,
-  BoxDecoration,
-  Border,
   BuildContext,
   Flex,
   MainAxisAlignment,
   OverflowBox,
-  BorderSide,
+  Stack,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import { Scale } from "../types";
+import { Addition, Scale } from "../types";
 import BarGroup from "./BarGroup";
-import { defaultYAxisConfig } from "./YAxis";
-import { defaultXAxisConfig } from "./XAxis";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -35,6 +31,7 @@ export type PlotConfig = {
     width?: string;
     getCount?: (yLabelCount: number) => number;
   };
+  additions?: Widget[]
 };
 
 class Plot extends ComponentWidget {
@@ -56,32 +53,37 @@ class Plot extends ComponentWidget {
     const { height, width, horizontalLine, verticalLine } = plot;
     const { labels } = data;
 
-    return Container({
-      width: width,
-      height: height,
-      child: Flex({
-        direction:
-          this.props.direction === "vertical" ? "horizontal" : "vertical",
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: labels.map((label, index) =>
-          Container({
-            width: this.props.direction === "vertical" ? 0 : undefined,
-            height: this.props.direction === "horizontal" ? 0 : undefined,
-            child: OverflowBox({
-              maxWidth:
-                this.props.direction === "vertical" ? Infinity : undefined,
-              maxHeight:
-                this.props.direction === "horizontal" ? Infinity : undefined,
-              child: BarGroup({
-                index,
-                scale: this.props.scale,
-                label,
-                direction: this.props.direction,
+    const Plot = () =>
+      Container({
+        width: width,
+        height: height,
+        child: Flex({
+          direction:
+            this.props.direction === "vertical" ? "horizontal" : "vertical",
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: labels.map((label, index) =>
+            Container({
+              width: this.props.direction === "vertical" ? 0 : undefined,
+              height: this.props.direction === "horizontal" ? 0 : undefined,
+              child: OverflowBox({
+                maxWidth:
+                  this.props.direction === "vertical" ? Infinity : undefined,
+                maxHeight:
+                  this.props.direction === "horizontal" ? Infinity : undefined,
+                child: BarGroup({
+                  index,
+                  scale: this.props.scale,
+                  label,
+                  direction: this.props.direction,
+                }),
               }),
-            }),
-          })
-        ),
-      }),
+            })
+          ),
+        }),
+      });
+
+    return Stack({
+      children: [Plot()],
     });
   }
 }

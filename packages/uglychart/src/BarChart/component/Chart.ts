@@ -134,9 +134,7 @@ class Chart extends ComponentWidget {
               templateRows: [Grid.Fr(1), Grid.ContentFit()],
             }),
           }),
-          ...additions.map(({ position, Custom }) =>
-            Positioned({ ...position, child: Custom() })
-          ),
+          ...additions,
         ],
       }),
     });

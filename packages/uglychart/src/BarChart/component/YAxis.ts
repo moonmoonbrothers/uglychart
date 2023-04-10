@@ -19,6 +19,10 @@ import {
   Alignment,
   VerticalDirection,
   EdgeInsets,
+  TextStyle,
+  ConstrainedBox,
+  ConstraintsTransformBox,
+  Constraints,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import YAxisLabel from "./YAxisLabel";
@@ -76,7 +80,6 @@ class YAxis extends ComponentWidget {
           this.props.type === "value"
             ? VerticalDirection.up
             : VerticalDirection.down,
-        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment:
           this.props.type === "index"
             ? MainAxisAlignment.spaceEvenly
@@ -88,16 +91,27 @@ class YAxis extends ComponentWidget {
               maxHeight: Infinity,
               alignment:
                 this.props.type === "index"
-                  ? Alignment.center
+                  ? Alignment.centerRight
                   : index === 0
-                  ? Alignment.topCenter
+                  ? Alignment.topRight
                   : index === this.props.labels.length - 1
-                  ? Alignment.topCenter
-                  : Alignment.center,
+                  ? Alignment.topRight
+                  : Alignment.centerRight,
               child: Row({
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
-                children: [Text("10"), YTick()],
+                children: [
+                  Container({
+                    height: 0,
+                    child: ConstraintsTransformBox({
+                      constraintsTransform() {
+                        return new Constraints();
+                      },
+                      child: YAxisLabel({ index, text: label }),
+                    }),
+                  }),
+                  YTick(),
+                ],
               }),
             }),
           })
