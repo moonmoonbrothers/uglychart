@@ -13,6 +13,7 @@ import { YAxisProps } from "./component/YAxis";
 import { YAxisLabelProps } from "./component/YAxisLabel";
 import { LayoutConfig } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
+import { ChartConfig } from "./component/Chart";
 
 export type Scale = _Scale;
 
@@ -161,15 +162,7 @@ type Plot =
     >;
 
 export type Chart =
-  | {
-      type: "config";
-      width?: number;
-      height?: number;
-      scale?: Partial<Scale>;
-      direction?: "horizontal" | "vertical";
-      alignment?: Alignment;
-      additions?: Widget[]
-    }
+  | ChartConfig
   | CustomWidget<{
       Plot: (props: PlotProps) => Widget;
       XAxis: (props: XAxisProps) => Widget;

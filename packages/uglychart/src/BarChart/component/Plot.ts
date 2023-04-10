@@ -9,7 +9,7 @@ import {
   Stack,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import { Addition, Scale } from "../types";
+import { Scale } from "../types";
 import BarGroup from "./BarGroup";
 
 export type PlotProps = {
@@ -31,7 +31,8 @@ export type PlotConfig = {
     width?: string;
     getCount?: (yLabelCount: number) => number;
   };
-  additions?: Widget[];
+  backgroundAdditions?: Widget[];
+  foregroundAdditions?: Widget[];
 };
 
 class Plot extends ComponentWidget {
@@ -55,7 +56,8 @@ class Plot extends ComponentWidget {
       width,
       horizontalLine,
       verticalLine,
-      additions = [],
+      backgroundAdditions = [],
+      foregroundAdditions = [],
     } = plot;
     const { labels } = data;
 
@@ -89,7 +91,7 @@ class Plot extends ComponentWidget {
       });
 
     return Stack({
-      children: [...additions, Plot()],
+      children: [...backgroundAdditions, Plot(), ...foregroundAdditions],
     });
   }
 }

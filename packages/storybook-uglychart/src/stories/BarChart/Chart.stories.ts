@@ -60,7 +60,7 @@ export const Basic: Story = {
 				},
 				chart: {
 					type: 'config',
-					additions: [
+					foregroundAdditions: [
 						Positioned({
 							bottom: -20,
 							right: -15,
@@ -197,6 +197,7 @@ export const Vertical: Story = {
 			custom: {
 				layout: {
 					type: 'config',
+					backgroundColor: 'white',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
 				},
 				chart: {
@@ -207,7 +208,7 @@ export const Vertical: Story = {
 						min: 0,
 						step: 20
 					},
-					additions: [
+					foregroundAdditions: [
 						Positioned({
 							right: 0,
 							top: -20,
@@ -286,7 +287,7 @@ export const Vertical: Story = {
 				},
 				plot: {
 					type: 'config',
-					additions: [
+					backgroundAdditions: [
 						Column({
 							crossAxisAlignment: CrossAxisAlignment.stretch,
 							children: Array.from({ length: 5 }, () =>

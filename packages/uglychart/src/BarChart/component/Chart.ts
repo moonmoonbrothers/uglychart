@@ -22,6 +22,17 @@ import YAxis from "./YAxis";
 import Plot from "./Plot";
 import { getScale, getValueEdge, Scale } from "../util";
 
+export type ChartConfig = {
+  type: "config";
+  width?: number;
+  height?: number;
+  scale?: Partial<Scale>;
+  direction?: "horizontal" | "vertical";
+  alignment?: Alignment;
+  foregroundAdditions?: Widget[];
+  backgroundAdditions?: Widget[];
+};
+
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
@@ -52,7 +63,8 @@ class Chart extends ComponentWidget {
     const {
       direction = "horizontal",
       scale: scaleOption,
-      additions = [],
+      foregroundAdditions= [],
+      backgroundAdditions = [],
     } = chart;
 
     const scale: Scale = {
@@ -80,6 +92,7 @@ class Chart extends ComponentWidget {
       child: Stack({
         clipped: false,
         children: [
+          ...backgroundAdditions,
           Container({
             child: Grid({
               childrenByRow: [
@@ -138,7 +151,7 @@ class Chart extends ComponentWidget {
               templateRows: [Grid.Fr(1), Grid.ContentFit()],
             }),
           }),
-          ...additions,
+          ...foregroundAdditions,
         ],
       }),
     });
