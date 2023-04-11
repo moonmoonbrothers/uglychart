@@ -32,5 +32,6 @@
     "packages/flutterjs-solid",
     "packages/storybook-flutterjs"
   ],
+  "type": "module",
   "devDependencies": {}
 }

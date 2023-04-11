@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/uglychart",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "main": "src/index.ts",
   "description": "",
   "scripts": {
@@ -8,5 +8,6 @@
     "build": "rm -rf package && tsc --build .",
     "prepackage": "npm run build",
     "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set exports='{\".\": \"./index.js\"}' --json"
-  }
+  },
+  "type": "module"
 }

@@ -2,6 +2,7 @@
   "include": ["src/index.ts"],
   "compilerOptions": {
     "declaration": true,
+    "module": "ES6",
     "outDir": "package",
     "allowJs": true,
     "checkJs": true,
