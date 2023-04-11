@@ -17,7 +17,15 @@ import {
 	BorderSide,
 	Row,
 	MainAxisSize,
-	SizedBox
+	SizedBox,
+	TextBaseline,
+	MainAxisAlignment,
+	Alignment,
+	Flexible,
+	CustomPaint,
+	Size,
+	Path,
+	Rect
 } from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
@@ -507,6 +515,188 @@ export const Vertical: Story = {
 			}
 		}
 	}),
+	`
+	}
+};
+
+export const Temp: Story = {
+	args: {
+		ssrSize: {
+			width: 100,
+			height: 100
+		},
+		width: '1000px',
+		height: '600px',
+		widget: BarChart({
+			data: {
+				title: '단어 검사 자음 정확도',
+				labels: [
+					'음절',
+					'모음',
+					'자음',
+					'',
+					'초성',
+					'종성',
+					'',
+					'*ㅂㄷㄱ',
+					'ㅁㄴㅇ',
+					'ㅈㅉㅊ',
+					'ㅅㅆ',
+					'ㄹ',
+					'',
+					'양순음 (자질)',
+					'치경음 (자질)',
+					'연구개음 (자질)',
+					'비음 (자질)',
+					'기식음 (자질)'
+				],
+				datasets: [
+					{
+						legend: '%',
+						data: [40, 85, 50, 0, 40, 85, 0, 40, 85, 50, 50, 50, 0, 40, 85, 50, 50, 40]
+					}
+				]
+			},
+			custom: {
+				title: {
+					type: 'config',
+					alignment: 'start',
+					margin: EdgeInsets.only({ bottom: 20 })
+				},
+				layout: {
+					type: 'config',
+					padding: EdgeInsets.all(30)
+				},
+				plot: {
+					type: 'config',
+					backgroundAdditions: [],
+					foregroundAdditions: [
+						CustomPaint({
+							size: Size.infinite,
+							painter: {
+								createDefaultSvgEl(context) {
+									const rect = context.createSvgEl('rect');
+									const line = context.createSvgEl('line');
+									const path = context.createSvgEl('path');
+									return {
+										rect,
+										path
+									};
+								},
+								paint(els, size) {
+									const { rect, path } = els;
+									const pathUtil = new Path();
+									const d = pathUtil
+										.moveTo({ x: 0, y: 0 })
+										.lineTo({ x: 10, y: 10 })
+										.lineTo({ x: 0, y: 10 })
+										.close()
+										.close()
+										.getD();
+
+									path.setAttribute('d', d);
+									path.setAttribute('fill', 'red');
+								}
+							}
+						})
+					]
+				},
+				yAxis: {
+					type: 'config',
+					thickness: 0,
+					tick: {
+						length: 0
+					}
+				},
+				xAxis: {
+					type: 'config',
+					tick: {
+						length: 0
+					}
+				},
+				xAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ top: 6 }),
+					font: {
+						lineHeight: 1.4
+					}
+				},
+				yAxisLabel: {
+					type: 'config',
+					margin: EdgeInsets.only({ right: 10 })
+				},
+				bar: {
+					type: 'custom',
+					Custom() {
+						return Container({
+							width: 12,
+							decoration: new BoxDecoration({
+								color: 'blue',
+								borderRadius: BorderRadius.vertical({ top: Radius.circular(6) })
+							})
+						});
+					}
+				},
+				chart: {
+					type: 'config',
+					alignment: Alignment.topCenter,
+					direction: 'vertical',
+					scale: {
+						min: 0,
+						max: 100,
+						step: 20
+					},
+					foregroundAdditions: [
+						Positioned({
+							right: 0,
+							top: -20,
+							child: Row({
+								mainAxisSize: MainAxisSize.min,
+								children: [
+									Container({
+										width: 12,
+										height: 12,
+										decoration: new BoxDecoration({
+											color: 'blue',
+											borderRadius: BorderRadius.all(Radius.circular(6))
+										})
+									}),
+									SizedBox({
+										width: 3
+									}),
+									Text('%ile', { style: new TextStyle({ height: 1 }) }),
+									SizedBox({
+										width: 10
+									}),
+									Container({
+										width: 12,
+										height: 12,
+										decoration: new BoxDecoration({
+											color: 'orange',
+											borderRadius: BorderRadius.all(Radius.circular(6))
+										})
+									}),
+									SizedBox({
+										width: 3
+									}),
+									Text('%', { style: new TextStyle({ height: 1 }) })
+								]
+							})
+						})
+					]
+				}
+			},
+			theme: {
+				text: {
+					color: 'gray'
+				},
+				border: {
+					color: 'gray',
+					width: 1
+				}
+			}
+		}),
+		code: dedent`
 	`
 	}
 };
