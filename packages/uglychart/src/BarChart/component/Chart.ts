@@ -23,7 +23,6 @@ import Plot from "./Plot";
 import { getScale, getValueEdge, Scale } from "../util";
 
 export type ChartConfig = {
-  type: "config";
   width?: number;
   height?: number;
   scale?: Partial<Scale>;

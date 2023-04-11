@@ -17,7 +17,6 @@ export type BarProps = {
 };
 
 export type BarConfig = {
-  type: "config";
   thickness?: number;
 };
 

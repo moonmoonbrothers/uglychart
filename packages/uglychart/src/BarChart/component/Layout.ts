@@ -13,7 +13,6 @@ import Chart from "./Chart";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 
 export type LayoutConfig = {
-  type: "config";
   padding?: EdgeInsets;
   backgroundColor?: string;
 };

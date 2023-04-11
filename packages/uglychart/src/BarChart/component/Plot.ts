@@ -18,7 +18,6 @@ export type PlotProps = {
 };
 
 export type PlotConfig = {
-  type: "config";
   width?: number;
   height?: number;
   verticalLine?: {
