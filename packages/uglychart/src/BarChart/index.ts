@@ -32,7 +32,6 @@ class BarChart extends ComponentWidget {
       plot = { type: "config" as const },
       chart = { type: "config" as const },
       dataLabel = { type: "config" as const },
-      additions = [],
     } = {},
     data,
     theme: {
@@ -58,7 +57,6 @@ class BarChart extends ComponentWidget {
       plot,
       chart,
       dataLabel,
-      additions,
       title,
     };
 
