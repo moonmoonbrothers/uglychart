@@ -4,7 +4,10 @@
   "description": "",
   "main": "src/index.ts",
   "devDependencies": {
-    "cp": "^0.2.0"
+    "cp": "^0.2.0",
+    "dts-bundle-generator": "^8.0.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.2.1"
   },
   "dependencies": {
     "canvas": "^2.11.0",
@@ -12,7 +15,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf package && tsc --build .",
+    "build": "tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
     "prepackage": "npm run build",
     "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set exports='{\".\": \"./index.js\"}' --json"
   },
