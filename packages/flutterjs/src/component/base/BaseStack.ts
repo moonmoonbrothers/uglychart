@@ -5,20 +5,19 @@ import {
   Offset,
   Size,
   TextDirection,
+  StackFit,
 } from "../../type";
 import Utils, { assert } from "../../utils";
 import { Widget } from "../../widget";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import { RenderPositioned } from "./BasePositioned";
 
-export type StackFit = "loose" | "expand" | "passthrough";
-
 export default class BaseStack extends MultiChildRenderObjectWidget {
   alignment: Alignment;
   fit: StackFit;
   constructor({
     children,
-    fit = "loose",
+    fit = StackFit.loose,
     alignment = Alignment.topLeft,
   }: {
     fit?: StackFit;
@@ -48,7 +47,7 @@ export class RenderStack extends MultiChildRenderObject {
   fit: StackFit;
   textDirection: TextDirection;
   constructor({
-    fit = "loose",
+    fit = StackFit.loose,
     alignment = Alignment.topLeft,
     textDirection = TextDirection.ltr,
   }: {

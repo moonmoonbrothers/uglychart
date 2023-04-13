@@ -1,10 +1,8 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Alignment, Matrix4, Size, TextDirection } from "../../type";
+import { Alignment, Matrix4, Offset, TextDirection } from "../../type";
 import { assert } from "../../utils";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
-
-type Offset = { x: number; y: number };
 
 class Transform extends SingleChildRenderObjectWidget {
   origin?: Offset;

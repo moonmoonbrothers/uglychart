@@ -1,6 +1,5 @@
-import { Alignment, Rect } from "../type";
+import { Alignment, Rect, StackFit } from "../type";
 import type Widget from "../widget/Widget";
-import type { StackFit } from "./base/BaseStack";
 import BaseIndexedStack from "./base/BaseIndexedStack";
 import ClipRect from "./ClipRect";
 
@@ -8,7 +7,7 @@ export default function IndexedStack({
   clipped,
   children,
   alignment,
-  sizing = "loose",
+  sizing = StackFit.loose,
   index = 0,
 }: {
   children: Widget[];
