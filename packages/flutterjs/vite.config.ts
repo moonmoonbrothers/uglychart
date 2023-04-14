@@ -9,5 +9,11 @@ module.exports = defineConfig({
       name: "index",
       fileName: "index",
     },
+    outDir: 'package',
+    rollupOptions: {
+      external: ['canvas']
+    }
   },
+  
+  
 });

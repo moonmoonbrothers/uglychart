@@ -40,7 +40,7 @@ class ProviderWidget<ProviderKey, Value> extends Widget {
 }
 
 class ProviderElement extends Element {
-  override widget: ProviderWidget<unknown, unknown>
+  declare widget: ProviderWidget<unknown, unknown>
   child!: Element
 
   get providerKey() {

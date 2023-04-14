@@ -13,11 +13,5 @@
     "sourceMap": true,
     "strict": true,
     "target": "ES2022"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build .",
-    "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && npm pkg set 'main'='index.js'"
   }
 }

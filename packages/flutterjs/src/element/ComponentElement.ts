@@ -5,7 +5,7 @@ import Element from "./Element"
 class ComponentElement extends Element {
   child!: Element
 
-  override widget: ComponentWidget
+  declare widget: ComponentWidget
   constructor(widget: ComponentWidget) {
     super(widget)
     this.widget = widget
