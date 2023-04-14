@@ -569,6 +569,8 @@ export const Temp: Story = {
 				},
 				plot: {
 					type: 'config',
+					width: 500,
+					height: 300,
 					backgroundAdditions: [],
 					foregroundAdditions: [
 						CustomPaint({

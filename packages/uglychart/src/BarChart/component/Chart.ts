@@ -4,11 +4,9 @@ import {
   ComponentWidget,
   Container,
   Grid,
-
   Stack,
   Widget,
   BuildContext,
-
   BoxDecoration,
   Border,
   BorderSide,
@@ -34,7 +32,7 @@ class Chart extends ComponentWidget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { labels, datasets } = DataProvider.of(context);
-    const { chart, yAxis, xAxis } = CustomProvider.of(context);
+    const { chart, yAxis, xAxis, plot } = CustomProvider.of(context);
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
@@ -59,9 +57,17 @@ class Chart extends ComponentWidget {
     const {
       direction = "horizontal",
       scale: scaleOption,
-      foregroundAdditions= [],
+      foregroundAdditions = [],
       backgroundAdditions = [],
+      width,
+      height,
     } = chart;
+
+    let [plotHeight, plotWidth] = [undefined, undefined];
+    if (plot.type === "config") {
+      plotHeight = plot.height;
+      plotWidth = plot.width;
+    }
 
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,
@@ -83,7 +89,9 @@ class Chart extends ComponentWidget {
         ? [valueLabels, indexLabels]
         : [indexLabels, valueLabels];
 
-    return Align({
+    return Container({
+      width,
+      height,
       alignment: Alignment.topCenter,
       child: Stack({
         clipped: false,
@@ -143,8 +151,14 @@ class Chart extends ComponentWidget {
                   }),
                 ],
               ],
-              templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-              templateRows: [Grid.Fr(1), Grid.ContentFit()],
+              templateColumns: [
+                Grid.ContentFit(),
+                plotWidth ? Grid.ContentFit() : Grid.Fr(1),
+              ],
+              templateRows: [
+                plotHeight ? Grid.ContentFit() : Grid.Fr(1),
+                Grid.ContentFit(),
+              ],
             }),
           }),
           ...foregroundAdditions,

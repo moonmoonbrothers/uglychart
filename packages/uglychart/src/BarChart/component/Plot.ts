@@ -8,6 +8,7 @@ import {
   OverflowBox,
   Stack,
   Axis,
+  Alignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
@@ -65,6 +66,7 @@ class Plot extends ComponentWidget {
       Container({
         width: width,
         height: height,
+        alignment: Alignment.center,
         child: Flex({
           direction:
             this.props.direction === "vertical"
