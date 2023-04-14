@@ -1,8 +1,11 @@
 import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
 import { BarChartProps } from "./types";
 import Layout from "./component/Layout";
-import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import {
+  ComponentWidget,
+  Widget,
+  BuildContext,
+} from "@moonmoonbrothers/flutterjs";
 import { Custom, Data, Theme } from "./types";
 
 class BarChart extends ComponentWidget {
@@ -65,13 +68,13 @@ class BarChart extends ComponentWidget {
     this.theme = {
       border: {
         width: borderWidth,
-        color: borderColor
+        color: borderColor,
       },
       text: {
         fontSize,
         color,
         fontFamily,
-        lineHeight
+        lineHeight,
       },
     };
   }

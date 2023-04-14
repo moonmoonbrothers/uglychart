@@ -7,6 +7,7 @@ import {
   Widget,
   BuildContext,
   EdgeInsets,
+  MainAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Font } from "../types";
@@ -37,7 +38,12 @@ class Title extends ComponentWidget {
 
     const { alignment, font, margin } = title;
     return Row({
-      mainAxisAlignment: alignment ?? defaultTitleConfig.alignment,
+      mainAxisAlignment:
+        alignment === "start"
+          ? MainAxisAlignment.start
+          : alignment === "end"
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.center,
       children: [
         Padding({
           padding: margin,

@@ -4,14 +4,11 @@ import {
   ComponentWidget,
   Container,
   Grid,
-  IntrinsicHeight,
-  IntrinsicWidth,
-  Positioned,
+
   Stack,
   Widget,
   BuildContext,
-  Text,
-  Opacity,
+
   BoxDecoration,
   Border,
   BorderSide,

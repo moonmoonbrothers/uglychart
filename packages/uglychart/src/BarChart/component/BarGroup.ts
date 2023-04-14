@@ -10,6 +10,7 @@ import {
   Expanded,
   Alignment,
   FractionallySizedBox,
+  Axis,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../util";
@@ -90,7 +91,8 @@ class BarGroup extends ComponentWidget {
             direction === "horizontal"
               ? CrossAxisAlignment.start
               : CrossAxisAlignment.end,
-          direction: direction === "horizontal" ? "vertical" : "horizontal",
+          direction:
+            direction === "horizontal" ? Axis.vertical : Axis.horizontal,
           children,
         }),
       });
@@ -127,14 +129,15 @@ class BarGroup extends ComponentWidget {
     };
 
     return Flex({
-      direction,
+      direction: direction === "vertical" ? Axis.vertical : Axis.horizontal,
       children: areas.map((type) =>
         Expanded({
           flex: barGroupRatio[type],
           child: Flex({
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
-            direction: direction === "horizontal" ? "vertical" : "horizontal",
+            direction:
+              direction === "horizontal" ? Axis.vertical : Axis.horizontal,
             children: datasets.map(({ data, legend }, index) => {
               const value = data[this.props.index];
               const ratio = barRatio[type](value);

@@ -7,6 +7,7 @@ import {
   MainAxisAlignment,
   OverflowBox,
   Stack,
+  Axis,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
@@ -66,7 +67,9 @@ class Plot extends ComponentWidget {
         height: height,
         child: Flex({
           direction:
-            this.props.direction === "vertical" ? "horizontal" : "vertical",
+            this.props.direction === "vertical"
+              ? Axis.horizontal
+              : Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: labels.map((label, index) =>
             Container({
