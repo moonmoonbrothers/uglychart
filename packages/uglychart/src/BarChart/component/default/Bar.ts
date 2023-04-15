@@ -1,5 +1,8 @@
-import { Container, BoxDecoration } from "@moonmoonbrothers/flutterjs";
-import { EdgeInsetsGeometry } from "@moonmoonbrothers/flutterjs/src/type/_types/EdgeInsets";
+import {
+  Container,
+  type BoxDecoration,
+  type EdgeInsets,
+} from "@moonmoonbrothers/flutterjs";
 export default function Bar({
   thickness,
   direction,
@@ -11,13 +14,13 @@ export default function Bar({
   direction: "horizontal" | "vertical";
   color?: string;
   decoration?: BoxDecoration;
-  margin?: EdgeInsetsGeometry;
+  margin?: EdgeInsets;
 }) {
   return Container({
     color,
     decoration,
     height: direction === "horizontal" ? thickness : undefined,
     width: direction === "horizontal" ? thickness : undefined,
-    margin
+    margin,
   });
 }
