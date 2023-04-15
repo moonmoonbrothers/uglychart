@@ -94,7 +94,10 @@ class XAxis extends ComponentWidget {
                   }),
                 }),
               }),
-              XAxisLabel({ text: `${label}`, index }),
+              Container({
+                width: 0,
+                child: XAxisLabel({ text: `${label}`, index }),
+              }),
             ],
           })
         ),

@@ -10,6 +10,7 @@ import {
   Padding,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import { YAxisLabel as DefaultYAxisLabel } from "./default";
 
 export type YAxisLabelProps = {
   index: number;
@@ -31,16 +32,15 @@ class YAxisLabel extends ComponentWidget {
     }
     const { font, margin } = yAxisLabel;
 
-    return Padding({
-      padding: margin,
-      child: Text(text, {
-        style: new TextStyle({
-          fontFamily: font?.fontFamily ?? theme.text.fontFamily,
-          fontSize: font?.fontSize ?? theme.text.fontSize,
-          color: font?.color ?? theme.text.color,
-          height: font?.lineHeight ?? theme.text.lineHeight,
-        }),
+    return DefaultYAxisLabel({
+      text,
+      style: new TextStyle({
+        fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+        fontSize: font?.fontSize ?? theme.text.fontSize,
+        color: font?.color ?? theme.text.color,
+        height: font?.lineHeight ?? theme.text.lineHeight,
       }),
+      margin,
     });
   }
 }

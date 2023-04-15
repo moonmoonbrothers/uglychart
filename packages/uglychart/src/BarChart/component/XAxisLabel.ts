@@ -10,6 +10,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import { XAxisLabel as DefaultXAxisLabel } from "./default";
 
 export type XAxisLabelProps = {
   index: number;
@@ -31,21 +32,17 @@ class XAxisLabel extends ComponentWidget {
     }
     const { font, margin } = xAxisLabel;
 
-    return Container({
-      width: 0,
-      child: Container({
-        margin,
-        child: Text(text, {
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.center,
-          style: new TextStyle({
-            fontFamily: font?.fontFamily ?? theme.text.fontFamily,
-            fontSize: font?.fontSize ?? theme.text.fontSize,
-            color: font?.color ?? theme.text.color,
-            height: font?.lineHeight ?? theme.text.lineHeight,
-          }),
-        }),
+    return DefaultXAxisLabel({
+      text,
+      overflow: TextOverflow.visible,
+      textAlign: TextAlign.center,
+      style: new TextStyle({
+        fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+        fontSize: font?.fontSize ?? theme.text.fontSize,
+        color: font?.color ?? theme.text.color,
+        height: font?.lineHeight ?? theme.text.lineHeight,
       }),
+      margin,
     });
   }
 }

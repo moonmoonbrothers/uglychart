@@ -8,7 +8,7 @@ import {
   TextAlign,
 } from "@moonmoonbrothers/flutterjs";
 
-export function XAxisLabel({
+export default function XAxisLabel({
   text,
   overflow,
   style,

@@ -11,6 +11,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Font } from "../types";
+import { Title as DefaultTitle } from "./default";
 
 export type TitleConfig = {
   margin?: EdgeInsets;
@@ -37,26 +38,17 @@ class Title extends ComponentWidget {
     }
 
     const { alignment, font, margin } = title;
-    return Row({
-      mainAxisAlignment:
-        alignment === "start"
-          ? MainAxisAlignment.start
-          : alignment === "end"
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.center,
-      children: [
-        Padding({
-          padding: margin,
-          child: Text(text, {
-            style: new TextStyle({
-              fontFamily: font?.fontFamily ?? theme.text.fontFamily,
-              fontSize: font?.fontSize ?? defaultTitleConfig.font.fontSize,
-              color: font?.color ?? theme.text.color,
-              height: font?.lineHeight ?? theme.text.lineHeight,
-            }),
-          }),
-        }),
-      ],
+
+    return DefaultTitle({
+      align: alignment,
+      text,
+      style: new TextStyle({
+        fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+        fontSize: font?.fontSize ?? defaultTitleConfig.font.fontSize,
+        color: font?.color ?? theme.text.color,
+        height: font?.lineHeight ?? theme.text.lineHeight,
+      }),
+      margin,
     });
   }
 }

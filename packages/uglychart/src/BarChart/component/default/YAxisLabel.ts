@@ -9,7 +9,7 @@ import {
   TextAlign,
 } from "@moonmoonbrothers/flutterjs";
 
-export function YAxisLabel({
+export default function YAxisLabel({
   text,
   overflow,
   style,
