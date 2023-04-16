@@ -1,19 +1,7 @@
 import {
-  Column,
   ComponentWidget,
-  Container,
-  Row,
   Widget,
   BuildContext,
-  MainAxisSize,
-  MainAxisAlignment,
-  CrossAxisAlignment,
-  BoxDecoration,
-  Border,
-  BorderSide,
-  Alignment,
-  ConstraintsTransformBox,
-  SizedBox,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";

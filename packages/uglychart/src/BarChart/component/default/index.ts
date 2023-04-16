@@ -5,5 +5,6 @@ import YAxisLabel from "./YAxisLabel";
 import XAxisTick from "./XAxisTick";
 import YAxisTick from "./YAxisTick";
 import XAxis from './XAxis'
+import YAxis from "./YAxis";
 
-export { Title, Bar, XAxisLabel, YAxisLabel, XAxisTick, YAxisTick, XAxis };
+export { Title, Bar, XAxisLabel, YAxisLabel, XAxisTick, YAxisTick, XAxis, YAxis };
