@@ -20,7 +20,7 @@ export default function Bar({
     color,
     decoration,
     height: direction === "horizontal" ? thickness : undefined,
-    width: direction === "horizontal" ? thickness : undefined,
+    width: direction === "vertical" ? thickness : undefined,
     margin,
   });
 }

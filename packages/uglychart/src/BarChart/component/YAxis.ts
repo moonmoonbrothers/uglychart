@@ -43,7 +43,7 @@ class YAxis extends ComponentWidget {
     return DefaultYAxis({
       color: yAxis.color ?? theme.border.color,
       thickness: yAxis.thickness ?? theme.border.width,
-      labels,
+      labels: type === "index" ? labels : labels.reverse(),
       ticks:
         type === "index"
           ? [...ticks, YAxisTick({ index: ticks.length })]

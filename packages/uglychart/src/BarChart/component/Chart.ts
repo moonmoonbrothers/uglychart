@@ -121,25 +121,22 @@ class Chart extends ComponentWidget {
                           : undefined) ?? theme.border.width,
                       decoration: new BoxDecoration({
                         border: new Border({
-                          left: new BorderSide({
-                            color:
-                              (yAxis.type === "config"
-                                ? yAxis.color
-                                : undefined) ?? theme.border.color,
-                            width:
-                              (yAxis.type === "config"
-                                ? yAxis.thickness
-                                : undefined) ?? theme.border.width,
-                          }),
+                          // left: new BorderSide({
+                          //   color:
+                          //     (yAxis.type === "config"
+                          //       ? yAxis.color
+                          //       : undefined) ?? theme.border.color,
+                          //   width:
+                          //     (yAxis.type === "config"
+                          //       ? yAxis.thickness
+                          //       : undefined) ?? theme.border.width,
+                          // }),
                           bottom: new BorderSide({
                             color:
                               (xAxis.type === "config"
                                 ? xAxis.color
                                 : undefined) ?? theme.border.color,
-                            width:
-                              (xAxis.type === "config"
-                                ? xAxis.thickness
-                                : undefined) ?? theme.border.width,
+                            width: 2,
                           }),
                         }),
                       }),
