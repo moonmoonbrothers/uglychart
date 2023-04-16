@@ -1,5 +1,5 @@
 import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
-import { BarChartProps } from "./types";
+import { BarChartProps, Font } from "./types";
 import Layout from "./component/Layout";
 import {
   ComponentWidget,
@@ -11,7 +11,7 @@ import { Custom, Data, Theme } from "./types";
 class BarChart extends ComponentWidget {
   custom: Required<Custom>;
   data: Data;
-  theme: Required<Theme>;
+  theme: Theme
 
   constructor({
     custom: {
@@ -35,6 +35,8 @@ class BarChart extends ComponentWidget {
       plot = { type: "config" as const },
       chart = { type: "config" as const },
       dataLabel = { type: "config" as const },
+      xAxisTick = { type: "config" as const },
+      yAxisTick = { type: "config" as const },
     } = {},
     data,
     theme: {
@@ -61,6 +63,8 @@ class BarChart extends ComponentWidget {
       chart,
       dataLabel,
       title,
+      xAxisTick,
+      yAxisTick,
     };
 
     this.data = data;

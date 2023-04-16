@@ -24,7 +24,6 @@ export type BarGroupProps = {
 };
 
 export type BarGroupConfig = {
-  type: "config";
   barBackgroundColors?: string[];
   barBorderColors?: string[];
   gap?: number;

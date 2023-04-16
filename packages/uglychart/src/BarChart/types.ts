@@ -15,12 +15,15 @@ import { LayoutConfig } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
 import { ChartConfig } from "./component/Chart";
 import { DataLabelConfig } from "./component/DataLabel";
+import type { DeepPartial } from "../utils";
+import { XAxisTickProps } from "./component/XAxisTick";
+import { YAxisTickProps } from "./component/YAxisTick";
 
 export type Scale = _Scale;
 
 export type BarChartProps = {
   data: Data;
-  theme?: Theme;
+  theme?: DeepPartial<Theme>;
   padding?: EdgeInsets;
   custom?: Custom;
 };
@@ -41,6 +44,8 @@ export type Custom = {
   plot?: Plot;
   chart?: Chart;
   dataLabel?: DataLabel;
+  xAxisTick?: XAxisTick;
+  yAxisTick?: YAxisTick;
 };
 
 export type Data = {
@@ -68,7 +73,7 @@ export type CustomWidget<
 };
 
 type BarGroup =
-  | BarGroupConfig
+  | CustomConfig<BarGroupConfig>
   | CustomWidget<
       {
         Bar: (props: BarProps) => Widget;
@@ -109,19 +114,39 @@ type YAxisLabel =
 
 export type XAxis =
   | CustomConfig<Axis>
-  | ({ axis: "data" | "label" } & CustomWidget<
-      { XAxisLabel: (props: { index: number; text: string }) => Widget },
+  | ({ thickness: number; color: string } & CustomWidget<
+      {
+        XAxisTick: (props: XAxisTickProps) => Widget;
+        XAxisLabel: (props: { index: number; text: string }) => Widget;
+      },
       { data: Data }
     >);
 
 export type YAxis =
   | CustomConfig<Axis>
-  | CustomWidget<
-      { YAxisLabel: (props: YAxisLabelProps) => Widget },
+  | ({ thickness: number; color: string } & CustomWidget<
+      {
+        YAxisTick: (props: YAxisTickProps) => Widget;
+         YAxisLabel: (props: YAxisLabelProps) => Widget
+         },
       { data: Data }
-    >;
+    >);
 
 type Layout = CustomConfig<LayoutConfig> | CustomWidget<"Title" | "Chart">;
+
+export type XAxisTick =
+  | CustomConfig<Tick>
+  | CustomWidget<
+      {},
+      { data: Data; theme: Theme; index: number; label: string | number }
+    >;
+
+export type YAxisTick =
+  | CustomConfig<Tick>
+  | CustomWidget<
+      {},
+      { data: Data; theme: Theme; index: number; label: string | number }
+    >;
 
 type Tick = {
   color?: string;
@@ -167,10 +192,10 @@ export type Chart =
     }>;
 
 export type Theme = {
-  text?: Font;
-  border?: {
-    color?: string;
-    width?: number;
+  text: Required<Font>;
+  border: {
+    color: string;
+    width: number;
   };
 };
 

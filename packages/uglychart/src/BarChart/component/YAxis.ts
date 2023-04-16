@@ -26,6 +26,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import YAxisLabel from "./YAxisLabel";
+import YAxisTick from "./YAxisTick";
 
 export type YAxisProps = {
   type: "index" | "value";
@@ -50,21 +51,11 @@ class YAxis extends ComponentWidget {
     const { yAxis } = CustomProvider.of(context);
 
     if (yAxis.type === "custom") {
-      return yAxis.Custom({ YAxisLabel }, { theme, data });
+      return yAxis.Custom({ YAxisLabel, YAxisTick }, { theme, data });
     }
 
     const axisThickness = yAxis.thickness ?? theme.border.width;
     const axisColor = yAxis.color ?? theme.border.color;
-
-    const YTick = () =>
-      Container({
-        height:
-          yAxis.tick?.thickness ??
-          axisThickness ??
-          defaultYAxisConfig.tick.thickness,
-        color: yAxis.tick?.color ?? axisColor,
-        width: yAxis.tick?.length ?? defaultYAxisConfig.tick.length,
-      });
 
     return Container({
       decoration: new BoxDecoration({
@@ -110,7 +101,7 @@ class YAxis extends ComponentWidget {
                       child: YAxisLabel({ index, text: label }),
                     }),
                   }),
-                  YTick(),
+                  YAxisTick({ index, label }),
                 ],
               }),
             }),

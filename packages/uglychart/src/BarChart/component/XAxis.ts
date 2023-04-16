@@ -8,8 +8,6 @@ import {
   MainAxisSize,
   MainAxisAlignment,
   CrossAxisAlignment,
-  EdgeInsets,
-  DecoratedBox,
   BoxDecoration,
   Border,
   BorderSide,
@@ -18,6 +16,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";
+import XAxisTick from "./XAxisTick";
 
 export type XAxisProps = {
   type: "index" | "value";
@@ -42,7 +41,7 @@ class XAxis extends ComponentWidget {
     const { xAxis } = CustomProvider.of(context);
 
     if (xAxis.type === "custom") {
-      return xAxis.Custom({ XAxisLabel }, { theme, data });
+      return xAxis.Custom({ XAxisLabel, XAxisTick }, { theme, data });
     }
 
     const axisThickness = xAxis.thickness ?? theme.border.width;
@@ -83,14 +82,9 @@ class XAxis extends ComponentWidget {
                   maxWidth: Infinity,
                   maxHeight: Infinity,
                   minHeight: 0,
-                  child: Container({
-                    height:
-                      xAxis.tick?.length ?? defaultXAxisConfig.tick.length,
-                    width:
-                      xAxis.tick?.thickness ??
-                      axisThickness ??
-                      defaultXAxisConfig.tick.thickness,
-                    color: xAxis.tick?.color ?? axisColor,
+                  child: XAxisTick({
+                    index,
+                    label,
                   }),
                 }),
               }),
