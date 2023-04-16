@@ -189,11 +189,11 @@ export const Vertical: Story = {
 					'ㅈㅉㅊ',
 					'ㅅㅆ',
 					'ㄹ',
-					'양순음 (자질)',
-					'치경음 (자질)',
-					'연구개음 (자질)',
-					'비음 (자질)',
-					'기식음 (자질)'
+					'양순음',
+					'치경음',
+					'연구개음',
+					'비음',
+					'기식음'
 				],
 				datasets: [
 					{
@@ -318,6 +318,10 @@ export const Vertical: Story = {
 						fontFamily: 'Noto Sans KR, sans-serif'
 					},
 					margin: EdgeInsets.only({ bottom: 20 })
+				},
+				yAxisTick: {
+					type: 'config',
+					thickness: 0
 				}
 			},
 			theme: {

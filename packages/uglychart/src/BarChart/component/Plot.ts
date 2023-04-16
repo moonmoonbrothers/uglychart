@@ -72,7 +72,7 @@ class Plot extends ComponentWidget {
             this.props.direction === "vertical"
               ? Axis.horizontal
               : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: labels.map((label, index) =>
             Container({
               width: this.props.direction === "vertical" ? 0 : undefined,

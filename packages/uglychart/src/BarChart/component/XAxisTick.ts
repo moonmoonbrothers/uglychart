@@ -8,11 +8,9 @@ import { XAxisTick as DefaultXAxisTick } from "./default";
 
 class XAxisTick extends ComponentWidget {
   index: number;
-  label: string;
-  constructor({ index, label }: XAxisTickProps) {
+  constructor({ index }: XAxisTickProps) {
     super();
     this.index = index;
-    this.label = label;
   }
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
@@ -20,10 +18,7 @@ class XAxisTick extends ComponentWidget {
     const { xAxis, xAxisTick } = CustomProvider.of(context);
 
     if (xAxisTick.type === "custom") {
-      return xAxisTick.Custom(
-        {},
-        { theme, data, index: this.index, label: this.label }
-      );
+      return xAxisTick.Custom({}, { theme, data, index: this.index });
     }
 
     return DefaultXAxisTick({
@@ -35,8 +30,7 @@ class XAxisTick extends ComponentWidget {
 }
 
 export type XAxisTickProps = {
-  index: number
-  label: string
-}
+  index: number;
+};
 
-export default (props: XAxisTickProps) => new XAxisTick(props) 
+export default (props: XAxisTickProps) => new XAxisTick(props);

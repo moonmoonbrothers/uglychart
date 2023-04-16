@@ -11,12 +11,14 @@ import {
   BoxDecoration,
   Border,
   BorderSide,
-  OverflowBox,
   Alignment,
+  ConstraintsTransformBox,
+  SizedBox,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxisLabel from "./XAxisLabel";
 import XAxisTick from "./XAxisTick";
+import { XAxis as DefaultXAxis } from "./default";
 
 export type XAxisProps = {
   type: "index" | "value";
@@ -36,6 +38,7 @@ class XAxis extends ComponentWidget {
   }
 
   build(context: BuildContext): Widget {
+    const { type } = this.props;
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { xAxis } = CustomProvider.of(context);
@@ -44,58 +47,19 @@ class XAxis extends ComponentWidget {
       return xAxis.Custom({ XAxisLabel, XAxisTick }, { theme, data });
     }
 
-    const axisThickness = xAxis.thickness ?? theme.border.width;
-    const axisColor = xAxis.color ?? theme.border.color;
+    const labels = this.props.labels.map((label, index) =>
+      XAxisLabel({ index, text: label })
+    );
+    const ticks = this.props.labels.map((_, index) => XAxisTick({ index }));
 
-    return Container({
-      decoration: new BoxDecoration({
-        border: new Border({
-          top: new BorderSide({
-            width: axisThickness,
-            color: axisColor,
-          }),
-        }),
-      }),
-      child: Row({
-        mainAxisAlignment:
-          this.props.type === "index"
-            ? MainAxisAlignment.spaceEvenly
-            : MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: this.props.labels.map((label, index) =>
-          Column({
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container({
-                width: 0,
-                height: xAxis.tick?.length ?? defaultXAxisConfig.tick.length,
-                child: OverflowBox({
-                  alignment:
-                    this.props.type === "index"
-                      ? Alignment.center
-                      : index === 0
-                      ? Alignment.centerRight
-                      : index === this.props.labels.length - 1
-                      ? Alignment.centerRight
-                      : Alignment.center,
-                  maxWidth: Infinity,
-                  maxHeight: Infinity,
-                  minHeight: 0,
-                  child: XAxisTick({
-                    index,
-                    label,
-                  }),
-                }),
-              }),
-              Container({
-                width: 0,
-                child: XAxisLabel({ text: `${label}`, index }),
-              }),
-            ],
-          })
-        ),
-      }),
+    return DefaultXAxis({
+      color: xAxis.color ?? theme.border.color,
+      thickness: xAxis.thickness ?? theme.border.width,
+      labels,
+      ticks:
+        type === "index"
+          ? [...ticks, XAxisTick({ index: ticks.length })]
+          : ticks,
     });
   }
 }

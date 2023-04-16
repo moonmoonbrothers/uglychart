@@ -34,8 +34,6 @@ class XAxisLabel extends ComponentWidget {
 
     return DefaultXAxisLabel({
       text,
-      overflow: TextOverflow.visible,
-      textAlign: TextAlign.center,
       style: new TextStyle({
         fontFamily: font?.fontFamily ?? theme.text.fontFamily,
         fontSize: font?.fontSize ?? theme.text.fontSize,

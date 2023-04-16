@@ -127,8 +127,8 @@ export type YAxis =
   | ({ thickness: number; color: string } & CustomWidget<
       {
         YAxisTick: (props: YAxisTickProps) => Widget;
-         YAxisLabel: (props: YAxisLabelProps) => Widget
-         },
+        YAxisLabel: (props: YAxisLabelProps) => Widget;
+      },
       { data: Data }
     >);
 
@@ -136,17 +136,11 @@ type Layout = CustomConfig<LayoutConfig> | CustomWidget<"Title" | "Chart">;
 
 export type XAxisTick =
   | CustomConfig<Tick>
-  | CustomWidget<
-      {},
-      { data: Data; theme: Theme; index: number; label: string | number }
-    >;
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
 
 export type YAxisTick =
   | CustomConfig<Tick>
-  | CustomWidget<
-      {},
-      { data: Data; theme: Theme; index: number; label: string | number }
-    >;
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
 
 type Tick = {
   color?: string;
@@ -155,7 +149,6 @@ type Tick = {
 };
 
 type Axis = {
-  tick?: Tick;
   thickness?: number;
   color?: string;
 };

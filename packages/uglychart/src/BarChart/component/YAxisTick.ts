@@ -8,35 +8,29 @@ import { YAxisTick as DefaultYAxisTick } from "./default";
 
 class YAxisTick extends ComponentWidget {
   index: number;
-  label: string;
-  constructor({ index, label }: YAxisTickProps) {
+  constructor({ index }: YAxisTickProps) {
     super();
     this.index = index;
-    this.label = label;
   }
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
-    const { xAxis, xAxisTick } = CustomProvider.of(context);
+    const { yAxis, yAxisTick } = CustomProvider.of(context);
 
-    if (xAxisTick.type === "custom") {
-      return xAxisTick.Custom(
-        {},
-        { theme, data, index: this.index, label: this.label }
-      );
+    if (yAxisTick.type === "custom") {
+      return yAxisTick.Custom({}, { theme, data, index: this.index });
     }
 
     return DefaultYAxisTick({
-      thickness: xAxisTick.thickness ?? xAxis.thickness ?? theme.border.width,
-      length: xAxisTick.length ?? 10,
-      color: xAxisTick.color ?? xAxis.color ?? theme.border.color,
+      thickness: yAxisTick.thickness ?? yAxis.thickness ?? theme.border.width,
+      length: yAxisTick.length ?? 10,
+      color: yAxisTick.color ?? yAxis.color ?? theme.border.color,
     });
   }
 }
 
 export type YAxisTickProps = {
-  index: number
-  label: string
-}
+  index: number;
+};
 
-export default (props: YAxisTickProps) => new YAxisTick(props) 
+export default (props: YAxisTickProps) => new YAxisTick(props);
