@@ -1,7 +1,5 @@
 import {
-  Alignment,
   EdgeInsets,
-  Radius,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { TitleConfig } from "./component/Title";
@@ -90,7 +88,6 @@ type Bar =
         index: number;
         label: string;
         legend: string;
-        reverse: boolean;
         direction: "vertical" | "horizontal";
         data: Data;
         theme: Theme;
@@ -162,7 +159,6 @@ type DataLabel =
         index: number;
         legend: string;
         label: string;
-        reverse: boolean;
         direction: "horizontal" | "vertical";
       }
     >;

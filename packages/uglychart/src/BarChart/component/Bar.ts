@@ -11,7 +11,6 @@ export type BarProps = {
   backgroundColor: string;
   index: number;
   value: number;
-  reverse?: boolean;
   label: string;
   legend: string;
   direction: "horizontal" | "vertical";
@@ -41,7 +40,6 @@ export class Bar extends ComponentWidget {
       label,
       legend,
       direction,
-      reverse = false,
     } = this.props;
 
     if (bar.type === "custom") {
@@ -55,7 +53,6 @@ export class Bar extends ComponentWidget {
           legend,
           data,
           direction,
-          reverse,
         }
       );
     }

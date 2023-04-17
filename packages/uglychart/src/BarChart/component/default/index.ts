@@ -7,6 +7,7 @@ import YAxisTick from "./YAxisTick";
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
 import BarGroup from "./BarGroup";
+import Plot from './Plot'
 
 export {
   Title,
@@ -18,4 +19,5 @@ export {
   XAxis,
   YAxis,
   BarGroup,
+  Plot
 };

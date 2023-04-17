@@ -6,13 +6,13 @@ import {
   Flex,
   MainAxisAlignment,
   OverflowBox,
-  Stack,
   Axis,
   Alignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
 import BarGroup from "./BarGroup";
+import { Plot as DefaultPlot } from "./default";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -52,6 +52,7 @@ class Plot extends ComponentWidget {
         { data, theme }
       );
     }
+
     const {
       height,
       width,
@@ -62,40 +63,20 @@ class Plot extends ComponentWidget {
     } = plot;
     const { labels } = data;
 
-    const Plot = () =>
-      Container({
-        width: width,
-        height: height,
-        alignment: Alignment.center,
-        child: Flex({
-          direction:
-            this.props.direction === "vertical"
-              ? Axis.horizontal
-              : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: labels.map((label, index) =>
-            Container({
-              width: this.props.direction === "vertical" ? 0 : undefined,
-              height: this.props.direction === "horizontal" ? 0 : undefined,
-              child: OverflowBox({
-                maxWidth:
-                  this.props.direction === "vertical" ? Infinity : undefined,
-                maxHeight:
-                  this.props.direction === "horizontal" ? Infinity : undefined,
-                child: BarGroup({
-                  index,
-                  scale: this.props.scale,
-                  label,
-                  direction: this.props.direction,
-                }),
-              }),
-            })
-          ),
-        }),
-      });
-
-    return Stack({
-      children: [...backgroundAdditions, Plot(), ...foregroundAdditions],
+    return DefaultPlot({
+      direction: this.props.direction,
+      height: plot.height,
+      width: plot.width,
+      BackgroundAdditions: foregroundAdditions,
+      ForegroundAdditions: backgroundAdditions,
+      BarGroups: labels.map((label, index) =>
+        BarGroup({
+          index,
+          scale: this.props.scale,
+          label,
+          direction: this.props.direction,
+        })
+      ),
     });
   }
 }

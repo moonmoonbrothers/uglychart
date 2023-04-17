@@ -1,7 +1,6 @@
 import {
   Alignment,
   Axis,
-  Container,
   EdgeInsets,
   Expanded,
   Flex,
@@ -19,7 +18,7 @@ export default function BarGroup({
   direction,
   negativeBarRatios,
   positiveBarRatios,
-  bars,
+  children: bars,
   gap,
 }: BarGroupProps) {
   const Bars = ({ type }: { type: "negative" | "positive" }) =>
@@ -58,15 +57,16 @@ export default function BarGroup({
         flex: area === "negative" ? negativeAreaRatio : positiveAreaRatio,
         child: Transform({
           alignment: Alignment.center,
-          transform: Matrix4.diagonal3Values(1, area === "negative" ? 1 : 1, 1),
-          child: Container({
-            color: area === "negative" ? "purple" : undefined,
-            child: Flex({
-              mainAxisSize: MainAxisSize.min,
-              direction:
-                direction === "vertical" ? Axis.horizontal : Axis.vertical,
-              children: Bars({ type: area }),
-            }),
+          transform: Matrix4.diagonal3Values(
+            direction === "horizontal" && area === "negative" ? -1 : 1,
+            direction === "vertical" && area === "negative" ? -1 : 1,
+            1
+          ),
+          child: Flex({
+            mainAxisSize: MainAxisSize.min,
+            direction:
+              direction === "vertical" ? Axis.horizontal : Axis.vertical,
+            children: Bars({ type: area }),
           }),
         }),
       })
@@ -80,6 +80,6 @@ type BarGroupProps = {
   direction: "vertical" | "horizontal";
   negativeBarRatios: number[];
   positiveBarRatios: number[];
-  bars: Widget[];
+  children: Widget[];
   gap: number;
 };

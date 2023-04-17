@@ -93,7 +93,7 @@ export class AppRunner {
 
   paint() {
     const rootRenderObject = this.root.renderObject;
-    rootRenderObject.paint(this.owner.paintContext, Offset.zero());
+    rootRenderObject.paint(this.owner.paintContext);
   }
 }
 

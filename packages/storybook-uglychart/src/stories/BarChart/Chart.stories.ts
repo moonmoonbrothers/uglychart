@@ -10,22 +10,9 @@ import {
 	BorderRadius,
 	Radius,
 	Positioned,
-	Column,
-	CrossAxisAlignment,
-	Expanded,
-	Border,
-	BorderSide,
 	Row,
 	MainAxisSize,
-	SizedBox,
-	TextBaseline,
-	MainAxisAlignment,
-	Alignment,
-	Flexible,
-	CustomPaint,
-	Size,
-	Path,
-	Rect
+	SizedBox
 } from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
@@ -304,7 +291,7 @@ export const VerticalWithMinusValues: Story = {
 export const Vertical: Story = {
 	args: {
 		ssrSize: { width: 800, height: 450 },
-		width: '900px',
+		width: '800px',
 		height: '450px',
 		widget: BarChart({
 			data: {
