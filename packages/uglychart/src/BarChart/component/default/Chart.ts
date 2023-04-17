@@ -7,8 +7,6 @@ import {
   BoxDecoration,
   Border,
   BorderSide,
-  IntrinsicWidth,
-  IntrinsicHeight,
 } from "@moonmoonbrothers/flutterjs";
 
 export default function Chart({
@@ -21,8 +19,8 @@ export default function Chart({
   Plot,
   BackgroundAdditions,
   ForegroundAdditions,
-  width,
-  height,
+  plotHeight,
+  plotWidth,
 }: ChartProps) {
   return Stack({
     children: [
@@ -35,14 +33,22 @@ export default function Chart({
             XAxis,
           ],
         ],
-        templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-        templateRows: [Grid.Fr(1), Grid.ContentFit()],
+        templateColumns: [
+          Grid.ContentFit(),
+          plotWidth ? Grid.ContentFit() : Grid.Fr(1),
+        ],
+        templateRows: [
+          plotHeight ? Grid.ContentFit() : Grid.Fr(1),
+          Grid.ContentFit(),
+        ],
       }),
       ...ForegroundAdditions,
     ],
   });
 }
 type ChartProps = {
+  plotWidth?: number;
+  plotHeight?: number;
   yAxisColor: string;
   yAxisThickness: number;
   xAxisColor: string;
@@ -84,14 +90,6 @@ function Edge({
           }),
         }),
       }),
-    }),
-  });
-}
-
-function IntrinsicSize({ child }: { child: Widget }) {
-  return IntrinsicWidth({
-    child: IntrinsicHeight({
-      child,
     }),
   });
 }

@@ -1,14 +1,8 @@
 import {
   Alignment,
   ComponentWidget,
-  Container,
-  Grid,
-  Stack,
   Widget,
   BuildContext,
-  BoxDecoration,
-  Border,
-  BorderSide,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxis from "./XAxis";
@@ -37,7 +31,6 @@ class Chart extends ComponentWidget {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
 
-    /* scale 구하기 */
     const valueEdge = getValueEdge(datasets.map(({ data }) => data));
 
     const roughEdge = {
@@ -63,12 +56,6 @@ class Chart extends ComponentWidget {
       height,
     } = chart;
 
-    let [plotHeight, plotWidth] = [undefined, undefined];
-    if (plot.type === "config") {
-      plotHeight = plot.height;
-      plotWidth = plot.width;
-    }
-
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,
       max: scaleOption?.max ?? suggestedScale.max,
@@ -77,7 +64,6 @@ class Chart extends ComponentWidget {
 
     const { min, max, step } = scale;
 
-    /* label 생성 */
     const valueLabels = Array.from(
       { length: Math.floor((max - min) / step) + 1 },
       (_, i) => `${step * i + min}`
@@ -92,6 +78,8 @@ class Chart extends ComponentWidget {
     return DefaultChart({
       BackgroundAdditions: backgroundAdditions,
       ForegroundAdditions: foregroundAdditions,
+      plotHeight: plot.height,
+      plotWidth: plot.width,
       width,
       height,
       YAxis: YAxis({

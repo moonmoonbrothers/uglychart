@@ -652,7 +652,7 @@ export const WithPlotSize: Story = {
 				},
 				plot: {
 					type: 'config',
-					height: 400,
+					height: 300,
 					width: 400
 				},
 				title: {

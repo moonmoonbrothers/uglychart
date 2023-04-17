@@ -1,7 +1,4 @@
-import {
-  EdgeInsets,
-  Widget,
-} from "@moonmoonbrothers/flutterjs";
+import { EdgeInsets, Widget } from "@moonmoonbrothers/flutterjs";
 import { TitleConfig } from "./component/Title";
 import { BarProps, BarConfig } from "./component/Bar";
 import { BarGroupProps, BarGroupConfig } from "./component/BarGroup";
@@ -165,12 +162,16 @@ type DataLabel =
 
 type Plot =
   | CustomConfig<PlotConfig>
-  | CustomWidget<
+    /*
+      Must be specified If your custom plot has specific size,
+      It will be used in Chart to layout it correctly
+    */
+  | ({ width?: number; height?: number } & CustomWidget<
       {
         BarGroup: (props: BarGroupProps) => Widget;
       },
       { data: Data }
-    >;
+    >);
 
 export type Chart =
   | CustomConfig<ChartConfig>
