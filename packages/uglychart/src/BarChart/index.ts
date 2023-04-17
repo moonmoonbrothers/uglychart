@@ -1,14 +1,17 @@
 import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
-import { BarChartProps } from "./types";
+import { BarChartProps, Font } from "./types";
 import Layout from "./component/Layout";
-import { ComponentWidget, Widget } from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import {
+  ComponentWidget,
+  Widget,
+  BuildContext,
+} from "@moonmoonbrothers/flutterjs";
 import { Custom, Data, Theme } from "./types";
 
 class BarChart extends ComponentWidget {
   custom: Required<Custom>;
   data: Data;
-  theme: Required<Theme>;
+  theme: Theme
 
   constructor({
     custom: {
@@ -32,7 +35,8 @@ class BarChart extends ComponentWidget {
       plot = { type: "config" as const },
       chart = { type: "config" as const },
       dataLabel = { type: "config" as const },
-      additions = [],
+      xAxisTick = { type: "config" as const },
+      yAxisTick = { type: "config" as const },
     } = {},
     data,
     theme: {
@@ -58,8 +62,9 @@ class BarChart extends ComponentWidget {
       plot,
       chart,
       dataLabel,
-      additions,
       title,
+      xAxisTick,
+      yAxisTick,
     };
 
     this.data = data;
@@ -67,13 +72,13 @@ class BarChart extends ComponentWidget {
     this.theme = {
       border: {
         width: borderWidth,
-        color: borderColor
+        color: borderColor,
       },
       text: {
         fontSize,
         color,
         fontFamily,
-        lineHeight
+        lineHeight,
       },
     };
   }

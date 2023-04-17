@@ -1,20 +1,16 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject";
-import { Constraints, Size } from "../../type";
+import {
+  Axis,
+  Constraints,
+  CrossAxisAlignment,
+  MainAxisAlignment,
+  MainAxisSize,
+  Size,
+  VerticalDirection,
+} from "../../type";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 import { RenderFlexible } from "./BaseFlexible";
-
-export type MainAxisAlignment =
-  | "start"
-  | "end"
-  | "spaceEvenly"
-  | "spaceBetween"
-  | "spaceAround"
-  | "center";
-export type CrossAxisAlignment = "stretch" | "center" | "start" | "end";
-export type Axis = "horizontal" | "vertical";
-export type VerticalDirection = "up" | "down";
-export type MainAxisSize = "min" | "max";
 
 class Flex extends MultiChildRenderObjectWidget {
   direction: Axis;
@@ -25,10 +21,10 @@ class Flex extends MultiChildRenderObjectWidget {
   constructor({
     children,
     direction,
-    mainAxisAlignment = "start",
-    crossAxisAlignment = "center",
-    verticalDirection = "down",
-    mainAxisSize = "max",
+    mainAxisAlignment = MainAxisAlignment.start,
+    crossAxisAlignment = CrossAxisAlignment.center,
+    verticalDirection = VerticalDirection.down,
+    mainAxisSize = MainAxisSize.max,
   }: {
     children: Widget[];
     direction: Axis;
@@ -296,16 +292,16 @@ class RenderFlex extends MultiChildRenderObject {
     const parentCrossAxisValue = this.size[this.crossAxisSizeName];
     let offsetOnCrossAxis: number;
     switch (this.crossAxisAlignment) {
-      case "center":
+      case CrossAxisAlignment.center:
         offsetOnCrossAxis = (parentCrossAxisValue - childCrossAxisValue) / 2;
         break;
-      case "start":
+      case CrossAxisAlignment.start:
         offsetOnCrossAxis = 0;
         break;
-      case "end":
+      case CrossAxisAlignment.end:
         offsetOnCrossAxis = parentCrossAxisValue - childCrossAxisValue;
         break;
-      case "stretch":
+      case CrossAxisAlignment.stretch:
         offsetOnCrossAxis = 0;
         break;
     }

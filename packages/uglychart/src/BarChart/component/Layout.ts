@@ -13,8 +13,8 @@ import Chart from "./Chart";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 
 export type LayoutConfig = {
-  type: "config";
   padding?: EdgeInsets;
+  backgroundColor?: string;
 };
 
 class Layout extends ComponentWidget {
@@ -25,12 +25,12 @@ class Layout extends ComponentWidget {
     if (layout.type === "custom")
       return layout.Custom({ Title, Chart }, { theme, data });
 
-    const { padding } = layout;
+    const { padding, backgroundColor } = layout;
     return Container({
       width: Infinity,
       height: Infinity,
-      color: "white",
       padding,
+      color: backgroundColor,
       alignment: Alignment.topLeft,
       child: Column({
         children: [

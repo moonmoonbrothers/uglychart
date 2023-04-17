@@ -1,22 +1,23 @@
 import { Rect } from "../type";
 import type Widget from "../widget/Widget";
 import ClipRect from "./ClipRect";
-import BaseFlex, {
-  type CrossAxisAlignment,
-  type MainAxisAlignment,
-  type Axis,
-  type VerticalDirection,
-  type MainAxisSize,
-} from "./base/BaseFlex";
+import BaseFlex from "./base/BaseFlex";
+import type {
+  CrossAxisAlignment,
+  MainAxisAlignment,
+  Axis,
+  VerticalDirection,
+  MainAxisSize,
+} from "../type";
 
 export default function Flex({
   children,
-  mainAxisAlignment = "start",
-  crossAxisAlignment = "center",
+  mainAxisAlignment,
+  crossAxisAlignment,
   direction,
   clipped = false,
-  verticalDirection = "down",
-  mainAxisSize = "max",
+  verticalDirection,
+  mainAxisSize,
 }: {
   children: Widget[];
   mainAxisAlignment?: MainAxisAlignment;

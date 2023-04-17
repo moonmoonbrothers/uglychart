@@ -4,14 +4,9 @@ import {
   ComponentWidget,
   Container,
   Grid,
-  IntrinsicHeight,
-  IntrinsicWidth,
-  Positioned,
   Stack,
   Widget,
   BuildContext,
-  Text,
-  Opacity,
   BoxDecoration,
   Border,
   BorderSide,
@@ -22,12 +17,22 @@ import YAxis from "./YAxis";
 import Plot from "./Plot";
 import { getScale, getValueEdge, Scale } from "../util";
 
+export type ChartConfig = {
+  width?: number;
+  height?: number;
+  scale?: Partial<Scale>;
+  direction?: "horizontal" | "vertical";
+  alignment?: Alignment;
+  foregroundAdditions?: Widget[];
+  backgroundAdditions?: Widget[];
+};
+
 class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { labels, datasets } = DataProvider.of(context);
-    const { chart, yAxis, xAxis } = CustomProvider.of(context);
+    const { chart, yAxis, xAxis, plot } = CustomProvider.of(context);
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
@@ -52,8 +57,17 @@ class Chart extends ComponentWidget {
     const {
       direction = "horizontal",
       scale: scaleOption,
-      additions = [],
+      foregroundAdditions = [],
+      backgroundAdditions = [],
+      width,
+      height,
     } = chart;
+
+    let [plotHeight, plotWidth] = [undefined, undefined];
+    if (plot.type === "config") {
+      plotHeight = plot.height;
+      plotWidth = plot.width;
+    }
 
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,
@@ -75,11 +89,14 @@ class Chart extends ComponentWidget {
         ? [valueLabels, indexLabels]
         : [indexLabels, valueLabels];
 
-    return Align({
+    return Container({
+      width,
+      height,
       alignment: Alignment.topCenter,
       child: Stack({
         clipped: false,
         children: [
+          ...backgroundAdditions,
           Container({
             child: Grid({
               childrenByRow: [
@@ -104,25 +121,22 @@ class Chart extends ComponentWidget {
                           : undefined) ?? theme.border.width,
                       decoration: new BoxDecoration({
                         border: new Border({
-                          left: new BorderSide({
-                            color:
-                              (yAxis.type === "config"
-                                ? yAxis.color
-                                : undefined) ?? theme.border.color,
-                            width:
-                              (yAxis.type === "config"
-                                ? yAxis.thickness
-                                : undefined) ?? theme.border.width,
-                          }),
+                          // left: new BorderSide({
+                          //   color:
+                          //     (yAxis.type === "config"
+                          //       ? yAxis.color
+                          //       : undefined) ?? theme.border.color,
+                          //   width:
+                          //     (yAxis.type === "config"
+                          //       ? yAxis.thickness
+                          //       : undefined) ?? theme.border.width,
+                          // }),
                           bottom: new BorderSide({
                             color:
                               (xAxis.type === "config"
                                 ? xAxis.color
                                 : undefined) ?? theme.border.color,
-                            width:
-                              (xAxis.type === "config"
-                                ? xAxis.thickness
-                                : undefined) ?? theme.border.width,
+                            width: 2,
                           }),
                         }),
                       }),
@@ -134,11 +148,17 @@ class Chart extends ComponentWidget {
                   }),
                 ],
               ],
-              templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
-              templateRows: [Grid.Fr(1), Grid.ContentFit()],
+              templateColumns: [
+                Grid.ContentFit(),
+                plotWidth ? Grid.ContentFit() : Grid.Fr(1),
+              ],
+              templateRows: [
+                plotHeight ? Grid.ContentFit() : Grid.Fr(1),
+                Grid.ContentFit(),
+              ],
             }),
           }),
-          ...additions,
+          ...foregroundAdditions,
         ],
       }),
     });

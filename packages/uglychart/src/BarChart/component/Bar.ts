@@ -5,6 +5,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import { Bar as DefaultBar } from "./default";
 
 export type BarProps = {
   backgroundColor: string;
@@ -17,7 +18,6 @@ export type BarProps = {
 };
 
 export type BarConfig = {
-  type: "config";
   thickness?: number;
 };
 
@@ -63,11 +63,10 @@ export class Bar extends ComponentWidget {
     const { thickness = theme.border.width ?? defaultBarConfig.thickness } =
       bar;
 
-    return Container({
+    return DefaultBar({
       color: backgroundColor,
-      ...(direction === "horizontal"
-        ? { height: thickness }
-        : { width: thickness }),
+      direction,
+      thickness,
     });
   }
 }

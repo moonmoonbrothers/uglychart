@@ -17,7 +17,15 @@ import {
 	BorderSide,
 	Row,
 	MainAxisSize,
-	SizedBox
+	SizedBox,
+	TextBaseline,
+	MainAxisAlignment,
+	Alignment,
+	Flexible,
+	CustomPaint,
+	Size,
+	Path,
+	Rect
 } from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
@@ -60,7 +68,7 @@ export const Basic: Story = {
 				},
 				chart: {
 					type: 'config',
-					additions: [
+					foregroundAdditions: [
 						Positioned({
 							bottom: -20,
 							right: -15,
@@ -162,6 +170,137 @@ export const Basic: Story = {
 	}
 };
 
+export const HorizontalWithMinusValue: Story = {
+	args: {
+		ssrSize: { width: 800, height: 480 },
+		width: '800px',
+		height: '480px',
+		widget: BarChart({
+			data: {
+				title: 'Title',
+				labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
+				datasets: [
+					{
+						legend: 'A',
+						data: [-30, 40.5, -50.12, 30.5, 40]
+					},
+					{
+						legend: 'B',
+						data: [60, -20.5, 20.2, 22.5, 10]
+					},
+					{
+						legend: 'C',
+						data: [6, 10.5, 20.2, -12.5, -1]
+					}
+				]
+			},
+			custom: {
+				barGroup: {
+					type: 'config',
+					barBackgroundColors: ['black', 'grey', 'brown', 'black']
+				},
+				chart: {
+					type: 'config',
+					foregroundAdditions: [
+						Positioned({
+							bottom: -20,
+							right: -15,
+							child: Text('%ile')
+						}),
+						Positioned({
+							bottom: -25,
+							left: 20,
+							child: Container({
+								color: 'black',
+								padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
+								child: Text('made by moon', {
+									style: new TextStyle({ fontSize: 12, color: 'white' })
+								})
+							})
+						})
+					]
+				},
+				bar: {
+					type: 'config',
+					thickness: 15
+				},
+				layout: {
+					type: 'config',
+					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
+				},
+				title: {
+					type: 'config',
+					alignment: 'center',
+					font: {
+						fontSize: 40
+					}
+				}
+			}
+		}),
+		code: dedent`
+		import { TextStyle, Text, Container, EdgeInsets } from '@moonmoonbrothers/flutterjs';
+		import { BarChart } from '@moonmoonbrothers/uglychart';
+	`
+	}
+};
+
+export const VerticalWithMinusValues: Story = {
+	args: {
+		ssrSize: { width: 800, height: 480 },
+		width: '800px',
+		height: '480px',
+		widget: BarChart({
+			data: {
+				title: 'Title',
+				labels: ['label1', 'label2', 'label3', 'label4', 'label5'],
+				datasets: [
+					{
+						legend: 'A',
+						data: [-30, 40.5, -50.12, 30.5, 40]
+					},
+					{
+						legend: 'B',
+						data: [60, -20.5, 20.2, 22.5, 10]
+					},
+					{
+						legend: 'C',
+						data: [6, 10.5, 20.2, -12.5, -1]
+					}
+				]
+			},
+			custom: {
+				barGroup: {
+					type: 'config',
+					barBackgroundColors: ['black', 'grey', 'brown', 'black']
+				},
+				chart: {
+					type: 'config',
+					direction: 'vertical'
+				},
+				bar: {
+					type: 'config',
+					thickness: 15
+				},
+				layout: {
+					type: 'config',
+					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
+				},
+				title: {
+					type: 'config',
+					alignment: 'center',
+					font: {
+						fontSize: 40
+					}
+				}
+			}
+		}),
+		code: dedent`
+		import { TextStyle, Text, Container, EdgeInsets } from '@moonmoonbrothers/flutterjs';
+		import { BarChart } from '@moonmoonbrothers/uglychart';
+	`
+	}
+};
+
 export const Vertical: Story = {
 	args: {
 		ssrSize: { width: 800, height: 450 },
@@ -181,11 +320,11 @@ export const Vertical: Story = {
 					'ㅈㅉㅊ',
 					'ㅅㅆ',
 					'ㄹ',
-					'양순음 (자질)',
-					'치경음 (자질)',
-					'연구개음 (자질)',
-					'비음 (자질)',
-					'기식음 (자질)'
+					'양순음',
+					'치경음',
+					'연구개음',
+					'비음',
+					'기식음'
 				],
 				datasets: [
 					{
@@ -197,6 +336,7 @@ export const Vertical: Story = {
 			custom: {
 				layout: {
 					type: 'config',
+					backgroundColor: 'white',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
 				},
 				chart: {
@@ -207,7 +347,7 @@ export const Vertical: Story = {
 						min: 0,
 						step: 20
 					},
-					additions: [
+					foregroundAdditions: [
 						Positioned({
 							right: 0,
 							top: -20,
@@ -264,10 +404,7 @@ export const Vertical: Story = {
 						})
 				},
 				xAxis: {
-					type: 'config',
-					tick: {
-						length: 0
-					}
+					type: 'config'
 				},
 				xAxisLabel: {
 					type: 'config',
@@ -279,32 +416,7 @@ export const Vertical: Story = {
 				},
 				yAxis: {
 					type: 'config',
-					thickness: 0,
-					tick: {
-						length: 0
-					}
-				},
-				plot: {
-					type: 'config',
-					additions: [
-						Column({
-							crossAxisAlignment: CrossAxisAlignment.stretch,
-							children: Array.from({ length: 5 }, () =>
-								Expanded({
-									child: Container({
-										decoration: new BoxDecoration({
-											border: new Border({
-												top: new BorderSide({
-													color: '#E8E8E8',
-													width: 2
-												})
-											})
-										})
-									})
-								})
-							)
-						})
-					]
+					thickness: 2
 				},
 				title: {
 					type: 'config',
@@ -315,6 +427,10 @@ export const Vertical: Story = {
 						fontFamily: 'Noto Sans KR, sans-serif'
 					},
 					margin: EdgeInsets.only({ bottom: 20 })
+				},
+				yAxisTick: {
+					type: 'config',
+					thickness: 0
 				}
 			},
 			theme: {

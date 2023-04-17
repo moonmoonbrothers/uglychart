@@ -1,11 +1,12 @@
 import type Widget from "../widget/Widget";
 import Flex from "./Flex";
-import type {
-  MainAxisAlignment,
-  CrossAxisAlignment,
-  VerticalDirection,
-  MainAxisSize,
-} from "./base/BaseFlex";
+import {
+  type MainAxisAlignment,
+  type CrossAxisAlignment,
+  type VerticalDirection,
+  type MainAxisSize,
+  Axis,
+} from "../type";
 
 export default function Row({
   children,
@@ -22,10 +23,10 @@ export default function Row({
 }) {
   return Flex({
     children,
-    direction: "horizontal",
+    direction: Axis.horizontal,
     mainAxisAlignment,
     crossAxisAlignment,
     verticalDirection,
-    mainAxisSize
+    mainAxisSize,
   });
 }

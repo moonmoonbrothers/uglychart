@@ -8,6 +8,8 @@ import XAxis from "./XAxis"
 import XAxisLabel from "./XAxisLabel"
 import YAxis from "./YAxis"
 import YAxisLabel from "./YAxisLabel"
+import XAxisTick from "./XAxisTick"
+import YAxisTick from "./YAxisTick"
 
 export {
   Bar,
@@ -20,4 +22,6 @@ export {
   XAxisLabel,
   YAxis,
   YAxisLabel,
+  XAxisTick,
+  YAxisTick
 }

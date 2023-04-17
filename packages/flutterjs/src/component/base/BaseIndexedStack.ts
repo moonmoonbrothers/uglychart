@@ -1,9 +1,7 @@
-import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { assert } from "../../utils";
-import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
-import Stack, { RenderStack, type StackFit } from "./BaseStack";
+import Stack, { RenderStack } from "./BaseStack";
 import type Widget from "../../widget/Widget";
-import { Alignment, Matrix4, Offset } from "../../type";
+import { Alignment, Matrix4, Offset, StackFit } from "../../type";
 import { PaintContext } from "../../utils/type";
 
 class IndexedStack extends Stack {
@@ -11,7 +9,7 @@ class IndexedStack extends Stack {
   constructor({
     children,
     index = 0,
-    sizing = "loose",
+    sizing = StackFit.loose,
     alignment,
   }: {
     children: Widget[];

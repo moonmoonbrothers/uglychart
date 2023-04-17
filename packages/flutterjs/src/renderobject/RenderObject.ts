@@ -131,7 +131,8 @@ class RenderObject {
     if (oldEl) {
       container = oldEl;
       if (oldEl.nodeName === "g") {
-        for (const child of oldEl.children) {
+        for (let i = 0; i < oldEl.children.length; i++) {
+          const child = oldEl.children[i];
           const name = child.getAttribute("data-render-name")!;
           svgEls[name] = child as unknown as SVGElement;
         }

@@ -43,8 +43,11 @@ export class StackedBarChart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const {
       data: { datasets },
-      scale: scaleOption,
+      custom,
     } = this.props;
+
+    const scaleOption =
+      custom?.chart?.type === "config" ? custom.chart.scale : undefined;
 
     /* 
       scale을 구하고 

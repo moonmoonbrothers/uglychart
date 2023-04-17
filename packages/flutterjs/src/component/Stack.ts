@@ -1,13 +1,13 @@
-import { Alignment, Rect } from "../type";
+import { Alignment, Rect, StackFit } from "../type";
 import type Widget from "../widget/Widget";
-import BaseStack, { type StackFit } from "./base/BaseStack";
+import BaseStack from "./base/BaseStack";
 import ClipRect from "./ClipRect";
 
 export default function Stack({
   clipped = false,
   children,
   alignment = Alignment.topLeft,
-  fit = "loose",
+  fit,
 }: {
   children: Widget[];
   clipped?: boolean;

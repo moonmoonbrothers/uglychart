@@ -13,15 +13,22 @@ import { YAxisProps } from "./component/YAxis";
 import { YAxisLabelProps } from "./component/YAxisLabel";
 import { LayoutConfig } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
+import { ChartConfig } from "./component/Chart";
+import { DataLabelConfig } from "./component/DataLabel";
+import type { DeepPartial } from "../utils";
+import { XAxisTickProps } from "./component/XAxisTick";
+import { YAxisTickProps } from "./component/YAxisTick";
 
 export type Scale = _Scale;
 
 export type BarChartProps = {
   data: Data;
-  theme?: Theme;
+  theme?: DeepPartial<Theme>;
   padding?: EdgeInsets;
   custom?: Custom;
 };
+
+type CustomConfig<T> = { type: "config" } & T;
 
 export type BarChartType = "vertical" | "horizontal";
 
@@ -37,6 +44,8 @@ export type Custom = {
   plot?: Plot;
   chart?: Chart;
   dataLabel?: DataLabel;
+  xAxisTick?: XAxisTick;
+  yAxisTick?: YAxisTick;
 };
 
 export type Data = {
@@ -64,7 +73,7 @@ export type CustomWidget<
 };
 
 type BarGroup =
-  | BarGroupConfig
+  | CustomConfig<BarGroupConfig>
   | CustomWidget<
       {
         Bar: (props: BarProps) => Widget;
@@ -73,7 +82,7 @@ type BarGroup =
     >;
 
 type Bar =
-  | BarConfig
+  | CustomConfig<BarConfig>
   | CustomWidget<
       {},
       {
@@ -88,33 +97,50 @@ type Bar =
       }
     >;
 
-type Title = TitleConfig | CustomWidget<{}, { text: string }>;
+type Title = CustomConfig<TitleConfig> | CustomWidget<{}, { text: string }>;
 
 type AxisLabel = {
-  type: "config";
   margin?: EdgeInsets;
   font?: Font;
 };
 
-type XAxisLabel = AxisLabel | CustomWidget<{}, { text: string; index: number }>;
+type XAxisLabel =
+  | CustomConfig<AxisLabel>
+  | CustomWidget<{}, { text: string; index: number }>;
 
-type YAxisLabel = AxisLabel | CustomWidget<{}, { text: string; index: number }>;
+type YAxisLabel =
+  | CustomConfig<AxisLabel>
+  | CustomWidget<{}, { text: string; index: number }>;
 
 export type XAxis =
-  | Axis
-  | ({ axis: "data" | "label" } & CustomWidget<
-      { XAxisLabel: (props: { index: number; text: string }) => Widget },
+  | CustomConfig<Axis>
+  | ({ thickness: number; color: string } & CustomWidget<
+      {
+        XAxisTick: (props: XAxisTickProps) => Widget;
+        XAxisLabel: (props: { index: number; text: string }) => Widget;
+      },
       { data: Data }
     >);
 
 export type YAxis =
-  | Axis
-  | CustomWidget<
-      { YAxisLabel: (props: YAxisLabelProps) => Widget },
+  | CustomConfig<Axis>
+  | ({ thickness: number; color: string } & CustomWidget<
+      {
+        YAxisTick: (props: YAxisTickProps) => Widget;
+        YAxisLabel: (props: YAxisLabelProps) => Widget;
+      },
       { data: Data }
-    >;
+    >);
 
-type Layout = LayoutConfig | CustomWidget<"Title" | "Chart">;
+type Layout = CustomConfig<LayoutConfig> | CustomWidget<"Title" | "Chart">;
+
+export type XAxisTick =
+  | CustomConfig<Tick>
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
+
+export type YAxisTick =
+  | CustomConfig<Tick>
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
 
 type Tick = {
   color?: string;
@@ -123,22 +149,12 @@ type Tick = {
 };
 
 type Axis = {
-  type: "config";
-  tick?: Tick;
   thickness?: number;
   color?: string;
 };
 
 type DataLabel =
-  | {
-      type: "config";
-      gap?: number;
-      font?: Font;
-      backgroundColor?: string;
-      borderColor?: string;
-      borderWidth?: number;
-      borderRadius?: Radius;
-    }
+  | CustomConfig<DataLabelConfig>
   | CustomWidget<
       {},
       {
@@ -152,7 +168,7 @@ type DataLabel =
     >;
 
 type Plot =
-  | PlotConfig
+  | CustomConfig<PlotConfig>
   | CustomWidget<
       {
         BarGroup: (props: BarGroupProps) => Widget;
@@ -161,15 +177,7 @@ type Plot =
     >;
 
 export type Chart =
-  | {
-      type: "config";
-      width?: number;
-      height?: number;
-      scale?: Partial<Scale>;
-      direction?: "horizontal" | "vertical";
-      alignment?: Alignment;
-      additions?: Widget[]
-    }
+  | CustomConfig<ChartConfig>
   | CustomWidget<{
       Plot: (props: PlotProps) => Widget;
       XAxis: (props: XAxisProps) => Widget;
@@ -177,10 +185,10 @@ export type Chart =
     }>;
 
 export type Theme = {
-  text?: Font;
-  border?: {
-    color?: string;
-    width?: number;
+  text: Required<Font>;
+  border: {
+    color: string;
+    width: number;
   };
 };
 
