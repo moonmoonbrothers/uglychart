@@ -1,7 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { dedent } from 'ts-dedent';
-import { Center, Transform, Matrix4, Container } from '@moonmoonbrothers/flutterjs';
+import {
+	Center,
+	Transform,
+	Matrix4,
+	Container,
+	Alignment,
+	Text,
+	TextStyle
+} from '@moonmoonbrothers/flutterjs';
 
 const meta = {
 	title: 'Widget/Transform',
@@ -45,41 +53,50 @@ export const Basic: Story = {
 	}
 };
 
-const RotateCode= dedent`
+export const Rotate: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		code: dedent`
+		import { Center, Transform, Container, Alignment, Text, TextStyle } from '@moonmoonbrothers/flutterjs';
+
 		Center({
 			child: Transform.rotate({
 				angle: Math.PI / 4,
 				child: Container({
 					width: 200,
 					height: 200,
-					color: 'green'
+					color: 'green',
+					alignment: Alignment.bottomRight,
+					child: Container({
+						color: 'red',
+						child: Text('AAAA', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
+					})
 				})
 			})
 		})
-`
-
-export const Rotate: Story = {
-	args: {
-		ssrSize: { width: 400, height: 400 },
-		width: '400px',
-		height: '400px',
-		code:
-			dedent`import { Center, Transform, Container } from '@moonmoonbrothers/flutterjs';\n\n\n` +
-			RotateCode,
+			
+			`,
 		widget: Center({
 			child: Transform.rotate({
 				angle: Math.PI / 4,
 				child: Container({
 					width: 200,
 					height: 200,
-					color: 'green'
+					color: 'green',
+					alignment: Alignment.bottomRight,
+					child: Container({
+						color: 'red',
+						child: Text('AAAA', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
+					})
 				})
 			})
 		})
 	}
 };
 
-const ScaleCode= dedent`
+const ScaleCode = dedent`
 		Center({
 			child: Transform.scale({
 				scale: 0.5,
@@ -90,7 +107,7 @@ const ScaleCode= dedent`
 				})
 			})
 		})
-`
+`;
 
 export const Scale: Story = {
 	args: {
@@ -107,6 +124,34 @@ export const Scale: Story = {
 					width: 200,
 					height: 200,
 					color: 'green'
+				})
+			})
+		})
+	}
+};
+
+export const Symmetric: Story = {
+	args: {
+		ssrSize: { width: 400, height: 400 },
+		width: '400px',
+		height: '400px',
+		code: dedent`
+			import { Center, Transform, Container, Text, TextStyle, Matrix4, Alignment } from '@moonmoonbrothers/flutterjs'
+			
+			`,
+		widget: Center({
+			child: Transform({
+				transform: Matrix4.diagonal3Values(1, -1, 1),
+				alignment: Alignment.center,
+				child: Container({
+					width: 200,
+					height: 200,
+					color: 'green',
+					alignment: Alignment.bottomRight,
+					child: Container({
+						color: 'red',
+						child: Text('AAAA', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
+					})
 				})
 			})
 		})

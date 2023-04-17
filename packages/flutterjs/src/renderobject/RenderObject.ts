@@ -31,12 +31,11 @@ class RenderObject {
 
   paint(
     context: PaintContext,
-    offset: Offset,
     clipId?: string,
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
-    const totalOffset = offset.plus(this.offset);
+    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
@@ -45,14 +44,13 @@ class RenderObject {
       container.setAttribute("opacity", `${opacity}`);
       this.performPaint(svgEls, context);
       Object.values(svgEls).forEach((el) =>
-        this.setSvgTransform(el, totalOffset, matrix4)
+        this.setSvgTransform(el, translatedMatrix4)
       );
     }
     const childClipId = this.getChildClipId(clipId);
-    const childMatrix4 = this.getChildMatrix4(matrix4);
+    const childMatrix4 = this.getChildMatrix4(translatedMatrix4);
     const childOpacity = this.getChildOpacity(opacity);
     this.paintChildren(context, {
-      offset: totalOffset,
       clipId: childClipId,
       matrix4: childMatrix4,
       opacity: childOpacity,
@@ -62,19 +60,17 @@ class RenderObject {
   paintChildren(
     context: PaintContext,
     {
-      offset,
       clipId,
       matrix4,
       opacity,
     }: {
-      offset: Offset;
       clipId?: string;
       matrix4: Matrix4;
       opacity: number;
     }
   ) {
     this.children.forEach((child) =>
-      child.paint(context, offset, clipId, matrix4, opacity)
+      child.paint(context, clipId, matrix4, opacity)
     );
   }
 
@@ -86,14 +82,9 @@ class RenderObject {
     return parentOpacity;
   }
 
-  setSvgTransform(el: SVGElement, offset: Offset, matrix: Matrix4) {
+  setSvgTransform(el: SVGElement, matrix: Matrix4) {
     const style = el.getAttribute("style") || "";
-    el.setAttribute(
-      "style",
-      `${style} transform: translate(${offset.x}px, ${
-        offset.y
-      }px) matrix3d(${matrix.storage.join(",")});`
-    );
+    el.setAttribute("style", `transform: matrix3d(${matrix.storage.join(",")}); ${style}`);
     // el.setAttribute(
     //   "transform",
     //   `translate(${offset.x} ${offset.y}) matrix3d(${matrix.storage.join(
