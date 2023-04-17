@@ -1,0 +1,31 @@
+{
+  "name": "@moonmoonbrothers/flutterjs",
+  "version": "0.0.21",
+  "description": "",
+  "main": "src/index.ts",
+  "devDependencies": {
+    "cp": "^0.2.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.2.1"
+  },
+  "dependencies": {
+    "canvas": "^2.11.0",
+    "short-unique-id": "^4.4.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build && tsc",
+    "prepackage": "npm run build",
+    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\": {\"import\": \"./index.mjs\", \n \"require\": \"./index.umd.js\"}}' --json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonmoonbrothers/uglychart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moonmoonbrothers/uglychart/issues"
+  },
+  "homepage": "https://github.com/moonmoonbrothers/uglychart#readme"
+}

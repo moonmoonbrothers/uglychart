@@ -1,0 +1,16 @@
+{
+  "name": "@moonmoonbrothers/uglychart",
+  "version": "0.0.13",
+  "main": "src/index.ts",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build && tsc",
+    "prepackage": "npm run build",
+    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\": {\"import\": \"./index.js\", \n \"require\": \"./index.umd.js\"}}' --json"
+  },
+  "type": "module",
+  "devDependencies": {
+    "vite": "^4.2.1"
+  }
+}
