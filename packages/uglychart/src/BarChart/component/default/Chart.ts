@@ -35,7 +35,7 @@ export default function Chart({
             XAxis,
           ],
         ],
-        templateColumns: [Grid.ContentFit(), Grid.ContentFit()],
+        templateColumns: [Grid.ContentFit(), Grid.Fr(1)],
         templateRows: [Grid.Fr(1), Grid.ContentFit()],
       }),
       ...ForegroundAdditions,

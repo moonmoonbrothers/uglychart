@@ -119,6 +119,41 @@ class RenderBaseGrid extends MultiChildRenderObject {
       () => 0
     );
 
+    // let availableWidth = this.size.width;
+
+    // contentFitColumnWidths.forEach((_, index) => {
+    //   if (this.columns[index].type !== "content-fit") return;
+
+    //   this.childrenByRow.forEach((columns) => {
+    //     const child = columns[index];
+    //     child.layout(new Constraints({ maxWidth: availableWidth }));
+    //     contentFitColumnWidths[index] = Math.max(
+    //       child.size.width,
+    //       contentFitColumnWidths[index]
+    //     );
+    //   });
+
+    //   availableWidth -= contentFitColumnWidths[index];
+    // });
+
+    // let availableHeight = this.size.height;
+
+    // contentFitRowHeights.forEach((_, index) => {
+    //   if (this.rows[index].type !== "content-fit") return;
+
+    //   const row = this.childrenByRow[index];
+
+    //   row.forEach((child) => {
+    //     child.layout(new Constraints({ maxHeight: availableHeight }));
+    //     contentFitRowHeights[index] = Math.max(
+    //       child.size.height,
+    //       contentFitRowHeights[index]
+    //     );
+    //   });
+
+    //   availableHeight -= contentFitRowHeights[index];
+    // });
+
     this.childrenByRow.forEach((columnChildren, rowIndex) => {
       columnChildren.forEach((child, columnIndex) => {
         if (this.columns[columnIndex].type === "content-fit") {
