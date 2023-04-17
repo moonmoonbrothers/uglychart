@@ -53,12 +53,10 @@ class RenderIndexedStack extends RenderStack {
   paintChildren(
     context: PaintContext,
     {
-      offset,
       clipId,
       matrix4,
       opacity,
     }: {
-      offset: Offset;
       clipId?: string | undefined;
       matrix4: Matrix4;
       opacity: number;
@@ -67,7 +65,7 @@ class RenderIndexedStack extends RenderStack {
     this.children.forEach((child) => child.dispose(context));
     const child = this.children[this.index];
     assert(child != null);
-    child.paint(context, offset, clipId, matrix4, opacity);
+    child.paint(context, clipId, matrix4, opacity);
   }
 }
 
