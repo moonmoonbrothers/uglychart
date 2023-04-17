@@ -9,6 +9,7 @@ import YAxis from "./YAxis";
 import BarGroup from "./BarGroup";
 import Plot from './Plot'
 import Layout from './Layout'
+import Chart from './Chart'
 
 export {
   Title,
@@ -21,5 +22,6 @@ export {
   YAxis,
   BarGroup,
   Plot,
-  Layout
+  Layout,
+  Chart
 };
