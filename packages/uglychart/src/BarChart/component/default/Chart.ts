@@ -58,8 +58,6 @@ type ChartProps = {
   XAxis: Widget;
   BackgroundAdditions: Widget[];
   ForegroundAdditions: Widget[];
-  width?: number;
-  height?: number;
 };
 
 function Edge({

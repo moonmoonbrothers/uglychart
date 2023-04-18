@@ -74,14 +74,6 @@ export const Basic: Story = {
 						})
 					]
 				},
-				bar: {
-					type: 'config',
-					thickness: 15
-				},
-				layout: {
-					type: 'config',
-					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
 				title: {
 					type: 'config',
 					alignment: 'center',

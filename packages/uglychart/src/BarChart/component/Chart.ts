@@ -12,8 +12,6 @@ import { getScale, getValueEdge, Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
 
 export type ChartConfig = {
-  width?: number;
-  height?: number;
   scale?: Partial<Scale>;
   direction?: "horizontal" | "vertical";
   alignment?: Alignment;
@@ -52,8 +50,6 @@ class Chart extends ComponentWidget {
       scale: scaleOption,
       foregroundAdditions = [],
       backgroundAdditions = [],
-      width,
-      height,
     } = chart;
 
     const scale: Scale = {
@@ -80,8 +76,6 @@ class Chart extends ComponentWidget {
       ForegroundAdditions: foregroundAdditions,
       plotHeight: plot.height,
       plotWidth: plot.width,
-      width,
-      height,
       YAxis: YAxis({
         labels: yLabels,
         type: direction === "horizontal" ? "index" : "value",

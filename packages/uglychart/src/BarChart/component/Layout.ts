@@ -14,6 +14,10 @@ export type LayoutConfig = {
   backgroundColor?: string;
 };
 
+const defaultLayoutConfig = {
+  padding: EdgeInsets.all(30),
+};
+
 class Layout extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
@@ -22,7 +26,7 @@ class Layout extends ComponentWidget {
     if (layout.type === "custom")
       return layout.Custom({ Title, Chart }, { theme, data });
 
-    const { padding, backgroundColor } = layout;
+    const { padding = defaultLayoutConfig.padding, backgroundColor } = layout;
 
     return DefaultLayout({
       padding,
