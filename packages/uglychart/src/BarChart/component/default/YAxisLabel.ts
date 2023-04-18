@@ -7,6 +7,7 @@ import {
   type EdgeInsets,
   BoxDecoration,
   TextAlign,
+  TextWidthBasis,
 } from "@moonmoonbrothers/flutterjs";
 
 export default function YAxisLabel({
@@ -19,6 +20,7 @@ export default function YAxisLabel({
   decoration,
   softWrap,
   textAlign,
+  textWidthBasis
 }: {
   text: string;
   overflow?: TextOverflow;
@@ -29,6 +31,7 @@ export default function YAxisLabel({
   padding?: EdgeInsets;
   decoration?: BoxDecoration;
   textAlign?: TextAlign;
+  textWidthBasis?: TextWidthBasis
 }) {
   return Container({
     margin,
@@ -36,6 +39,7 @@ export default function YAxisLabel({
     decoration,
     color: backgroundColor,
     child: Text(text, {
+      textWidthBasis,
       style: style,
       softWrap,
       overflow,

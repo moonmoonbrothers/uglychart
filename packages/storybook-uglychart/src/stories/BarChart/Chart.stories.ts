@@ -32,7 +32,7 @@ export const Basic: Story = {
 		widget: BarChart({
 			data: {
 				title: 'Title',
-				labels: ['label1_123_', 'label2', 'label3', 'label4', 'label5'],
+				labels: ['label1_\ntemp', 'label2', 'label3', 'label4', 'label5'],
 				datasets: [
 					{
 						legend: 'A',
