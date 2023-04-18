@@ -39,7 +39,7 @@ const BasicWidget = dedent`
 `;
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 400, height: 400 },
+		ssrSize: { width: 500, height: 600 },
 		width: '500px',
 		height: '600px',
 		code: importWidgets + BasicWidget,
