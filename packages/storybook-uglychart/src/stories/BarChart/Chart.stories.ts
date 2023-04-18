@@ -17,7 +17,7 @@ import {
 import { BarChart } from '@moonmoonbrothers/uglychart';
 
 const meta = {
-	title: 'Widget/BarChart',
+	title: 'Widget/BarChart/Cases',
 	component: Widget
 } satisfies Meta<Widget>;
 

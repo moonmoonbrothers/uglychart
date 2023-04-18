@@ -11,7 +11,8 @@ import {
 	Text,
 	Alignment,
 	Flexible,
-	TextStyle
+	TextStyle,
+	CrossAxisAlignment
 } from '@moonmoonbrothers/flutterjs';
 
 const meta = {
@@ -134,8 +135,7 @@ export const MainAxisSize_min: Story = {
 			MainAxisSize_minCode,
 		widget: Container({
 			color: 'lightblue',
-			child: 
-      Flex({
+			child: Flex({
 				direction: Axis.horizontal,
 				mainAxisSize: MainAxisSize.min,
 				children: [
@@ -152,7 +152,7 @@ export const MainAxisSize_min: Story = {
 							height: 50,
 							color: 'green'
 						})
-					}),
+					})
 				]
 			})
 		})
@@ -204,14 +204,14 @@ export const VerticalDirection_up: Story = {
 						height: 50,
 						color: 'red',
 						alignment: Alignment.center,
-						child: Text('1', {style: new TextStyle({color: 'white', fontSize: 30})} )
+						child: Text('1', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
 					}),
 					Container({
 						width: 50,
 						height: 50,
 						color: 'green',
 						alignment: Alignment.center,
-						child: Text('2', {style: new TextStyle({color: 'white', fontSize: 30})} )
+						child: Text('2', { style: new TextStyle({ color: 'white', fontSize: 30 }) })
 					})
 				]
 			})
@@ -268,5 +268,38 @@ export const MainAxisAlignment_center: Story = {
 				]
 			})
 		})
+	}
+};
+
+export const WithConstraintsTight: Story = {
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px',
+		widget: Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			child: Flex({
+				direction: Axis.horizontal,
+				mainAxisAlignment: MainAxisAlignment.spaceBetween,
+				mainAxisSize: MainAxisSize.min,
+				crossAxisAlignment: CrossAxisAlignment.end,
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green'
+					})
+				]
+			})
+		}),
+		code: dedent`import { Flex, Container, Axis } from '@moonmoonbrothers/flutterjs;
+			`
 	}
 };
