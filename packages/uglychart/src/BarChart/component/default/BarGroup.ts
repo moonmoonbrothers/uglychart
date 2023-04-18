@@ -1,9 +1,12 @@
 import {
   Alignment,
   Axis,
+  ConstraintsTransformBox,
+  CrossAxisAlignment,
   EdgeInsets,
   Expanded,
   Flex,
+  Flexible,
   FractionallySizedBox,
   MainAxisSize,
   Matrix4,
@@ -28,10 +31,6 @@ export default function BarGroup({
           ? negativeBarRatios[index]
           : positiveBarRatios[index];
       return FractionallySizedBox({
-        alignment:
-          direction === "vertical"
-            ? Alignment.bottomCenter
-            : Alignment.centerLeft,
         widthFactor: direction === "horizontal" ? ratio : undefined,
         heightFactor: direction === "vertical" ? ratio : undefined,
         child: Padding({
@@ -64,6 +63,10 @@ export default function BarGroup({
           ),
           child: Flex({
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment:
+              direction === "horizontal"
+                ? CrossAxisAlignment.start
+                : CrossAxisAlignment.end,
             direction:
               direction === "vertical" ? Axis.horizontal : Axis.vertical,
             children: Bars({ type: area }),

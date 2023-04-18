@@ -299,7 +299,31 @@ export const WithConstraintsTight: Story = {
 				]
 			})
 		}),
-		code: dedent`import { Flex, Container, Axis } from '@moonmoonbrothers/flutterjs;
+		code: dedent`
+		import { Flex, Container, Axis, CrossAxisAlignment, MainAxisAlignment, MainAxisSize } from '@moonmoonbrothers/flutterjs;
+
+		Container({
+			color: 'lightblue',
+			width: 300,
+			height: 300,
+			child: Flex({
+				direction: Axis.horizontal,
+				mainAxisAlignment: MainAxisAlignment.spaceBetween,
+				mainAxisSize: MainAxisSize.min,
+				crossAxisAlignment: CrossAxisAlignment.end,
+				children: [
+					Container({
+						width: 50,
+						height: 50,
+						color: 'red'
+					}),
+					Container({
+						width: 50,
+						height: 50,
+						color: 'green'
+					})
+				]
+			})
 			`
 	}
 };

@@ -108,6 +108,10 @@ type YAxisLabel =
 
 export type XAxis =
   | CustomConfig<Axis>
+    /*
+      Must be specified If your custom Axis's thickness and color,
+      It will be used to draw intersection between XAxis and YAxis
+    */
   | ({ thickness: number; color: string } & CustomWidget<
       {
         XAxisTick: (props: XAxisTickProps) => Widget;
@@ -118,6 +122,10 @@ export type XAxis =
 
 export type YAxis =
   | CustomConfig<Axis>
+    /*
+      Must be specified If your custom Axis's thickness and color,
+      It will be used to draw intersection between XAxis and YAxis
+    */
   | ({ thickness: number; color: string } & CustomWidget<
       {
         YAxisTick: (props: YAxisTickProps) => Widget;
