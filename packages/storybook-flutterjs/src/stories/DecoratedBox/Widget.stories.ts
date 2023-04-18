@@ -93,8 +93,11 @@ export const Circle: Story = {
 						height: 200,
 						color: 'white'
 					}),
-					DecoratedBox({
-						decoration: new BoxDecoration({ border: Border.all({}), shape: 'circle' }),
+					Container({
+						decoration: new BoxDecoration({
+							color: 'red',
+							shape: 'circle'
+						}),
 						child: SizedBox({
 							width: 200,
 							height: 200
