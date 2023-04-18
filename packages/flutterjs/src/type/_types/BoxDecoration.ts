@@ -131,6 +131,11 @@ class BoxDecorationPainter implements BoxPainter {
     box.setAttribute("stroke-width", "0");
     box.setAttribute("fill", this.decoration.color || "none");
 
+    if (this.decoration.shape == "circle") {
+      box.setAttribute("d", new Path().addOval(rect).getD());
+      return;
+    }
+
     if (this.decoration.borderRadius == null) {
       box.setAttribute("d", new Path().addRect(rect).getD());
       return;
