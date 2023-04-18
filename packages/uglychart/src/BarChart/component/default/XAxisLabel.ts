@@ -6,6 +6,7 @@ import {
   type EdgeInsets,
   BoxDecoration,
   TextAlign,
+  TextWidthBasis,
 } from "@moonmoonbrothers/flutterjs";
 
 export default function XAxisLabel({
@@ -18,6 +19,7 @@ export default function XAxisLabel({
   decoration,
   softWrap,
   textAlign,
+  textWidthBasis,
 }: {
   text: string;
   overflow?: TextOverflow;
@@ -28,6 +30,7 @@ export default function XAxisLabel({
   padding?: EdgeInsets;
   decoration?: BoxDecoration;
   textAlign?: TextAlign;
+  textWidthBasis?: TextWidthBasis;
 }) {
   return Container({
     margin,
@@ -36,6 +39,7 @@ export default function XAxisLabel({
     color: backgroundColor,
     child: Text(text, {
       style: style,
+      textWidthBasis,
       softWrap,
       overflow,
       textAlign,

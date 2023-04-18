@@ -6,6 +6,7 @@ import {
   TextAlign,
   TextOverflow,
   TextStyle,
+  TextWidthBasis,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
@@ -34,6 +35,8 @@ class XAxisLabel extends ComponentWidget {
 
     return DefaultXAxisLabel({
       text,
+      textWidthBasis: TextWidthBasis.longestLine,
+      textAlign: TextAlign.center,
       style: new TextStyle({
         fontFamily: font?.fontFamily ?? theme.text.fontFamily,
         fontSize: font?.fontSize ?? theme.text.fontSize,
