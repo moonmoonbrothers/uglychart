@@ -1,10 +1,9 @@
 import {
   ComponentWidget,
-  Container,
-  Positioned,
-  Text,
   Widget,
   BuildContext,
+  TextStyle,
+  SizedBox,
 } from "@moonmoonbrothers/flutterjs";
 import {
   CustomProvider as CustomProvider,
@@ -12,6 +11,7 @@ import {
   ThemeProvider,
 } from "../provider";
 import { Font } from "../types";
+import { Label } from "../../common";
 
 export type DataLabelProps = {
   index: number;
@@ -23,12 +23,9 @@ export type DataLabelProps = {
 };
 export type DataLabelConfig = {
   type: "config";
-  gap?: number;
   font?: Font;
   backgroundColor?: string;
-  borderColor?: string;
-  borderWidth?: number;
-  borderRadius?: number;
+  visible?: boolean;
 };
 
 export class DataLabel extends ComponentWidget {
@@ -40,14 +37,7 @@ export class DataLabel extends ComponentWidget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { dataLabel } = CustomProvider.of(context);
-    const {
-      direction,
-      value,
-      reverse = false,
-      label,
-      legend,
-      index,
-    } = this.props;
+    const { direction, value, label, legend, index } = this.props;
 
     if (dataLabel.type === "custom") {
       return dataLabel.Custom(
@@ -56,9 +46,18 @@ export class DataLabel extends ComponentWidget {
       );
     }
 
-    return Positioned({
-      child: Container({
-        child: Text(``, {}),
+    const { backgroundColor, font, visible = false } = dataLabel;
+
+    if (!visible) return SizedBox.shrink();
+
+    return Label({
+      text: value,
+      backgroundColor,
+      style: new TextStyle({
+        fontFamily: font?.fontFamily ?? theme.text.fontFamily,
+        fontSize: font?.fontSize ?? theme.text.fontSize,
+        color: font?.color ?? theme.text.color,
+        height: font?.lineHeight ?? theme.text.lineHeight,
       }),
     });
   }

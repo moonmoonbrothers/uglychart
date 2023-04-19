@@ -1,21 +1,13 @@
 import {
   ComponentWidget,
-  EdgeInsets,
-  Padding,
   Widget,
   BuildContext,
-  CrossAxisAlignment,
-  Flex,
-  MainAxisSize,
-  Expanded,
-  Alignment,
-  FractionallySizedBox,
-  Axis,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../util";
 import Bar from "./Bar";
 import { BarGroup as DefaultBarGroup } from "./default";
+import DataLabel from "./DataLabel";
 
 export type BarGroupProps = {
   direction: "vertical" | "horizontal";
@@ -82,6 +74,16 @@ class BarGroup extends ComponentWidget {
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
+      DataLabels: values.map(({ data, legend }, index) =>
+        DataLabel({
+          direction,
+          index,
+          legend,
+          value: data,
+          label,
+        })
+      ),
+
       Bars: values.map(({ data, legend }, index) =>
         Bar({
           value: data,

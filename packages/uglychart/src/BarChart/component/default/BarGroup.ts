@@ -30,6 +30,7 @@ export default function BarGroup({
   negativeBarRatios,
   positiveBarRatios,
   Bars: _Bars,
+  DataLabels: _DataLabels,
   gap,
 }: BarGroupProps) {
   const isAllNegative = positiveBarRatios.reduce(Utils.sum) === 0;
@@ -96,20 +97,11 @@ export default function BarGroup({
                     direction === "horizontal" && type === "positive"
                       ? Alignment.centerLeft
                       : direction === "horizontal" && type === "negative"
-                      ? Alignment.center
+                      ? Alignment.centerRight
                       : direction === "vertical" && type === "positive"
                       ? Alignment.bottomCenter
                       : Alignment.topCenter,
-                  child: Container({
-                    color: "red",
-                    child: Text("10", {
-                      textWidthBasis: TextWidthBasis.longestLine,
-                      style: new TextStyle({
-                        height: 1,
-                        fontSize: 14,
-                      }),
-                    }),
-                  }),
+                  child: _DataLabels[index],
                 }),
               }),
         ],
@@ -180,5 +172,6 @@ type BarGroupProps = {
   negativeBarRatios: number[];
   positiveBarRatios: number[];
   Bars: Widget[];
+  DataLabels: Widget[];
   gap: number;
 };

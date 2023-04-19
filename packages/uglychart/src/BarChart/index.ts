@@ -45,7 +45,7 @@ class BarChart extends ComponentWidget {
         color = "black",
         fontFamily = "Noto Sans KR, sans-serif",
         fontSize = 16,
-        lineHeight = 1.2,
+        lineHeight = 1,
       } = {},
       border: { width: borderWidth = 2, color: borderColor = "black" } = {},
     } = {},
