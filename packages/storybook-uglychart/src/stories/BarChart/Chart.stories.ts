@@ -29,7 +29,8 @@ export const Basic: Story = {
 		ssrSize: { width: 800, height: 480 },
 		width: '800px',
 		height: '480px',
-		widget: BarChart({
+		widget:
+		 BarChart({
 			data: {
 				title: 'Title',
 				labels: ['label1_\ntemp', 'label2', 'label3', 'label4', 'label5'],

@@ -52,7 +52,7 @@ export class DataLabel extends ComponentWidget {
     if (dataLabel.type === "custom") {
       return dataLabel.Custom(
         {},
-        { value, index, label, direction, data, theme, legend, reverse }
+        { value, index, label, direction, data, theme, legend }
       );
     }
 

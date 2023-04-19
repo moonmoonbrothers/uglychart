@@ -82,7 +82,7 @@ class BarGroup extends ComponentWidget {
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
-      children: values.map(({ data, legend }, index) =>
+      Bars: values.map(({ data, legend }, index) =>
         Bar({
           value: data,
           direction,

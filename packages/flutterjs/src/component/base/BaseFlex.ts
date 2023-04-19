@@ -187,7 +187,7 @@ class RenderFlex extends MultiChildRenderObject {
       });
     }
 
-    return this.constraints.loosen()
+    return this.constraints.loosen();
   }
 
   private getFlexItemConstraint(childExtent: number, fit: "loose" | "tight") {

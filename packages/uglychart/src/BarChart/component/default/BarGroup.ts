@@ -1,19 +1,27 @@
 import {
   Alignment,
   Axis,
-  ConstraintsTransformBox,
+  Container,
   CrossAxisAlignment,
   EdgeInsets,
   Expanded,
   Flex,
-  Flexible,
   FractionallySizedBox,
   MainAxisSize,
   Matrix4,
+  Opacity,
   Padding,
+  SizedBox,
+  Stack,
+  Text,
+  TextStyle,
+  TextWidthBasis,
   Transform,
+  VerticalDirection,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
+import { Utils } from "../../../utils";
+import { IgnoreChildSize } from "../../../common";
 
 export default function BarGroup({
   negativeAreaRatio,
@@ -21,26 +29,90 @@ export default function BarGroup({
   direction,
   negativeBarRatios,
   positiveBarRatios,
-  children: bars,
+  Bars: _Bars,
   gap,
 }: BarGroupProps) {
+  const isAllNegative = positiveBarRatios.reduce(Utils.sum) === 0;
+  const isAllPositive = negativeBarRatios.reduce(Utils.sum) === 0;
+
   const Bars = ({ type }: { type: "negative" | "positive" }) =>
-    bars.map((bar, index) => {
+    _Bars.map((bar, index) => {
       const ratio =
         type === "negative"
           ? negativeBarRatios[index]
           : positiveBarRatios[index];
+
       return FractionallySizedBox({
         widthFactor: direction === "horizontal" ? ratio : undefined,
         heightFactor: direction === "vertical" ? ratio : undefined,
-        child: Padding({
-          padding: EdgeInsets.symmetric(
-            direction === "horizontal"
-              ? { vertical: gap / 2 }
-              : { horizontal: gap / 2 }
-          ),
-          child: bar,
-        }),
+        child: bar,
+      });
+    });
+
+  const DataLabels = ({ type }: { type: "negative" | "positive" }) =>
+    _Bars.map((bar, index) => {
+      const invisible =
+        (type === "negative" && isAllPositive) ||
+        (type === "positive" && isAllNegative) ||
+        (type === "negative" && negativeBarRatios[index] === 0) ||
+        (type === "positive" &&
+          positiveBarRatios[index] === 0 &&
+          negativeBarRatios[index] !== 0);
+
+      const ratio =
+        type === "negative"
+          ? negativeBarRatios[index]
+          : positiveBarRatios[index];
+
+      return Flex({
+        direction: direction === "horizontal" ? Axis.horizontal : Axis.vertical,
+        verticalDirection:
+          direction === "vertical"
+            ? VerticalDirection.up
+            : VerticalDirection.down,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Opacity({
+            opacity: 0,
+            child: FractionallySizedBox({
+              widthFactor: direction === "horizontal" ? ratio : undefined,
+              heightFactor: direction === "vertical" ? ratio : undefined,
+              child: bar,
+            }),
+          }),
+          invisible
+            ? SizedBox.shrink()
+            : Transform({
+                alignment: Alignment.center,
+                transform: Matrix4.diagonal3Values(
+                  direction === "horizontal" && type === "negative" ? -1 : 1,
+                  direction === "vertical" && type === "negative" ? -1 : 1,
+                  1
+                ),
+                child: IgnoreChildSize({
+                  ignoreWidth: true,
+                  ignoreHeight: true,
+                  alignment:
+                    direction === "horizontal" && type === "positive"
+                      ? Alignment.centerLeft
+                      : direction === "horizontal" && type === "negative"
+                      ? Alignment.center
+                      : direction === "vertical" && type === "positive"
+                      ? Alignment.bottomCenter
+                      : Alignment.topCenter,
+                  child: Container({
+                    color: "red",
+                    child: Text("10", {
+                      textWidthBasis: TextWidthBasis.longestLine,
+                      style: new TextStyle({
+                        height: 1,
+                        fontSize: 14,
+                      }),
+                    }),
+                  }),
+                }),
+              }),
+        ],
       });
     });
 
@@ -48,6 +120,26 @@ export default function BarGroup({
     direction === "vertical"
       ? ["positive", "negative"]
       : ["negative", "positive"];
+
+  const Grouping = ({ children }: { children: Widget[] }) =>
+    Flex({
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment:
+        direction === "horizontal"
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.end,
+      direction: direction === "vertical" ? Axis.horizontal : Axis.vertical,
+      children: children.map((child) =>
+        Padding({
+          padding: EdgeInsets.symmetric(
+            direction === "horizontal"
+              ? { vertical: gap / 2 }
+              : { horizontal: gap / 2 }
+          ),
+          child,
+        })
+      ),
+    });
 
   return Flex({
     direction: direction === "vertical" ? Axis.vertical : Axis.horizontal,
@@ -61,15 +153,19 @@ export default function BarGroup({
             direction === "vertical" && area === "negative" ? -1 : 1,
             1
           ),
-          child: Flex({
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment:
-              direction === "horizontal"
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.end,
-            direction:
-              direction === "vertical" ? Axis.horizontal : Axis.vertical,
-            children: Bars({ type: area }),
+          child: Stack({
+            alignment:
+              direction === "vertical"
+                ? Alignment.bottomCenter
+                : Alignment.centerLeft,
+            children: [
+              Grouping({
+                children: Bars({ type: area }),
+              }),
+              Grouping({
+                children: DataLabels({ type: area }),
+              }),
+            ],
           }),
         }),
       })
@@ -83,6 +179,6 @@ type BarGroupProps = {
   direction: "vertical" | "horizontal";
   negativeBarRatios: number[];
   positiveBarRatios: number[];
-  children: Widget[];
+  Bars: Widget[];
   gap: number;
 };
