@@ -1,25 +1,18 @@
 import {
-  Align,
   Alignment,
   ComponentWidget,
-  Container,
-  Grid,
-  Stack,
   Widget,
   BuildContext,
-  BoxDecoration,
-  Border,
-  BorderSide,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
 import Plot from "./Plot";
 import { getScale, getValueEdge, Scale } from "../util";
+import { Chart as DefaultChart } from "./default";
+import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export type ChartConfig = {
-  width?: number;
-  height?: number;
   scale?: Partial<Scale>;
   direction?: "horizontal" | "vertical";
   alignment?: Alignment;
@@ -37,7 +30,6 @@ class Chart extends ComponentWidget {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
 
-    /* scale 구하기 */
     const valueEdge = getValueEdge(datasets.map(({ data }) => data));
 
     const roughEdge = {
@@ -59,15 +51,7 @@ class Chart extends ComponentWidget {
       scale: scaleOption,
       foregroundAdditions = [],
       backgroundAdditions = [],
-      width,
-      height,
     } = chart;
-
-    let [plotHeight, plotWidth] = [undefined, undefined];
-    if (plot.type === "config") {
-      plotHeight = plot.height;
-      plotWidth = plot.width;
-    }
 
     const scale: Scale = {
       min: scaleOption?.min ?? suggestedScale.min,
@@ -77,7 +61,6 @@ class Chart extends ComponentWidget {
 
     const { min, max, step } = scale;
 
-    /* label 생성 */
     const valueLabels = Array.from(
       { length: Math.floor((max - min) / step) + 1 },
       (_, i) => `${step * i + min}`
@@ -89,78 +72,24 @@ class Chart extends ComponentWidget {
         ? [valueLabels, indexLabels]
         : [indexLabels, valueLabels];
 
-    return Container({
-      width,
-      height,
-      alignment: Alignment.topCenter,
-      child: Stack({
-        clipped: false,
-        children: [
-          ...backgroundAdditions,
-          Container({
-            child: Grid({
-              childrenByRow: [
-                [
-                  YAxis({
-                    labels: yLabels,
-                    type: direction === "horizontal" ? "index" : "value",
-                  }),
-                  Plot({ direction, scale }),
-                ],
-                [
-                  Container({
-                    alignment: Alignment.topRight,
-                    child: Container({
-                      width:
-                        (yAxis.type === "config"
-                          ? yAxis.thickness
-                          : undefined) ?? theme.border.width,
-                      height:
-                        (xAxis.type === "config"
-                          ? xAxis.thickness
-                          : undefined) ?? theme.border.width,
-                      decoration: new BoxDecoration({
-                        border: new Border({
-                          // left: new BorderSide({
-                          //   color:
-                          //     (yAxis.type === "config"
-                          //       ? yAxis.color
-                          //       : undefined) ?? theme.border.color,
-                          //   width:
-                          //     (yAxis.type === "config"
-                          //       ? yAxis.thickness
-                          //       : undefined) ?? theme.border.width,
-                          // }),
-                          bottom: new BorderSide({
-                            color:
-                              (xAxis.type === "config"
-                                ? xAxis.color
-                                : undefined) ?? theme.border.color,
-                            width: 2,
-                          }),
-                        }),
-                      }),
-                    }),
-                  }),
-                  XAxis({
-                    labels: xLabels,
-                    type: direction === "vertical" ? "index" : "value",
-                  }),
-                ],
-              ],
-              templateColumns: [
-                Grid.ContentFit(),
-                plotWidth ? Grid.ContentFit() : Grid.Fr(1),
-              ],
-              templateRows: [
-                plotHeight ? Grid.ContentFit() : Grid.Fr(1),
-                Grid.ContentFit(),
-              ],
-            }),
-          }),
-          ...foregroundAdditions,
-        ],
+    return DefaultChart({
+      BackgroundAdditions: backgroundAdditions,
+      ForegroundAdditions: foregroundAdditions,
+      plotHeight: plot.height,
+      plotWidth: plot.width,
+      YAxis: YAxis({
+        labels: yLabels,
+        type: direction === "horizontal" ? "index" : "value",
       }),
+      Plot: Plot({ direction, scale }),
+      XAxis: XAxis({
+        labels: xLabels,
+        type: direction === "vertical" ? "index" : "value",
+      }),
+      yAxisThickness: yAxis.thickness ?? theme.border.width,
+      xAxisThickness: xAxis.thickness ?? theme.border.width,
+      xAxisColor: xAxis.color ?? theme.border.color,
+      yAxisColor: yAxis.color ?? theme.border.color,
     });
   }
 }

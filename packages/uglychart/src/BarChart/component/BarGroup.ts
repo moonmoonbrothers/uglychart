@@ -1,21 +1,13 @@
 import {
   ComponentWidget,
-  EdgeInsets,
-  Padding,
   Widget,
   BuildContext,
-  CrossAxisAlignment,
-  Flex,
-  MainAxisSize,
-  Expanded,
-  Alignment,
-  FractionallySizedBox,
-  Axis,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../util";
 import Bar from "./Bar";
 import { BarGroup as DefaultBarGroup } from "./default";
+import DataLabel from "./DataLabel";
 
 export type BarGroupProps = {
   direction: "vertical" | "horizontal";
@@ -75,94 +67,6 @@ class BarGroup extends ComponentWidget {
       return (data - min) / (max - min);
     });
 
-    // const barRatio = {
-    //   negative: (value: number) => {
-    //     if (value > 0 || scale.min > 0) return 0;
-
-    //     const max = -1 * scale.min;
-    //     const min = Math.min(-1 * scale.max, 0);
-
-    //     return (-1 * value - min) / (max - min);
-    //   },
-    //   positive: (value: number) => {
-    //     if (value < 0 || scale.max < 0) return 0;
-
-    //     const max = scale.max;
-    //     const min = Math.min(scale.min, 0);
-
-    //     return (value - min) / (max - min);
-    //   },
-    // };
-
-    // type AreaType = "negative" | "positive";
-
-    // const barGap = EdgeInsets.symmetric(
-    //   direction === "horizontal"
-    //     ? { vertical: gap / 2 }
-    //     : { horizontal: gap / 2 }
-    // );
-
-    // const areas: AreaType[] =
-    //   direction === "horizontal"
-    //     ? ["negative", "positive"]
-    //     : ["positive", "negative"];
-
-    // const getBarAlignment = (
-    //   type: AreaType,
-    //   direction: "vertical" | "horizontal"
-    // ) => {
-    //   if (type === "negative") {
-    //     if (direction === "vertical") {
-    //       return Alignment.topLeft;
-    //     } else {
-    //       return Alignment.topRight;
-    //     }
-    //   } else {
-    //     if (direction === "vertical") {
-    //       return Alignment.bottomLeft;
-    //     } else {
-    //       return Alignment.bottomLeft;
-    //     }
-    //   }
-    // };
-
-    // return Flex({
-    //   direction: direction === "vertical" ? Axis.vertical : Axis.horizontal,
-    //   children: areas.map((type) =>
-    //     Expanded({
-    //       flex: barGroupRatio[type],
-    //       child: Flex({
-    //         mainAxisSize: MainAxisSize.min,
-    //         crossAxisAlignment: CrossAxisAlignment.end,
-    //         direction:
-    //           direction === "horizontal" ? Axis.vertical : Axis.horizontal,
-    //         children: datasets.map(({ data, legend }, index) => {
-    //           const value = data[this.props.index];
-    //           const ratio = barRatio[type](value);
-    //           return Padding({
-    //             padding: barGap,
-    //             child: FractionallySizedBox({
-    //               alignment: getBarAlignment(type, direction),
-    //               widthFactor: direction === "horizontal" ? ratio : undefined,
-    //               heightFactor: direction === "vertical" ? ratio : undefined,
-    //               child: Bar({
-    //                 direction,
-    //                 backgroundColor:
-    //                   backgroundColors[index % backgroundColors.length],
-    //                 index,
-    //                 label,
-    //                 legend,
-    //                 value,
-    //                 reverse: type === "negative",
-    //               }),
-    //             }),
-    //           });
-    //         }),
-    //       }),
-    //     })
-    //   ),
-    // });
-
     return DefaultBarGroup({
       direction,
       gap,
@@ -170,7 +74,17 @@ class BarGroup extends ComponentWidget {
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
-      bars: values.map(({ data, legend }, index) =>
+      DataLabels: values.map(({ data, legend }, index) =>
+        DataLabel({
+          direction,
+          index,
+          legend,
+          value: data,
+          label,
+        })
+      ),
+
+      Bars: values.map(({ data, legend }, index) =>
         Bar({
           value: data,
           direction,

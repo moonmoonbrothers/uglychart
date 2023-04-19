@@ -8,6 +8,8 @@ import {
   ConstraintsTransformBox,
   Constraints,
   Padding,
+  TextAlign,
+  TextWidthBasis,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { YAxisLabel as DefaultYAxisLabel } from "./default";
@@ -34,6 +36,8 @@ class YAxisLabel extends ComponentWidget {
 
     return DefaultYAxisLabel({
       text,
+      textAlign: TextAlign.center,
+      textWidthBasis: TextWidthBasis.longestLine,
       style: new TextStyle({
         fontFamily: font?.fontFamily ?? theme.text.fontFamily,
         fontSize: font?.fontSize ?? theme.text.fontSize,

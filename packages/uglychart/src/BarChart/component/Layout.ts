@@ -1,9 +1,5 @@
 import {
-  Alignment,
-  Column,
   ComponentWidget,
-  Container,
-  Flexible,
   Widget,
   BuildContext,
   EdgeInsets,
@@ -11,10 +7,15 @@ import {
 import Title from "./Title";
 import Chart from "./Chart";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
+import { Layout as DefaultLayout } from "./default";
 
 export type LayoutConfig = {
   padding?: EdgeInsets;
   backgroundColor?: string;
+};
+
+const defaultLayoutConfig = {
+  padding: EdgeInsets.all(30),
 };
 
 class Layout extends ComponentWidget {
@@ -25,21 +26,13 @@ class Layout extends ComponentWidget {
     if (layout.type === "custom")
       return layout.Custom({ Title, Chart }, { theme, data });
 
-    const { padding, backgroundColor } = layout;
-    return Container({
-      width: Infinity,
-      height: Infinity,
+    const { padding = defaultLayoutConfig.padding, backgroundColor } = layout;
+
+    return DefaultLayout({
       padding,
-      color: backgroundColor,
-      alignment: Alignment.topLeft,
-      child: Column({
-        children: [
-          Title(),
-          Flexible({
-            child: Chart(),
-          }),
-        ],
-      }),
+      Title: Title(),
+      Chart: Chart(),
+      backgroundColor,
     });
   }
 }

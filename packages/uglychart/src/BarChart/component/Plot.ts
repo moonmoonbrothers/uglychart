@@ -6,13 +6,14 @@ import {
   Flex,
   MainAxisAlignment,
   OverflowBox,
-  Stack,
   Axis,
   Alignment,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
 import BarGroup from "./BarGroup";
+import { Plot as DefaultPlot } from "./default";
+import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -22,18 +23,25 @@ export type PlotProps = {
 export type PlotConfig = {
   width?: number;
   height?: number;
-  verticalLine?: {
-    color?: string;
-    width?: string;
-    getCount?: (xLabelCount: number) => number;
-  };
-  horizontalLine?: {
-    color?: string;
-    width?: string;
-    getCount?: (yLabelCount: number) => number;
-  };
+  verticalLine?: PlotLine;
+  horizontalLine?: PlotLine;
   backgroundAdditions?: Widget[];
   foregroundAdditions?: Widget[];
+};
+
+const defaultPlotConfig = {
+  verticalLine: {
+    color: "#D3D3D3",
+  },
+  horizontalLine: {
+    color: "#D3D3D3",
+  },
+};
+
+type PlotLine = {
+  color?: string;
+  thickness?: number;
+  count?: number;
 };
 
 class Plot extends ComponentWidget {
@@ -43,7 +51,7 @@ class Plot extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
-    const { plot, yAxis, xAxis } = CustomProvider.of(context);
+    const { plot } = CustomProvider.of(context);
     if (plot.type === "custom") {
       return plot.Custom(
         {
@@ -52,6 +60,7 @@ class Plot extends ComponentWidget {
         { data, theme }
       );
     }
+
     const {
       height,
       width,
@@ -61,41 +70,42 @@ class Plot extends ComponentWidget {
       foregroundAdditions = [],
     } = plot;
     const { labels } = data;
+    const { scale, direction } = this.props;
 
-    const Plot = () =>
-      Container({
-        width: width,
-        height: height,
-        alignment: Alignment.center,
-        child: Flex({
-          direction:
-            this.props.direction === "vertical"
-              ? Axis.horizontal
-              : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: labels.map((label, index) =>
-            Container({
-              width: this.props.direction === "vertical" ? 0 : undefined,
-              height: this.props.direction === "horizontal" ? 0 : undefined,
-              child: OverflowBox({
-                maxWidth:
-                  this.props.direction === "vertical" ? Infinity : undefined,
-                maxHeight:
-                  this.props.direction === "horizontal" ? Infinity : undefined,
-                child: BarGroup({
-                  index,
-                  scale: this.props.scale,
-                  label,
-                  direction: this.props.direction,
-                }),
-              }),
-            })
-          ),
-        }),
-      });
+    const [labelLineCount, valueLineCount] = [
+      labels.length,
+      (scale.max - scale.min) / scale.step,
+    ];
 
-    return Stack({
-      children: [...backgroundAdditions, Plot(), ...foregroundAdditions],
+    assert(
+      valueLineCount === Math.round(valueLineCount),
+      "scale.max - scale.min must be divisible by scale.step"
+    );
+
+    return DefaultPlot({
+      direction: direction,
+      height: height,
+      width: width,
+      verticalLine: {
+        thickness: verticalLine?.thickness ?? theme.border.width,
+        color: verticalLine?.color ?? defaultPlotConfig.verticalLine.color,
+        count: direction === "horizontal" ? valueLineCount : labelLineCount,
+      },
+      horizontalLine: {
+        thickness: horizontalLine?.thickness ?? theme.border.width,
+        color: horizontalLine?.color ?? defaultPlotConfig.horizontalLine.color,
+        count: direction === "vertical" ? valueLineCount : labelLineCount,
+      },
+      BackgroundAdditions: foregroundAdditions,
+      ForegroundAdditions: backgroundAdditions,
+      BarGroups: labels.map((label, index) =>
+        BarGroup({
+          index,
+          scale: scale,
+          label,
+          direction: this.props.direction,
+        })
+      ),
     });
   }
 }

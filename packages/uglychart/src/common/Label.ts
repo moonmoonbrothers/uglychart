@@ -1,4 +1,3 @@
-
 import {
   Container,
   Text,
@@ -10,19 +9,19 @@ import {
   TextWidthBasis,
 } from "@moonmoonbrothers/flutterjs";
 
-export default function YAxisLabel({
+export default function Label({
   text,
-  overflow,
+  overflow = TextOverflow.visible,
   style,
   margin,
   backgroundColor,
   padding,
   decoration,
-  softWrap,
-  textAlign,
-  textWidthBasis
+  softWrap = true,
+  textAlign = TextAlign.center,
+  textWidthBasis = TextWidthBasis.longestLine,
 }: {
-  text: string;
+  text: string | number;
   overflow?: TextOverflow;
   style?: TextStyle;
   softWrap?: boolean;
@@ -31,16 +30,16 @@ export default function YAxisLabel({
   padding?: EdgeInsets;
   decoration?: BoxDecoration;
   textAlign?: TextAlign;
-  textWidthBasis?: TextWidthBasis
+  textWidthBasis?: TextWidthBasis;
 }) {
   return Container({
     margin,
     padding,
     decoration,
     color: backgroundColor,
-    child: Text(text, {
-      textWidthBasis,
+    child: Text(`${text}`, {
       style: style,
+      textWidthBasis,
       softWrap,
       overflow,
       textAlign,

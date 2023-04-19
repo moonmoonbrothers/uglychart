@@ -11,7 +11,6 @@ export type BarProps = {
   backgroundColor: string;
   index: number;
   value: number;
-  reverse?: boolean;
   label: string;
   legend: string;
   direction: "horizontal" | "vertical";
@@ -22,7 +21,7 @@ export type BarConfig = {
 };
 
 const defaultBarConfig = {
-  thickness: 2,
+  thickness: 16,
 };
 
 export class Bar extends ComponentWidget {
@@ -35,14 +34,7 @@ export class Bar extends ComponentWidget {
     const data = DataProvider.of(context);
     const { bar } = CustomProvider.of(context);
 
-    const {
-      backgroundColor,
-      index,
-      label,
-      legend,
-      direction,
-      reverse = false,
-    } = this.props;
+    const { backgroundColor, index, label, legend, direction } = this.props;
 
     if (bar.type === "custom") {
       return bar.Custom(
@@ -55,13 +47,11 @@ export class Bar extends ComponentWidget {
           legend,
           data,
           direction,
-          reverse,
         }
       );
     }
 
-    const { thickness = theme.border.width ?? defaultBarConfig.thickness } =
-      bar;
+    const { thickness = defaultBarConfig.thickness } = bar;
 
     return DefaultBar({
       color: backgroundColor,

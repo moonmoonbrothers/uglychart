@@ -83,14 +83,7 @@ class RenderObject {
   }
 
   setSvgTransform(el: SVGElement, matrix: Matrix4) {
-    const style = el.getAttribute("style") || "";
-    el.setAttribute("style", `transform: matrix3d(${matrix.storage.join(",")}); ${style}`);
-    // el.setAttribute(
-    //   "transform",
-    //   `translate(${offset.x} ${offset.y}) matrix3d(${matrix.storage.join(
-    //     " "
-    //   )})`
-    // );
+    el.style.transform = `matrix3d(${matrix.storage.join(",")})`;
   }
 
   attach(ownerElement: RenderObjectElement) {

@@ -7,11 +7,12 @@ import {
   BuildContext,
 } from "@moonmoonbrothers/flutterjs";
 import { Custom, Data, Theme } from "./types";
+import * as defaultComponents from "./component/default";
 
 class BarChart extends ComponentWidget {
   custom: Required<Custom>;
   data: Data;
-  theme: Theme
+  theme: Theme;
 
   constructor({
     custom: {
@@ -44,7 +45,7 @@ class BarChart extends ComponentWidget {
         color = "black",
         fontFamily = "Noto Sans KR, sans-serif",
         fontSize = 16,
-        lineHeight = 1.2,
+        lineHeight = 1,
       } = {},
       border: { width: borderWidth = 2, color: borderColor = "black" } = {},
     } = {},
@@ -98,3 +99,4 @@ class BarChart extends ComponentWidget {
 }
 
 export default (props: BarChartProps) => new BarChart(props);
+export { defaultComponents as DefaultComponents };

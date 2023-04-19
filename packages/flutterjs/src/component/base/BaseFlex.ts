@@ -106,16 +106,14 @@ class RenderFlex extends MultiChildRenderObject {
   }
   protected preformLayout(): void {
     let totalFlex = 0;
-    let [childIntrinsicMainAxisValue, crossAxisValue, mainAxisValue] = [
-      0, 0, 0,
-    ];
+    let [childIntrinsicMainAxisValue, crossAxisValue] = [0, 0];
     const sortedChildren =
       this.verticalDirection === "down"
         ? this.children
         : [...this.children].reverse();
 
     sortedChildren.forEach((child) => {
-      child.layout(this.constraints);
+      child.layout(this.constraints.loosen());
       const flex = child instanceof RenderFlexible ? child.flex : 0;
       totalFlex += flex;
       if (flex === 0) {
@@ -149,7 +147,7 @@ class RenderFlex extends MultiChildRenderObject {
         );
       }
 
-      child.layout(childConstraint.enforce(this.constraints));
+      child.layout(childConstraint.enforce(this.constraints.loosen()));
     });
 
     /*
@@ -183,19 +181,13 @@ class RenderFlex extends MultiChildRenderObject {
   }
 
   private getNonFlexItemConstraint(crossAxisValue: number) {
-    let childConstraint: Constraints;
-
-    switch (this.crossAxisAlignment) {
-      case "stretch":
-        childConstraint = Constraints.tightFor({
-          [this.crossAxisSizeName]: crossAxisValue,
-        });
-        break;
-      default:
-        childConstraint = this.constraints;
+    if (this.crossAxisAlignment === CrossAxisAlignment.stretch) {
+      return Constraints.tightFor({
+        [this.crossAxisSizeName]: crossAxisValue,
+      });
     }
 
-    return childConstraint.enforce(this.constraints);
+    return this.constraints.loosen();
   }
 
   private getFlexItemConstraint(childExtent: number, fit: "loose" | "tight") {

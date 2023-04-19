@@ -1,9 +1,4 @@
-import {
-  Alignment,
-  EdgeInsets,
-  Radius,
-  Widget,
-} from "@moonmoonbrothers/flutterjs";
+import { EdgeInsets, Widget } from "@moonmoonbrothers/flutterjs";
 import { TitleConfig } from "./component/Title";
 import { BarProps, BarConfig } from "./component/Bar";
 import { BarGroupProps, BarGroupConfig } from "./component/BarGroup";
@@ -90,7 +85,6 @@ type Bar =
         index: number;
         label: string;
         legend: string;
-        reverse: boolean;
         direction: "vertical" | "horizontal";
         data: Data;
         theme: Theme;
@@ -114,6 +108,10 @@ type YAxisLabel =
 
 export type XAxis =
   | CustomConfig<Axis>
+    /*
+      Must be specified If your custom Axis's thickness and color,
+      It will be used to draw intersection between XAxis and YAxis
+    */
   | ({ thickness: number; color: string } & CustomWidget<
       {
         XAxisTick: (props: XAxisTickProps) => Widget;
@@ -124,6 +122,10 @@ export type XAxis =
 
 export type YAxis =
   | CustomConfig<Axis>
+    /*
+      Must be specified If your custom Axis's thickness and color,
+      It will be used to draw intersection between XAxis and YAxis
+    */
   | ({ thickness: number; color: string } & CustomWidget<
       {
         YAxisTick: (props: YAxisTickProps) => Widget;
@@ -162,19 +164,22 @@ type DataLabel =
         index: number;
         legend: string;
         label: string;
-        reverse: boolean;
         direction: "horizontal" | "vertical";
       }
     >;
 
 type Plot =
   | CustomConfig<PlotConfig>
-  | CustomWidget<
+    /*
+      Must be specified If your custom plot has specific size,
+      It will be used in Chart to layout it correctly
+    */
+  | ({ width?: number; height?: number } & CustomWidget<
       {
         BarGroup: (props: BarGroupProps) => Widget;
       },
       { data: Data }
-    >;
+    >);
 
 export type Chart =
   | CustomConfig<ChartConfig>
