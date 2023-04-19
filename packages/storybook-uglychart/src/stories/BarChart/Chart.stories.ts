@@ -55,7 +55,8 @@ export const Basic: Story = {
 				},
 				dataLabel: {
 					type: 'config',
-					visible: true
+					visible: true,
+					margin: EdgeInsets.only({ left: 10 })
 				},
 				chart: {
 					type: 'config',
@@ -144,6 +145,11 @@ export const HorizontalWithMinusValue: Story = {
 							})
 						})
 					]
+				},
+				dataLabel: {
+					type: 'config',
+					visible: true,
+					margin: EdgeInsets.only({ right: 5, left: 5 })
 				},
 				bar: {
 					type: 'config',

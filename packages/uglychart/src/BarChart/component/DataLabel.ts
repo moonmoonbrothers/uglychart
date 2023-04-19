@@ -4,6 +4,7 @@ import {
   BuildContext,
   TextStyle,
   SizedBox,
+  EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 import {
   CustomProvider as CustomProvider,
@@ -26,6 +27,8 @@ export type DataLabelConfig = {
   font?: Font;
   backgroundColor?: string;
   visible?: boolean;
+  margin?: EdgeInsets;
+  padding?: EdgeInsets;
 };
 
 export class DataLabel extends ComponentWidget {
@@ -46,13 +49,21 @@ export class DataLabel extends ComponentWidget {
       );
     }
 
-    const { backgroundColor, font, visible = false } = dataLabel;
+    const {
+      backgroundColor,
+      font,
+      visible = false,
+      margin,
+      padding,
+    } = dataLabel;
 
     if (!visible) return SizedBox.shrink();
 
     return Label({
       text: value,
       backgroundColor,
+      margin,
+      padding,
       style: new TextStyle({
         fontFamily: font?.fontFamily ?? theme.text.fontFamily,
         fontSize: font?.fontSize ?? theme.text.fontSize,
