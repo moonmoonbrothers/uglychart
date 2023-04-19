@@ -20,8 +20,8 @@ import {
   VerticalDirection,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
-import { Utils } from "../../../utils";
-import { IgnoreChildSize } from "../../../common";
+import { Utils } from "../../../../utils";
+import { IgnoreChildSize } from "../../../../common";
 
 export default function BarGroup({
   negativeAreaRatio,

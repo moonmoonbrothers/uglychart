@@ -10,7 +10,7 @@ import { LayoutConfig } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
 import { ChartConfig } from "./component/Chart";
 import { DataLabelConfig } from "./component/DataLabel";
-import type { DeepPartial } from "../utils";
+import type { DeepPartial } from "../../utils";
 import { XAxisTickProps } from "./component/XAxisTick";
 import { YAxisTickProps } from "./component/YAxisTick";
 
