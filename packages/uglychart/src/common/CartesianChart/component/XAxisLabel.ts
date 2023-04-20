@@ -1,27 +1,26 @@
 import {
-  ComponentWidget,
   TextAlign,
   TextStyle,
   TextWidthBasis,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { XAxisLabel as DefaultXAxisLabel } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type XAxisLabelProps = {
   index: number;
   text: string;
 };
 
-export class XAxisLabel extends ComponentWidget {
+export class XAxisLabel extends CartesianChartContextWidget{
   constructor(private props: XAxisLabelProps) {
     super();
   }
   build(context: BuildContext): Widget {
-    const data = DataProvider.of(context);
-    const theme = ThemeProvider.of(context);
-    const { xAxisLabel } = CustomProvider.of(context);
+    const data = this.getData(context);
+    const theme = this.getTheme(context);
+    const { xAxisLabel } = this.getCustom(context);
 
     const { text, index } = this.props;
     if (xAxisLabel.type === "custom") {

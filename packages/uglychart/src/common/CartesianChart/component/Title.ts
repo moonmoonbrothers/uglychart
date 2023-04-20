@@ -1,17 +1,12 @@
 import {
-  ComponentWidget,
-  Padding,
-  Row,
-  Text,
   TextStyle,
   Widget,
   BuildContext,
   EdgeInsets,
-  MainAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Font } from "../types";
 import { Title as DefaultTitle } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type TitleConfig = {
   margin?: EdgeInsets;
@@ -26,11 +21,11 @@ const defaultTitleConfig = {
   alignment: "start" as const,
 };
 
-export class Title extends ComponentWidget {
+export class Title extends CartesianChartContextWidget {
   build(context: BuildContext): Widget {
-    const data = DataProvider.of(context);
-    const theme = ThemeProvider.of(context);
-    const { title } = CustomProvider.of(context);
+    const data = this.getData(context);
+    const theme = this.getTheme(context);
+    const { title } = this.getCustom(context);
 
     const { title: text = "" } = data;
     if (title.type === "custom") {

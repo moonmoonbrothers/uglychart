@@ -1,28 +1,21 @@
 import {
-  ComponentWidget,
   Widget,
   BuildContext,
   TextStyle,
   SizedBox,
   EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
-import {
-  CustomProvider as CustomProvider,
-  DataProvider,
-  ThemeProvider,
-} from "../provider";
 import { Font } from "../types";
 import { DataLabel as DefaultDataLabel } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type DataLabelProps = {
   index: number;
   value: number;
-  reverse?: boolean;
   label: string;
   legend: string;
 };
 export type DataLabelConfig = {
-  type: "config";
   font?: Font;
   backgroundColor?: string;
   visible?: boolean;
@@ -30,15 +23,15 @@ export type DataLabelConfig = {
   padding?: EdgeInsets;
 };
 
-export class DataLabel extends ComponentWidget {
+export class DataLabel extends CartesianChartContextWidget {
   constructor(private props: DataLabelProps) {
     super();
   }
 
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { dataLabel } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { dataLabel } = this.getCustom(context);
     const { value, label, legend, index } = this.props;
 
     if (dataLabel.type === "custom") {

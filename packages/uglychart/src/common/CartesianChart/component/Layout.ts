@@ -1,13 +1,10 @@
 import {
-  ComponentWidget,
   Widget,
   BuildContext,
   EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
-import Title from "./Title";
-import Chart from "./Chart";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Layout as DefaultLayout } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type LayoutConfig = {
   padding?: EdgeInsets;
@@ -18,11 +15,12 @@ const defaultLayoutConfig = {
   padding: EdgeInsets.all(30),
 };
 
-export class Layout extends ComponentWidget {
+export class Layout extends CartesianChartContextWidget {
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { layout } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { layout } = this.getCustom(context);
+    const { Title, Chart } = this.getDependencies(context);
     if (layout.type === "custom")
       return layout.Custom({ Title, Chart }, { theme, data });
 

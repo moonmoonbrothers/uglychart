@@ -1,35 +1,23 @@
-import {
-  ComponentWidget,
-  Widget,
-  BuildContext,
-} from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import XAxisLabel from "./XAxisLabel";
-import XAxisTick from "./XAxisTick";
+import { Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { XAxis as DefaultXAxis } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type XAxisProps = {
   type: "index" | "value";
   labels: string[];
 };
 
-export const defaultXAxisConfig = {
-  tick: {
-    thickness: 2,
-    length: 10,
-  },
-};
-
-export class XAxis extends ComponentWidget {
+export class XAxis extends CartesianChartContextWidget {
   constructor(private props: XAxisProps) {
     super();
   }
 
   build(context: BuildContext): Widget {
     const { type } = this.props;
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { xAxis } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { xAxis } = this.getCustom(context);
+    const { XAxisLabel, XAxisTick } = this.getDependencies(context);
 
     if (xAxis.type === "custom") {
       return xAxis.Custom({ XAxisLabel, XAxisTick }, { theme, data });

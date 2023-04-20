@@ -4,10 +4,10 @@ import {
   BuildContext,
   Container,
 } from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -38,15 +38,15 @@ type PlotLine = {
   count?: number;
 };
 
-export class Plot extends ComponentWidget {
+export class Plot extends CartesianChartContextWidget {
   
   constructor(private props: PlotProps) {
     super();
   }
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { plot } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { plot } = this.getCustom(context);
     if (plot.type === "custom") {
       return plot.Custom({}, { data, theme });
     }

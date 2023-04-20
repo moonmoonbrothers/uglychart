@@ -1,32 +1,26 @@
 import {
-  ComponentWidget,
-  Container,
-  Text,
   TextStyle,
   Widget,
   BuildContext,
-  ConstraintsTransformBox,
-  Constraints,
-  Padding,
   TextAlign,
   TextWidthBasis,
 } from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { YAxisLabel as DefaultYAxisLabel } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type YAxisLabelProps = {
   index: number;
   text: string;
 };
 
-export class YAxisLabel extends ComponentWidget {
+export class YAxisLabel extends CartesianChartContextWidget {
   constructor(private props: YAxisLabelProps) {
     super();
   }
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { yAxisLabel } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { yAxisLabel } = this.getCustom(context);
 
     const { text, index } = this.props;
     if (yAxisLabel.type === "custom") {

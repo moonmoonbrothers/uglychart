@@ -1,12 +1,6 @@
-import {
-  ComponentWidget,
-  Widget,
-  BuildContext,
-} from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import YAxisLabel from "./YAxisLabel";
-import YAxisTick from "./YAxisTick";
+import { Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { YAxis as DefaultYAxis } from "./default";
+import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type YAxisProps = {
   type: "index" | "value";
@@ -20,16 +14,17 @@ export const defaultYAxisConfig = {
   },
 };
 
-export class YAxis extends ComponentWidget {
+export class YAxis extends CartesianChartContextWidget {
   constructor(private props: YAxisProps) {
     super();
   }
 
   build(context: BuildContext): Widget {
     const { type } = this.props;
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { yAxis } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { yAxis } = this.getCustom(context);
+    const { YAxisLabel, YAxisTick } = this.getDependencies(context);
 
     if (yAxis.type === "custom") {
       return yAxis.Custom({ YAxisLabel, YAxisTick }, { theme, data });
