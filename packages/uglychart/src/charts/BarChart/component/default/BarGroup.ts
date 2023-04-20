@@ -21,7 +21,7 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { Utils } from "../../../../utils";
-import { IgnoreChildSize } from "../../../../common";
+import { IgnoreChildSize } from "../../../../common/components";
 
 export default function BarGroup({
   negativeAreaRatio,

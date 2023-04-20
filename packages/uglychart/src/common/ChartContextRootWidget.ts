@@ -9,28 +9,38 @@ class ChartContextRootWidget<
   CUSTOM,
   DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
   THEME,
-  DATA
+  DATA,
 > extends ComponentWidget {
   custom: CUSTOM;
   data: DATA;
   theme: THEME;
-  child: Widget;
+  get dependencies(): DEPENDENCIES {
+    throw new Error("Not implemented");
+  }
+  get root(): Widget {
+    throw new Error("Not implemented");
+  }
   constructor({
     custom,
     theme,
     data,
-    child,
   }: {
     custom: CUSTOM;
-    theme: THEME;
+    theme: Partial<THEME>;
     data: DATA;
-    child: Widget;
   }) {
     super();
-    this.custom = custom;
-    this.theme = theme;
+    this.custom = this.mergeWithDefaultCustom(custom);
+    this.theme = this.mergeWithDefaultTheme(theme);
     this.data = data;
-    this.child = child;
+  }
+
+  mergeWithDefaultTheme(theme: Partial<THEME>): THEME {
+    throw new Error("not implemented");
+  }
+
+  mergeWithDefaultCustom(custom: Partial<CUSTOM>): CUSTOM {
+    throw new Error("not implemented");
   }
 
   build(context: BuildContext): Widget {
@@ -52,15 +62,11 @@ class ChartContextRootWidget<
           child: Provider({
             providerKey: "DEPENDENCIES",
             value: this.dependencies,
-            child: this.child,
+            child: this.root,
           }),
         }),
       }),
     });
-  }
-
-  get dependencies(): DEPENDENCIES {
-    throw Error("Not implemented: injectDependencies");
   }
 }
 

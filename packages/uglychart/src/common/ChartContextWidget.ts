@@ -5,10 +5,10 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 class ChartContextWidget<
-  DATA,
-  DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
   CUSTOM,
-  THEME
+  DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
+  THEME,
+  DATA
 > extends ComponentWidget {
   getData(context: BuildContext): DATA {
     return Provider.of("DATA", context);

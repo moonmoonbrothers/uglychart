@@ -12,7 +12,7 @@ import {
   ThemeProvider,
 } from "../provider";
 import { Font } from "../types";
-import { Label } from "../../../common";
+import { Label } from "../../../common/components";
 
 export type DataLabelProps = {
   index: number;

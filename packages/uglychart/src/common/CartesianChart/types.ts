@@ -54,17 +54,17 @@ export type CartesianChartProps = {
 type CustomConfig<T> = { type: "config" } & T;
 
 export type Custom = {
-  title?: CustomTitle;
-  layout?: CustomLayout;
-  xAxis?: CustomXAxis;
-  xAxisLabel?: CustomXAxisLabel;
-  yAxis?: CustomYAxis;
-  yAxisLabel?: CustomYAxisLabel;
-  chart?: CustomChart;
-  dataLabel?: CUstomDataLabel;
-  xAxisTick?: CUstomXAxisTick;
-  yAxisTick?: CustomYAxisTick;
-  plot?: CustomPlot;
+  title: CustomTitle;
+  layout: CustomLayout;
+  xAxis: CustomXAxis;
+  xAxisLabel: CustomXAxisLabel;
+  yAxis: CustomYAxis;
+  yAxisLabel: CustomYAxisLabel;
+  chart: CustomChart;
+  dataLabel: CUstomDataLabel;
+  xAxisTick: CUstomXAxisTick;
+  yAxisTick: CustomYAxisTick;
+  plot: CustomPlot;
 };
 
 export type Data = {
