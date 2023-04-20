@@ -1,22 +1,50 @@
 import { EdgeInsets, Widget } from "@moonmoonbrothers/flutterjs";
-import { TitleConfig } from "./component/Title";
-import { BarProps, BarConfig } from "./component/Bar";
-import { BarGroupProps, BarGroupConfig } from "./component/BarGroup";
-import { PlotProps, PlotConfig } from "./component/Plot";
-import { XAxisProps } from "./component/XAxis";
-import { YAxisProps } from "./component/YAxis";
-import { YAxisLabelProps } from "./component/YAxisLabel";
-import { LayoutConfig } from "./component/Layout";
+import CustomTitle, { TitleConfig, Title } from "./component/Title";
+import CustomPlot, { PlotProps, PlotConfig, Plot } from "./component/Plot";
+import { XAxisProps, XAxis } from "./component/XAxis";
+import { YAxisProps, YAxis } from "./component/YAxis";
+import { YAxisLabelProps, YAxisLabel } from "./component/YAxisLabel";
+import { XAxisLabelProps, XAxisLabel } from "./component/XAxisLabel";
+import { LayoutConfig, Layout } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
-import { ChartConfig } from "./component/Chart";
-import { DataLabelConfig } from "./component/DataLabel";
+import { ChartConfig, Chart } from "./component/Chart";
+import { DataLabelConfig, DataLabel } from "./component/DataLabel";
 import type { DeepPartial } from "../../utils";
-import { XAxisTickProps } from "./component/XAxisTick";
-import { YAxisTickProps } from "./component/YAxisTick";
+import { XAxisTickProps, XAxisTick } from "./component/XAxisTick";
+import { YAxisTickProps, YAxisTick } from "./component/YAxisTick";
+
+export type Dependencies = {
+  Plot: (...args: ConstructorParameters<typeof Plot>) => Plot;
+  XAxis: (...args: ConstructorParameters<typeof XAxis>) => XAxis;
+  YAxis: (...args: ConstructorParameters<typeof YAxis>) => YAxis;
+  YAxisLabel: (...args: ConstructorParameters<typeof YAxisLabel>) => YAxisLabel;
+  XAxisLabel: (...args: ConstructorParameters<typeof XAxisLabel>) => XAxisLabel;
+  Title: (...args: ConstructorParameters<typeof Title>) => Title;
+  XAxisTick: (...args: ConstructorParameters<typeof XAxisTick>) => XAxisTick;
+  YAxisTick: (...args: ConstructorParameters<typeof YAxisTick>) => YAxisTick;
+  DataLabel: (...args: ConstructorParameters<typeof DataLabel>) => DataLabel;
+  Layout: (...args: ConstructorParameters<typeof Layout>) => Layout;
+  Chart: (...args: ConstructorParameters<typeof Chart>) => Chart;
+};
+
+export type Theme = {
+  text: Required<Font>;
+  border: {
+    color: string;
+    width: number;
+  };
+};
+
+export type Font = {
+  fontSize?: number;
+  color?: string;
+  fontFamily?: string;
+  lineHeight?: number;
+};
 
 export type Scale = _Scale;
 
-export type BarChartProps = {
+export type CartesianChartProps = {
   data: Data;
   theme?: DeepPartial<Theme>;
   padding?: EdgeInsets;
@@ -25,22 +53,18 @@ export type BarChartProps = {
 
 type CustomConfig<T> = { type: "config" } & T;
 
-export type BarChartType = "vertical" | "horizontal";
-
 export type Custom = {
-  title?: Title;
-  bar?: Bar;
-  layout?: Layout;
-  barGroup?: BarGroup;
-  xAxis?: XAxis;
-  xAxisLabel?: XAxisLabel;
-  yAxis?: YAxis;
-  yAxisLabel?: YAxisLabel;
-  plot?: Plot;
-  chart?: Chart;
-  dataLabel?: DataLabel;
-  xAxisTick?: XAxisTick;
-  yAxisTick?: YAxisTick;
+  title?: CustomTitle;
+  layout?: CustomLayout;
+  xAxis?: CustomXAxis;
+  xAxisLabel?: CustomXAxisLabel;
+  yAxis?: CustomYAxis;
+  yAxisLabel?: CustomYAxisLabel;
+  chart?: CustomChart;
+  dataLabel?: CUstomDataLabel;
+  xAxisTick?: CUstomXAxisTick;
+  yAxisTick?: CustomYAxisTick;
+  plot?: CustomPlot;
 };
 
 export type Data = {
@@ -67,48 +91,26 @@ export type CustomWidget<
   ) => Widget;
 };
 
-type BarGroup =
-  | CustomConfig<BarGroupConfig>
-  | CustomWidget<
-      {
-        Bar: (props: BarProps) => Widget;
-      },
-      BarGroupProps
-    >;
-
-type Bar =
-  | CustomConfig<BarConfig>
-  | CustomWidget<
-      {},
-      {
-        backgroundColor: string;
-        index: number;
-        label: string;
-        legend: string;
-        direction: "vertical" | "horizontal";
-        data: Data;
-        theme: Theme;
-      }
-    >;
-
-type Title = CustomConfig<TitleConfig> | CustomWidget<{}, { text: string }>;
+type CustomTitle =
+  | CustomConfig<TitleConfig>
+  | CustomWidget<{}, { text: string }>;
 
 type AxisLabel = {
   margin?: EdgeInsets;
   font?: Font;
 };
 
-type XAxisLabel =
+type CustomXAxisLabel =
   | CustomConfig<AxisLabel>
   | CustomWidget<{}, { text: string; index: number }>;
 
-type YAxisLabel =
+type CustomYAxisLabel =
   | CustomConfig<AxisLabel>
   | CustomWidget<{}, { text: string; index: number }>;
 
-export type XAxis =
+export type CustomXAxis =
   | CustomConfig<Axis>
-    /*
+  /*
       Must be specified If your custom Axis's thickness and color,
       It will be used to draw intersection between XAxis and YAxis
     */
@@ -120,9 +122,9 @@ export type XAxis =
       { data: Data }
     >);
 
-export type YAxis =
+export type CustomYAxis =
   | CustomConfig<Axis>
-    /*
+  /*
       Must be specified If your custom Axis's thickness and color,
       It will be used to draw intersection between XAxis and YAxis
     */
@@ -134,13 +136,15 @@ export type YAxis =
       { data: Data }
     >);
 
-type Layout = CustomConfig<LayoutConfig> | CustomWidget<"Title" | "Chart">;
+type CustomLayout =
+  | CustomConfig<LayoutConfig>
+  | CustomWidget<"Title" | "Chart">;
 
-export type XAxisTick =
+export type CUstomXAxisTick =
   | CustomConfig<Tick>
   | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
 
-export type YAxisTick =
+export type CustomYAxisTick =
   | CustomConfig<Tick>
   | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
 
@@ -155,7 +159,7 @@ type Axis = {
   color?: string;
 };
 
-type DataLabel =
+type CUstomDataLabel =
   | CustomConfig<DataLabelConfig>
   | CustomWidget<
       {},
@@ -164,42 +168,21 @@ type DataLabel =
         index: number;
         legend: string;
         label: string;
-        direction: "horizontal" | "vertical";
       }
     >;
 
-type Plot =
+type CustomPlot =
   | CustomConfig<PlotConfig>
-    /*
+  /*
       Must be specified If your custom plot has specific size,
       It will be used in Chart to layout it correctly
     */
-  | ({ width?: number; height?: number } & CustomWidget<
-      {
-        BarGroup: (props: BarGroupProps) => Widget;
-      },
-      { data: Data }
-    >);
+  | ({ width?: number; height?: number } & CustomWidget<{}, { data: Data }>);
 
-export type Chart =
+export type CustomChart =
   | CustomConfig<ChartConfig>
   | CustomWidget<{
       Plot: (props: PlotProps) => Widget;
       XAxis: (props: XAxisProps) => Widget;
       YAxis: (props: YAxisProps) => Widget;
     }>;
-
-export type Theme = {
-  text: Required<Font>;
-  border: {
-    color: string;
-    width: number;
-  };
-};
-
-export type Font = {
-  fontSize?: number;
-  color?: string;
-  fontFamily?: string;
-  lineHeight?: number;
-};

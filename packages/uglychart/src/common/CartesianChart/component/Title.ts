@@ -26,7 +26,7 @@ const defaultTitleConfig = {
   alignment: "start" as const,
 };
 
-class Title extends ComponentWidget {
+export class Title extends ComponentWidget {
   build(context: BuildContext): Widget {
     const data = DataProvider.of(context);
     const theme = ThemeProvider.of(context);

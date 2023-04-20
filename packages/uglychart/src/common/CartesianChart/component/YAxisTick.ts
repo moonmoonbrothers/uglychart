@@ -6,7 +6,7 @@ import {
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { YAxisTick as DefaultYAxisTick } from "./default";
 
-class YAxisTick extends ComponentWidget {
+export class YAxisTick extends ComponentWidget {
   index: number;
   constructor({ index }: YAxisTickProps) {
     super();

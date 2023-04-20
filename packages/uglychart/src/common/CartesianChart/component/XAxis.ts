@@ -20,7 +20,7 @@ export const defaultXAxisConfig = {
   },
 };
 
-class XAxis extends ComponentWidget {
+export class XAxis extends ComponentWidget {
   constructor(private props: XAxisProps) {
     super();
   }

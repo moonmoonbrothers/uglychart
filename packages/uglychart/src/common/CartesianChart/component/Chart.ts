@@ -10,7 +10,6 @@ import YAxis from "./YAxis";
 import Plot from "./Plot";
 import { getScale, getValueEdge, Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
-import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export type ChartConfig = {
   scale?: Partial<Scale>;
@@ -20,7 +19,7 @@ export type ChartConfig = {
   backgroundAdditions?: Widget[];
 };
 
-class Chart extends ComponentWidget {
+export class Chart extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);

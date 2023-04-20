@@ -20,7 +20,7 @@ export const defaultYAxisConfig = {
   },
 };
 
-class YAxis extends ComponentWidget {
+export class YAxis extends ComponentWidget {
   constructor(private props: YAxisProps) {
     super();
   }

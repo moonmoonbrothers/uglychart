@@ -6,7 +6,7 @@ import {
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { XAxisTick as DefaultXAxisTick } from "./default";
 
-class XAxisTick extends ComponentWidget {
+export class XAxisTick extends ComponentWidget {
   index: number;
   constructor({ index }: XAxisTickProps) {
     super();

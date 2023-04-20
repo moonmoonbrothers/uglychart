@@ -17,7 +17,7 @@ import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export default function Plot({
   direction,
-  BarGroups,
+  child,
   BackgroundAdditions,
   ForegroundAdditions,
   width,
@@ -105,11 +105,7 @@ export default function Plot({
         height,
         color: backgroundColor,
         alignment: Alignment.topLeft,
-        child: Flex({
-          direction: direction === "vertical" ? Axis.horizontal : Axis.vertical,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: BarGroups,
-        }),
+        child,
       }),
       ...ForegroundAdditions,
     ],
@@ -124,9 +120,9 @@ type PlotProps = {
   direction: "vertical" | "horizontal";
   BackgroundAdditions: Widget[];
   ForegroundAdditions: Widget[];
-  BarGroups: Widget[];
-  verticalLine?: PlotLine;
-  horizontalLine?: PlotLine;
+  child: Widget;
+  verticalLine: PlotLine;
+  horizontalLine: PlotLine;
 };
 
 type PlotLine = {

@@ -14,7 +14,7 @@ export type XAxisLabelProps = {
   text: string;
 };
 
-class XAxisLabel extends ComponentWidget {
+export class XAxisLabel extends ComponentWidget {
   constructor(private props: XAxisLabelProps) {
     super();
   }

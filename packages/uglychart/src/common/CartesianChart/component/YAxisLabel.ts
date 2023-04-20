@@ -19,7 +19,7 @@ export type YAxisLabelProps = {
   text: string;
 };
 
-class YAxisLabel extends ComponentWidget {
+export class YAxisLabel extends ComponentWidget {
   constructor(private props: YAxisLabelProps) {
     super();
   }

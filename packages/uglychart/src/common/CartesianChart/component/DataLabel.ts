@@ -12,7 +12,7 @@ import {
   ThemeProvider,
 } from "../provider";
 import { Font } from "../types";
-import { Label } from "../..";
+import { DataLabel as DefaultDataLabel } from "./default";
 
 export type DataLabelProps = {
   index: number;
@@ -20,7 +20,6 @@ export type DataLabelProps = {
   reverse?: boolean;
   label: string;
   legend: string;
-  direction: "horizontal" | "vertical";
 };
 export type DataLabelConfig = {
   type: "config";
@@ -40,13 +39,10 @@ export class DataLabel extends ComponentWidget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);
     const { dataLabel } = CustomProvider.of(context);
-    const { direction, value, label, legend, index } = this.props;
+    const { value, label, legend, index } = this.props;
 
     if (dataLabel.type === "custom") {
-      return dataLabel.Custom(
-        {},
-        { value, index, label, direction, data, theme, legend }
-      );
+      return dataLabel.Custom({}, { value, index, label, data, theme, legend });
     }
 
     const {
@@ -59,7 +55,7 @@ export class DataLabel extends ComponentWidget {
 
     if (!visible) return SizedBox.shrink();
 
-    return Label({
+    return DefaultDataLabel({
       text: value,
       backgroundColor,
       margin,

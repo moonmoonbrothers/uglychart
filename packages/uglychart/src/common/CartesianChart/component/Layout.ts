@@ -18,7 +18,7 @@ const defaultLayoutConfig = {
   padding: EdgeInsets.all(30),
 };
 
-class Layout extends ComponentWidget {
+export class Layout extends ComponentWidget {
   build(context: BuildContext): Widget {
     const theme = ThemeProvider.of(context);
     const data = DataProvider.of(context);

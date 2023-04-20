@@ -1,17 +1,11 @@
 import {
-  Container,
   ComponentWidget,
   Widget,
   BuildContext,
-  Flex,
-  MainAxisAlignment,
-  OverflowBox,
-  Axis,
-  Alignment,
+  Container,
 } from "@moonmoonbrothers/flutterjs";
 import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
-import BarGroup from "./BarGroup";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
@@ -44,7 +38,8 @@ type PlotLine = {
   count?: number;
 };
 
-class Plot extends ComponentWidget {
+export class Plot extends ComponentWidget {
+  
   constructor(private props: PlotProps) {
     super();
   }
@@ -53,12 +48,7 @@ class Plot extends ComponentWidget {
     const data = DataProvider.of(context);
     const { plot } = CustomProvider.of(context);
     if (plot.type === "custom") {
-      return plot.Custom(
-        {
-          BarGroup,
-        },
-        { data, theme }
-      );
+      return plot.Custom({}, { data, theme });
     }
 
     const {
@@ -98,14 +88,7 @@ class Plot extends ComponentWidget {
       },
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
-      BarGroups: labels.map((label, index) =>
-        BarGroup({
-          index,
-          scale: scale,
-          label,
-          direction: this.props.direction,
-        })
-      ),
+      child: Container({}),
     });
   }
 }

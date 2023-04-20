@@ -1,5 +1,3 @@
-import Bar from "./Bar";
-import BarGroup from "./BarGroup";
 import ChartContent from "./Chart";
 import Layout from "./Layout";
 import Plot from "./Plot";
@@ -11,10 +9,10 @@ import YAxisLabel from "./YAxisLabel";
 import XAxisTick from "./XAxisTick";
 import YAxisTick from "./YAxisTick";
 import Chart from "./Chart";
+import DataLabel from "./DataLabel";
 
 export {
-  Bar,
-  BarGroup,
+  DataLabel,
   ChartContent,
   Layout,
   Plot,

@@ -1,15 +1,15 @@
-import { ThemeProvider, DataProvider, CustomProvider } from "./provider";
-import { BarChartProps, Font } from "./types";
+import { CartesianChartProps } from "./types";
 import Layout from "./component/Layout";
 import {
   ComponentWidget,
   Widget,
   BuildContext,
+  Provider,
 } from "@moonmoonbrothers/flutterjs";
 import { Custom, Data, Theme } from "./types";
 import * as defaultComponents from "./component/default";
 
-class BarChart extends ComponentWidget {
+class CartesianChart extends ComponentWidget {
   custom: Required<Custom>;
   data: Data;
   theme: Theme;
@@ -18,10 +18,6 @@ class BarChart extends ComponentWidget {
     custom: {
       layout = { type: "config" as const },
       title = { type: "config" as const },
-      bar = { type: "config" as const },
-      barGroup = {
-        type: "config" as const,
-      },
       xAxis = { type: "config" as const },
       yAxis = {
         type: "config" as const,
@@ -49,13 +45,11 @@ class BarChart extends ComponentWidget {
       } = {},
       border: { width: borderWidth = 2, color: borderColor = "black" } = {},
     } = {},
-  }: BarChartProps) {
+  }: CartesianChartProps) {
     super();
 
     this.custom = {
       layout,
-      bar,
-      barGroup,
       xAxis,
       yAxis,
       xAxisLabel,
@@ -85,12 +79,21 @@ class BarChart extends ComponentWidget {
   }
 
   override build(context: BuildContext): Widget {
-    return ThemeProvider({
-      theme: this.theme,
-      child: DataProvider({
-        data: this.data,
-        child: CustomProvider({
-          custom: this.custom,
+    return Provider({
+      providerKey: "THEME",
+      value: {
+        theme: this.theme,
+      },
+      child: Provider({
+        providerKey: "DATA",
+        value: {
+          data: this.data,
+        },
+        child: Provider({
+          providerKey: "CUSTOM",
+          value: {
+            custom: this.custom,
+          },
           child: Layout(),
         }),
       }),
@@ -98,5 +101,5 @@ class BarChart extends ComponentWidget {
   }
 }
 
-export default (props: BarChartProps) => new BarChart(props);
+export default (props: CartesianChartProps) => new CartesianChart(props);
 export { defaultComponents as DefaultComponents };
