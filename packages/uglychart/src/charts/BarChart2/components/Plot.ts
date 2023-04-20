@@ -1,12 +1,19 @@
 import {
+  Container,
+  ComponentWidget,
   Widget,
   BuildContext,
-  Container,
+  Flex,
+  MainAxisAlignment,
+  OverflowBox,
+  Axis,
+  Alignment,
 } from "@moonmoonbrothers/flutterjs";
+import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
 import { Scale } from "../types";
+import BarGroup from "../BarGroup";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
-import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -37,17 +44,21 @@ type PlotLine = {
   count?: number;
 };
 
-export class Plot extends CartesianChartContextWidget {
-  
+class Plot extends ComponentWidget {
   constructor(private props: PlotProps) {
     super();
   }
   build(context: BuildContext): Widget {
-    const theme = this.getTheme(context);
-    const data = this.getData(context);
-    const { plot } = this.getCustom(context);
+    const theme = ThemeProvider.of(context);
+    const data = DataProvider.of(context);
+    const { plot } = CustomProvider.of(context);
     if (plot.type === "custom") {
-      return plot.Custom({}, { data, theme });
+      return plot.Custom(
+        {
+          BarGroup,
+        },
+        { data, theme }
+      );
     }
 
     const {
@@ -87,7 +98,14 @@ export class Plot extends CartesianChartContextWidget {
       },
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
-      child: Container({}),
+      BarGroups: labels.map((label, index) =>
+        BarGroup({
+          index,
+          scale: scale,
+          label,
+          direction: this.props.direction,
+        })
+      ),
     });
   }
 }

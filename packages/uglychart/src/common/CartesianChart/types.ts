@@ -47,7 +47,6 @@ export type Scale = _Scale;
 export type CartesianChartProps = {
   data: Data;
   theme?: DeepPartial<Theme>;
-  padding?: EdgeInsets;
   custom?: Custom;
 };
 
@@ -61,7 +60,7 @@ export type Custom = {
   yAxis: CustomYAxis;
   yAxisLabel: CustomYAxisLabel;
   chart: CustomChart;
-  dataLabel: CUstomDataLabel;
+  dataLabel: CustomDataLabel;
   xAxisTick: CUstomXAxisTick;
   yAxisTick: CustomYAxisTick;
   plot: CustomPlot;
@@ -159,7 +158,7 @@ type Axis = {
   color?: string;
 };
 
-type CUstomDataLabel =
+type CustomDataLabel =
   | CustomConfig<DataLabelConfig>
   | CustomWidget<
       {},
