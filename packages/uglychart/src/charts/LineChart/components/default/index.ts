@@ -1,15 +1,13 @@
-import Bar from "./Bar";
-import BarGroup from "./BarGroup";
+import Line from "./Line";
 import Series from "./Series";
-import XAxis from "./XAxis";
-import YAxis from "./YAxis";
-
 import {
   Title,
   XAxisLabel,
   YAxisLabel,
   XAxisTick,
   YAxisTick,
+  XAxis,
+  YAxis,
   Plot,
   Layout,
   Chart,
@@ -17,8 +15,7 @@ import {
 } from "../../../../common/CartesianChart/component/default/index";
 
 export {
-  Bar,
-  BarGroup,
+  Line,
   Series,
   Title,
   XAxisLabel,

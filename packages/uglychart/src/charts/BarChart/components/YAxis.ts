@@ -1,6 +1,6 @@
 import { Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { YAxis as DefaultYAxis } from "./default";
-import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { YAxis as BaseYAxis } from "../../../common/CartesianChart/component/YAxis";
 
 export type YAxisProps = {
   type: "index" | "value";
@@ -14,11 +14,7 @@ export const defaultYAxisConfig = {
   },
 };
 
-export class YAxis extends CartesianChartContextWidget {
-  constructor(protected props: YAxisProps) {
-    super();
-  }
-
+export class YAxis extends BaseYAxis {
   build(context: BuildContext): Widget {
     const { type } = this.props;
     const theme = this.getTheme(context);
@@ -39,7 +35,10 @@ export class YAxis extends CartesianChartContextWidget {
       color: yAxis.color ?? theme.border.color,
       thickness: yAxis.thickness ?? theme.border.width,
       labels: type === "index" ? labels : labels.reverse(),
-      ticks,
+      ticks:
+        type === "index"
+          ? [...ticks, YAxisTick({ index: ticks.length })]
+          : ticks,
     });
   }
 }

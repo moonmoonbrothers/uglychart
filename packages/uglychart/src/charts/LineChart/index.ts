@@ -3,16 +3,12 @@ import type { Custom } from "./types";
 import * as defaultComponents from "./components/default";
 import { Dependencies } from "../../common/CartesianChart/types";
 import Series from "./components/Series";
-import XAxis from "./components/XAxis";
-import YAxis from "./components/YAxis";
 class BarChart extends CartesianChartContextRootWidget<Custom> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
     return {
       ...base,
       Series,
-      XAxis,
-      YAxis,
     };
   }
 

@@ -19,10 +19,7 @@ export default function YAxis({ color, thickness, labels, ticks }: YAxisProps) {
 
   const Labels = () =>
     Column({
-      mainAxisAlignment:
-        ticks.length !== labels.length
-          ? MainAxisAlignment.spaceAround
-          : MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: labels.map((label) =>
         IgnoreChildWidth({

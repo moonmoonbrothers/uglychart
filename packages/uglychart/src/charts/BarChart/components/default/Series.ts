@@ -9,6 +9,7 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../../../common/CartesianChart/types";
+
 export default function Series({
   direction,
   children,

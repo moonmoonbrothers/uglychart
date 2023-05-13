@@ -24,7 +24,7 @@ export class Chart extends CartesianChartContextWidget {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
     const {
-      direction = "horizontal",
+      direction = "vertical",
       foregroundAdditions = [],
       backgroundAdditions = [],
     } = chart;

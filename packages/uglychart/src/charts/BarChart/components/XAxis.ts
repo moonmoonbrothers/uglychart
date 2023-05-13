@@ -1,17 +1,8 @@
 import { Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { XAxis as DefaultXAxis } from "./default";
-import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { XAxis as BaseXAxis } from "../../../common/CartesianChart/component/XAxis";
 
-export type XAxisProps = {
-  type: "index" | "value";
-  labels: string[];
-};
-
-export class XAxis extends CartesianChartContextWidget {
-  constructor(protected props: XAxisProps) {
-    super();
-  }
-
+export class XAxis extends BaseXAxis {
   build(context: BuildContext): Widget {
     const { type } = this.props;
     const theme = this.getTheme(context);
@@ -32,9 +23,13 @@ export class XAxis extends CartesianChartContextWidget {
       color: xAxis.color ?? theme.border.color,
       thickness: xAxis.thickness ?? theme.border.width,
       labels,
-      ticks,
+      ticks:
+        type === "index"
+          ? [...ticks, XAxisTick({ index: ticks.length })]
+          : ticks,
     });
   }
 }
 
-export default (props: XAxisProps) => new XAxis(props);
+export default (...props: ConstructorParameters<typeof XAxis>) =>
+  new XAxis(...props);

@@ -19,7 +19,10 @@ export default function XAxis({ color, thickness, labels, ticks }: XAxisProps) {
 
   const Labels = () =>
     Row({
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment:
+        ticks.length !== labels.length
+          ? MainAxisAlignment.spaceAround
+          : MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: labels.map((label, index) =>
         IgnoreChildWidth({
