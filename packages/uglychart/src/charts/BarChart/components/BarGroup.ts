@@ -27,6 +27,7 @@ class BarGroup extends CartesianChartContextWidget<Custom> {
     const data = this.getData(context);
     const { barGroup } = this.getCustom(context);
     const { scale, direction, label } = this.props;
+    const { DataLabel } = this.getDependencies(context);
 
     if (barGroup.type === "custom") {
       return barGroup.Custom({ Bar }, { theme, data, scale, direction });
@@ -70,15 +71,13 @@ class BarGroup extends CartesianChartContextWidget<Custom> {
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
-      DataLabels: values.map(
-        ({ data, legend }, index) => SizedBox.shrink()
-        // DataLabel({
-        //   direction,
-        //   index,
-        //   legend,
-        //   value: data,
-        //   label,
-        // })
+      DataLabels: values.map(({ data, legend }, index) =>
+        DataLabel({
+          index,
+          legend,
+          value: data,
+          label,
+        })
       ),
 
       Bars: values.map(({ data, legend }, index) =>

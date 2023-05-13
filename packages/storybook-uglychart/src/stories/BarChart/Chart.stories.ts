@@ -195,6 +195,10 @@ export const VerticalWithMinusValues: Story = {
 				]
 			},
 			custom: {
+				dataLabel: {
+					type: 'config',
+					visible: true
+				},
 				barGroup: {
 					type: 'config',
 					barBackgroundColors: ['black', 'grey', 'brown', 'black']
