@@ -43,27 +43,17 @@ class CartesianChartContextRootWidget<
     } as DEPENDENCIES;
   }
 
-  mergeWithDefaultTheme(theme: DeepPartial<THEME>): THEME {
+  mergeWithDefaultTheme(theme: DeepPartial<Theme>): THEME {
     return {
-      // text: {
-      //   color: theme?.text?.color || "black",
-      //   fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
-      //   fontSize: theme?.text?.fontSize || 16,
-      //   lineHeight: theme?.text?.lineHeight || 1,
-      // },
-      // border: {
-      //   width: theme?.border?.width || 2,
-      //   color: theme?.border?.color || "black",
-      // },
       text: {
-        color: "black",
-        fontFamily: "Noto Sans KR, sans-serif",
-        fontSize: 16,
-        lineHeight: 1,
+        color: theme?.text?.color || "black",
+        fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
+        fontSize: theme?.text?.fontSize || 16,
+        lineHeight: theme?.text?.lineHeight || 1,
       },
       border: {
-        width: 2,
-        color: "black",
+        width: theme?.border?.width || 2,
+        color: theme?.border?.color || "black",
       },
     } as THEME;
   }

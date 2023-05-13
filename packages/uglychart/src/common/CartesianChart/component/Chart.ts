@@ -29,7 +29,7 @@ export class Chart extends CartesianChartContextWidget {
       backgroundAdditions = [],
     } = chart;
 
-    const { xLabels, yLabels } = this.getXAnxYLabels({ scale, labels });
+    const { xLabels, yLabels } = this.getXAnxYLabels({ scale, labels, direction });
 
     return DefaultChart({
       BackgroundAdditions: backgroundAdditions,
@@ -59,7 +59,7 @@ export class Chart extends CartesianChartContextWidget {
   }: {
     scale: Scale;
     labels: string[];
-    direction?: "horizontal" | "vertical";
+    direction: "horizontal" | "vertical";
   }): {
     xLabels: string[];
     yLabels: string[];
