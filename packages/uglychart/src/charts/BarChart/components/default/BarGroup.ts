@@ -61,6 +61,7 @@ export default function BarGroup({
         type === "negative"
           ? negativeBarRatios[index]
           : positiveBarRatios[index];
+        
 
       return Flex({
         direction: direction === "horizontal" ? Axis.horizontal : Axis.vertical,
