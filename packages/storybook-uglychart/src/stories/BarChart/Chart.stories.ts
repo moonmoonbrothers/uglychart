@@ -53,11 +53,6 @@ export const Basic: Story = {
 					type: 'config',
 					barBackgroundColors: ['black', 'grey', 'brown', 'black']
 				},
-				dataLabel: {
-					type: 'config',
-					visible: true,
-					margin: EdgeInsets.only({ left: 10 })
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [

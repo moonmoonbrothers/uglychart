@@ -3,16 +3,23 @@ import {
   Text,
   type BoxDecoration,
   type EdgeInsets,
+  Flex,
+  Axis,
+  MainAxisAlignment,
+  Widget,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../../../common/CartesianChart/types";
 export default function Series({
   direction,
-  scale,
+  children,
 }: {
   scale: Scale;
   direction: "horizontal" | "vertical";
+  children: Widget[];
 }) {
-  return Container({
-    child: Text("무야호!~!@~!#~!#$"),
+  return Flex({
+    direction: direction === "vertical" ? Axis.horizontal : Axis.vertical,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children,
   });
 }

@@ -4,12 +4,13 @@ import {
   Provider,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
+import { DeepPartial } from "../utils";
 
 class ChartContextRootWidget<
   CUSTOM,
   DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
   THEME,
-  DATA,
+  DATA
 > extends ComponentWidget {
   custom: CUSTOM;
   data: DATA;
@@ -21,12 +22,12 @@ class ChartContextRootWidget<
     throw new Error("Not implemented");
   }
   constructor({
-    custom,
-    theme,
+    custom = {},
+    theme = {},
     data,
   }: {
-    custom: CUSTOM;
-    theme: Partial<THEME>;
+    custom?: Partial<CUSTOM>;
+    theme?: DeepPartial<THEME>;
     data: DATA;
   }) {
     super();
@@ -35,7 +36,7 @@ class ChartContextRootWidget<
     this.data = data;
   }
 
-  mergeWithDefaultTheme(theme: Partial<THEME>): THEME {
+  mergeWithDefaultTheme(theme: DeepPartial<THEME>): THEME {
     throw new Error("not implemented");
   }
 
@@ -46,19 +47,13 @@ class ChartContextRootWidget<
   build(context: BuildContext): Widget {
     return Provider({
       providerKey: "THEME",
-      value: {
-        theme: this.theme,
-      },
+      value: this.theme,
       child: Provider({
         providerKey: "DATA",
-        value: {
-          data: this.data,
-        },
+        value: this.data,
         child: Provider({
           providerKey: "CUSTOM",
-          value: {
-            custom: this.custom,
-          },
+          value: this.custom,
           child: Provider({
             providerKey: "DEPENDENCIES",
             value: this.dependencies,

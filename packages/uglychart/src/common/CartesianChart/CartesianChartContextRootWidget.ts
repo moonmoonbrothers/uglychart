@@ -12,8 +12,10 @@ import {
   Chart,
   DataLabel,
   Layout,
-  Series
-} from './component'
+  Series,
+  Title,
+} from "./component";
+import { DeepPartial } from "../../utils";
 
 class CartesianChartContextRootWidget<
   CUSTOM extends Custom = Custom,
@@ -26,6 +28,7 @@ class CartesianChartContextRootWidget<
   }
   get dependencies(): DEPENDENCIES {
     return {
+      Title,
       XAxis,
       XAxisLabel,
       XAxisTick,
@@ -35,39 +38,50 @@ class CartesianChartContextRootWidget<
       Plot,
       Chart,
       DataLabel,
-      Layout, 
-      Series
+      Layout,
+      Series,
     } as DEPENDENCIES;
   }
 
-  mergeWithDefaultTheme(theme: Partial<THEME>): THEME {
+  mergeWithDefaultTheme(theme: DeepPartial<THEME>): THEME {
     return {
+      // text: {
+      //   color: theme?.text?.color || "black",
+      //   fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
+      //   fontSize: theme?.text?.fontSize || 16,
+      //   lineHeight: theme?.text?.lineHeight || 1,
+      // },
+      // border: {
+      //   width: theme?.border?.width || 2,
+      //   color: theme?.border?.color || "black",
+      // },
       text: {
-        color: theme?.text?.color || "black",
-        fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
-        fontSize: theme?.text?.fontSize || 16,
-        lineHeight: theme?.text?.lineHeight || 1,
+        color: "black",
+        fontFamily: "Noto Sans KR, sans-serif",
+        fontSize: 16,
+        lineHeight: 1,
       },
       border: {
-        width: theme?.border?.width || 2,
-        color: theme?.border?.color || "black",
+        width: 2,
+        color: "black",
       },
     } as THEME;
   }
 
   mergeWithDefaultCustom(custom: Partial<CUSTOM>): CUSTOM {
     return {
-      plot: custom?.plot ?? { type: "config" as const },
-      layout: custom?.layout ?? { type: "config" as const },
-      title: custom?.title ?? { type: "config" as const },
-      xAxis: custom?.xAxis ?? { type: "config" as const },
-      yAxis: custom?.yAxis ?? { type: "config" as const },
-      xAxisLabel: custom?.xAxisLabel ?? { type: "config" as const },
-      yAxisLabel: { type: "config" as const },
-      chart: { type: "config" as const },
-      dataLabel: { type: "config" as const },
-      xAxisTick: { type: "config" as const },
-      yAxisTick: { type: "config" as const },
+      plot: custom?.plot ?? { type: "config" },
+      layout: custom?.layout ?? { type: "config" },
+      title: custom?.title ?? { type: "config" },
+      xAxis: custom?.xAxis ?? { type: "config" },
+      yAxis: custom?.yAxis ?? { type: "config" },
+      xAxisLabel: custom?.xAxisLabel ?? { type: "config" },
+      yAxisLabel: custom?.yAxisLabel ?? { type: "config" },
+      chart: custom?.chart ?? { type: "config" },
+      dataLabel: custom?.dataLabel ?? { type: "config" },
+      xAxisTick: custom?.xAxisTick ?? { type: "config" },
+      yAxisTick: custom?.yAxisTick ?? { type: "config" },
+      series: custom?.series ?? { type: "config" },
     } as CUSTOM;
   }
 }
