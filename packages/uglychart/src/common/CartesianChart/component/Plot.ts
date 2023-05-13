@@ -1,8 +1,4 @@
-import {
-  Widget,
-  BuildContext,
-  Container,
-} from "@moonmoonbrothers/flutterjs";
+import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../types";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
@@ -38,7 +34,6 @@ type PlotLine = {
 };
 
 export class Plot extends CartesianChartContextWidget {
-  
   constructor(private props: PlotProps) {
     super();
   }
@@ -49,6 +44,7 @@ export class Plot extends CartesianChartContextWidget {
     if (plot.type === "custom") {
       return plot.Custom({}, { data, theme });
     }
+    const { Series } = this.getDependencies(context);
 
     const {
       height,
@@ -87,7 +83,10 @@ export class Plot extends CartesianChartContextWidget {
       },
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
-      child: Container({}),
+      child: Series({
+        direction,
+        scale,
+      }),
     });
   }
 }

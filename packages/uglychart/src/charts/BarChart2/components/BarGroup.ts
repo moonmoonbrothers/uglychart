@@ -1,13 +1,9 @@
-import {
-  ComponentWidget,
-  Widget,
-  BuildContext,
-} from "@moonmoonbrothers/flutterjs";
-import { CustomProvider, DataProvider, ThemeProvider } from "../provider";
-import { Scale } from "../util";
+import { Widget, BuildContext, SizedBox } from "@moonmoonbrothers/flutterjs";
 import Bar from "./Bar";
 import { BarGroup as DefaultBarGroup } from "./default";
-import DataLabel from "./DataLabel";
+import { Scale } from "../../../common/CartesianChart/types";
+import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
+import type { Custom } from "../types";
 
 export type BarGroupProps = {
   direction: "vertical" | "horizontal";
@@ -22,18 +18,18 @@ export type BarGroupConfig = {
   gap?: number;
 };
 
-class BarGroup extends ComponentWidget {
+class BarGroup extends CartesianChartContextWidget<Custom> {
   constructor(private props: BarGroupProps) {
     super();
   }
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const { barGroup } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { barGroup } = this.getCustom(context);
     const { scale, direction, label } = this.props;
-    const data = DataProvider.of(context);
 
     if (barGroup.type === "custom") {
-      return barGroup.Custom({ Bar }, { theme, data, ...this.props });
+      return barGroup.Custom({ Bar }, { theme, data, scale, direction });
     }
 
     const { barBackgroundColors: backgroundColors = ["gray"], gap = 2 } =
@@ -74,14 +70,15 @@ class BarGroup extends ComponentWidget {
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
-      DataLabels: values.map(({ data, legend }, index) =>
-        DataLabel({
-          direction,
-          index,
-          legend,
-          value: data,
-          label,
-        })
+      DataLabels: values.map(
+        ({ data, legend }, index) => SizedBox.shrink()
+        // DataLabel({
+        //   direction,
+        //   index,
+        //   legend,
+        //   value: data,
+        //   label,
+        // })
       ),
 
       Bars: values.map(({ data, legend }, index) =>

@@ -1,8 +1,5 @@
-import Bar from './Bar'
-import BarGroup from './BarGroup'
-import Plot from './Plot'
+import Bar from "./Bar";
+import BarGroup from "./BarGroup";
+import Series from "./Series";
 
-export {
-  Bar,
-  BarGroup
-}
+export { Bar, BarGroup, Series };

@@ -12,6 +12,7 @@ import { DataLabelConfig, DataLabel } from "./component/DataLabel";
 import type { DeepPartial } from "../../utils";
 import { XAxisTickProps, XAxisTick } from "./component/XAxisTick";
 import { YAxisTickProps, YAxisTick } from "./component/YAxisTick";
+import CustomSeries, { SeriesConfig, Series } from "./component/Series";
 
 export type Dependencies = {
   Plot: (...args: ConstructorParameters<typeof Plot>) => Plot;
@@ -25,6 +26,7 @@ export type Dependencies = {
   DataLabel: (...args: ConstructorParameters<typeof DataLabel>) => DataLabel;
   Layout: (...args: ConstructorParameters<typeof Layout>) => Layout;
   Chart: (...args: ConstructorParameters<typeof Chart>) => Chart;
+  Series: (...args: ConstructorParameters<typeof Series>) => Series;
 };
 
 export type Theme = {
@@ -50,7 +52,7 @@ export type CartesianChartProps = {
   custom?: Custom;
 };
 
-type CustomConfig<T> = { type: "config" } & T;
+export type CustomConfig<T> = { type: "config" } & T;
 
 export type Custom = {
   title: CustomTitle;
@@ -64,6 +66,7 @@ export type Custom = {
   xAxisTick: CUstomXAxisTick;
   yAxisTick: CustomYAxisTick;
   plot: CustomPlot;
+  series: CustomSeries;
 };
 
 export type Data = {
@@ -185,3 +188,5 @@ export type CustomChart =
       XAxis: (props: XAxisProps) => Widget;
       YAxis: (props: YAxisProps) => Widget;
     }>;
+
+export type CustomSeries = CustomConfig<SeriesConfig> | CustomWidget<{}>;

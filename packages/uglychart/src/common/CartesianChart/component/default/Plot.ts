@@ -104,7 +104,6 @@ export default function Plot({
         width,
         height,
         color: backgroundColor,
-        alignment: Alignment.topLeft,
         child,
       }),
       ...ForegroundAdditions,

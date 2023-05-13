@@ -1,6 +1,5 @@
 import { Custom, Theme, Data, Dependencies, Font } from "./types";
 import ChartContextRootWidget from "../ChartContextRootWidget";
-import { DeepPartial } from "../../utils";
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import {
   XAxis,
@@ -12,7 +11,8 @@ import {
   Plot,
   Chart,
   DataLabel,
-  Layout
+  Layout,
+  Series
 } from './component'
 
 class CartesianChartContextRootWidget<
@@ -35,7 +35,8 @@ class CartesianChartContextRootWidget<
       Plot,
       Chart,
       DataLabel,
-      Layout
+      Layout, 
+      Series
     } as DEPENDENCIES;
   }
 

@@ -5,6 +5,8 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Bar as DefaultBar } from "./default";
+import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
+import type { Custom } from "../types";
 
 export type BarProps = {
   backgroundColor: string;
@@ -23,15 +25,15 @@ const defaultBarConfig = {
   thickness: 16,
 };
 
-export class Bar extends ComponentWidget {
+export class Bar extends CartesianChartContextWidget<Custom> {
   constructor(private props: BarProps) {
     super();
   }
 
   build(context: BuildContext): Widget {
-    const theme = ThemeProvider.of(context);
-    const data = DataProvider.of(context);
-    const { bar } = CustomProvider.of(context);
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { bar } = this.getCustom(context);
 
     const { backgroundColor, index, label, legend, direction } = this.props;
 
