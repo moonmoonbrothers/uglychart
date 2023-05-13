@@ -11,11 +11,16 @@ import {
   SizedBox,
   BuildContext,
 } from "@moonmoonbrothers/flutterjs";
-import BarChart from "../BarChart";
-import { BarProps } from "../BarChart/component/Bar";
-import { BarGroupProps } from "../BarChart/component/BarGroup";
-import { BarChartProps, Custom, CustomWidget, Scale } from "../BarChart/types";
-import { getScale } from "../BarChart/util";
+import BarChart from "../Legacy_BarChart";
+import { BarProps } from "../Legacy_BarChart/component/Bar";
+import { BarGroupProps } from "../Legacy_BarChart/component/BarGroup";
+import {
+  BarChartProps,
+  Custom,
+  CustomWidget,
+  Scale,
+} from "../Legacy_BarChart/types";
+import { getScale } from "../Legacy_BarChart/util";
 import { getStackValueEdge } from "./util/getStackValueEdge";
 
 export type StackBarChartProps = Omit<BarChartProps, "custom"> & {
