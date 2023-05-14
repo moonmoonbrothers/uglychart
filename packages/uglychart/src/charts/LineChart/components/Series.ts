@@ -3,10 +3,10 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { Series as DefaultSeries } from "./default";
 import { Series as BaseSeries } from "../../../common/CartesianChart/component/Series";
 import type { Custom } from "../types";
-import Line from './Line'
+import Line from "./Line";
 
 export type SeriesConfig = {
-  lineColors?: string[]
+  lineColors?: string[];
 };
 
 export type SeriesProps = ConstructorParameters<typeof BaseSeries>;
@@ -15,17 +15,26 @@ export class Series extends BaseSeries<Custom> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const { labels, datasets } = data;
+    const { datasets } = data;
     const { series } = this.getCustom(context);
 
     if (series.type === "custom") {
       return series.Custom({}, { theme, data });
     }
 
-    const { scale, } = this.props;
+    const { lineColors = ["black"] } = series;
+
+    const { scale } = this.props;
 
     return DefaultSeries({
-      children: []
+      children: datasets.map(({ data: values }, i) =>
+        Line({
+          values,
+          color: lineColors[i % lineColors.length],
+          maxValue: scale.max,
+          minValue: scale.min,
+        })
+      ),
     });
   }
 }

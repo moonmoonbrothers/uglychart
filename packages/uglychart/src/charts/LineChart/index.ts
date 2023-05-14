@@ -17,8 +17,7 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
 
     return {
       ...base,
-      bar: custom.bar ?? { type: "config" },
-      barGroup: custom.barGroup ?? { type: "config" },
+      line: base?.line ?? { type: "config" },
     };
   }
 }

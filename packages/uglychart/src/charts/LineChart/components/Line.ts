@@ -5,8 +5,10 @@ import CartesianChartContextWidget from "../../../common/CartesianChart/Cartesia
 import type { Custom } from "../types";
 
 export type LineProps = {
-  index: number;
   color: string;
+  values: number[];
+  minValue: number;
+  maxValue: number;
 };
 
 export type LineConfig = {
@@ -26,7 +28,12 @@ export class Line extends CartesianChartContextWidget<Custom> {
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { line } = this.getCustom(context);
-    const { color, index } = this.props;
+    const {
+      color,
+      values: values,
+      maxValue: maxValue,
+      minValue: minValue,
+    } = this.props;
 
     if (line.type === "custom") {
       return line.Custom(
@@ -35,7 +42,9 @@ export class Line extends CartesianChartContextWidget<Custom> {
           color,
           theme,
           data,
-          index,
+          points: values,
+          minPoint: minValue,
+          maxPoint: maxValue,
         }
       );
     }
@@ -45,7 +54,9 @@ export class Line extends CartesianChartContextWidget<Custom> {
     return DefaultLine({
       thickness,
       color,
-      points: [],
+      values,
+      minValue,
+      maxValue,
     });
   }
 }
