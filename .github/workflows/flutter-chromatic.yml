@@ -1,0 +1,42 @@
+name: Deploy to Chromatic
+
+on:
+  push:
+    paths:
+      - packages/flutterjs
+      - packages/storybook-flutterjs
+      - .github/workflows/flutter-chromatic.yml
+    branches:
+      - develop
+
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 👈 Required to retrieve git history
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.17.1
+
+      - name: Install dependencies
+        run: |
+          cd packages/storybook-flutterjs
+          npm ci
+
+      - name: Build Storybook
+        run: |
+          cd packages/storybook-flutterjs
+          npm run build-storybook
+
+      - name: Deploy to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: 39002ee740e0
+          workingDir: packages/storybook-flutterjs
+          buildScriptName: build-storybook
+          autoAcceptChanges: true
