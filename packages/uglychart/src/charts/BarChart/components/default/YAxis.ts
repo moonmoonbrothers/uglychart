@@ -10,18 +10,21 @@ import {
   Widget,
 } from "@moonmoonbrothers/flutterjs";
 
-export default function XAxis({ color, thickness, labels, ticks }: XAxisProps) {
-  const HorizontalLine = () =>
+export default function YAxis({ color, thickness, labels, ticks }: YAxisProps) {
+  const VerticalLine = () =>
     Container({
-      height: thickness,
+      width: thickness,
       color,
     });
 
   const Labels = () =>
-    Row({
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: labels.map((label, index) =>
+    Column({
+      mainAxisAlignment:
+        ticks.length !== labels.length
+          ? MainAxisAlignment.spaceAround
+          : MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: labels.map((label) =>
         IgnoreChildWidth({
           child: label,
         })
@@ -29,7 +32,7 @@ export default function XAxis({ color, thickness, labels, ticks }: XAxisProps) {
     });
 
   const Ticks = () =>
-    Row({
+    Column({
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: ticks.map((tick, index) =>
         IgnoreChildWidth({
@@ -39,9 +42,9 @@ export default function XAxis({ color, thickness, labels, ticks }: XAxisProps) {
       ),
     });
 
-  return Column({
+  return Row({
     mainAxisSize: MainAxisSize.min,
-    children: [HorizontalLine(), Ticks(), Labels()],
+    children: [Labels(), Ticks(), VerticalLine()],
   });
 }
 
@@ -53,16 +56,16 @@ function IgnoreChildWidth({
   isEdge?: boolean;
 }) {
   return Container({
-    width: 0,
+    height: 0,
     child: ConstraintsTransformBox({
       constraintsTransform: ConstraintsTransformBox.unconstrained,
-      alignment: isEdge ? Alignment.centerRight : Alignment.center,
+      alignment: isEdge ? Alignment.topCenter : Alignment.center,
       child,
     }),
   });
 }
 
-type XAxisProps = {
+type YAxisProps = {
   ticks: Widget[];
   labels: Widget[];
   color: string;

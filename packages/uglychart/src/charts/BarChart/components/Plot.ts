@@ -1,21 +1,12 @@
 import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
-import { Scale } from "../types";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
-import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { Plot as BasePlot } from "../../../common/CartesianChart/component/Plot";
 
-export type PlotProps = {
-  direction: "vertical" | "horizontal";
-  scale: Scale;
-};
-
-export type PlotConfig = {
-  width?: number;
-  height?: number;
-  verticalLine?: PlotLine;
-  horizontalLine?: PlotLine;
-  backgroundAdditions?: Widget[];
-  foregroundAdditions?: Widget[];
+type PlotLine = {
+  color?: string;
+  thickness?: number;
+  count?: number;
 };
 
 const defaultPlotConfig = {
@@ -27,16 +18,7 @@ const defaultPlotConfig = {
   },
 };
 
-type PlotLine = {
-  color?: string;
-  thickness?: number;
-  count?: number;
-};
-
-export class Plot extends CartesianChartContextWidget {
-  constructor(protected props: PlotProps) {
-    super();
-  }
+export class Plot extends BasePlot {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -58,7 +40,7 @@ export class Plot extends CartesianChartContextWidget {
     const { scale, direction } = this.props;
 
     const [labelLineCount, valueLineCount] = [
-      labels.length - 1,
+      labels.length,
       (scale.max - scale.min) / scale.step,
     ];
 
@@ -91,4 +73,5 @@ export class Plot extends CartesianChartContextWidget {
   }
 }
 
-export default (props: PlotProps) => new Plot(props);
+export default (...props: ConstructorParameters<typeof Plot>) =>
+  new Plot(...props);
