@@ -1,12 +1,13 @@
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import {
   Custom as CartesianChartCustom,
-  CustomWidget,
-  CustomConfig,
+  Theme as CartesianChartTheme,
+  Data as CartesianChartData,
   Scale,
 } from "../../common/CartesianChart/types";
 import { AreaConfig, AreaProps } from "./components/Area";
 import { SeriesConfig } from "./components/Series";
+import type { CustomConfig, CustomWidget } from "../../common/type";
 
 export type Custom = CartesianChartCustom & {
   area: CustomArea;
@@ -36,3 +37,6 @@ type CustomArea =
         maxPoint: number;
       }
     >;
+
+export type Theme = CartesianChartTheme
+export type Data = CartesianChartData
