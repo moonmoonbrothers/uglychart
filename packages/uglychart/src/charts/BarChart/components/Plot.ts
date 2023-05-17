@@ -37,7 +37,8 @@ export class Plot extends BasePlot {
       foregroundAdditions = [],
     } = plot;
     const { labels } = data;
-    const { scale, direction } = this.props;
+    const { direction } = this.props;
+    const scale = this.getScale(context);
 
     const [labelLineCount, valueLineCount] = [
       labels.length,
@@ -67,7 +68,6 @@ export class Plot extends BasePlot {
       ForegroundAdditions: backgroundAdditions,
       child: Series({
         direction,
-        scale,
       }),
     });
   }

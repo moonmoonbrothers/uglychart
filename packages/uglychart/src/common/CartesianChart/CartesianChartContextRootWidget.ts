@@ -1,4 +1,4 @@
-import { Custom, Theme, Data, Dependencies, Font } from "./types";
+import { Custom, Theme, Data, Dependencies, Font, Scale } from "./types";
 import ChartContextRootWidget from "../ChartContextRootWidget";
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import {
@@ -21,11 +21,13 @@ class CartesianChartContextRootWidget<
   CUSTOM extends Custom = Custom,
   DEPENDENCIES extends Dependencies = Dependencies,
   THEME extends Theme = Theme,
-  DATA extends Data = Data
-> extends ChartContextRootWidget<CUSTOM, DEPENDENCIES, THEME, DATA> {
+  DATA = Data,
+  SCALE = Scale
+> extends ChartContextRootWidget<CUSTOM, DEPENDENCIES, THEME, DATA, SCALE> {
   get root(): Widget {
     return this.dependencies.Layout();
   }
+
   get dependencies(): DEPENDENCIES {
     return {
       Title,

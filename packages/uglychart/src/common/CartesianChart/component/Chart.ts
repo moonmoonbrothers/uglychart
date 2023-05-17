@@ -17,7 +17,7 @@ export class Chart extends CartesianChartContextWidget {
     const data = this.getData(context);
     const { labels } = data;
     const { chart, yAxis, xAxis, plot } = this.getCustom(context);
-    const scale = this.resolveScale(context);
+    const scale = this.getScale(context);
     const { XAxis, YAxis, Plot } = this.getDependencies(context);
 
     if (chart.type === "custom") {
@@ -29,7 +29,11 @@ export class Chart extends CartesianChartContextWidget {
       backgroundAdditions = [],
     } = chart;
 
-    const { xLabels, yLabels } = this.getXAnxYLabels({ scale, labels, direction });
+    const { xLabels, yLabels } = this.getXAnxYLabels({
+      scale,
+      labels,
+      direction,
+    });
 
     return DefaultChart({
       BackgroundAdditions: backgroundAdditions,
@@ -40,7 +44,7 @@ export class Chart extends CartesianChartContextWidget {
         labels: yLabels,
         type: direction === "horizontal" ? "index" : "value",
       }),
-      Plot: Plot({ direction, scale }),
+      Plot: Plot({ direction }),
       XAxis: XAxis({
         labels: xLabels,
         type: direction === "vertical" ? "index" : "value",
@@ -76,32 +80,6 @@ export class Chart extends CartesianChartContextWidget {
       xLabels: direction === "horizontal" ? valueLabels : indexLabels,
       yLabels: direction === "horizontal" ? indexLabels : valueLabels,
     };
-  }
-
-  resolveScale(context: BuildContext): Scale {
-    const { datasets } = this.getData(context);
-    const { chart } = this.getCustom(context);
-    if (chart.type === "config" && chart.scale != null) return chart.scale;
-
-    const valueEdge = getValueEdge(datasets.map(({ data }) => data));
-
-    const roughEdge = {
-      min: valueEdge.min > 0 ? 0 : valueEdge.min,
-      max: valueEdge.max < 0 ? 0 : valueEdge.max,
-    };
-    /* 
-      chart size에 따라 보정 필요!
-      MediaQuery.of(context).size 를 통해 수정할듯
-    */
-    const roughStepCount = 10;
-
-    const roughScale: Scale = {
-      min: roughEdge.min,
-      max: roughEdge.max,
-      step: (roughEdge.max - roughEdge.min) / roughStepCount,
-    };
-
-    return getScale(roughScale);
   }
 }
 

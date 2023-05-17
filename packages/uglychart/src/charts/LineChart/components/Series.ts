@@ -24,7 +24,7 @@ export class Series extends BaseSeries<Custom> {
 
     const { lineColors = ["black"] } = series;
 
-    const { scale } = this.props;
+    const scale = this.getScale(context);
 
     return DefaultSeries({
       children: datasets.map(({ data: values }, i) =>
