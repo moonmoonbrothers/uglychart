@@ -169,12 +169,7 @@ export type CustomPlot<THEME, DATA> =
       Must be specified If your custom plot has specific size,
       It will be used in Chart to layout it correctly
     */
-  | ({ width?: number; height?: number } & CustomWidget<
-      {},
-      { data: Data },
-      THEME,
-      DATA
-    >);
+  | ({ width?: number; height?: number } & CustomWidget<{}, {}, THEME, DATA>);
 
 export type CustomChart<THEME, DATA> =
   | CustomConfig<ChartConfig>
