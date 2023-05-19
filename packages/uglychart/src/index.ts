@@ -10,11 +10,17 @@ import AreaChart, {
   DefaultComponents as AreaChartDefaultComponents,
 } from "./charts/AreaChart";
 
+import ScatterChart, {
+  DefaultComponents as ScatterChartDefaultComponents,
+} from "./charts/ScatterChart";
+
 export {
   BarChart,
   BarChartDefaultComponents,
   LineChart,
   LineChartDefaultComponents,
   AreaChart,
-  AreaChartDefaultComponents
+  AreaChartDefaultComponents,
+  ScatterChart,
+  ScatterChartDefaultComponents,
 };

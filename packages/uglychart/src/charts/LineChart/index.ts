@@ -3,6 +3,11 @@ import type { Custom } from "./types";
 import * as defaultComponents from "./components/default";
 import { Dependencies } from "../../common/CartesianChart/types";
 import Series from "./components/Series";
+import {
+  Scale,
+  getScale,
+  getValueEdge,
+} from "../../common/CartesianChart/util";
 class BarChart extends CartesianChartContextRootWidget<Custom> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
@@ -19,6 +24,27 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
       ...base,
       line: base?.line ?? { type: "config" },
     };
+  }
+
+  get scale(): Scale {
+    const { datasets } = this.data;
+    if (this.scaleConfig != null) return this.scaleConfig;
+
+    const valueEdge = getValueEdge(datasets.map(({ data }) => data));
+
+    const roughEdge = {
+      min: valueEdge.min > 0 ? 0 : valueEdge.min,
+      max: valueEdge.max < 0 ? 0 : valueEdge.max,
+    };
+    const roughStepCount = 10;
+
+    const roughScale: Scale = {
+      min: roughEdge.min,
+      max: roughEdge.max,
+      step: (roughEdge.max - roughEdge.min) / roughStepCount,
+    };
+
+    return getScale(roughScale);
   }
 }
 

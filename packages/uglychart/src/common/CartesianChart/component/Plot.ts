@@ -6,7 +6,6 @@ import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
 export type PlotProps = {
   direction: "vertical" | "horizontal";
-  scale: Scale;
 };
 
 export type PlotConfig = {
@@ -55,7 +54,8 @@ export class Plot extends CartesianChartContextWidget {
       foregroundAdditions = [],
     } = plot;
     const { labels } = data;
-    const { scale, direction } = this.props;
+    const { direction } = this.props;
+    const scale = this.getScale(context);
 
     const [labelLineCount, valueLineCount] = [
       labels.length - 1,
@@ -85,7 +85,6 @@ export class Plot extends CartesianChartContextWidget {
       ForegroundAdditions: backgroundAdditions,
       child: Series({
         direction,
-        scale,
       }),
     });
   }

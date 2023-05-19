@@ -1,7 +1,7 @@
 import { Alignment, Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
-import { getScale, getValueEdge, Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
-import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { Scale, Data, Theme, Custom, Dependencies } from "../types";
+import ChartContextWidget from "../../../common/ChartContextWidget";
 
 export type ChartConfig = {
   scale?: Scale;
@@ -11,11 +11,16 @@ export type ChartConfig = {
   backgroundAdditions?: Widget[];
 };
 
-export class Chart extends CartesianChartContextWidget {
+export class Chart extends ChartContextWidget<
+  Custom,
+  Dependencies,
+  Theme,
+  Data,
+  Scale
+> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const { labels } = data;
     const { chart, yAxis, xAxis, plot } = this.getCustom(context);
     const scale = this.getScale(context);
     const { XAxis, YAxis, Plot } = this.getDependencies(context);
@@ -31,8 +36,6 @@ export class Chart extends CartesianChartContextWidget {
 
     const { xLabels, yLabels } = this.getXAnxYLabels({
       scale,
-      labels,
-      direction,
     });
 
     return DefaultChart({
@@ -56,30 +59,29 @@ export class Chart extends CartesianChartContextWidget {
     });
   }
 
-  getXAnxYLabels({
-    scale,
-    labels,
-    direction,
-  }: {
-    scale: Scale;
-    labels: string[];
-    direction: "horizontal" | "vertical";
-  }): {
+  getXAnxYLabels({ scale }: { scale: Scale }): {
     xLabels: string[];
     yLabels: string[];
   } {
-    const { min, max, step } = scale;
+    return {
+      xLabels: this.getLabels(scale.x),
+      yLabels: this.getLabels(scale.y),
+    };
+  }
 
-    const valueLabels = Array.from(
+  private getLabels({
+    min,
+    max,
+    step,
+  }: {
+    min: number;
+    max: number;
+    step: number;
+  }) {
+    return Array.from(
       { length: Math.floor((max - min) / step) + 1 },
       (_, i) => `${step * i + min}`
     );
-    const indexLabels = labels;
-
-    return {
-      xLabels: direction === "horizontal" ? valueLabels : indexLabels,
-      yLabels: direction === "horizontal" ? indexLabels : valueLabels,
-    };
   }
 }
 

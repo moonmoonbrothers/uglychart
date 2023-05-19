@@ -9,7 +9,6 @@ import { Scale } from "../util";
 import { Custom } from "../types";
 
 export type SeriesProps = {
-  scale: Scale;
   direction: "horizontal" | "vertical";
 };
 

@@ -13,6 +13,7 @@ import type { DeepPartial } from "../../utils";
 import { XAxisTickProps, XAxisTick } from "./component/XAxisTick";
 import { YAxisTickProps, YAxisTick } from "./component/YAxisTick";
 import CustomSeries, { SeriesConfig, Series } from "./component/Series";
+import type { CustomConfig, CustomWidget } from "../type";
 
 export type Dependencies = {
   Plot: (...args: ConstructorParameters<typeof Plot>) => Plot;
@@ -49,24 +50,22 @@ export type Scale = _Scale;
 export type CartesianChartProps = {
   data: Data;
   theme?: DeepPartial<Theme>;
-  custom?: Custom;
+  custom?: Custom<Theme, Data>;
 };
 
-export type CustomConfig<T> = { type: "config" } & T;
-
-export type Custom = {
-  title: CustomTitle;
-  layout: CustomLayout;
-  xAxis: CustomXAxis;
-  xAxisLabel: CustomXAxisLabel;
-  yAxis: CustomYAxis;
-  yAxisLabel: CustomYAxisLabel;
-  chart: CustomChart;
-  dataLabel: CustomDataLabel;
-  xAxisTick: CUstomXAxisTick;
-  yAxisTick: CustomYAxisTick;
-  plot: CustomPlot;
-  series: CustomSeries;
+export type Custom<THEME = Theme, DATA = Data> = {
+  title: CustomTitle<THEME, DATA>;
+  layout: CustomLayout<THEME, DATA>;
+  xAxis: CustomXAxis<THEME, DATA>;
+  xAxisLabel: CustomXAxisLabel<THEME, DATA>;
+  yAxis: CustomYAxis<THEME, DATA>;
+  yAxisLabel: CustomYAxisLabel<THEME, DATA>;
+  chart: CustomChart<THEME, DATA>;
+  dataLabel: CustomDataLabel<THEME, DATA>;
+  xAxisTick: CUstomXAxisTick<THEME, DATA>;
+  yAxisTick: CustomYAxisTick<THEME, DATA>;
+  plot: CustomPlot<THEME, DATA>;
+  series: CustomSeries<THEME, DATA>;
 };
 
 export type Data = {
@@ -78,39 +77,24 @@ export type Data = {
   }[];
 };
 
-export type CustomWidget<
-  T extends string | {} | Record<string, any>,
-  R = {}
-> = {
-  type: "custom";
-  Custom: (
-    child: T extends string
-      ? { [key in T]: () => Widget }
-      : T extends {}
-      ? T
-      : {},
-    data: R & { theme: Theme; data: Data }
-  ) => Widget;
-};
-
-type CustomTitle =
+export type CustomTitle<THEME, DATA> =
   | CustomConfig<TitleConfig>
-  | CustomWidget<{}, { text: string }>;
+  | CustomWidget<{}, { text: string }, THEME, DATA>;
 
 type AxisLabel = {
   margin?: EdgeInsets;
   font?: Font;
 };
 
-type CustomXAxisLabel =
+export type CustomXAxisLabel<THEME, DATA> =
   | CustomConfig<AxisLabel>
-  | CustomWidget<{}, { text: string; index: number }>;
+  | CustomWidget<{}, { text: string; index: number }, THEME, DATA>;
 
-type CustomYAxisLabel =
+export type CustomYAxisLabel<THEME, DATA> =
   | CustomConfig<AxisLabel>
-  | CustomWidget<{}, { text: string; index: number }>;
+  | CustomWidget<{}, { text: string; index: number }, THEME, DATA>;
 
-export type CustomXAxis =
+export type CustomXAxis<THEME, DATA> =
   | CustomConfig<Axis>
   /*
       Must be specified If your custom Axis's thickness and color,
@@ -121,10 +105,12 @@ export type CustomXAxis =
         XAxisTick: (props: XAxisTickProps) => Widget;
         XAxisLabel: (props: { index: number; text: string }) => Widget;
       },
-      { data: Data }
+      { data: Data },
+      THEME,
+      DATA
     >);
 
-export type CustomYAxis =
+export type CustomYAxis<THEME = Theme, DATA = Data> =
   | CustomConfig<Axis>
   /*
       Must be specified If your custom Axis's thickness and color,
@@ -135,20 +121,22 @@ export type CustomYAxis =
         YAxisTick: (props: YAxisTickProps) => Widget;
         YAxisLabel: (props: YAxisLabelProps) => Widget;
       },
-      { data: Data }
+      { data: Data },
+      THEME,
+      DATA
     >);
 
-type CustomLayout =
+type CustomLayout<THEME, DATA> =
   | CustomConfig<LayoutConfig>
-  | CustomWidget<"Title" | "Chart">;
+  | CustomWidget<"Title" | "Chart", THEME, DATA>;
 
-export type CUstomXAxisTick =
+export type CUstomXAxisTick<THEME, DATA> =
   | CustomConfig<Tick>
-  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }, THEME, DATA>;
 
-export type CustomYAxisTick =
+export type CustomYAxisTick<THEME, DATA> =
   | CustomConfig<Tick>
-  | CustomWidget<{}, { data: Data; theme: Theme; index: number }>;
+  | CustomWidget<{}, { data: Data; theme: Theme; index: number }, THEME, DATA>;
 
 type Tick = {
   color?: string;
@@ -161,7 +149,7 @@ type Axis = {
   color?: string;
 };
 
-type CustomDataLabel =
+export type CustomDataLabel<THEME, DATA> =
   | CustomConfig<DataLabelConfig>
   | CustomWidget<
       {},
@@ -170,23 +158,32 @@ type CustomDataLabel =
         index: number;
         legend: string;
         label: string;
-      }
+      },
+      THEME,
+      DATA
     >;
 
-type CustomPlot =
+export type CustomPlot<THEME, DATA> =
   | CustomConfig<PlotConfig>
   /*
       Must be specified If your custom plot has specific size,
       It will be used in Chart to layout it correctly
     */
-  | ({ width?: number; height?: number } & CustomWidget<{}, { data: Data }>);
+  | ({ width?: number; height?: number } & CustomWidget<{}, {}, THEME, DATA>);
 
-export type CustomChart =
+export type CustomChart<THEME, DATA> =
   | CustomConfig<ChartConfig>
-  | CustomWidget<{
-      Plot: (props: PlotProps) => Widget;
-      XAxis: (props: XAxisProps) => Widget;
-      YAxis: (props: YAxisProps) => Widget;
-    }>;
+  | CustomWidget<
+      {
+        Plot: (props: PlotProps) => Widget;
+        XAxis: (props: XAxisProps) => Widget;
+        YAxis: (props: YAxisProps) => Widget;
+      },
+      {},
+      THEME,
+      DATA
+    >;
 
-export type CustomSeries = CustomConfig<SeriesConfig> | CustomWidget<{}>;
+export type CustomSeries<THEME, DATA> =
+  | CustomConfig<SeriesConfig>
+  | CustomWidget<{}, {}, THEME, DATA>;

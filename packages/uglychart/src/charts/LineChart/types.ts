@@ -1,12 +1,13 @@
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import {
   Custom as CartesianChartCustom,
-  CustomWidget,
-  CustomConfig,
+  Theme as CartesianChartTheme,
+  Data as CartesianChartData,
   Scale,
 } from "../../common/CartesianChart/types";
 import { LineConfig, LineProps } from "./components/Line";
 import { SeriesConfig } from "./components/Series";
+import type { CustomConfig, CustomWidget } from "../../common/type";
 
 export type Custom = CartesianChartCustom & {
   line: CustomLine;

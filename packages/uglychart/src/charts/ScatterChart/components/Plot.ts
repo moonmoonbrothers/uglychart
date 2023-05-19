@@ -1,12 +1,17 @@
 import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Plot as DefaultPlot } from "./default";
-import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
-import { Plot as BasePlot } from "../../../common/CartesianChart/component/Plot";
+import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
+import ChartContextWidget from "../../../common/ChartContextWidget";
 
-type PlotLine = {
-  color?: string;
-  thickness?: number;
-  count?: number;
+export type PlotProps = {};
+
+export type PlotConfig = {
+  width?: number;
+  height?: number;
+  verticalLine?: PlotLine;
+  horizontalLine?: PlotLine;
+  backgroundAdditions?: Widget[];
+  foregroundAdditions?: Widget[];
 };
 
 const defaultPlotConfig = {
@@ -18,7 +23,22 @@ const defaultPlotConfig = {
   },
 };
 
-export class Plot extends BasePlot {
+type PlotLine = {
+  color?: string;
+  thickness?: number;
+  count?: number;
+};
+
+export class Plot extends ChartContextWidget<
+  Custom,
+  Dependencies,
+  Theme,
+  Data,
+  Scale
+> {
+  constructor(protected props: PlotProps) {
+    super();
+  }
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -36,42 +56,31 @@ export class Plot extends BasePlot {
       backgroundAdditions = [],
       foregroundAdditions = [],
     } = plot;
-    const { labels } = data;
-    const { direction } = this.props;
     const scale = this.getScale(context);
 
-    const [labelLineCount, valueLineCount] = [
-      labels.length,
-      (scale.max - scale.min) / scale.step,
+    const [defaultHorizontalLineCount, defaultVerticalLineCount] = [
+      (scale.y.max - scale.y.min) / scale.y.step,
+      (scale.x.max - scale.x.min) / scale.x.step,
     ];
 
-    assert(
-      valueLineCount === Math.round(valueLineCount),
-      "scale.max - scale.min must be divisible by scale.step"
-    );
-
     return DefaultPlot({
-      direction: direction,
       height: height,
       width: width,
       verticalLine: {
         thickness: verticalLine?.thickness ?? theme.border.width,
         color: verticalLine?.color ?? defaultPlotConfig.verticalLine.color,
-        count: direction === "horizontal" ? valueLineCount : labelLineCount,
+        count: verticalLine?.count ?? defaultVerticalLineCount,
       },
       horizontalLine: {
         thickness: horizontalLine?.thickness ?? theme.border.width,
         color: horizontalLine?.color ?? defaultPlotConfig.horizontalLine.color,
-        count: direction === "vertical" ? valueLineCount : labelLineCount,
+        count: horizontalLine?.count ?? defaultHorizontalLineCount,
       },
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
-      child: Series({
-        direction,
-      }),
+      child: Series(),
     });
   }
 }
 
-export default (...props: ConstructorParameters<typeof Plot>) =>
-  new Plot(...props);
+export default (props: PlotProps) => new Plot(props);

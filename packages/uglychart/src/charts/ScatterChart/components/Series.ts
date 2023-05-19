@@ -1,17 +1,25 @@
-import { Widget } from "@moonmoonbrothers/flutterjs";
+import { SizedBox, Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Series as DefaultSeries } from "./default";
-import { Series as BaseSeries } from "../../../common/CartesianChart/component/Series";
-import type { Custom } from "../types";
-import Line from "./Line";
+import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
+import ChartContextWidget from "../../../common/ChartContextWidget";
+import Scatter from "./Scatter";
 
 export type SeriesConfig = {
-  lineColors?: string[];
+  dotColors?: string[];
 };
 
-export type SeriesProps = ConstructorParameters<typeof BaseSeries>;
+export type SeriesProps = {
+  direction: "horizontal" | "vertical";
+};
 
-export class Series extends BaseSeries<Custom> {
+export class Series extends ChartContextWidget<
+  Custom,
+  Dependencies,
+  Theme,
+  Data,
+  Scale
+> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -22,17 +30,13 @@ export class Series extends BaseSeries<Custom> {
       return series.Custom({}, { theme, data });
     }
 
-    const { lineColors = ["black"] } = series;
-
-    const scale = this.getScale(context);
+    const { dotColors = ["black"] } = series;
 
     return DefaultSeries({
       children: datasets.map(({ data: values }, i) =>
-        Line({
-          values,
-          color: lineColors[i % lineColors.length],
-          maxValue: scale.max,
-          minValue: scale.min,
+        Scatter({
+          color: dotColors[i % dotColors.length],
+          points: values,
         })
       ),
     });

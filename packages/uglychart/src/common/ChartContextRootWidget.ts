@@ -10,11 +10,13 @@ class ChartContextRootWidget<
   CUSTOM,
   DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
   THEME,
-  DATA
+  DATA,
+  SCALE
 > extends ComponentWidget {
   custom: CUSTOM;
   data: DATA;
   theme: THEME;
+  scaleConfig?: SCALE;
   get dependencies(): DEPENDENCIES {
     throw new Error("Not implemented");
   }
@@ -25,15 +27,22 @@ class ChartContextRootWidget<
     custom = {},
     theme = {},
     data,
+    scale,
   }: {
     custom?: Partial<CUSTOM>;
     theme?: DeepPartial<THEME>;
     data: DATA;
+    scale?: SCALE;
   }) {
     super();
     this.custom = this.mergeWithDefaultCustom(custom);
     this.theme = this.mergeWithDefaultTheme(theme);
     this.data = data;
+    this.scaleConfig = scale;
+  }
+
+  get scale(): SCALE {
+    throw new Error("Not implemented");
   }
 
   mergeWithDefaultTheme(theme: DeepPartial<THEME>): THEME {
@@ -57,7 +66,11 @@ class ChartContextRootWidget<
           child: Provider({
             providerKey: "DEPENDENCIES",
             value: this.dependencies,
-            child: this.root,
+            child: Provider({
+              providerKey: "SCALE",
+              value: this.scale,
+              child: this.root,
+            }),
           }),
         }),
       }),

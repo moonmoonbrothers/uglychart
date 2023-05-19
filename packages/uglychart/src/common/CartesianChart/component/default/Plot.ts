@@ -14,7 +14,6 @@ import {
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export default function Plot({
-  direction,
   child,
   BackgroundAdditions,
   ForegroundAdditions,
@@ -114,7 +113,7 @@ type PlotProps = {
   height?: number;
   backgroundColor?: string;
   padding?: EdgeInsets;
-  direction: "vertical" | "horizontal";
+  direction?: "vertical" | "horizontal";
   BackgroundAdditions: Widget[];
   ForegroundAdditions: Widget[];
   child: Widget;
