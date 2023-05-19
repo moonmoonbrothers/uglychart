@@ -3,6 +3,7 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
 import ChartContextWidget from "../../../common/ChartContextWidget";
+import Scatter from "./Scatter";
 
 export type SeriesConfig = {
   dotColors?: string[];
@@ -19,7 +20,6 @@ export class Series extends ChartContextWidget<
   Data,
   Scale
 > {
-
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -32,10 +32,13 @@ export class Series extends ChartContextWidget<
 
     const { dotColors = ["black"] } = series;
 
-    const scale = this.getScale(context);
-
     return DefaultSeries({
-      children: datasets.map(({ data: values }, i) => SizedBox.shrink()),
+      children: datasets.map(({ data: values }, i) =>
+        Scatter({
+          color: dotColors[i % dotColors.length],
+          points: values,
+        })
+      ),
     });
   }
 }

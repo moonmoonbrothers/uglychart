@@ -5,24 +5,37 @@ import {
   Scale as CartesianChartScale,
   Dependencies as CartesianChartDependencies,
 } from "../../common/CartesianChart/types";
-import { AreaConfig, AreaProps } from "./components/Area";
+import type { ScatterConfig, ScatterProps } from "./components/Scatter";
 import { Series, SeriesConfig } from "./components/Series";
+import { Chart } from "./components/Chart";
+import { Plot } from "./components/Plot";
 import type { CustomConfig, CustomWidget } from "../../common/type";
 
 export type Custom = CartesianChartCustom<Theme, Data> & {
   series: CustomSeries;
+  scatter: CustomScatter;
 };
 
 type CustomSeries =
   | CustomConfig<SeriesConfig>
   | CustomWidget<
       {
-        Line: (props: AreaProps) => Widget;
+        Line: (props: ScatterProps) => Widget;
       },
       {
         scale: Scale;
-        direction: "horizontal" | "vertical";
       },
+      Theme,
+      Data
+    >;
+
+type CustomScatter =
+  | CustomConfig<ScatterConfig>
+  | CustomWidget<
+      {},
+      {
+        scale: Scale;
+      } & ScatterProps,
       Theme,
       Data
     >;
@@ -41,6 +54,11 @@ export type Scale = {
   y: CartesianChartScale;
 };
 
-export type Dependencies = Omit<CartesianChartDependencies, "Series"> & {
+export type Dependencies = Omit<
+  CartesianChartDependencies,
+  "Series" | "Plot" | "Chart"
+> & {
   Series: (...props: ConstructorParameters<typeof Series>) => Series;
+  Plot: (...props: ConstructorParameters<typeof Plot>) => Plot;
+  Chart: (...props: ConstructorParameters<typeof Chart>) => Chart;
 };

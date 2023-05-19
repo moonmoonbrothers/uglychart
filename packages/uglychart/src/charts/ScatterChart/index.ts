@@ -1,11 +1,22 @@
 import CartesianChartContextRootWidget from "../../common/CartesianChart/CartesianChartContextRootWidget";
 import type { Custom, Theme, Data, Scale, Dependencies } from "./types";
 import * as defaultComponents from "./components/default";
-import Series from "./components/Series";
+import { Series, Plot, Chart } from "./components";
 import { getScale, getValueEdge } from "../../common/CartesianChart/util";
 import ChartContextRootWidget from "../../common/ChartContextRootWidget";
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { DeepPartial } from "../../utils";
+import {
+  XAxis,
+  XAxisLabel,
+  XAxisTick,
+  YAxis,
+  YAxisLabel,
+  YAxisTick,
+  DataLabel,
+  Layout,
+  Title,
+} from "../../common/CartesianChart/component";
 
 class ScatterChart extends ChartContextRootWidget<
   Custom,
@@ -19,9 +30,18 @@ class ScatterChart extends ChartContextRootWidget<
   }
 
   get dependencies(): Dependencies {
-    const base = super.dependencies;
     return {
-      ...base,
+      Title,
+      XAxis,
+      XAxisLabel,
+      XAxisTick,
+      YAxis,
+      YAxisLabel,
+      YAxisTick,
+      Plot,
+      Chart,
+      DataLabel,
+      Layout,
       Series,
     };
   }
@@ -35,16 +55,7 @@ class ScatterChart extends ChartContextRootWidget<
       y: getValueEdge(datasets.map(({ data }) => data.map(({ y }) => y))),
     };
 
-    const roughEdge = {
-      x: {
-        min: valueEdge.x.min > 0 ? 0 : valueEdge.x.min,
-        max: valueEdge.x.max < 0 ? 0 : valueEdge.x.max,
-      },
-      y: {
-        min: valueEdge.y.min > 0 ? 0 : valueEdge.y.min,
-        max: valueEdge.y.max < 0 ? 0 : valueEdge.y.max,
-      },
-    };
+    const roughEdge = valueEdge
 
     const roughStepCount = 10;
     const roughScale: Scale = {
@@ -80,6 +91,7 @@ class ScatterChart extends ChartContextRootWidget<
       xAxisTick: custom?.xAxisTick ?? { type: "config" },
       yAxisTick: custom?.yAxisTick ?? { type: "config" },
       series: custom?.series ?? { type: "config" },
+      scatter: custom?.scatter ?? { type: "config" },
     };
   }
 

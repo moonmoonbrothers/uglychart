@@ -1,6 +1,5 @@
 import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Plot as DefaultPlot } from "./default";
-import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
 import ChartContextWidget from "../../../common/ChartContextWidget";
 
@@ -59,7 +58,7 @@ export class Plot extends ChartContextWidget<
     } = plot;
     const scale = this.getScale(context);
 
-    const [defaultVerticalLineCount, defaultHorizontalLineCount] = [
+    const [defaultHorizontalLineCount, defaultVerticalLineCount] = [
       (scale.y.max - scale.y.min) / scale.y.step,
       (scale.x.max - scale.x.min) / scale.x.step,
     ];

@@ -1,4 +1,4 @@
-import Area from "./Area";
+import Scatter from "./Scatter";
 import Series from "./Series";
 import {
   Title,
@@ -15,7 +15,7 @@ import {
 } from "../../../../common/CartesianChart/component/default/index";
 
 export {
-  Area,
+  Scatter,
   Series,
   Title,
   XAxisLabel,
