@@ -35,8 +35,6 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
 
   get scale(): Scale {
     const { datasets } = this.data;
-    if (this.scaleConfig != null) return this.scaleConfig;
-
     const valueEdge = getValueEdge(datasets.map(({ data }) => data));
 
     const roughEdge = {
@@ -46,9 +44,11 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
     const roughStepCount = 10;
 
     const roughScale: Scale = {
-      min: roughEdge.min,
-      max: roughEdge.max,
-      step: (roughEdge.max - roughEdge.min) / roughStepCount,
+      min: this.scaleConfig?.min ?? roughEdge.min,
+      max: this.scaleConfig?.max ?? roughEdge.max,
+      step:
+        this.scaleConfig?.step ??
+        (roughEdge.max - roughEdge.min) / roughStepCount,
     };
 
     return getScale(roughScale);

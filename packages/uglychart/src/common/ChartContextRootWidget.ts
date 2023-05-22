@@ -16,7 +16,7 @@ class ChartContextRootWidget<
   custom: CUSTOM;
   data: DATA;
   theme: THEME;
-  scaleConfig?: SCALE;
+  scaleConfig?: DeepPartial<SCALE>;
   get dependencies(): DEPENDENCIES {
     throw new Error("Not implemented");
   }
@@ -32,7 +32,7 @@ class ChartContextRootWidget<
     custom?: Partial<CUSTOM>;
     theme?: DeepPartial<THEME>;
     data: DATA;
-    scale?: SCALE;
+    scale?: DeepPartial<SCALE>;
   }) {
     super();
     this.custom = this.mergeWithDefaultCustom(custom);
