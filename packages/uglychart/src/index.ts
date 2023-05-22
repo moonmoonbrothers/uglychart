@@ -14,6 +14,10 @@ import ScatterChart, {
   DefaultComponents as ScatterChartDefaultComponents,
 } from "./charts/ScatterChart";
 
+import BubbleChart, {
+  DefaultComponents as BubbleChartDefaultComponents,
+} from './charts/BubbleChart'
+
 export {
   BarChart,
   BarChartDefaultComponents,
@@ -23,4 +27,6 @@ export {
   AreaChartDefaultComponents,
   ScatterChart,
   ScatterChartDefaultComponents,
+  BubbleChart,
+  BubbleChartDefaultComponents
 };
