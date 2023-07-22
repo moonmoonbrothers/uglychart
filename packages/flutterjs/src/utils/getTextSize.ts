@@ -1,4 +1,3 @@
-import pixelWidth from "string-pixel-width";
 const OFFSET = 20;
 const SCALE = 100;
 const defaultWidthMapStr = `007LLmW'55;N0500LLLLLLLLLL00NNNLzWW\\\\WQb\\0FWLg\\bWb\\WQ\\WrWWQ000CL5LLFLL0LL**F*gLLLL5F0LF\\FFF5.5N`;
@@ -46,7 +45,6 @@ export function getTextWidth({
   if (ctx != null) {
     ctx.font = font;
     const width = Math.ceil(ctx.measureText(text).width);
-    console.log("client", ctx.measureText(text).width);
     return width;
   }
 
@@ -63,8 +61,6 @@ export function getTextWidth({
       width += preCalcWidth == null ? fontSize : preCalcWidth * fontSize;
     }
   }
-
-  console.log("node", pixelWidth(text, { font: "open sans", size: 16 }));
 
   return Math.ceil(width);
 }
