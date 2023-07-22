@@ -9,8 +9,8 @@
     "vite": "^4.2.1"
   },
   "dependencies": {
-    "canvas": "^2.11.0",
-    "short-unique-id": "^4.4.4"
+    "short-unique-id": "^4.4.4",
+    "string-pixel-width": "^1.11.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
