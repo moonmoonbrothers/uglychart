@@ -35,6 +35,7 @@ import ClipRRect from "./ClipRRect";
 import DecoratedBox from "./DecoratedBox";
 import RichText from "./RichText";
 import CustomPaint from "./CustomPaint";
+import GestureDetector from "./GestureDetector";
 
 export {
   ConstrainedBox,
@@ -74,4 +75,5 @@ export {
   DecoratedBox,
   RichText,
   CustomPaint,
+  GestureDetector,
 };

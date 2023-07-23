@@ -36,8 +36,9 @@ class RenderColoredBox extends SingleChildRenderObject {
   createDefaultSvgEl({ createSvgEl }: PaintContext): {
     [key: string]: SVGElement;
   } {
+    const rect = createSvgEl("rect");
     return {
-      rect: createSvgEl("rect"),
+      rect,
     };
   }
 }

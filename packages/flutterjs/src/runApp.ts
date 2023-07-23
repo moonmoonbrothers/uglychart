@@ -131,6 +131,7 @@ export class Owner {
   get paintContext(): PaintContext {
     const { document: _document, view } = this;
     return {
+      isOnBrowser: this.window === window,
       createSvgEl(tagName) {
         const el = _document.createElementNS(
           "http://www.w3.org/2000/svg",
