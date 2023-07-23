@@ -22,15 +22,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 400, height: 400 },
 		width: '400px',
 		height: '400px',
+		ssrSize: { width: 400, height: 400 },
 		widget: Container({
 			alignment: Alignment.center,
 			color: 'lightgreen',
 			child: GestureDetector({
 				onClick() {
-					console.log('clicked!!');
+					alert('clicked!!');
 				},
 				child: Container({
 					width: 200,

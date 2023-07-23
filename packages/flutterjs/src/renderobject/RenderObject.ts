@@ -42,6 +42,7 @@ class RenderObject {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
       container.setAttribute("opacity", `${opacity}`);
+      container.setAttribute("pointer-events", "none");
       this.performPaint(svgEls, context);
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, translatedMatrix4)

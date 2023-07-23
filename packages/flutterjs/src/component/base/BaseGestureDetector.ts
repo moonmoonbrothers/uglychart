@@ -1,5 +1,4 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Constraints, Size, Offset, Matrix4, Decoration } from "../../type";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
@@ -21,6 +20,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
 }
 
 class RenderGestureDetector extends SingleChildRenderObject {
+  private mountedOnBroswer: boolean = false;
   private _onClick: () => void;
   get onClick(): () => void {
     return this._onClick;
@@ -33,14 +33,22 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this.onClick = onClick;
   }
 
-  protected performPaint({ rect }: { rect: SVGRectElement }): void {
+  protected performPaint(
+    { rect }: { rect: SVGRectElement },
+    { isOnBrowser }: PaintContext
+  ): void {
+    if (!this.mountedOnBroswer && isOnBrowser) {
+      this.mountedOnBroswer = true;
+      rect.addEventListener("click", () => this.onClick());
+    }
     rect.setAttribute("width", `${this.size.width}`);
     rect.setAttribute("height", `${this.size.height}`);
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext) {
     const rect = createSvgEl("rect");
-    rect.addEventListener("mousedown", () => this.onClick());
+    rect.setAttribute("pointer-events", "auto");
+    rect.setAttribute("cursor", "pointer");
     return {
       rect,
     };
