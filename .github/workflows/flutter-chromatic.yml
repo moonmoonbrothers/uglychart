@@ -3,8 +3,8 @@ name: Deploy to Chromatic
 on:
   push:
     paths:
-      - packages/flutterjs
-      - packages/storybook-flutterjs
+      - packages/flutterjs/**/*
+      - packages/storybook-flutterjs/**/*
       - .github/workflows/flutter-chromatic.yml
     branches:
       - develop

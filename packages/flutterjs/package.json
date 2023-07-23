@@ -9,7 +9,6 @@
     "vite": "^4.2.1"
   },
   "dependencies": {
-    "canvas": "^2.11.0",
     "short-unique-id": "^4.4.4"
   },
   "scripts": {
