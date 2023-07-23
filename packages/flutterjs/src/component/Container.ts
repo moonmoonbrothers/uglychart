@@ -113,20 +113,11 @@ export default function Container({
     });
   }
 
-  if (color != null || decoration != null) {
-    if (color != null) {
-      current = DecoratedBox({
-        decoration: new BoxDecoration({
-          color,
-        }),
-        child: current,
-      });
-    } else {
-      current = DecoratedBox({
-        decoration: decoration!,
-        child: current,
-      });
-    }
+  if (decoration != null) {
+    current = DecoratedBox({
+      decoration: decoration!,
+      child: current,
+    });
   }
 
   if (constraints != null) {

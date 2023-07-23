@@ -4,7 +4,7 @@
 	import typescript from 'svelte-highlight/languages/typescript';
 	import codeStyle from 'svelte-highlight/styles/github-dark-dimmed';
 	export let widget: any;
-	export let ssrSize: { width: number; height: number };
+	export let ssrSize: { width: number; height: number } = { width: 0, height: 0 };
 	export let width: string;
 	export let height: string;
 	export let description = '';
