@@ -13,7 +13,7 @@ type AppRunnerProps = {
 
 export class AppRunner {
   root!: RenderObjectElement;
-  owner: Owner;
+  owner: RenderContext;
   viewSize: { width: number; height: number };
   constructor({
     view,
@@ -22,7 +22,11 @@ export class AppRunner {
     ssrSize = Size.zero,
   }: AppRunnerProps) {
     this.viewSize = ssrSize;
-    this.owner = new Owner({ view, document: _document, window: _window });
+    this.owner = new RenderContext({
+      view,
+      document: _document,
+      window: _window,
+    });
   }
 
   runApp(widget: Widget): string {
@@ -97,7 +101,7 @@ export class AppRunner {
   }
 }
 
-export class Owner {
+export class RenderContext {
   document: Document;
   window: Window;
   view: SVGSVGElement;
