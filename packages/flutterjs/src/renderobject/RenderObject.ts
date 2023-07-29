@@ -55,14 +55,7 @@ class RenderObject {
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
-    if (
-      this.clipId === clipId &&
-      this.matrix === matrix4 &&
-      this.opacity === opacity &&
-      !this.needsPaint
-    ) {
-      return;
-    }
+    this.needsPaint = true;
     this.clipId = clipId;
     this.matrix = matrix4;
     this.opacity = opacity;
@@ -79,7 +72,6 @@ class RenderObject {
         this.setSvgTransform(el, translatedMatrix4)
       );
     }
-    this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(translatedMatrix4);
     const childOpacity = this.getChildOpacity(opacity);
