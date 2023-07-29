@@ -30,15 +30,12 @@ class RenderAspectRatio extends SingleChildRenderObject {
   set aspectRatio(value: number) {
     assert(value > 0);
     assert(Number.isFinite(value));
-    if (this._aspectRatio === value) return;
-
     this._aspectRatio = value;
-    this.markNeedsLayout();
   }
 
   constructor({ aspectRatio }: { aspectRatio: number }) {
     super({ isPainter: false });
-    this._aspectRatio = aspectRatio;
+    this.aspectRatio = aspectRatio;
   }
 
   getIntrinsicWidth(height: number): number {

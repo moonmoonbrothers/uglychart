@@ -24,16 +24,7 @@ class BaseClipPath extends SingleChildRenderObjectWidget {
 }
 
 class RenderClipPath extends SingleChildRenderObject {
-  private _clipper: Clipper;
-  get clipper() {
-    return this._clipper;
-  }
-  set clipper(value: Clipper) {
-    if (this._clipper === value) return;
-    this._clipper = value;
-    this.markNeedsLayout();
-  }
-
+  public clipper: Clipper;
   constructor({ clipper }: { clipper: Clipper }) {
     super({ isPainter: true });
     this.clipper = clipper;

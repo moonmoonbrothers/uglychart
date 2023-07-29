@@ -45,7 +45,6 @@ class RenderAlign extends RenderAligningShiftedBox {
     return this._widthFactor;
   }
   set widthFactor(value: number) {
-    if (value === this._widthFactor) return;
     this._widthFactor = value;
     this.markNeedsLayout();
   }
@@ -54,7 +53,6 @@ class RenderAlign extends RenderAligningShiftedBox {
     return this._heightFactor;
   }
   set heightFactor(value: number) {
-    if (value === this._heightFactor) return;
     this._heightFactor = value;
     this.markNeedsLayout();
   }

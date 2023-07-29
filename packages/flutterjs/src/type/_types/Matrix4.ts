@@ -30,13 +30,6 @@ class Matrix4 {
     return this._m4storage;
   }
 
-  equal(other: Matrix4) {
-    if (this === other) return true;
-    return this._m4storage.every((value, i) => {
-      return value === other._m4storage[i];
-    });
-  }
-
   get dimension() {
     return 4;
   }
