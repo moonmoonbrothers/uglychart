@@ -240,6 +240,7 @@ class Constraints {
   }
 
   equal(other: Constraints): boolean {
+    if (this === other) return true;
     return (
       this.maxWidth === other.maxWidth &&
       this.minWidth === other.minWidth &&
