@@ -14,6 +14,11 @@ class ComponentWidget extends Widget {
   build(context: BuildContext): Widget {
     throw { message: "not implemented" };
   }
+
+  setState(callback?: () => void) {
+    callback?.();
+    this.element.markNeedsBuild();
+  }
 }
 
 export class BuildContext extends Element {}

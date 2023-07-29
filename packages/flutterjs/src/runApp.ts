@@ -1,8 +1,14 @@
 import type RenderObjectElement from "./element/RenderObjectElement";
-import { Size, Offset, Constraints } from "./type";
+import { Size, Constraints } from "./type";
 import type { PaintContext } from "./utils/type";
 import RenderObjectToWidgetAdapter from "./widget/RenderObjectToWidgetAdapter";
 import type Widget from "./widget/Widget";
+import {
+  BuildOwner,
+  RenderOwner,
+  Scheduler,
+  RenderFrameDispatcher,
+} from "./scheduler";
 
 type AppRunnerProps = {
   document?: Document;
@@ -12,9 +18,14 @@ type AppRunnerProps = {
 };
 
 export class AppRunner {
-  root!: RenderObjectElement;
-  owner: RenderContext;
-  viewSize: { width: number; height: number };
+  private root!: RenderObjectElement;
+  private renderContext: RenderContext;
+  private viewSize: { width: number; height: number };
+  private buildOwner: BuildOwner;
+  private renderOwner: RenderOwner;
+  private scheduler: Scheduler;
+  private renderDispatcher: RenderFrameDispatcher;
+
   constructor({
     view,
     document: _document = document,
@@ -22,20 +33,40 @@ export class AppRunner {
     ssrSize = Size.zero,
   }: AppRunnerProps) {
     this.viewSize = ssrSize;
-    this.owner = new RenderContext({
+    const renderContext = new RenderContext({
       view,
       document: _document,
       window: _window,
     });
+    const renderDispatcher = new RenderFrameDispatcher();
+    const buildOwner = new BuildOwner({
+      onNeedVisualUpdate: () => renderDispatcher.dispatch(),
+    });
+    const renderOwner = new RenderOwner({
+      onNeedVisualUpdate: () => renderDispatcher.dispatch(),
+      paintContext: renderContext.paintContext,
+    });
+    const scheduler = new Scheduler();
+    scheduler.addPersistenceCallbacks(() => buildOwner.flushBuild());
+    scheduler.addPersistenceCallbacks(() => renderOwner.drawFrame());
+    renderDispatcher.setOnFrame(() => scheduler.schedule());
+    this.buildOwner = buildOwner;
+    this.renderOwner = renderOwner;
+    this.scheduler = scheduler;
+    this.renderDispatcher = renderDispatcher;
+    this.renderContext = renderContext;
   }
 
   runApp(widget: Widget): string {
     this.root = new RenderObjectToWidgetAdapter({
       app: widget,
+      buildOwner: this.buildOwner,
+      renderOwner: this.renderOwner,
+      renderContext: this.renderContext,
     }).createElement();
     this.root.mount(undefined);
     this.draw();
-    return this.owner.view.innerHTML;
+    return this.renderContext.view.innerHTML;
   }
 
   setConfig({
@@ -47,9 +78,10 @@ export class AppRunner {
     window?: Window;
     view?: SVGSVGElement;
   }) {
-    if (document) this.owner.document = document;
-    if (window) this.owner.window = window;
-    if (view) this.owner.view = view;
+    if (document) this.renderContext.document = document;
+    if (window) this.renderContext.window = window;
+    if (view) this.renderContext.view = view;
+    this.renderOwner.paintContext = this.renderContext.paintContext;
   }
 
   onMount({
@@ -59,17 +91,19 @@ export class AppRunner {
     view?: SVGSVGElement;
     resizeTarget?: HTMLElement;
   }) {
-    if (view) this.owner.view = view;
-    this.owner.window = window;
-    this.owner.document = document;
+    this.setConfig({
+      view,
+      window,
+      document,
+    });
     resizeTarget && this.observeCanvasSize(resizeTarget);
   }
 
   observeCanvasSize(target: HTMLElement) {
     const resize = (child: ResizeObserverEntry) => {
       const { width, height } = child.target.getBoundingClientRect();
-      this.owner.view.setAttribute("width", `${width}`);
-      this.owner.view.setAttribute("height", `${height}`);
+      this.renderContext.view.setAttribute("width", `${width}`);
+      this.renderContext.view.setAttribute("height", `${height}`);
       this.viewSize = new Size({ width, height });
     };
     const resizeObserver = new ResizeObserver((entries) => {
@@ -97,7 +131,7 @@ export class AppRunner {
 
   paint() {
     const rootRenderObject = this.root.renderObject;
-    rootRenderObject.paint(this.owner.paintContext);
+    rootRenderObject.paint(this.renderContext.paintContext);
   }
 }
 

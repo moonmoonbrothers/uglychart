@@ -1,10 +1,13 @@
 import type RenderObject from "../renderobject/RenderObject";
 import type { RenderContext } from "../runApp";
+import { BuildOwner, RenderOwner } from "../scheduler";
 import Widget from "../widget/Widget";
 import RenderObjectElement from "./RenderObjectElement";
 
 class Element {
   renderContext!: RenderContext;
+  renderOwner!: RenderOwner;
+  buildOwner!: BuildOwner;
   widget: Widget;
   parent?: Element;
   dirty = true;
@@ -78,6 +81,8 @@ class Element {
   mount(newParent?: Element) {
     if (newParent) {
       this.renderContext = newParent.renderContext;
+      this.renderOwner = newParent.renderOwner;
+      this.buildOwner = newParent.buildOwner;
       this.depth = newParent.depth + 1;
     }
     this.parent = newParent;
@@ -85,21 +90,29 @@ class Element {
 
   update(newWidget: Widget) {
     this.widget = newWidget;
+    newWidget.element = this;
   }
 
   inflateWidget(childWidget: Widget): Element {
     const newChild = childWidget.createElement();
+    childWidget.element = this;
     newChild.mount(this);
     return newChild;
   }
 
-  rebuild() {
+  rebuild({ force = false }: { force?: boolean } = {}) {
+    if (!this.dirty && !force) return;
     this.dirty = false;
     this.performRebuild();
   }
 
   protected performRebuild() {
-    throw { message: "not implemented rebuild" };
+    throw new Error("not implemented performRebuild");
+  }
+
+  markNeedsBuild() {
+    this.dirty = true;
+    this.buildOwner.scheduleFor(this);
   }
 }
 

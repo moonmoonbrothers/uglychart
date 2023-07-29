@@ -77,7 +77,8 @@ class CustomWidget extends ComponentWidget {
 	}
 	build(context: BuildContext) {
 		const handleClick = () => {
-			this.index = this.index + 1 + this.colors.length;
+			this.index = (this.index + 1) % this.colors.length;
+			this.setState();
 		};
 		return GestureDetector({
 			onClick() {

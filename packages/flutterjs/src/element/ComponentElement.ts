@@ -1,49 +1,48 @@
-import type ComponentWidget from "../widget/ComponentWidget"
-import type Widget from "../widget/Widget"
-import Element from "./Element"
+import type ComponentWidget from "../widget/ComponentWidget";
+import type Widget from "../widget/Widget";
+import Element from "./Element";
 
 class ComponentElement extends Element {
-  child!: Element
+  child!: Element;
 
-  declare widget: ComponentWidget
+  declare widget: ComponentWidget;
   constructor(widget: ComponentWidget) {
-    super(widget)
-    this.widget = widget
+    super(widget);
+    this.widget = widget;
   }
 
   override mount(newParent?: Element | undefined): void {
-    super.mount(newParent)
-    this._firstBuild()
+    super.mount(newParent);
+    this._firstBuild();
   }
 
   override update(newWidget: Widget): void {
-      super.update(newWidget)
-      this.rebuild()
+    super.update(newWidget);
+    this.rebuild({ force: true });
   }
 
   initState(): void {
-    this.widget.initState(this)
+    this.widget.initState(this);
   }
 
   build(): Widget {
-    return this.widget.build(this)
+    return this.widget.build(this);
   }
 
   _firstBuild() {
-    this.performRebuild()
+    this.performRebuild();
   }
 
   override performRebuild(): void {
-    this.initState()
-    const built = this.build()
+    this.initState();
+    const built = this.build();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.child = this.updateChild(this.child, built)!
+    this.child = this.updateChild(this.child, built)!;
   }
 
   override visitChildren(visitor: (child: Element) => void): void {
-    visitor(this.child)
+    visitor(this.child);
   }
 }
 
-
-export default ComponentElement
+export default ComponentElement;

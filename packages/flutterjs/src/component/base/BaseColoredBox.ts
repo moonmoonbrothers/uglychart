@@ -21,10 +21,17 @@ class ColoredBox extends SingleChildRenderObjectWidget {
 }
 
 class RenderColoredBox extends SingleChildRenderObject {
-  color: string;
+  _color: string;
+  get color() {
+    return this._color;
+  }
+  set color(value) {
+    this._color = value;
+    this.markNeedsPaint();
+  }
   constructor({ color }: { color: string }) {
     super({ isPainter: true });
-    this.color = color;
+    this._color = color;
   }
 
   protected performPaint({ rect }: { rect: SVGElement }): void {

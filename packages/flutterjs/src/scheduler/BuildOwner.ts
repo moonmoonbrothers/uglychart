@@ -1,7 +1,19 @@
 import Element from "../element/Element";
 class BuildOwner {
-  onBuildSchedule: () => void;
-  dirtyElements: Element[] = [];
+  private onNeedVisualUpdate: () => void;
+  private dirtyElements: Element[] = [];
+  constructor({ onNeedVisualUpdate }: { onNeedVisualUpdate: () => void }) {
+    this.onNeedVisualUpdate = () => onNeedVisualUpdate();
+  }
+
+  scheduleFor(elememt: Element) {
+    this.dirtyElements.push(elememt);
+    this.requestVisualUpdate();
+  }
+
+  private requestVisualUpdate() {
+    this.onNeedVisualUpdate();
+  }
 
   flushBuild() {
     const dirtyElements = this.dirtyElements;
