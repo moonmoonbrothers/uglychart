@@ -19,6 +19,13 @@ class Widget {
       oldWidget.key === newWidget.key
     );
   }
+
+  toJSON() {
+    return {
+      key: this.key,
+      runtimeType: this.runtimeType,
+    };
+  }
 }
 
 export default Widget;

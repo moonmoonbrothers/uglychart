@@ -12,7 +12,8 @@ import {
 
 const meta = {
 	title: 'Widget/Align',
-	component: Widget
+	component: Widget,
+	argTypes: {}
 } satisfies Meta<Widget>;
 
 export default meta;

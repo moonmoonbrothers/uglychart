@@ -35,7 +35,7 @@ class RenderAspectRatio extends SingleChildRenderObject {
 
   constructor({ aspectRatio }: { aspectRatio: number }) {
     super({ isPainter: false });
-    this.aspectRatio = aspectRatio;
+    this._aspectRatio = aspectRatio;
   }
 
   getIntrinsicWidth(height: number): number {
