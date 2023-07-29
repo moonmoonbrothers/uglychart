@@ -3,6 +3,7 @@ import type { PaintContext } from "../utils/type";
 import ShortUniqueId from "short-unique-id";
 import { RenderObjectElement } from "../element";
 import { RenderOwner } from "../scheduler";
+import { assert } from "../utils";
 
 const uid = new ShortUniqueId({ dictionary: "hex" });
 
@@ -15,6 +16,7 @@ class RenderObject {
   id = uid.randomUUID(6);
   ownerElement!: RenderObjectElement;
   renderOwner!: RenderOwner;
+  parent?: RenderObject;
   needsPaint = true;
   needsLayout = true;
   clipId?: string;
@@ -31,10 +33,20 @@ class RenderObject {
   size: Size = Size.zero;
   constraints: Constraints = Constraints.loose(Size.maximum());
   offset: Offset = Offset.zero();
+  parentUsesSize = false;
 
-  layout(constraint: Constraints) {
-    this.constraints = constraint.normalize();
+  layout(
+    constraint: Constraints,
+    { parentUsesSize = true }: { parentUsesSize?: boolean } = {}
+  ) {
+    const normalizedConstraints = constraint.normalize();
+    if (this.constraints.equal(normalizedConstraints) && !this.needsLayout) {
+      return;
+    }
+    this.constraints = normalizedConstraints;
+    this.parentUsesSize = parentUsesSize;
     this.preformLayout();
+    this.needsLayout = false;
   }
 
   paint(
@@ -101,7 +113,6 @@ class RenderObject {
 
   attach(ownerElement: RenderObjectElement) {
     this.ownerElement = ownerElement;
-    this.renderOwner = ownerElement.renderOwner;
     this.depth = ownerElement.depth;
   }
 
@@ -207,15 +218,22 @@ class RenderObject {
   }
 
   layoutWithoutResize() {
-    this.needsLayout = false;
-    this.preformLayout();
+    this.layout(this.constraints, { parentUsesSize: this.parentUsesSize });
     this.markNeedsPaint();
+  }
+
+  markNeedsParentLayout() {
+    this.parent?.markNeedsLayout();
   }
 
   markNeedsLayout() {
     this.needsLayout = true;
-    this.renderOwner.needsLayoutRenderObjects.push(this);
-    this.renderOwner.requestVisualUpdate();
+    if (this.parentUsesSize && this.parent != null) {
+      this.markNeedsParentLayout();
+    } else {
+      this.renderOwner.needsLayoutRenderObjects.push(this);
+      this.renderOwner.requestVisualUpdate();
+    }
   }
 
   markNeedsPaint() {

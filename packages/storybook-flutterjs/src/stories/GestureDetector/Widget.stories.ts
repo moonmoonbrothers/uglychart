@@ -75,7 +75,7 @@ class CustomWidget extends ComponentWidget {
 		super(key);
 		this.colors = colors;
 	}
-	build(context: BuildContext) {
+	build() {
 		const handleClick = () => {
 			this.index = (this.index + 1) % this.colors.length;
 			this.setState();
@@ -108,6 +108,49 @@ export const ColorChange: Story = {
 			child: new CustomWidget({
 				colors: ['black', 'red', 'green']
 			})
+		}),
+		code: dedent`
+		`
+	}
+};
+
+class SizeChageWidget extends ComponentWidget {
+	index = 0;
+	width = 200;
+	height = 200;
+	build() {
+		const handleClick = () => {
+			this.width = this.width + 10;
+			this.height = this.height + 10;
+			console.log('set state called!');
+			this.setState();
+		};
+		return GestureDetector({
+			onClick() {
+				handleClick();
+			},
+			child: Container({
+				width: this.width,
+				height: this.height,
+				color: 'black',
+				alignment: Alignment.center,
+				child: Text('click to size up!', {
+					style: new TextStyle({ fontSize: 20, fontWeight: 'bold', color: 'white' })
+				})
+			})
+		});
+	}
+}
+
+export const SizeChange: Story = {
+	args: {
+		width: '400px',
+		height: '400px',
+		ssrSize: { width: 400, height: 400 },
+		widget: Container({
+			alignment: Alignment.center,
+			color: 'lightgreen',
+			child: new SizeChageWidget()
 		}),
 		code: dedent`
 		`

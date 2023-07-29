@@ -21,20 +21,29 @@ class BaseConstrainedBox extends SingleChildRenderObjectWidget {
   }
 
   updateRenderObject(renderObject: RenderConstrainedBox): void {
-    renderObject.constraints = this.constraints;
+    renderObject.additionalConstraint = this.constraints;
   }
 }
 
 class RenderConstrainedBox extends SingleChildRenderObject {
-  additionalConstraint: Constraints;
+  _additionalConstraint: Constraints;
+  get additionalConstraint() {
+    return this._additionalConstraint;
+  }
+  set additionalConstraint(constraint: Constraints) {
+    if (constraint.equal(this._additionalConstraint)) return;
+    this._additionalConstraint = constraint;
+    this.markNeedsLayout();
+  }
+
   constructor({ constraint }: { constraint: Constraints }) {
     super({ isPainter: false });
-    this.additionalConstraint = constraint;
+    this._additionalConstraint = constraint;
   }
 
   protected override preformLayout(): void {
     this.constraints = this.additionalConstraint.enforce(this.constraints);
-    let size = Size.zero
+    let size = Size.zero;
     if (this.child != null) {
       this.child.layout(this.constraints);
       size = this.child.size;

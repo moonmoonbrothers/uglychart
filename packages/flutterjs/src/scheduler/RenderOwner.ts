@@ -26,8 +26,15 @@ class RenderOwner {
   }
 
   private flushLayout() {
-    //일단 임시구현하자
-    // parent까지 구해가지고 그건 처리해보자고!
+    const dirties = this.needsLayoutRenderObjects;
+    this.needsLayoutRenderObjects = [];
+
+    dirties
+      .sort((a, b) => a.depth - b.depth)
+      .forEach((renderObject) => {
+        if (!renderObject.needsLayout) return;
+        renderObject.layoutWithoutResize();
+      });
   }
 
   private flushPaint() {

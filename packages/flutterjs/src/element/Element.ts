@@ -6,7 +6,6 @@ import RenderObjectElement from "./RenderObjectElement";
 
 class Element {
   renderContext!: RenderContext;
-  renderOwner!: RenderOwner;
   buildOwner!: BuildOwner;
   widget: Widget;
   parent?: Element;
@@ -81,7 +80,6 @@ class Element {
   mount(newParent?: Element) {
     if (newParent) {
       this.renderContext = newParent.renderContext;
-      this.renderOwner = newParent.renderOwner;
       this.buildOwner = newParent.buildOwner;
       this.depth = newParent.depth + 1;
     }

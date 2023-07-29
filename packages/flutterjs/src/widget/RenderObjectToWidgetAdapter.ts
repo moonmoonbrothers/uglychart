@@ -30,13 +30,12 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   createElement(): RenderObjectElement {
     const el = super.createElement();
     el.renderContext = this.renderContext;
-    el.renderOwner = this.renderOwner;
     el.buildOwner = this.buidlOwner;
     return el;
   }
 
   createRenderObject(): RenderObject {
-    return new RenderView();
+    return new RenderView({ renderOwner: this.renderOwner });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

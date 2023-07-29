@@ -22,6 +22,13 @@ class RenderObjectElement extends Element {
   override mount(newParent?: Element | undefined): void {
     super.mount(newParent);
     this._renderObject = this.createRenderObject();
+    this.ancestorRenderObjectElement = this.findAncestorRenderObjectElement();
+    const ancestorRenderObject = this.ancestorRenderObjectElement?.renderObject;
+    if (ancestorRenderObject) {
+      this.renderObject.parent = ancestorRenderObject;
+      this.renderObject.renderOwner = ancestorRenderObject.renderOwner;
+    }
+
     this.children = (this.widget as RenderObjectWidget).children.map(
       (childWidget) => this.inflateWidget(childWidget)
     );
@@ -69,6 +76,16 @@ class RenderObjectElement extends Element {
 
   visitChildren(visitor: (child: Element) => void): void {
     this.children.forEach((child) => visitor(child));
+  }
+
+  private ancestorRenderObjectElement: RenderObjectElement | null;
+
+  private findAncestorRenderObjectElement(): RenderObjectElement | null {
+    let ancestor: Element | null = this.parent;
+    while (ancestor != null && !(ancestor instanceof RenderObjectElement)) {
+      ancestor = ancestor.parent;
+    }
+    return ancestor as RenderObjectElement | null;
   }
 }
 
