@@ -57,7 +57,7 @@ class RenderObject {
   ) {
     if (
       this.clipId === clipId &&
-      this.matrix === matrix4 &&
+      this.matrix.equal(matrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
