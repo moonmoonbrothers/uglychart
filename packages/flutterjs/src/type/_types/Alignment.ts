@@ -12,6 +12,12 @@ class Alignment {
     this.y = y;
   }
 
+  equal(other: Alignment) {
+    if (other === this) return true;
+
+    return this.x === other.x && this.y === other.y;
+  }
+
   add(target: Alignment): Alignment {
     return new Alignment({
       x: this.x + target.x,
