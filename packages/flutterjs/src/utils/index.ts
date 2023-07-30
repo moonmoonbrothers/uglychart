@@ -20,4 +20,10 @@ export default class Utils {
   static clampDouble(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
   }
+
+  static arrayEqual(a: any[], b: any[]): boolean {
+    if (a.length !== b.length) return false;
+
+    return a.every((value, i) => value === b[i]);
+  }
 }

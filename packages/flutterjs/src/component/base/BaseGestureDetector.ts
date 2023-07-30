@@ -26,7 +26,9 @@ class RenderGestureDetector extends SingleChildRenderObject {
     return this._onClick;
   }
   set onClick(prop: (() => void) | undefined) {
+    if (this.onClick === prop) return;
     this._onClick = prop ?? function () {};
+    this.markNeedsPaint();
   }
   constructor({ onClick = () => {} }: { onClick?: () => void }) {
     super({ isPainter: true });

@@ -30,10 +30,19 @@ class FractionalTranslation extends SingleChildRenderObjectWidget {
 }
 
 class RenderFractionalTranslation extends SingleChildRenderObject {
-  translation: BriefOffset;
+  _translation: BriefOffset;
+  get translation() {
+    return this._translation;
+  }
+  set translation(value: BriefOffset) {
+    if (this._translation.x === value.x && this._translation.y === value.y)
+      return;
+    this._translation = value;
+    this.markNeedsLayout;
+  }
   constructor({ translation }: { translation: BriefOffset }) {
     super({ isPainter: false });
-    this.translation = translation;
+    this._translation = translation;
   }
 
   protected override preformLayout(): void {

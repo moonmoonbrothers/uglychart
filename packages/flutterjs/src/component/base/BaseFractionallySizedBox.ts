@@ -39,8 +39,27 @@ class BaseFractionallySizedBox extends SingleChildRenderObjectWidget {
 }
 
 class RenderFractionallySizedBox extends RenderAligningShiftedBox {
-  widthFactor?: number;
-  heightFactor?: number;
+  _widthFactor?: number;
+  _heightFactor?: number;
+  get widthFactor(): number | undefined {
+    return this._widthFactor;
+  }
+
+  set widthFactor(newWidthFactor: number | undefined) {
+    if (this._widthFactor === newWidthFactor) return; // early return
+    this._widthFactor = newWidthFactor;
+    this.markNeedsLayout();
+  }
+
+  get heightFactor(): number | undefined {
+    return this._heightFactor;
+  }
+
+  set heightFactor(newHeightFactor: number | undefined) {
+    if (this._heightFactor === newHeightFactor) return; // early return
+    this._heightFactor = newHeightFactor;
+    this.markNeedsLayout();
+  }
   constructor({
     alignment,
     widthFactor,
@@ -57,8 +76,8 @@ class RenderFractionallySizedBox extends RenderAligningShiftedBox {
     if (heightFactor != null && heightFactor < 0)
       throw new Error("heightFactor must be greater than zero");
 
-    this.widthFactor = widthFactor;
-    this.heightFactor = heightFactor;
+    this._widthFactor = widthFactor;
+    this._heightFactor = heightFactor;
   }
 
   private getInnerConstraints(constraints: Constraints): Constraints {
