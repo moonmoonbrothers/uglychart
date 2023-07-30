@@ -61,11 +61,60 @@ class Flex extends MultiChildRenderObjectWidget {
 }
 
 class RenderFlex extends MultiChildRenderObject {
-  direction: Axis;
-  mainAxisAlignment: MainAxisAlignment;
-  crossAxisAlignment: CrossAxisAlignment;
-  verticalDirection: VerticalDirection;
-  mainAxisSize: MainAxisSize;
+  _direction: Axis;
+  _mainAxisAlignment: MainAxisAlignment;
+  _crossAxisAlignment: CrossAxisAlignment;
+  _verticalDirection: VerticalDirection;
+  _mainAxisSize: MainAxisSize;
+  get direction(): Axis {
+    return this._direction;
+  }
+
+  set direction(newDirection: Axis) {
+    if (this._direction === newDirection) return; // early return
+    this._direction = newDirection;
+  }
+
+  get mainAxisAlignment(): MainAxisAlignment {
+    return this._mainAxisAlignment;
+  }
+
+  set mainAxisAlignment(newMainAxisAlignment: MainAxisAlignment) {
+    if (this._mainAxisAlignment === newMainAxisAlignment) return; // early return
+    this._mainAxisAlignment = newMainAxisAlignment;
+    this.markNeedsLayout();
+  }
+
+  get crossAxisAlignment(): CrossAxisAlignment {
+    return this._crossAxisAlignment;
+  }
+
+  set crossAxisAlignment(newCrossAxisAlignment: CrossAxisAlignment) {
+    if (this._crossAxisAlignment === newCrossAxisAlignment) return; // early return
+    this._crossAxisAlignment = newCrossAxisAlignment;
+    this.markNeedsLayout();
+  }
+
+  get verticalDirection(): VerticalDirection {
+    return this._verticalDirection;
+  }
+
+  set verticalDirection(newVerticalDirection: VerticalDirection) {
+    if (this._verticalDirection === newVerticalDirection) return; // early return
+    this._verticalDirection = newVerticalDirection;
+    this.markNeedsLayout();
+  }
+
+  get mainAxisSize(): MainAxisSize {
+    return this._mainAxisSize;
+  }
+
+  set mainAxisSize(newMainAxisSize: MainAxisSize) {
+    if (this._mainAxisSize === newMainAxisSize) return; // early return
+    this._mainAxisSize = newMainAxisSize;
+    this.markNeedsLayout();
+  }
+
   get mainAxisSizeName(): "width" | "height" {
     return this.direction === "horizontal" ? "width" : "height";
   }
@@ -98,11 +147,11 @@ class RenderFlex extends MultiChildRenderObject {
     mainAxisSize: MainAxisSize;
   }) {
     super({ isPainter: false });
-    this.direction = direction;
-    this.mainAxisAlignment = mainAxisAlignment;
-    this.crossAxisAlignment = crossAxisAlignment;
-    this.verticalDirection = verticalDirection;
-    this.mainAxisSize = mainAxisSize;
+    this._direction = direction;
+    this._mainAxisAlignment = mainAxisAlignment;
+    this._crossAxisAlignment = crossAxisAlignment;
+    this._verticalDirection = verticalDirection;
+    this._mainAxisSize = mainAxisSize;
   }
   protected preformLayout(): void {
     let totalFlex = 0;
