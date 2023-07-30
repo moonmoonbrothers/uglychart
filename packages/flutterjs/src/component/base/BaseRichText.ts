@@ -31,6 +31,7 @@ class RichText extends RenderObjectWidget {
   textScaleFactor: number;
   maxLines?: number;
   textWidthBasis: TextWidthBasis;
+
   constructor({
     text,
     textAlign = TextAlign.start,
@@ -78,14 +79,26 @@ class RichText extends RenderObjectWidget {
 }
 
 class RenderParagraph extends RenderObject {
-  // text: InlineSpan;
-  // textAlign: TextAlign;
-  // textDirection?: TextDirection;
-  softWrap: boolean;
-  overflow: TextOverflow;
-  // textScaleFactor: number;
-  // maxLines?: number;
-  // textWidthBasis: TextWidthBasis;
+  _softWrap: boolean;
+  _overflow: TextOverflow;
+  get softWrap(): boolean {
+    return this._softWrap;
+  }
+  set softWrap(newSoftWrap: boolean) {
+    if (this._softWrap === newSoftWrap) return; // early return
+    this._softWrap = newSoftWrap;
+    this.markNeedsLayout();
+  }
+
+  get overflow(): TextOverflow {
+    return this._overflow;
+  }
+
+  set overflow(newOverflow: TextOverflow) {
+    if (this._overflow === newOverflow) return; // early return
+    this._overflow = newOverflow;
+    this.markNeedsLayout();
+  }
   textPainter: TextPainter;
   constructor({
     text,
@@ -98,8 +111,8 @@ class RenderParagraph extends RenderObject {
     textWidthBasis = TextWidthBasis.parent,
   }: RichTextProps) {
     super({ isPainter: true });
-    this.softWrap = softWrap;
-    this.overflow = overflow;
+    this._softWrap = softWrap;
+    this._overflow = overflow;
     this.textPainter = new TextPainter({
       text,
       textAlign,
@@ -116,7 +129,9 @@ class RenderParagraph extends RenderObject {
   }
 
   set text(value: InlineSpan) {
+    if (this.textPainter.text.eqauls(value)) return;
     this.textPainter.text = value;
+    this.markNeedsLayout();
   }
 
   get textWidthBasis(): TextWidthBasis {
@@ -125,6 +140,7 @@ class RenderParagraph extends RenderObject {
 
   set textWidthBasis(value: TextWidthBasis) {
     this.textPainter.textWidthBasis = value;
+    this.markNeedsLayout();
   }
 
   get textAlign(): TextAlign {
@@ -132,7 +148,9 @@ class RenderParagraph extends RenderObject {
   }
 
   set textAlign(textAlign: TextAlign) {
+    if (this.textPainter.textAlign === textAlign) return;
     this.textPainter.textAlign = textAlign;
+    this.markNeedsLayout();
   }
 
   get textDirection(): TextDirection {
@@ -140,7 +158,9 @@ class RenderParagraph extends RenderObject {
   }
 
   set textDirection(direction: TextDirection) {
-    this.textPainter.textDirection;
+    if (this.textPainter.textDirection === direction) return;
+    this.textPainter.textDirection = direction;
+    this.markNeedsLayout();
   }
 
   get textScaleFactor(): number {
@@ -148,7 +168,9 @@ class RenderParagraph extends RenderObject {
   }
 
   set textScaleFactor(scaleFactor: number) {
+    if (this.textPainter.textScaleFactor === scaleFactor) return;
     this.textPainter.textScaleFactor = scaleFactor;
+    this.markNeedsLayout();
   }
 
   get maxLines(): number | undefined {
@@ -156,7 +178,9 @@ class RenderParagraph extends RenderObject {
   }
 
   set maxLines(value: number | undefined) {
+    if (this.textPainter.maxLines === value) return;
     this.textPainter.maxLines = value;
+    this.markNeedsLayout();
   }
 
   protected performPaint(

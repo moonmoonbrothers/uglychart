@@ -35,8 +35,28 @@ class BaseLimitedBox extends SingleChildRenderObjectWidget {
 }
 
 class RenderLimitedBox extends SingleChildRenderObject {
-  maxWidth: number;
-  maxHeight: number;
+  _maxWidth: number;
+  _maxHeight: number;
+
+  get maxWidth(): number {
+    return this._maxWidth;
+  }
+
+  set maxWidth(newMaxWidth: number) {
+    if (this._maxWidth === newMaxWidth) return; // early return
+    this._maxWidth = newMaxWidth;
+    this.markNeedsLayout();
+  }
+
+  get maxHeight(): number {
+    return this._maxHeight;
+  }
+
+  set maxHeight(newMaxHeight: number) {
+    if (this._maxHeight === newMaxHeight) return; // early return
+    this._maxHeight = newMaxHeight;
+    this.markNeedsLayout();
+  }
 
   constructor({
     maxHeight = Infinity,
@@ -46,8 +66,8 @@ class RenderLimitedBox extends SingleChildRenderObject {
     maxHeight?: number;
   }) {
     super({ isPainter: false });
-    this.maxHeight = maxHeight;
-    this.maxWidth = maxWidth;
+    this._maxHeight = maxHeight;
+    this._maxWidth = maxWidth;
   }
 
   protected override preformLayout(): void {

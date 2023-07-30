@@ -13,12 +13,22 @@ export class EdgeInsetsGeometry {
   left: number;
   right: number;
 
+  eqaul(other: EdgeInsetsGeometry) {
+    if (this === other) return;
+    return (
+      this.top === other.top &&
+      this.bottom === other.bottom &&
+      this.left === other.left &&
+      this.right === other.right
+    );
+  }
+
   get horizontal(): number {
-    return this.left + this.right
+    return this.left + this.right;
   }
 
   get vertical(): number {
-    return this.top + this.bottom
+    return this.top + this.bottom;
   }
 
   constructor({ top, bottom, left, right }: EdgeInsetsProps) {

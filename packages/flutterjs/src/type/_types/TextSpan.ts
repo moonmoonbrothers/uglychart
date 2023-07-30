@@ -6,6 +6,14 @@ class TextSpan extends InlineSpan {
   text?: string;
   children: InlineSpan[];
 
+  eqauls(other: TextSpan): boolean {
+    if (other === this) return true;
+    return (
+      this.text === other.text &&
+      InlineSpan.equals(this.children, other.children)
+    );
+  }
+
   constructor({
     style = new TextStyle(),
     text,

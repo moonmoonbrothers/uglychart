@@ -4,6 +4,20 @@ import { Paragraph } from "./TextPainter";
 class InlineSpan {
   style?: TextStyle;
 
+  static equals(targets: InlineSpan[], values: InlineSpan[]): boolean {
+    if (targets.length !== values.length) return false;
+    return targets.every((value, i) => values[i].eqauls(value));
+  }
+
+  eqauls(other: InlineSpan): boolean {
+    if (this.style != null || other.style != null) {
+      return this.style.equals(other.style);
+    }
+
+    if (this.style == null && other.style == null) return true;
+    return false;
+  }
+
   constructor({ style }: { style?: TextStyle }) {
     this.style = style;
   }

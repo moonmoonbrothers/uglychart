@@ -1,5 +1,5 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Size, Offset, EdgeInsets, } from "../../type";
+import { Size, Offset, EdgeInsets } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 
@@ -28,10 +28,18 @@ export default class Padding extends SingleChildRenderObjectWidget {
 }
 
 class RenderPadding extends SingleChildRenderObject {
-  padding: EdgeInsets;
+  _padding: EdgeInsets;
+  get padding(): EdgeInsets {
+    return this._padding;
+  }
+  set padding(value: EdgeInsets) {
+    if (value.eqaul(this._padding)) return;
+    this._padding = value;
+    this.markNeedsLayout();
+  }
   constructor({ padding }: { padding: EdgeInsets }) {
     super({ isPainter: false });
-    this.padding = padding;
+    this._padding = padding;
   }
 
   protected preformLayout(): void {

@@ -26,21 +26,24 @@ export default class BoxDecoration implements Decoration {
     if (!(other instanceof BoxDecoration)) return false;
     if (this.color !== other.color) return false;
     if (
-      !(this.border != null && other.border != null) ||
-      !this.border.equal(other.border)
+      !(this.border == null && other.border == null) &&
+      (!(this.border != null && other.border != null) ||
+        !this.border.equal(other.border))
     ) {
       return false;
     }
     if (
-      !(this.borderRadius != null && other.borderRadius != null) ||
-      !this.borderRadius.equal(other.borderRadius)
+      !(this.borderRadius == null && other.borderRadius == null) &&
+      (!(this.borderRadius != null && other.borderRadius != null) ||
+        !this.borderRadius.equal(other.borderRadius))
     ) {
       return false;
     }
 
     if (
-      !(this.boxShadow != null && other.boxShadow != null) ||
-      !BoxShadow.equals(this.boxShadow, other.boxShadow)
+      !(this.boxShadow == null && other.boxShadow == null) &&
+      (!(this.boxShadow != null && other.boxShadow != null) ||
+        !BoxShadow.equals(this.boxShadow, other.boxShadow))
     ) {
       return false;
     }

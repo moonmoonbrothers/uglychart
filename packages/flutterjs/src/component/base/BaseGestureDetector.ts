@@ -32,7 +32,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
   constructor({ onClick = () => {} }: { onClick?: () => void }) {
     super({ isPainter: true });
-    this.onClick = onClick;
+    this._onClick = onClick;
   }
 
   protected performPaint(
