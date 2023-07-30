@@ -30,9 +30,25 @@ class RenderObject {
   get children(): RenderObject[] {
     return this.ownerElement.children.map((child) => child.renderObject);
   }
-  size: Size = Size.zero;
   constraints: Constraints = Constraints.loose(Size.maximum());
-  offset: Offset = Offset.zero();
+  _offset: Offset = Offset.zero();
+  get offset() {
+    return this._offset;
+  }
+  set offset(value: Offset) {
+    if (this.offset.x === value.x && this.offset.y === value.y) return;
+    this._offset = value;
+  }
+  _size: Size = Size.zero;
+  get size() {
+    return this._size;
+  }
+  set size(value) {
+    if (this.size.height === value.height && this.size.width === value.width) {
+      return;
+    }
+    this._size = value;
+  }
   parentUsesSize = false;
 
   layout(

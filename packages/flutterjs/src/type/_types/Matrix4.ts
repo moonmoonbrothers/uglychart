@@ -42,14 +42,6 @@ class Matrix4 {
     });
   }
 
-  equal2(other: Matrix4) {
-    if (this === other) return true;
-
-    return this.storage.every((value, i) => {
-      return other._m4storage[i] === value;
-    });
-  }
-
   static zero(): Matrix4 {
     return new Matrix4(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }

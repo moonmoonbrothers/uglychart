@@ -149,7 +149,6 @@ export const SizeChange: Story = {
 		ssrSize: { width: 400, height: 400 },
 		widget: Container({
 			alignment: Alignment.center,
-			color: 'lightgreen',
 			child: new SizeChageWidget()
 		}),
 		code: dedent`
