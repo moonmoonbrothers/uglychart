@@ -26,6 +26,7 @@ class RenderColoredBox extends SingleChildRenderObject {
     return this._color;
   }
   set color(value) {
+    if (value === this._color) return;
     this._color = value;
     this.markNeedsPaint();
   }

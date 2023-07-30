@@ -1,13 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { parseHTML } from 'linkedom';
-	import {
-		type Widget,
-		Alignment,
-		AppRunner,
-		Container,
-		Text
-	} from '@moonmoonbrothers/flutterjs';
+	import { type Widget, Alignment, AppRunner, Container, Text } from '@moonmoonbrothers/flutterjs';
+	const browser = typeof window !== 'undefined';
 
 	export let widget: Widget = Container({
 		width: Infinity,
@@ -20,20 +15,31 @@
 	export let width = '100%';
 	export let height = '300px';
 
-	let svgEl!: SVGSVGElement;
+	let svgEl: SVGSVGElement;
 	let containerEl: HTMLElement;
-	const { document: _document, window: _window } = parseHTML(`<svg></svg>`);
-	const _svg = _document.querySelector('svg')!;
-	const runner = new AppRunner({
-		view: _svg,
-		window: _window,
-		document: _document,
-		ssrSize
-	});
-	const innerHTML = runner.runApp(widget);
+	let runner: AppRunner;
+	let innerHTML: string = '';
+	if (!browser) {
+		const { document: _document, window: _window } = parseHTML(`<svg></svg>`);
+		const _svg = _document.querySelector('svg')!;
+		runner = new AppRunner({
+			view: _svg,
+			window: _window,
+			document: _document,
+			ssrSize
+		});
+		innerHTML = runner.runApp(widget);
+	}
 	onMount(() => {
-		runner.onMount({
+		runner = new AppRunner({
 			view: svgEl,
+			window: window,
+			document: document,
+			ssrSize
+		});
+		svgEl.innerHTML = '';
+		runner.runApp(widget);
+		runner.onMount({
 			resizeTarget: containerEl
 		});
 	});

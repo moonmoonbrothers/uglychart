@@ -55,18 +55,18 @@ class RenderObject {
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
+    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (
       this.clipId === clipId &&
-      this.matrix === matrix4 &&
+      this.matrix.equal(translatedMatrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
       return;
     }
     this.clipId = clipId;
-    this.matrix = matrix4;
+    this.matrix = translatedMatrix4;
     this.opacity = opacity;
-    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
@@ -177,7 +177,10 @@ class RenderObject {
        parent clipPath must be applied to clipPath element itself. 
        I don't know it is intended behavior in svg 2.0 specification.
       */
-      if (values.length === 1 && values[0].nodeName === "CLIPPATH") {
+      if (
+        values.length === 1 &&
+        values[0].nodeName.toUpperCase() === "CLIPPATH"
+      ) {
         const svgEl = values[0];
         container = svgEl;
         context.setId(svgEl, this.id);

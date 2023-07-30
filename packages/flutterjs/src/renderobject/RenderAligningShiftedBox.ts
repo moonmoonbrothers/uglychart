@@ -18,6 +18,7 @@ class RenderAligningShiftedBox extends SingleChildRenderObject {
   set textDirection(value) {
     if (this._textDirection == value) return;
     this._textDirection = value;
+    this.markNeedsLayout();
   }
   constructor({
     alignment = Alignment.center,

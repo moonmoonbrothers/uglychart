@@ -44,7 +44,7 @@ const BasicCode = dedent`
 
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 600, height: 300 },
+		ssrSize: { width: 400, height: 400 },
 		width: '400px',
 		height: '400px',
 		code:

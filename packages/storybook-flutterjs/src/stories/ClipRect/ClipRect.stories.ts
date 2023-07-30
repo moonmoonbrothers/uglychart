@@ -6,7 +6,8 @@ import {
 	Rect,
 	Stack,
 	Positioned,
-	SizedBox
+	SizedBox,
+	Offset
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 const ImportWidgetCode = dedent`import {
@@ -137,14 +138,14 @@ export const Nested: Story = {
 		widget: ClipRect({
 			clipper: (size) =>
 				Rect.fromCenter({
-					center: { x: size.width / 2, y: size.height / 2 },
+					center: new Offset({ x: size.width / 2, y: size.height / 2 }),
 					width: size.width / 2,
 					height: size.height / 2
 				}),
 			child: ClipRect({
 				clipper: (size) =>
 					Rect.fromCenter({
-						center: { x: (size.width * 3) / 4, y: size.height / 4 },
+						center: new Offset({ x: (size.width * 3) / 4, y: size.height / 4 }),
 						width: size.width / 2,
 						height: size.height / 2
 					}),

@@ -75,14 +75,14 @@ class CustomWidget extends ComponentWidget {
 		super(key);
 		this.colors = colors;
 	}
+	handleClick = () => {
+		this.index = (this.index + 1) % this.colors.length;
+		this.setState();
+	};
 	build() {
-		const handleClick = () => {
-			this.index = (this.index + 1) % this.colors.length;
-			this.setState();
-		};
 		return GestureDetector({
-			onClick() {
-				handleClick();
+			onClick: () => {
+				this.handleClick();
 			},
 			child: Container({
 				width: 200,

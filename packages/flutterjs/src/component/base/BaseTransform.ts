@@ -138,10 +138,49 @@ class Transform extends SingleChildRenderObjectWidget {
 }
 
 class RenderTransform extends SingleChildRenderObject {
-  origin?: Offset;
-  alignment?: Alignment;
-  transform: Matrix4;
-  textDirection: TextDirection;
+  _origin?: Offset;
+  get origin(): Offset | undefined | null {
+    return this._origin;
+  }
+  set origin(value: Offset | undefined | null) {
+    if (value == null && this.origin == null) return;
+    if (
+      value != null &&
+      this.origin != null &&
+      this.origin.x === value.x &&
+      this.origin.y === value.y
+    )
+      return;
+    this.origin = value;
+    this.markNeedsLayout();
+  }
+  _alignment?: Alignment;
+  get alignment(): Alignment {
+    return this._alignment;
+  }
+  set alignment(value: Alignment) {
+    if (this._alignment.equal(value)) return;
+    this._alignment = value;
+    this.markNeedsLayout();
+  }
+  _transform: Matrix4;
+  get transform() {
+    return this._transform;
+  }
+  set transform(value: Matrix4) {
+    if (this.transform.equal(value)) return;
+    this._transform = value;
+    this.markNeedsLayout();
+  }
+  _textDirection: TextDirection;
+  get textDirection(): TextDirection {
+    return this._textDirection;
+  }
+  set textDirection(value) {
+    if (this._textDirection == value) return;
+    this._textDirection = value;
+    this.markNeedsLayout();
+  }
   constructor({
     origin,
     alignment,
@@ -154,10 +193,10 @@ class RenderTransform extends SingleChildRenderObject {
     textDirection?: TextDirection;
   }) {
     super({ isPainter: false });
-    this.transform = transform;
-    this.origin = origin;
-    this.alignment = alignment;
-    this.textDirection = textDirection;
+    this._transform = transform;
+    this._origin = origin;
+    this._alignment = alignment;
+    this._textDirection = textDirection;
   }
 
   private get _effectiveTransform(): Matrix4 {
