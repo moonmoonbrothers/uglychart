@@ -1,7 +1,7 @@
 import type Widget from "../widget/Widget";
 import BaseGuestureDetector from "./base/BaseGestureDetector";
 
-export default function ColoredBox({
+export default function GestureDetector({
   child,
   onClick,
 }: {

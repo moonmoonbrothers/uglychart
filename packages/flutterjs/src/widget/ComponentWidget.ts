@@ -1,10 +1,10 @@
-import ComponentElement from "../element/ComponentElement"
-import Element from "../element/Element"
-import Widget from "./Widget"
+import ComponentElement from "../element/ComponentElement";
+import Element from "../element/Element";
+import Widget from "./Widget";
 
 class ComponentWidget extends Widget {
   createElement(): ComponentElement {
-    return new ComponentElement(this)
+    return new ComponentElement(this);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
@@ -12,10 +12,15 @@ class ComponentWidget extends Widget {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(context: BuildContext): Widget {
-    throw { message: "not implemented" }
+    throw { message: "not implemented" };
+  }
+
+  setState(callback?: () => void) {
+    callback?.();
+    this.element.markNeedsBuild();
   }
 }
 
 export class BuildContext extends Element {}
 
-export default ComponentWidget
+export default ComponentWidget;

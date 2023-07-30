@@ -43,9 +43,34 @@ export default class BaseStack extends MultiChildRenderObjectWidget {
 }
 
 export class RenderStack extends MultiChildRenderObject {
-  alignment: Alignment;
-  fit: StackFit;
-  textDirection: TextDirection;
+  _alignment: Alignment;
+  get alignment(): Alignment {
+    return this._alignment;
+  }
+  set alignment(value) {
+    if (value.equal(this._alignment)) return;
+    this._alignment = value;
+    this.markNeedsLayout();
+  }
+  _fit: StackFit;
+  get fit(): StackFit {
+    return this._fit;
+  }
+  set fit(value: StackFit) {
+    if (this._fit !== value) return;
+    this._fit = value;
+    this.markNeedsLayout();
+  }
+  _textDirection: TextDirection;
+  get textDirection(): TextDirection {
+    return this._textDirection;
+  }
+  set textDirection(value: TextDirection) {
+    if (this._textDirection !== value) return;
+    this._textDirection = value;
+    this.markNeedsPaint();
+  }
+
   constructor({
     fit = StackFit.loose,
     alignment = Alignment.topLeft,
@@ -56,9 +81,9 @@ export class RenderStack extends MultiChildRenderObject {
     textDirection?: TextDirection;
   }) {
     super({ isPainter: false });
-    this.alignment = alignment;
-    this.fit = fit;
-    this.textDirection = textDirection;
+    this._alignment = alignment;
+    this._fit = fit;
+    this._textDirection = textDirection;
   }
 
   private get resolvedAlignment(): Alignment {

@@ -1,34 +1,38 @@
-import type RenderObject from "../renderobject/RenderObject"
-import type { Owner } from "../runApp"
-import Widget from "../widget/Widget"
-import RenderObjectElement from "./RenderObjectElement"
+import type RenderObject from "../renderobject/RenderObject";
+import type { RenderContext } from "../runApp";
+import { BuildOwner, RenderOwner } from "../scheduler";
+import Widget from "../widget/Widget";
+import RenderObjectElement from "./RenderObjectElement";
 
 class Element {
-  owner!: Owner
-  widget: Widget
-  parent?: Element
+  renderContext!: RenderContext;
+  buildOwner!: BuildOwner;
+  widget: Widget;
+  parent?: Element;
+  dirty = true;
+  depth = 0;
   constructor(widget: Widget) {
-    this.widget = widget
+    this.widget = widget;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   visitChildren(visitor: (child: Element) => void) {
-    throw { message: "not implemented" }
+    throw { message: "not implemented" };
   }
 
   get renderObject(): RenderObject {
-    let result: RenderObject | null = null
+    let result: RenderObject | null = null;
     const visitor = (child: Element) => {
       if (child instanceof RenderObjectElement) {
-        result = child._renderObject
+        result = child._renderObject;
       } else {
-        child.visitChildren(visitor)
+        child.visitChildren(visitor);
       }
-    }
-    visitor(this)
+    };
+    visitor(this);
 
-    if (result == null) throw { message: "can not find render object" }
-    return result
+    if (result == null) throw { message: "can not find render object" };
+    return result;
   }
 
   //There are 5 case
@@ -47,56 +51,67 @@ class Element {
     newWidget?: Widget | null
   ): Element | null | undefined {
     if (child != null && newWidget == null) {
-      child.unmount()
-      return null
+      child.unmount();
+      return null;
     } else if (child == null && newWidget == null) {
       //nothing happen
     } else if (child == null && newWidget != null) {
-      return this.inflateWidget(newWidget)
+      return this.inflateWidget(newWidget);
     } else if (
       child != null &&
       newWidget != null &&
       Widget.canUpdate(child.widget, newWidget)
     ) {
-      child.update(newWidget)
-      return child
+      child.update(newWidget);
+      return child;
     } else {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      child!.unmount()
+      child!.unmount();
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return this.inflateWidget(newWidget!)
+      return this.inflateWidget(newWidget!);
     }
   }
 
   unmount() {
-    this.parent = undefined
-    this.renderObject.dispose(this.owner.paintContext)
+    this.parent = undefined;
+    this.renderObject.dispose(this.renderContext.paintContext);
   }
 
   mount(newParent?: Element) {
     if (newParent) {
-      this.owner = newParent.owner
+      this.renderContext = newParent.renderContext;
+      this.buildOwner = newParent.buildOwner;
+      this.depth = newParent.depth + 1;
     }
-    this.parent = newParent
+    this.parent = newParent;
   }
 
   update(newWidget: Widget) {
-    this.widget = newWidget
+    this.widget = newWidget;
+    newWidget.element = this;
   }
 
   inflateWidget(childWidget: Widget): Element {
-    const newChild = childWidget.createElement()
-    newChild.mount(this)
-    return newChild
+    const newChild = childWidget.createElement();
+    childWidget.element = this;
+    newChild.mount(this);
+    return newChild;
   }
 
-  rebuild() {
-    this.performRebuild()
+  rebuild({ force = false }: { force?: boolean } = {}) {
+    if (!this.dirty && !force) return;
+    this.dirty = false;
+    this.performRebuild();
   }
 
   protected performRebuild() {
-    throw { message: "not implemented rebuild" }
+    throw new Error("not implemented performRebuild");
+  }
+
+  markNeedsBuild() {
+    this.dirty = true;
+    this.buildOwner.scheduleFor(this);
   }
 }
 
-export default Element
+export default Element;

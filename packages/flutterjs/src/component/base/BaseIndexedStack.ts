@@ -36,7 +36,15 @@ class IndexedStack extends Stack {
 }
 
 class RenderIndexedStack extends RenderStack {
-  index: number;
+  _index: number;
+  get index() {
+    return this._index;
+  }
+  set index(value: number) {
+    if (this._index === value) return;
+    this._index = value;
+    this.markNeedsPaint();
+  }
   constructor({
     index,
     fit,
@@ -47,7 +55,7 @@ class RenderIndexedStack extends RenderStack {
     index: number;
   }) {
     super({ alignment, fit });
-    this.index = index;
+    this._index = index;
   }
 
   paintChildren(

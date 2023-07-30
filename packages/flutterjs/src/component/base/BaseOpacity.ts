@@ -22,18 +22,19 @@ class Opacity extends SingleChildRenderObjectWidget {
 }
 
 class RenderOpacity extends SingleChildRenderObject {
-  _opacity!: number;
-  get opacity(): number {
-    return this._opacity;
+  _opacityProp!: number;
+  get opacityProp(): number {
+    return this._opacityProp;
   }
-  set opacity(value: number) {
+  set opacityProp(value: number) {
     assert(value >= 0 && value <= 1.0);
-    this._opacity = value;
+    this._opacityProp = value;
+    this.markNeedsPaint();
   }
 
   constructor({ opacity }: { opacity: number }) {
     super({ isPainter: false });
-    this.opacity = opacity;
+    this._opacityProp = opacity;
   }
 
   protected override preformLayout(): void {
@@ -44,7 +45,7 @@ class RenderOpacity extends SingleChildRenderObject {
   }
 
   getChildOpacity(parentOpacity: number): number {
-    return parentOpacity * this.opacity;
+    return parentOpacity * this.opacityProp;
   }
 }
 

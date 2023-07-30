@@ -19,6 +19,20 @@ class TextStyle {
   /// tall.
   height?: number;
 
+  equals(other: TextStyle): boolean {
+    if (this === other) return true;
+
+    return (
+      this.inherit === other.inherit &&
+      this.color === other.color &&
+      this.fontSize === other.fontSize &&
+      this.fontWeight === other.fontWeight &&
+      this.fontFamily === other.fontFamily &&
+      this.textBaseline === other.textBaseline &&
+      this.fontStyle === other.fontStyle
+    );
+  }
+
   constructor({
     inherit = true,
     color,

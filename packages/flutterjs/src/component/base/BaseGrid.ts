@@ -49,11 +49,60 @@ class BaseGrid extends MultiChildRenderObjectWidget {
 }
 
 class RenderBaseGrid extends MultiChildRenderObject {
-  templateRows: GridTemplate[];
-  templateColumns: GridTemplate[];
-  autoColumn: GridTemplate;
-  autoRow: GridTemplate;
-  columnCounts: number[]; // describe column count per row, example) [3,3,3,2]
+  _templateRows: GridTemplate[];
+  _templateColumns: GridTemplate[];
+  _autoColumn: GridTemplate;
+  _autoRow: GridTemplate;
+  _columnCounts: number[]; // describe column count per row, example) [3,3,3,2]
+  get templateRows() {
+    return this._templateRows;
+  }
+  set templateRows(value: GridTemplate[]) {
+    if (GridTemplate.equals(value, this._templateRows)) return;
+    this._templateRows = value;
+    this.markNeedsLayout();
+  }
+
+  get templateColumns(): GridTemplate[] {
+    return this._templateColumns;
+  }
+
+  set templateColumns(value: GridTemplate[]) {
+    if (GridTemplate.equals(value, this._templateColumns)) return;
+    this._templateColumns = value;
+    this.markNeedsLayout();
+  }
+
+  get autoColumn(): GridTemplate {
+    return this._autoColumn;
+  }
+
+  set autoColumn(value: GridTemplate) {
+    if (value.equals(this._autoColumn)) return;
+    this._autoColumn = value;
+    this.markNeedsLayout();
+  }
+
+  get autoRow(): GridTemplate {
+    return this._autoRow;
+  }
+
+  set autoRow(value: GridTemplate) {
+    if (value.equals(this._autoRow)) return;
+    this._autoRow = value;
+    this.markNeedsLayout();
+  }
+
+  get columnCounts(): number[] {
+    return this._columnCounts;
+  }
+
+  set columnCounts(value: number[]) {
+    if (Utils.arrayEqual(value, this._columnCounts)) return;
+    this._columnCounts = value;
+    this.markNeedsLayout();
+  }
+
   constructor({
     templateColumns,
     templateRows,
@@ -62,11 +111,11 @@ class RenderBaseGrid extends MultiChildRenderObject {
     columnCounts,
   }: Required<BaseGridProps> & { columnCounts: number[] }) {
     super({ isPainter: false });
-    this.columnCounts = columnCounts;
-    this.templateRows = templateRows;
-    this.templateColumns = templateColumns;
-    this.autoColumn = autoColumn;
-    this.autoRow = autoRow;
+    this._columnCounts = columnCounts;
+    this._templateRows = templateRows;
+    this._templateColumns = templateColumns;
+    this._autoColumn = autoColumn;
+    this._autoRow = autoRow;
   }
 
   private get rowCount(): number {
@@ -284,6 +333,16 @@ export class GridTemplate {
   }) {
     this.type = type;
     this.value = value;
+  }
+
+  static equals(target: GridTemplate[], other: GridTemplate[]): boolean {
+    if (target.length !== other.length) return false;
+    return target.every((value, i) => value.equals(other[i]));
+  }
+
+  equals(other: GridTemplate): boolean {
+    if (this === other) return true;
+    return this.type === other.type && this.value === other.value;
   }
 
   static Fr(value: number) {

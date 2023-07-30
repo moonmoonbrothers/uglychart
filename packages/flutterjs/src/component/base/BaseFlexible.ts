@@ -25,12 +25,32 @@ class Flexible extends SingleChildRenderObjectWidget {
 }
 
 export class RenderFlexible extends SingleChildRenderObject {
-  flex: number;
-  fit: "tight" | "loose";
+  _flex: number;
+  _fit: "tight" | "loose";
+
+  get flex(): number {
+    return this._flex;
+  }
+
+  set flex(newFlex: number) {
+    if (this._flex === newFlex) return; // early return
+    this._flex = newFlex;
+    this.markNeedsLayout();
+  }
+
+  get fit(): "tight" | "loose" {
+    return this._fit;
+  }
+
+  set fit(newFit: "tight" | "loose") {
+    if (this._fit === newFit) return; // early return
+    this._fit = newFit;
+    this.markNeedsLayout();
+  }
   constructor({ flex, fit }: { flex: number; fit: "tight" | "loose" }) {
     super({ isPainter: false });
-    this.flex = flex;
-    this.fit = fit;
+    this._flex = flex;
+    this._fit = fit;
   }
 }
 

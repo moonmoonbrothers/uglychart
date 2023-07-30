@@ -2,7 +2,7 @@ import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 
-export type StrokeAlign = -1 | 0 | 1
+export type StrokeAlign = -1 | 0 | 1;
 
 export interface ShapeBorder {
   get dimensions(): EdgeInsetsGeometry;
@@ -13,10 +13,10 @@ export interface ShapeBorder {
 }
 
 export class BorderSide {
-  color: string;
-  width: number;
-  style: BorderStyle;
-  strokeAlign: StrokeAlign
+  readonly color: string;
+  readonly width: number;
+  readonly style: BorderStyle;
+  readonly strokeAlign: StrokeAlign;
   constructor({
     style = "solid",
     width = 1,
@@ -32,6 +32,16 @@ export class BorderSide {
     this.style = style;
     this.width = width;
     this.strokeAlign = strokeAlign;
+  }
+
+  equal(other: BorderSide) {
+    if (this === other) return true;
+    return (
+      this.color === other.color &&
+      this.width === other.width &&
+      this.style === other.style &&
+      this.strokeAlign === other.strokeAlign
+    );
   }
 
   static strokeAlignInside = -1 as const;

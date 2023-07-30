@@ -24,9 +24,18 @@ export class BorderRadiusGeometry {
     this.topLeft = topLeft;
     this.topRight = topRight;
   }
+  equal(other: BorderRadiusGeometry): boolean {
+    if (this === other) return true;
+    return (
+      this.topLeft.equal(other.topLeft) &&
+      this.topRight.equal(other.topRight) &&
+      this.bottomLeft.equal(other.bottomLeft) &&
+      this.bottomRight.equal(other.bottomRight)
+    );
+  }
 
   toRRect(rect: Rect): RRect {
-    throw new Error("Not implemented")
+    throw new Error("Not implemented");
   }
 }
 
@@ -124,4 +133,3 @@ export default class BorderRadius extends BorderRadiusGeometry {
     });
   }
 }
-

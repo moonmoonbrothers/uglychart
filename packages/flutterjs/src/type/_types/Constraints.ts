@@ -239,6 +239,16 @@ class Constraints {
     });
   }
 
+  equal(other: Constraints): boolean {
+    if (this === other) return true;
+    return (
+      this.maxWidth === other.maxWidth &&
+      this.minWidth === other.minWidth &&
+      this.maxHeight === other.maxHeight &&
+      this.minHeight === other.minHeight
+    );
+  }
+
   private clampDouble(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
   }

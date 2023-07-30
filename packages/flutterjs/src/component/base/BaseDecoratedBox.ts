@@ -27,10 +27,19 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
 }
 
 class RenderDecoratedBox extends SingleChildRenderObject {
-  decoration: Decoration;
+  _decoration: Decoration;
+  get decoration() {
+    return this._decoration;
+  }
+  set decoration(value) {
+    if (this.decoration.equal(value)) return;
+    this._decoration = value;
+    this.markNeedsPaint();
+  }
+
   constructor({ decoration }: { decoration: Decoration }) {
     super({ isPainter: true });
-    this.decoration = decoration;
+    this._decoration = decoration;
   }
 
   protected performPaint(svgEls: {

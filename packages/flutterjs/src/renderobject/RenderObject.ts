@@ -2,6 +2,8 @@ import { Size, Offset, Constraints, Matrix4 } from "../type";
 import type { PaintContext } from "../utils/type";
 import ShortUniqueId from "short-unique-id";
 import { RenderObjectElement } from "../element";
+import { RenderOwner } from "../scheduler";
+import { assert } from "../utils";
 
 const uid = new ShortUniqueId({ dictionary: "hex" });
 
@@ -13,6 +15,14 @@ class RenderObject {
   isPainter: boolean;
   id = uid.randomUUID(6);
   ownerElement!: RenderObjectElement;
+  renderOwner!: RenderOwner;
+  parent?: RenderObject;
+  needsPaint = true;
+  needsLayout = true;
+  clipId?: string;
+  matrix: Matrix4 = Matrix4.identity();
+  opacity = 0;
+  depth = 0;
   constructor({ isPainter }: { isPainter: boolean }) {
     this.isPainter = isPainter;
   }
@@ -20,13 +30,40 @@ class RenderObject {
   get children(): RenderObject[] {
     return this.ownerElement.children.map((child) => child.renderObject);
   }
-  size: Size = Size.zero;
   constraints: Constraints = Constraints.loose(Size.maximum());
-  offset: Offset = Offset.zero();
+  _offset: Offset = Offset.zero();
+  get offset() {
+    return this._offset;
+  }
+  set offset(value: Offset) {
+    if (this.offset.x === value.x && this.offset.y === value.y) return;
+    this._offset = value;
+  }
+  _size: Size = Size.zero;
+  get size() {
+    return this._size;
+  }
+  set size(value) {
+    if (this.size.height === value.height && this.size.width === value.width) {
+      return;
+    }
+    this._size = value;
+  }
+  parentUsesSize = false;
 
-  layout(constraint: Constraints) {
-    this.constraints = constraint.normalize();
+  layout(
+    constraint: Constraints,
+    { parentUsesSize = true }: { parentUsesSize?: boolean } = {}
+  ) {
+    const normalizedConstraints = constraint.normalize();
+    if (this.constraints.equal(normalizedConstraints) && !this.needsLayout) {
+      return;
+    }
+    this.constraints = normalizedConstraints;
+    this.parentUsesSize = parentUsesSize;
     this.preformLayout();
+    this.needsLayout = false;
+    this.markNeedsPaint();
   }
 
   paint(
@@ -36,6 +73,17 @@ class RenderObject {
     opacity: number = 1
   ) {
     const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
+    if (
+      this.clipId === clipId &&
+      this.matrix.equal(translatedMatrix4) &&
+      this.opacity === opacity &&
+      !this.needsPaint
+    ) {
+      return;
+    }
+    this.clipId = clipId;
+    this.matrix = translatedMatrix4;
+    this.opacity = opacity;
     if (this.isPainter) {
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
@@ -48,6 +96,7 @@ class RenderObject {
         this.setSvgTransform(el, translatedMatrix4)
       );
     }
+    this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);
     const childMatrix4 = this.getChildMatrix4(translatedMatrix4);
     const childOpacity = this.getChildOpacity(opacity);
@@ -89,6 +138,7 @@ class RenderObject {
 
   attach(ownerElement: RenderObjectElement) {
     this.ownerElement = ownerElement;
+    this.depth = ownerElement.depth;
   }
 
   dispose(context: PaintContext) {
@@ -144,7 +194,10 @@ class RenderObject {
        parent clipPath must be applied to clipPath element itself. 
        I don't know it is intended behavior in svg 2.0 specification.
       */
-      if (values.length === 1 && values[0].nodeName === "CLIPPATH") {
+      if (
+        values.length === 1 &&
+        values[0].nodeName.toUpperCase() === "CLIPPATH"
+      ) {
         const svgEl = values[0];
         container = svgEl;
         context.setId(svgEl, this.id);
@@ -190,6 +243,29 @@ class RenderObject {
 
   protected getChildClipId(parentClipId?: string) {
     return parentClipId;
+  }
+
+  layoutWithoutResize() {
+    this.layout(this.constraints, { parentUsesSize: this.parentUsesSize });
+  }
+
+  markNeedsParentLayout() {
+    this.parent?.markNeedsLayout();
+  }
+
+  markNeedsLayout() {
+    this.needsLayout = true;
+    if (this.parentUsesSize && this.parent != null) {
+      this.markNeedsParentLayout();
+    } else {
+      this.renderOwner.needsLayoutRenderObjects.push(this);
+      this.renderOwner.requestVisualUpdate();
+    }
+  }
+
+  markNeedsPaint() {
+    this.needsPaint = true;
+    this.renderOwner.needsPaintRenderObjects.push(this);
   }
 }
 

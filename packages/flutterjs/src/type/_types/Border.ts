@@ -24,6 +24,10 @@ export class BoxBorder implements ShapeBorder {
     throw new Error("Method not implemented.");
   }
 
+  equal(other: BoxBorder): boolean {
+    throw new Error("Method not implemented.");
+  }
+
   protected static paintUniformBorderWidthRadius(
     paths: BorderPathEls,
     {
@@ -114,6 +118,17 @@ class Border extends BoxBorder {
     this.right = right;
     this.bottom = bottom;
     this.left = left;
+  }
+
+  equal(other: BoxBorder): boolean {
+    if (this === other) return true;
+    if (!(other instanceof Border)) return false;
+    return (
+      this.top.equal(other.top) &&
+      this.right.equal(other.right) &&
+      this.bottom.equal(other.bottom) &&
+      this.left.equal(other.left)
+    );
   }
 
   static fromBorderSide(side: BorderSide) {
