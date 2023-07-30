@@ -14,6 +14,11 @@ class Size {
     this.height = height;
   }
 
+  equal(other: Size): boolean {
+    if (this === other) return true;
+    return this.width === other.width && this.height === other.height;
+  }
+
   static zero = new Size({ width: 0, height: 0 });
 
   static maximum(): Size {

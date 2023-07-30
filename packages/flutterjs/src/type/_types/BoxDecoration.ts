@@ -11,14 +11,43 @@ export interface Decoration {
   get padding(): EdgeInsetsGeometry | undefined;
   getClipPath(rect: Rect): Path;
   createBoxPainter(): BoxPainter;
+  equal(decoration: Decoration): boolean;
 }
 
 export default class BoxDecoration implements Decoration {
-  color?: string;
-  border?: BoxBorder;
-  borderRadius?: BorderRadiusGeometry;
-  boxShadow?: BoxShadow[];
-  shape: BoxShape;
+  readonly color?: string;
+  readonly border?: BoxBorder;
+  readonly borderRadius?: BorderRadiusGeometry;
+  readonly boxShadow?: BoxShadow[];
+  readonly shape: BoxShape;
+
+  equal(other: Decoration): boolean {
+    if (this === other) return true;
+    if (!(other instanceof BoxDecoration)) return false;
+    if (this.color !== other.color) return false;
+    if (
+      !(this.border != null && other.border != null) ||
+      !this.border.equal(other.border)
+    ) {
+      return false;
+    }
+    if (
+      !(this.borderRadius != null && other.borderRadius != null) ||
+      !this.borderRadius.equal(other.borderRadius)
+    ) {
+      return false;
+    }
+
+    if (
+      !(this.boxShadow != null && other.boxShadow != null) ||
+      !BoxShadow.equals(this.boxShadow, other.boxShadow)
+    ) {
+      return false;
+    }
+    if (this.shape !== other.shape) return false;
+
+    return true;
+  }
   /*
     Those are not implemented
     gradient?: Gradient

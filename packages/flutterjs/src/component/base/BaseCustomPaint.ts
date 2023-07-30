@@ -44,8 +44,24 @@ class BaseCustomPaint<
 export class RenderCustomPaint<
   T extends Record<string, SVGElement>
 > extends SingleChildRenderObject {
-  painter: Painter<T>;
-  preferredSize: Size;
+  _painter: Painter<T>;
+  get painter() {
+    return this._painter;
+  }
+  set painter(value) {
+    if (this._painter === value) return;
+    this._painter = value;
+    this.markNeedsPaint();
+  }
+  _preferredSize: Size;
+  get preferredSize() {
+    return this._preferredSize;
+  }
+  set preferredSize(value) {
+    if (value.equal(this.preferredSize)) return;
+    this.preferredSize = value;
+    this.markNeedsLayout();
+  }
 
   constructor({
     preferredSize = Size.zero,
@@ -55,8 +71,8 @@ export class RenderCustomPaint<
     painter: Painter<T>;
   }) {
     super({ isPainter: true });
-    this.painter = painter;
-    this.preferredSize = preferredSize;
+    this._painter = painter;
+    this._preferredSize = preferredSize;
   }
 
   protected computeSizeForNoChild(constraints: Constraints): Size {

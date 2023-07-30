@@ -24,10 +24,19 @@ class BaseClipPath extends SingleChildRenderObjectWidget {
 }
 
 class RenderClipPath extends SingleChildRenderObject {
-  public clipper: Clipper;
+  _clipper: Clipper;
+  get clipper() {
+    return this._clipper;
+  }
+
+  set clipper(value: Clipper) {
+    if (this._clipper === value) return;
+    this._clipper = value;
+    this.markNeedsPaint();
+  }
   constructor({ clipper }: { clipper: Clipper }) {
     super({ isPainter: true });
-    this.clipper = clipper;
+    this._clipper = clipper;
   }
   protected getChildClipId(
     parentClipId?: string | undefined

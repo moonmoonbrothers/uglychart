@@ -9,6 +9,10 @@ export class Radius {
     return new Radius(x, y);
   }
   static zero = Radius.circular(0);
+  equal(other: Radius): boolean {
+    if (this === other) return true;
+    return this.x === other.x && this.y === other.y;
+  }
 
   clamp({ minimum, maximum }: { minimum?: Radius; maximum?: Radius }) {
     minimum ??= Radius.circular(-Infinity);
