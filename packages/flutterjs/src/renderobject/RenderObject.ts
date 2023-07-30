@@ -47,6 +47,7 @@ class RenderObject {
     this.parentUsesSize = parentUsesSize;
     this.preformLayout();
     this.needsLayout = false;
+    this.markNeedsPaint();
   }
 
   paint(
@@ -230,7 +231,6 @@ class RenderObject {
 
   layoutWithoutResize() {
     this.layout(this.constraints, { parentUsesSize: this.parentUsesSize });
-    this.markNeedsPaint();
   }
 
   markNeedsParentLayout() {
