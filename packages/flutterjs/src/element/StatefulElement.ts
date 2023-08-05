@@ -10,7 +10,6 @@ export class StatefulElement extends ComponentElement {
     super(widget);
     this.state = widget.createState();
     this.state.element = this;
-    this.state.widget = widget;
   }
 
   initState(): void {
@@ -23,14 +22,16 @@ export class StatefulElement extends ComponentElement {
 }
 
 export class State<T> {
-  widget: T;
+  get widget(): T {
+    return this.element.widget as T;
+  }
   element: StatefulElement;
   initState(context: Element) {}
   build(context: Element): Widget {
-    throw Error("not implemented");
+    throw Error("not implemented state");
   }
-  setState(callback: () => any) {
-    callback();
+  setState(callback?: () => any) {
+    callback?.();
     this.element.markNeedsBuild();
   }
 }

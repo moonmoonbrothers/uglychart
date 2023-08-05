@@ -12,7 +12,7 @@ class ComponentWidget extends Widget {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(context: BuildContext): Widget {
-    throw { message: "not implemented" };
+    throw { message: "not implemented build on ComponentWidget" };
   }
 
   setState(callback?: () => void) {

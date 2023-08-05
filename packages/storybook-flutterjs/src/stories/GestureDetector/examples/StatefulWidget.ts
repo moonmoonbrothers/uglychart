@@ -4,37 +4,43 @@ import {
 	GestureDetector,
 	Text,
 	TextStyle,
-	ComponentWidget,
 	Column,
 	MainAxisSize,
-	StatelessElement,
-	StatelessWidget,
 	Widget,
 	BuildContext,
 	Stack,
-	Positioned
+	Positioned,
+	State,
+	StatefulWidget
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 
-class SizeChageWidget extends ComponentWidget {
-	count = 0;
+class SizeChageWidget extends StatefulWidget {
+	count: number;
 	constructor({ count }: { count: number }) {
 		super();
 		this.count = count;
+		console.log('created!');
 	}
+	createState(): State<StatefulWidget> {
+		return new SizeChangeState();
+	}
+}
+
+class SizeChangeState extends State<SizeChageWidget> {
 	index = 0;
 	width = 200;
 	height = 200;
-	build() {
-		const handleClick = () => {
+	handleClick = () => {
+		this.setState(() => {
 			this.width = this.width + 10;
 			this.height = this.height + 10;
-			console.log('set state called!');
-			this.setState();
-		};
+		});
+	};
+	build() {
 		return GestureDetector({
-			onClick() {
-				handleClick();
+			onClick: () => {
+				this.handleClick();
 			},
 			child: Container({
 				width: this.width,
@@ -44,7 +50,7 @@ class SizeChageWidget extends ComponentWidget {
 				child: Column({
 					mainAxisSize: MainAxisSize.min,
 					children: [
-						Text(`count: ${this.count}`, {
+						Text(`count: ${this.widget.count}`, {
 							style: new TextStyle({ fontSize: 20, fontWeight: 'bold', color: 'yellow' })
 						}),
 						Text('click to size up!', {
@@ -57,8 +63,19 @@ class SizeChageWidget extends ComponentWidget {
 	}
 }
 
-class CounterWidget extends StatelessWidget {
+class CounterWidget extends StatefulWidget {
+	createState(): State<CounterWidget> {
+		return new CounterState();
+	}
+}
+
+class CounterState extends State<CounterWidget> {
 	count = 0;
+	handleClick() {
+		this.setState(() => {
+			this.count += 1;
+		});
+	}
 
 	build(context: BuildContext): Widget {
 		return Stack({
@@ -68,9 +85,7 @@ class CounterWidget extends StatelessWidget {
 					top: -30,
 					child: GestureDetector({
 						onClick: () => {
-							this.setState(() => {
-								this.count += 1;
-							});
+							this.handleClick();
 						},
 						child: Container({
 							color: 'white',

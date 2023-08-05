@@ -1,13 +1,13 @@
-import { StatelessElement, State } from "../element";
+import { StatelessElement, State, StatefulElement } from "../element";
 import ComponentWidget from "./ComponentWidget";
 
 class StatefulWidget extends ComponentWidget {
-  createElement(): StatelessElement {
-    return new StatelessElement(this);
+  createElement(): StatefulElement {
+    return new StatefulElement(this);
   }
 
-  createState(): State<this> {
-    throw new Error("must implemented");
+  createState(): State<StatefulWidget> {
+    throw new Error("not implemented createState");
   }
 }
 
