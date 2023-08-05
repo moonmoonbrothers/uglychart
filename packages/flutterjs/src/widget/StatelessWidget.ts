@@ -1,4 +1,4 @@
-import { ComponentElement, StatelessElement } from "../element";
+import { StatelessElement } from "../element";
 import ComponentWidget from "./ComponentWidget";
 
 class StatelessWidget extends ComponentWidget {

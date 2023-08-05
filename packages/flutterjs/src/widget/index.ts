@@ -5,6 +5,7 @@ import RenderObjectToWidgetAdapter from "./RenderObjectToWidgetAdapter";
 import RenderObjectWidget from "./RenderObjectWidget";
 import Widget from "./Widget";
 import StatelessWidget from "./StatelessWidget";
+import StatefulWidget from "./StatefulWidget";
 
 export {
   ComponentWidget,
@@ -15,4 +16,5 @@ export {
   RenderObjectWidget,
   BuildContext,
   StatelessWidget,
+  StatefulWidget,
 };
