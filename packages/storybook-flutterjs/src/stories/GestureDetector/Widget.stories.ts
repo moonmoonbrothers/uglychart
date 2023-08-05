@@ -9,7 +9,7 @@ import {
 	ComponentWidget
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
-import { BasicStory, ColorChangeStory, SizeChangeStory } from './examples';
+import { BasicStory, ColorChangeStory, SizeChangeStory, TestStatefulWidgetStory } from './examples';
 
 const meta = {
 	title: 'Widget/GestureDetector',
@@ -37,4 +37,8 @@ export const ColorChange: Story = {
 
 export const SizeChange: Story = {
 	args: SizeChangeStory
+};
+
+export const TestStatefulWidget: Story = {
+	args: TestStatefulWidgetStory
 };
