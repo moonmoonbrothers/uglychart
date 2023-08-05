@@ -1,12 +1,11 @@
-import type ComponentWidget from "../widget/ComponentWidget";
 import type Widget from "../widget/Widget";
 import Element from "./Element";
 
 class ComponentElement extends Element {
   child!: Element;
 
-  declare widget: ComponentWidget;
-  constructor(widget: ComponentWidget) {
+  declare widget: Widget;
+  constructor(widget: Widget) {
     super(widget);
     this.widget = widget;
   }
@@ -22,11 +21,11 @@ class ComponentElement extends Element {
   }
 
   initState(): void {
-    this.widget.initState(this);
+    throw new Error("not implemented initState on compoenent element");
   }
 
   build(): Widget {
-    return this.widget.build(this);
+    throw new Error("not implemented build on component element");
   }
 
   _firstBuild() {

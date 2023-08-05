@@ -1,7 +1,7 @@
-import { StatelessElement, State, StatefulElement } from "../element";
-import ComponentWidget from "./ComponentWidget";
+import { State, StatefulElement } from "../element";
+import Widget from "./Widget";
 
-class StatefulWidget extends ComponentWidget {
+class StatefulWidget extends Widget {
   createElement(): StatefulElement {
     return new StatefulElement(this);
   }
