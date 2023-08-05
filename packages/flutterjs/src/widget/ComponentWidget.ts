@@ -1,3 +1,4 @@
+import { Element } from "../element";
 import StatelessWidget from "./StatelessWidget";
 
 /*
@@ -5,4 +6,5 @@ import StatelessWidget from "./StatelessWidget";
   this widget is replaced by StatelessWidget.
   It must be removed soon.
 */
+export type BuildContext = Element;
 export default StatelessWidget;

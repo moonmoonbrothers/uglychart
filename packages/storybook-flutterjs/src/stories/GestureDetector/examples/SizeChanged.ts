@@ -4,11 +4,18 @@ import {
 	GestureDetector,
 	Text,
 	TextStyle,
-	ComponentWidget
+	StatefulWidget,
+	State
 } from '@moonmoonbrothers/flutterjs';
 import { dedent } from 'ts-dedent';
 
-class SizeChageWidget extends ComponentWidget {
+class SizeChangeWidget extends StatefulWidget {
+	createState(): State<StatefulWidget> {
+		return new SizeChangeState();
+	}
+}
+
+class SizeChangeState extends State<SizeChangeWidget> {
 	index = 0;
 	width = 200;
 	height = 200;
@@ -39,7 +46,7 @@ class SizeChageWidget extends ComponentWidget {
 const SizeChangeStory = {
 	widget: Container({
 		alignment: Alignment.center,
-		child: new SizeChageWidget()
+		child: new SizeChangeWidget()
 	}),
 	code: dedent`
 		`
