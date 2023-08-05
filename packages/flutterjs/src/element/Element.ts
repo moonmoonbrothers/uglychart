@@ -88,12 +88,10 @@ class Element {
 
   update(newWidget: Widget) {
     this.widget = newWidget;
-    newWidget.element = this;
   }
 
   inflateWidget(childWidget: Widget): Element {
     const newChild = childWidget.createElement();
-    childWidget.element = this;
     newChild.mount(this);
     return newChild;
   }
