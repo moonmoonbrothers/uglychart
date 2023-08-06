@@ -1,6 +1,7 @@
 import { animate, linear } from "popmotion";
 import Utils from "../utils";
-class AnimationController {
+import Animation from "./Animation";
+class AnimationController extends Animation<number> {
   isAnimating = false;
   get isDismissed() {
     return this.status === "dismissed";
@@ -8,13 +9,11 @@ class AnimationController {
   get isCompleted() {
     return this.status === "completed";
   }
-  status: "dismissed" | "forward" | "reverse" | "completed";
   _value: number = 0;
-  get value() {
+  get value(): number {
     if (this._value == null) return 0;
     return this._value;
   }
-
   private set value(value) {
     this.stop();
     this.internalSetValue(value);
@@ -51,6 +50,7 @@ class AnimationController {
     upperBound?: number;
     duration: number;
   }) {
+    super();
     this.duration = duration;
     this.upperBound = upperBound;
     this.lowerBound = lowerBound;

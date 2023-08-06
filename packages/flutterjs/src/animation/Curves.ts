@@ -14,7 +14,7 @@ import {
   bounceInOut,
   bounceOut,
 } from "popmotion";
-import { assert } from "../utils";
+import Curve from "./Curve";
 
 const transforms = {
   linear,
@@ -33,21 +33,6 @@ const transforms = {
   bounceOut,
 };
 
-class Curve {
-  private transfromInternal: (_: number) => number;
-  constructor(transform: (_: number) => number) {
-    this.transfromInternal = transform;
-  }
-
-  transform(value: number): number {
-    assert(
-      value >= 0 && value <= 1,
-      "parametric value $t is outside of [0, 1] range."
-    );
-
-    return this.transfromInternal(value);
-  }
-}
 namespace Curves {
   export const linear = new Curve(transforms.linear);
   export const easeIn = new Curve(transforms.easeIn);
