@@ -26,16 +26,16 @@ class RotateRectangleState extends State<RotateRectangleWidget> {
 		this.animationController.addListener(() => {
 			this.setState();
 		});
-		this.animationController.repeat();
+		this.animationController.forward();
 	}
 
 	build(context: Element): Widget {
 		return GestureDetector({
 			onClick: () => {
-				if (this.animationController.status === 'dismissed') {
-					this.animationController.repeat();
+				if (this.animationController.isCompleted || this.animationController.status === 'forward') {
+					this.animationController.reverse();
 				} else {
-					this.animationController.stop();
+					this.animationController.forward();
 				}
 				this.setState();
 			},

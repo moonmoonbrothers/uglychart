@@ -115,9 +115,10 @@ class AnimationController {
     this.animation = animate({
       from: this.value,
       to: target,
-      duration: this.duration,
+      duration:
+        this.duration *
+        (Math.abs(this.value - target) / (this.upperBound - this.lowerBound)),
       ease: linear,
-      //duration: this.duration,
       onPlay: () => {
         this.isAnimating = true;
       },
@@ -127,7 +128,6 @@ class AnimationController {
       },
       onComplete: () => {
         this.isAnimating = false;
-        this.status = "completed";
       },
       ...overrideOptions,
     });
