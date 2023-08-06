@@ -51,6 +51,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     const rect = createSvgEl("rect");
     rect.setAttribute("pointer-events", "auto");
     rect.setAttribute("cursor", "pointer");
+    rect.setAttribute("fill", "transparent");
     return {
       rect,
     };

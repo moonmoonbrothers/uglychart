@@ -1,26 +1,52 @@
-import { animate } from "popmotion";
+import { animate, linear } from "popmotion";
+import Utils from "../utils";
 class AnimationController {
   isAnimating = false;
+  get isDismissed() {
+    return this.status === "dismissed";
+  }
+  get isCompleted() {
+    return this.status === "completed";
+  }
   status: "dismissed" | "forward" | "reverse" | "completed";
-  private _value: number;
+  _value: number = 0;
   get value() {
-    if (this._value == null) throw Error("need to animate first");
+    if (this._value == null) return 0;
     return this._value;
   }
-  private set value(val) {
-    this._value = val;
+
+  private set value(value) {
+    this.stop();
+    this.internalSetValue(value);
+    this.notifyListeners();
   }
+  private internalSetValue(value: number) {
+    this._value = Utils.clampDouble(value, this.lowerBound, this.upperBound);
+    if (value === this.lowerBound) {
+      this.status = "dismissed";
+    } else if (value === this.upperBound) {
+      this.status = "completed";
+    } else if (this.direction === "forward") {
+      this.status = "forward";
+    } else {
+      this.status = "reverse";
+    }
+  }
+  private direction: "forward" | "reverse";
   private readonly lowerBound: number;
   private readonly upperBound: number;
   private readonly duration: number;
   private animation: {
     stop: () => void;
   } | null = null;
+  private listeners: (() => void)[] = [];
   constructor({
+    value,
     duration,
     lowerBound = 0,
     upperBound = 1,
   }: {
+    value?: number;
     lowerBound?: number;
     upperBound?: number;
     duration: number;
@@ -28,51 +54,61 @@ class AnimationController {
     this.duration = duration;
     this.upperBound = upperBound;
     this.lowerBound = lowerBound;
+    this.internalSetValue(value ?? lowerBound);
+    this.direction = "forward";
   }
 
   reset() {
-    this.value = this.lowerBound;
+    this.internalSetValue(this.lowerBound);
   }
 
   forward({ from }: { from?: number } = {}) {
     if (from != null) {
-      this._value = from;
-    } else if (this._value == null) {
-      this._value = this.lowerBound;
+      this.value = from;
     }
-    this.status = "forward";
+    this.direction = "forward";
     this.animate(this.upperBound);
   }
   reverse({ from }: { from?: number } = {}) {
     if (from != null) {
-      this._value = from;
-    } else if (this._value == null) {
-      this._value = this.lowerBound;
+      this.value = from;
     }
-    this.status = "reverse";
+    this.direction = "reverse";
     this.animate(this.lowerBound);
   }
   repeat({ reverse = false }: { reverse?: boolean } = {}) {
-    this._value = this.lowerBound;
-    this.animate(this.value, {
-      repeatType: reverse ? "reverse" : "loop",
-      repeat: Infinity,
-    });
+    const repeat = () => {
+      this.animate(
+        this.direction === "forward" ? this.upperBound : this.lowerBound,
+        {
+          onComplete: () => {
+            if (reverse) {
+              this.direction =
+                this.direction === "forward" ? "reverse" : "forward";
+            } else {
+              this._value = this.lowerBound;
+              this.notifyListeners();
+            }
+            repeat();
+          },
+        }
+      );
+    };
+    repeat();
   }
+
   stop() {
     this.animation?.stop();
+    this.status = "dismissed";
+  }
 
-    if (this.isAnimating) {
-      this.status = "dismissed";
-    }
+  dispose() {
+    this.animation?.stop();
   }
 
   private animate(
     target: number,
-    {
-      repeat,
-      repeatType,
-    }: { repeat?: number; repeatType?: "loop" | "reverse" } = {}
+    overrideOptions: { onComplete?: () => void } = {}
   ) {
     if (typeof window === "undefined") return;
     this.animation?.stop();
@@ -80,19 +116,34 @@ class AnimationController {
       from: this.value,
       to: target,
       duration: this.duration,
-      repeat,
-      repeatType,
+      ease: linear,
+      //duration: this.duration,
       onPlay: () => {
         this.isAnimating = true;
       },
-      onRepeat: () => {},
       onUpdate: (latest) => {
-        this.value = latest;
+        this.internalSetValue(latest);
+        this.notifyListeners();
       },
       onComplete: () => {
         this.isAnimating = false;
         this.status = "completed";
       },
+      ...overrideOptions,
+    });
+  }
+  addListener(callback: () => void) {
+    this.listeners.push(callback);
+  }
+  removeListener(callback: () => void) {
+    this.listeners = this.listeners.filter((listenr) => listenr !== callback);
+  }
+  clearListeners() {
+    this.listeners = [];
+  }
+  notifyListeners() {
+    this.listeners.forEach((listener) => {
+      listener();
     });
   }
 }
