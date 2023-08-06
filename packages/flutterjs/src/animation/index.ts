@@ -1,3 +1,4 @@
 import AnimationController from "./AnimationController";
+import Curves from "./Curves";
 
-export { AnimationController };
+export { AnimationController, Curves };
