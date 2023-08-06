@@ -2,6 +2,7 @@ import Widget from "../widget/Widget";
 import ComponentElement from "./ComponentElement";
 import StatefulWidget from "../widget/StatefulWidget";
 import Element from "./Element";
+import { BuildContext } from "../widget";
 
 export class StatefulElement extends ComponentElement {
   state: State<StatefulWidget>;
@@ -19,6 +20,11 @@ export class StatefulElement extends ComponentElement {
   build(): Widget {
     return this.state.build(this);
   }
+
+  unmount(): void {
+    super.unmount();
+    this.state.dispose();
+  }
 }
 
 export class State<T> {
@@ -26,12 +32,13 @@ export class State<T> {
     return this.element.widget as T;
   }
   element: StatefulElement;
-  initState(context: Element) {}
-  build(context: Element): Widget {
+  initState(context: BuildContext) {}
+  build(context: BuildContext): Widget {
     throw Error("not implemented state");
   }
   setState(callback?: () => any) {
     callback?.();
     this.element.markNeedsBuild();
   }
+  dispose() {}
 }

@@ -29,11 +29,11 @@ class ComponentElement extends Element {
   }
 
   _firstBuild() {
+    this.initState();
     this.performRebuild();
   }
 
   override performRebuild(): void {
-    this.initState();
     const built = this.build();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.child = this.updateChild(this.child, built)!;

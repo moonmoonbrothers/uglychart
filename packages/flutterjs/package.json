@@ -9,6 +9,7 @@
     "vite": "^4.2.1"
   },
   "dependencies": {
+    "popmotion": "^11.0.5",
     "short-unique-id": "^4.4.4"
   },
   "scripts": {
