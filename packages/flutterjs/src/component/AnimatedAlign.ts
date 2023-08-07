@@ -1,7 +1,7 @@
 import { Curve } from "../animation";
 import { Alignment } from "../type";
 import { Widget } from "../widget";
-import BaseAnimatedAlignWidget from "./base/BaseAnimatedAlignWidget";
+import BaseAnimatedAlignWidget from "./base/BaseAnimatedAlign";
 
 export default function AnimatedAlignWidget({
   key,

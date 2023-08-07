@@ -37,6 +37,7 @@ import RichText from "./RichText";
 import CustomPaint from "./CustomPaint";
 import GestureDetector from "./GestureDetector";
 import AnimatedAlign from "./AnimatedAlign";
+import AnimatedOpacity from "./AnimatedOpacity";
 
 export {
   ConstrainedBox,
@@ -78,4 +79,5 @@ export {
   CustomPaint,
   GestureDetector,
   AnimatedAlign,
+  AnimatedOpacity,
 };

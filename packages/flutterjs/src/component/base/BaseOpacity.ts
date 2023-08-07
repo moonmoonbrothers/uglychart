@@ -17,7 +17,7 @@ class Opacity extends SingleChildRenderObjectWidget {
   }
 
   updateRenderObject(renderObject: RenderOpacity): void {
-    renderObject.opacity = this.opacity;
+    renderObject.opacityProp = this.opacity;
   }
 }
 
