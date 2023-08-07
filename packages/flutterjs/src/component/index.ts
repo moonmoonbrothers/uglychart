@@ -36,6 +36,7 @@ import DecoratedBox from "./DecoratedBox";
 import RichText from "./RichText";
 import CustomPaint from "./CustomPaint";
 import GestureDetector from "./GestureDetector";
+import AnimatedAlign from "./AnimatedAlign";
 
 export {
   ConstrainedBox,
@@ -76,4 +77,5 @@ export {
   RichText,
   CustomPaint,
   GestureDetector,
+  AnimatedAlign,
 };

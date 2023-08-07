@@ -4,24 +4,20 @@
 		Container,
 		GestureDetector,
 		Text,
-		TextStyle
+		TextStyle,
+		StatefulWidget,
+		State
 	} from '@moonmoonbrothers/flutterjs';
 	import Widget from '@moonmoonbrothers/flutterjs-svelte';
+	import CustomWidget from './temp';
 </script>
 
-<svg viewBox="0 0 400 400" width="400" height="400" on:click={() => console.log('this is svg')}>
-	<g>
-		<circle
-			cursor="pointer"
-			on:mousedown={() => console.log('clicked')}
-			x="0"
-			y="0"
-			opacity="0.5"
-			fill="blue"
-			r="100"
-		/>
-	</g>
-</svg>
+<Widget
+	width="400px"
+	height="400px"
+	ssrSize={{ width: 400, height: 400 }}
+	widget={new CustomWidget()}
+/>
 
 <style>
 	.box1 {

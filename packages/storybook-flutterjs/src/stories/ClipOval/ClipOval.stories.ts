@@ -10,7 +10,8 @@ import {
 	Flexible,
 	Stack,
 	Positioned,
-	SizedBox
+	SizedBox,
+	Offset
 } from '@moonmoonbrothers/flutterjs';
 
 const importWidgets = dedent`import {
@@ -178,7 +179,7 @@ export const TranslatedClip: Story = {
 								child: ClipOval({
 									clipper: (size) =>
 										Rect.fromCenter({
-											center: { x: size.width / 2, y: size.height / 2 },
+											center: new Offset({ x: size.width / 2, y: size.height / 2 }),
 											width: size.width / 2,
 											height: size.height / 2
 										}),
@@ -207,7 +208,7 @@ export const TranslatedClip: Story = {
 								child: ClipOval({
 									clipper: (size) =>
 										Rect.fromCenter({
-											center: { x: size.width / 2, y: size.height / 2 },
+											center: new Offset({ x: size.width / 2, y: size.height / 2 }),
 											width: size.width / 2,
 											height: size.height / 2
 										}),

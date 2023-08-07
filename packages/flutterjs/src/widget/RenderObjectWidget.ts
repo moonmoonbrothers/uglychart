@@ -1,27 +1,27 @@
-import RenderObjectElement from "../element/RenderObjectElement"
-import type RenderObject from "../renderobject/RenderObject"
-import Widget from "./Widget"
+import RenderObjectElement from "../element/RenderObjectElement";
+import type RenderObject from "../renderobject/RenderObject";
+import Widget from "./Widget";
 
 class RenderObjectWidget extends Widget {
-  children: Widget[]
+  children: Widget[];
 
-  constructor({ children = [] }: { children: Widget[] }) {
-    super()
-    this.children = children
+  constructor({ children = [], key }: { children: Widget[]; key?: string }) {
+    super(key);
+    this.children = children;
   }
 
   createElement(): RenderObjectElement {
-    return new RenderObjectElement(this)
+    return new RenderObjectElement(this);
   }
 
   createRenderObject(): RenderObject {
-    throw { message: "not implemented createRenderObject" }
+    throw { message: "not implemented createRenderObject" };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateRenderObject(renderObject: RenderObject) {
-    throw { message: "not implemented updatedRenderObject" }
+    throw { message: "not implemented updatedRenderObject" };
   }
 }
 
-export default RenderObjectWidget
+export default RenderObjectWidget;

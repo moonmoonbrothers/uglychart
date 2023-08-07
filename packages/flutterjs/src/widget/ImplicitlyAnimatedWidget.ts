@@ -1,4 +1,3 @@
-import { BuildContext } from ".";
 import {
   AnimationController,
   Curve,
@@ -6,12 +5,12 @@ import {
   Curves,
   Tween,
 } from "../animation";
-import { State } from "../element";
+import { State, type BuildContext } from "../element";
 import { Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
-class ImplicitlyAnimatedWidget extends StatefulWidget {
+export class ImplicitlyAnimatedWidget extends StatefulWidget {
   curve: Curve;
   duration: number;
   constructor({
@@ -33,22 +32,30 @@ class ImplicitlyAnimatedWidget extends StatefulWidget {
   }
 }
 
-class ImplicitlyAnimatedWidgetState extends State<ImplicitlyAnimatedWidget> {
-  private controller: AnimationController;
-  private animation: CurvedAnimation;
+export default ImplicitlyAnimatedWidget;
+
+export class ImplicitlyAnimatedWidgetState<
+  T extends ImplicitlyAnimatedWidget
+> extends State<T> {
+  protected controller: AnimationController;
+  protected animation: CurvedAnimation;
+
+  constructor() {
+    super();
+    this.controller = new AnimationController({
+      duration: 0,
+    });
+    this.animation = this.createCurve();
+  }
 
   initState(context: BuildContext): void {
     super.initState(context);
 
     this.constructTweens();
     this.didUpdateTweens();
-    this.controller = new AnimationController({
-      duration: this.widget.duration,
-    });
-    this.animation = this.createCurve();
   }
 
-  didUpdateWidget(oldWidget: ImplicitlyAnimatedWidget): void {
+  didUpdateWidget(oldWidget: T): void {
     super.didUpdateWidget(oldWidget);
     if (this.widget.curve !== oldWidget.curve) {
       this.animation.dispose();
@@ -62,47 +69,26 @@ class ImplicitlyAnimatedWidgetState extends State<ImplicitlyAnimatedWidget> {
     }
   }
 
-  // @override
-  // void didUpdateWidget(T oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (widget.curve != oldWidget.curve) {
-  //     _animation.dispose();
-  //     _animation = _createCurve();
-  //   }
-  //   _controller.duration = widget.duration;
-  //   if (_constructTweens()) {
-  //     forEachTween((Tween<dynamic>? tween, dynamic targetValue, TweenConstructor<dynamic> constructor) {
-  //       _updateTween(tween, targetValue);
-  //       return tween;
-  //     });
-  //     _controller
-  //       ..value = 0.0
-  //       ..forward();
-  //     didUpdateTweens();
-  //   }
-  // }
-
   private createCurve() {
     return new CurvedAnimation({
-      curve: this.widget.curve,
+      curve: this.widget?.curve,
       parent: this.controller,
     });
   }
 
   private constructTweens() {
     let shouldStartAnimation = false;
-    this.forEachTween(({ getTween, setTween, targetValue }) => {
+    this.forEachTween(({ tween, targetValue }) => {
       if (targetValue == null) {
-        setTween(null);
-        return;
+        return null;
       }
 
-      const tween = getTween();
       if (tween == null) {
-        setTween(new Tween({ begin: targetValue, end: targetValue }));
+        return new Tween({ begin: targetValue, end: targetValue });
       } else if (this.shouldAnimateTween(tween, targetValue)) {
         shouldStartAnimation = true;
         this.updateTween(tween, targetValue);
+        return tween;
       }
     });
 
@@ -127,21 +113,20 @@ class ImplicitlyAnimatedWidgetState extends State<ImplicitlyAnimatedWidget> {
     const { end } = tween;
     if (typeof end === "number") {
       const target = targetValue as number;
-      return end === target;
+      return end !== target;
     } else {
       const target = targetValue as Data;
-      return end.equals(target);
+      return !end.equals(target);
     }
   }
 
   didUpdateTweens() {}
 
   forEachTween(
-    visitor: (props: {
-      getTween: () => Tween<Data | number> | Nullable;
-      setTween: (tween: Nullable | Tween<Data | number>) => void;
-      targetValue: Data | number | Nullable;
-    }) => void
+    visitor: <T extends Data | number>(props: {
+      tween: Tween<T> | Nullable;
+      targetValue: T | Nullable;
+    }) => Tween<T> | Nullable
   ) {
     throw new Error("forEachTween must be implemented");
   }
@@ -152,4 +137,16 @@ class ImplicitlyAnimatedWidgetState extends State<ImplicitlyAnimatedWidget> {
   }
 }
 
-export default ImplicitlyAnimatedWidget;
+export class AnimatedBaseWidgetState<
+  T extends ImplicitlyAnimatedWidget
+> extends ImplicitlyAnimatedWidgetState<T> {
+  initState(context: BuildContext): void {
+    super.initState(context);
+    this.controller.addListener(() => {
+      this.handleChange();
+    });
+  }
+  private handleChange() {
+    this.setState(() => {});
+  }
+}

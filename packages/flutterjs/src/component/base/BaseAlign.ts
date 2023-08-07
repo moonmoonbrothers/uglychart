@@ -12,13 +12,15 @@ class Align extends SingleChildRenderObjectWidget {
     widthFactor,
     heightFactor,
     alignment = Alignment.center,
+    key,
   }: {
+    key?: string;
     child?: Widget;
     alignment?: Alignment;
     widthFactor?: number;
     heightFactor?: number;
   }) {
-    super({ child });
+    super({ child, key });
     this.alignment = alignment;
     this.widthFactor = widthFactor;
     this.heightFactor = heightFactor;
@@ -44,7 +46,8 @@ class RenderAlign extends RenderAligningShiftedBox {
   get widthFactor() {
     return this._widthFactor;
   }
-  set widthFactor(value: number) {
+  set widthFactor(value: number | undefined) {
+    if (this._widthFactor === value) return;
     this._widthFactor = value;
     this.markNeedsLayout();
   }
@@ -52,7 +55,8 @@ class RenderAlign extends RenderAligningShiftedBox {
   get heightFactor() {
     return this._heightFactor;
   }
-  set heightFactor(value: number) {
+  set heightFactor(value: number | undefined) {
+    if (this._heightFactor === value) return;
     this._heightFactor = value;
     this.markNeedsLayout();
   }
