@@ -25,7 +25,7 @@ import TextBaseline from "./_types/TextBaseline";
 import TextStyle from "./_types/TextStyle";
 import TextSpan from "./_types/TextSpan";
 import Data from "./_types/Data";
-export * from "./_types/borders";
+export * from "./_types/Borders";
 
 export {
   Data,

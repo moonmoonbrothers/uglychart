@@ -38,6 +38,7 @@ import CustomPaint from "./CustomPaint";
 import GestureDetector from "./GestureDetector";
 import AnimatedAlign from "./AnimatedAlign";
 import AnimatedOpacity from "./AnimatedOpacity";
+import AnimatedPadding from "./AnimatedPadding";
 
 export {
   ConstrainedBox,
@@ -80,4 +81,5 @@ export {
   GestureDetector,
   AnimatedAlign,
   AnimatedOpacity,
+  AnimatedPadding,
 };

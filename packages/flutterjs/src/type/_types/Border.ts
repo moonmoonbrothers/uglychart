@@ -1,4 +1,4 @@
-import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./borders";
+import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./Borders";
 import EdgeInsets, { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
