@@ -1,3 +1,4 @@
+import Data from "./Data";
 import Rect from "./Rect";
 
 type EdgeInsetsProps = {
@@ -7,13 +8,31 @@ type EdgeInsetsProps = {
   right: number;
 };
 
-export class EdgeInsetsGeometry {
+export class EdgeInsetsGeometry extends Data {
   top: number;
   bottom: number;
   left: number;
   right: number;
 
-  eqaul(other: EdgeInsetsGeometry) {
+  plus(other: EdgeInsetsGeometry): EdgeInsetsGeometry {
+    return new EdgeInsetsGeometry({
+      top: this.top + other.top,
+      bottom: this.bottom + other.bottom,
+      left: this.left + other.left,
+      right: this.right + other.right,
+    });
+  }
+
+  multiply(value: number): EdgeInsetsGeometry {
+    return new EdgeInsetsGeometry({
+      top: this.top * value,
+      bottom: this.bottom * value,
+      left: this.left * value,
+      right: this.right * value,
+    });
+  }
+
+  equals(other: EdgeInsetsGeometry): boolean {
     if (this === other) return;
     return (
       this.top === other.top &&
@@ -21,6 +40,14 @@ export class EdgeInsetsGeometry {
       this.left === other.left &&
       this.right === other.right
     );
+  }
+
+  /**
+   * @deprecated The method should not be used
+   * Instead use elquals
+   */
+  eqaul(other: EdgeInsetsGeometry) {
+    return this.equals(other);
   }
 
   get horizontal(): number {
@@ -32,6 +59,7 @@ export class EdgeInsetsGeometry {
   }
 
   constructor({ top, bottom, left, right }: EdgeInsetsProps) {
+    super();
     this.top = top;
     this.bottom = bottom;
     this.left = left;
