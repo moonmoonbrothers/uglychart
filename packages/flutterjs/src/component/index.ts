@@ -39,6 +39,7 @@ import GestureDetector from "./GestureDetector";
 import AnimatedAlign from "./AnimatedAlign";
 import AnimatedOpacity from "./AnimatedOpacity";
 import AnimatedPadding from "./AnimatedPadding";
+import AnimatedScale from "./AnimatedScale";
 
 export {
   ConstrainedBox,
@@ -82,4 +83,5 @@ export {
   AnimatedAlign,
   AnimatedOpacity,
   AnimatedPadding,
+  AnimatedScale,
 };
