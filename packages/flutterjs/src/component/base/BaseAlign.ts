@@ -12,13 +12,15 @@ class Align extends SingleChildRenderObjectWidget {
     widthFactor,
     heightFactor,
     alignment = Alignment.center,
+    key,
   }: {
+    key?: string;
     child?: Widget;
     alignment?: Alignment;
     widthFactor?: number;
     heightFactor?: number;
   }) {
-    super({ child });
+    super({ child, key });
     this.alignment = alignment;
     this.widthFactor = widthFactor;
     this.heightFactor = heightFactor;

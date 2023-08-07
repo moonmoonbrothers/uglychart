@@ -75,4 +75,13 @@
 	:global(.highlight code) {
 		padding: 20px !important;
 	}
+	:global(pre) {
+		tab-size: 2;
+	}
+	:global(svg text) {
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
 </style>

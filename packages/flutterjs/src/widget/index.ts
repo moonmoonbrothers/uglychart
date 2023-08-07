@@ -6,6 +6,11 @@ import Widget from "./Widget";
 import StatelessWidget from "./StatelessWidget";
 import StatefulWidget from "./StatefulWidget";
 import { Element } from "../element";
+import {
+  AnimatedBaseWidgetState,
+  ImplicitlyAnimatedWidget,
+  ImplicitlyAnimatedWidgetState,
+} from "./ImplicitlyAnimatedWidget";
 
 export {
   StatelessWidget as ComponentWidget,
@@ -17,5 +22,7 @@ export {
   Element as BuildContext,
   StatelessWidget,
   StatefulWidget,
+  AnimatedBaseWidgetState,
+  ImplicitlyAnimatedWidget,
+  ImplicitlyAnimatedWidgetState,
 };
-export * from "./ImplicitlyAnimatedWidget";

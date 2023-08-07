@@ -39,7 +39,7 @@ export class State<T extends StatefulWidget> {
   element: StatefulElement;
   initState(context: BuildContext) {}
   build(context: BuildContext): Widget {
-    throw Error("not implemented state");
+    throw Error("not implemented state build");
   }
   setState(callback?: () => any) {
     callback?.();

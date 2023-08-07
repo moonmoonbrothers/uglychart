@@ -11,4 +11,5 @@ export {
   StatelessElement,
   State,
   StatefulElement,
+  Element as BuildContext,
 };

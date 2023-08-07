@@ -1,14 +1,12 @@
 import { Curve, Tween } from "../../animation";
-import { State } from "../../element";
 import { Alignment, Data } from "../../type";
 import { Nullable } from "../../utils/type";
+import { Widget } from "../../widget";
+import Align from "../Align";
 import {
   ImplicitlyAnimatedWidget,
-  StatefulWidget,
-  Widget,
   AnimatedBaseWidgetState,
-} from "../../widget";
-import Align from "../Align";
+} from "../../widget/ImplicitlyAnimatedWidget";
 
 class BaseAnimatedAlignWidget extends ImplicitlyAnimatedWidget {
   alignment: Alignment;
@@ -39,7 +37,7 @@ class BaseAnimatedAlignWidget extends ImplicitlyAnimatedWidget {
     this.widthFactor = widthFactor;
     this.heightFactor = heightFactor;
   }
-  createState(): State<StatefulWidget> {
+  createState(): AnimatedBaseWidgetState<BaseAnimatedAlignWidget> {
     return new BaseAnimatedAlignWidgetState();
   }
 }
@@ -71,10 +69,10 @@ class BaseAnimatedAlignWidgetState extends AnimatedBaseWidgetState<BaseAnimatedA
 
   build(): Widget {
     return Align({
-      child: this.widget,
       alignment: this.alignmentTween?.evaluate(this.animation),
       widthFactor: this.widthFactorTween?.evaluate(this.animation),
       heightFactor: this.heightFactorTween?.evaluate(this.animation),
+      child: this.widget.child,
     });
   }
 }

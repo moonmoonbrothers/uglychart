@@ -1,4 +1,3 @@
-import { BuildContext } from ".";
 import {
   AnimationController,
   Curve,
@@ -6,7 +5,7 @@ import {
   Curves,
   Tween,
 } from "../animation";
-import { State } from "../element";
+import { State, type BuildContext } from "../element";
 import { Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
@@ -33,21 +32,27 @@ export class ImplicitlyAnimatedWidget extends StatefulWidget {
   }
 }
 
+export default ImplicitlyAnimatedWidget;
+
 export class ImplicitlyAnimatedWidgetState<
   T extends ImplicitlyAnimatedWidget
 > extends State<T> {
   protected controller: AnimationController;
   protected animation: CurvedAnimation;
 
+  constructor() {
+    super();
+    this.controller = new AnimationController({
+      duration: 0,
+    });
+    this.animation = this.createCurve();
+  }
+
   initState(context: BuildContext): void {
     super.initState(context);
 
     this.constructTweens();
     this.didUpdateTweens();
-    this.controller = new AnimationController({
-      duration: this.widget.duration,
-    });
-    this.animation = this.createCurve();
   }
 
   didUpdateWidget(oldWidget: T): void {
@@ -66,7 +71,7 @@ export class ImplicitlyAnimatedWidgetState<
 
   private createCurve() {
     return new CurvedAnimation({
-      curve: this.widget.curve,
+      curve: this.widget?.curve,
       parent: this.controller,
     });
   }
@@ -108,10 +113,10 @@ export class ImplicitlyAnimatedWidgetState<
     const { end } = tween;
     if (typeof end === "number") {
       const target = targetValue as number;
-      return end === target;
+      return end !== target;
     } else {
       const target = targetValue as Data;
-      return end.equals(target);
+      return !end.equals(target);
     }
   }
 
