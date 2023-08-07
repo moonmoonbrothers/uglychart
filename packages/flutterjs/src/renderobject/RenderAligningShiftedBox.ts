@@ -7,7 +7,7 @@ class RenderAligningShiftedBox extends SingleChildRenderObject {
     return this._alignment;
   }
   set alignment(value: Alignment) {
-    if (this._alignment.equal(value)) return;
+    if (this._alignment.equals(value)) return;
     this._alignment = value;
     this.markNeedsLayout();
   }

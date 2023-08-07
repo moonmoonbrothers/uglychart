@@ -7,7 +7,7 @@ class CurvedAnimation extends Animation<number> {
   constructor({ parent, curve }: { parent: Animation<number>; curve: Curve }) {
     super();
     this.parent = parent;
-    this, (curve = curve);
+    this.curve = curve;
   }
 
   get value(): number {
