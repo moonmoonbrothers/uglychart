@@ -1,7 +1,6 @@
 import Widget from "../widget/Widget";
 import ComponentElement from "./ComponentElement";
 import StatefulWidget from "../widget/StatefulWidget";
-import Element from "./Element";
 import { BuildContext } from "../widget";
 
 export class StatefulElement extends ComponentElement {
@@ -10,6 +9,7 @@ export class StatefulElement extends ComponentElement {
   constructor(widget: StatefulWidget) {
     super(widget);
     this.state = widget.createState();
+    this.state.widget = widget;
     this.state.element = this;
   }
 
@@ -25,12 +25,17 @@ export class StatefulElement extends ComponentElement {
     super.unmount();
     this.state.dispose();
   }
+
+  update(newWidget: StatefulWidget): void {
+    super.update(newWidget);
+    const oldWidget = this.state.widget;
+    this.state.widget = newWidget;
+    this.state.didUpdateWidget(oldWidget);
+  }
 }
 
-export class State<T> {
-  get widget(): T {
-    return this.element.widget as T;
-  }
+export class State<T extends StatefulWidget> {
+  widget: T;
   element: StatefulElement;
   initState(context: BuildContext) {}
   build(context: BuildContext): Widget {
@@ -41,4 +46,5 @@ export class State<T> {
     this.element.markNeedsBuild();
   }
   dispose() {}
+  didUpdateWidget(oldWidget: T) {}
 }

@@ -1,26 +1,13 @@
+import { Data } from "../type";
 import Animitable from "./Animitable";
 
-class Tween<T> extends Animitable<T> {
+class Tween<T extends Data | number = Data | number> extends Animitable<T> {
   begin: T;
   end: T;
-  plus: (a: T, b: T) => T;
-  constantMultiply: (constant: number, value: T) => T;
-  constructor({
-    begin,
-    end,
-    plus,
-    constantMultiply,
-  }: {
-    begin: T;
-    end?: T;
-    plus: (a: T, b: T) => T;
-    constantMultiply: (constant: number, value: T) => T;
-  }) {
+  constructor({ begin, end }: { begin: T; end?: T }) {
     super();
     this.begin = begin;
     this.end = end ?? begin;
-    this.plus = plus;
-    this.constantMultiply = constantMultiply;
   }
 
   transform(value: number): T {
@@ -30,13 +17,14 @@ class Tween<T> extends Animitable<T> {
   }
 
   private lerp(t: number): T {
-    return this.plus(
-      this.begin,
-      this.constantMultiply(
-        t,
-        this.plus(this.end, this.constantMultiply(-1, this.begin))
-      )
-    );
+    const { begin } = this;
+    if (typeof begin === "number") {
+      const end = this.end as number;
+      return (begin + (end - begin) * t) as T;
+    } else {
+      const end = this.end as Data;
+      return begin.plus(end.minus(begin).multiply(t)) as T;
+    }
   }
 }
 

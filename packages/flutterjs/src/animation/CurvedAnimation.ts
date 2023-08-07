@@ -13,6 +13,10 @@ class CurvedAnimation extends Animation<number> {
   get value(): number {
     return this.curve.transform(this.parent.value);
   }
+
+  dispose() {
+    //
+  }
 }
 
 export default CurvedAnimation;

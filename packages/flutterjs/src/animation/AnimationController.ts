@@ -34,7 +34,7 @@ class AnimationController extends Animation<number> {
   private direction: "forward" | "reverse";
   private readonly lowerBound: number;
   private readonly upperBound: number;
-  private readonly duration: number;
+  duration: number;
   private animation: {
     stop: () => void;
   } | null = null;
@@ -60,6 +60,7 @@ class AnimationController extends Animation<number> {
 
   reset() {
     this.internalSetValue(this.lowerBound);
+    return this;
   }
 
   forward({ from }: { from?: number } = {}) {
@@ -68,6 +69,7 @@ class AnimationController extends Animation<number> {
     }
     this.direction = "forward";
     this.animate(this.upperBound);
+    return this;
   }
   reverse({ from }: { from?: number } = {}) {
     if (from != null) {
@@ -75,6 +77,7 @@ class AnimationController extends Animation<number> {
     }
     this.direction = "reverse";
     this.animate(this.lowerBound);
+    return this;
   }
   repeat({ reverse = false }: { reverse?: boolean } = {}) {
     const repeat = () => {
@@ -95,6 +98,7 @@ class AnimationController extends Animation<number> {
       );
     };
     repeat();
+    return this;
   }
 
   stop() {
