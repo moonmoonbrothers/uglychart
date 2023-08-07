@@ -1,21 +1,41 @@
+import Data from "./Data";
 import Offset from "./Offset";
 import Rect from "./Rect";
 import Size from "./Size";
 import TextDirection from "./TextDirection";
 
-class Alignment {
+class Alignment extends Data {
   x: number; // -1 ~ 1
   y: number; // -1 ~ 1
 
+  plus(other: Alignment): Alignment {
+    return new Alignment({
+      x: this.x + other.x,
+      y: this.y + other.y,
+    });
+  }
+
+  multiply(value: number): Alignment {
+    return new Alignment({ x: this.x * value, y: this.y * value });
+  }
+
+  equals(other: Alignment): boolean {
+    if (other === this) return true;
+
+    return this.x === other.x && this.y === other.y;
+  }
+
   constructor({ x, y }: { x: number; y: number }) {
+    super();
     this.x = x;
     this.y = y;
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   equal(other: Alignment) {
-    if (other === this) return true;
-
-    return this.x === other.x && this.y === other.y;
+    return this.equals(other);
   }
 
   add(target: Alignment): Alignment {
