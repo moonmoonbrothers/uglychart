@@ -1,6 +1,7 @@
 import { animate, linear } from "popmotion";
 import Utils from "../utils";
-class AnimationController {
+import Animation from "./Animation";
+class AnimationController extends Animation<number> {
   isAnimating = false;
   get isDismissed() {
     return this.status === "dismissed";
@@ -8,13 +9,11 @@ class AnimationController {
   get isCompleted() {
     return this.status === "completed";
   }
-  status: "dismissed" | "forward" | "reverse" | "completed";
   _value: number = 0;
-  get value() {
+  get value(): number {
     if (this._value == null) return 0;
     return this._value;
   }
-
   private set value(value) {
     this.stop();
     this.internalSetValue(value);
@@ -35,7 +34,7 @@ class AnimationController {
   private direction: "forward" | "reverse";
   private readonly lowerBound: number;
   private readonly upperBound: number;
-  private readonly duration: number;
+  duration: number;
   private animation: {
     stop: () => void;
   } | null = null;
@@ -51,6 +50,7 @@ class AnimationController {
     upperBound?: number;
     duration: number;
   }) {
+    super();
     this.duration = duration;
     this.upperBound = upperBound;
     this.lowerBound = lowerBound;
@@ -60,6 +60,7 @@ class AnimationController {
 
   reset() {
     this.internalSetValue(this.lowerBound);
+    return this;
   }
 
   forward({ from }: { from?: number } = {}) {
@@ -68,6 +69,7 @@ class AnimationController {
     }
     this.direction = "forward";
     this.animate(this.upperBound);
+    return this;
   }
   reverse({ from }: { from?: number } = {}) {
     if (from != null) {
@@ -75,6 +77,7 @@ class AnimationController {
     }
     this.direction = "reverse";
     this.animate(this.lowerBound);
+    return this;
   }
   repeat({ reverse = false }: { reverse?: boolean } = {}) {
     const repeat = () => {
@@ -95,6 +98,7 @@ class AnimationController {
       );
     };
     repeat();
+    return this;
   }
 
   stop() {

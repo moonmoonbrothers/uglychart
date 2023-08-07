@@ -5,3 +5,6 @@ export type PaintContext = {
   setId: (el: SVGElement, id: string) => void;
   isOnBrowser: boolean;
 };
+
+export type VoidCallback = () => void;
+export type Nullable = undefined | null;
