@@ -40,6 +40,7 @@ import AnimatedAlign from "./AnimatedAlign";
 import AnimatedOpacity from "./AnimatedOpacity";
 import AnimatedPadding from "./AnimatedPadding";
 import AnimatedScale from "./AnimatedScale";
+import AnimatedFractionallySizedBox from "./AnimatedFractionallySizedBox";
 
 export {
   ConstrainedBox,
@@ -84,4 +85,5 @@ export {
   AnimatedOpacity,
   AnimatedPadding,
   AnimatedScale,
+  AnimatedFractionallySizedBox,
 };
