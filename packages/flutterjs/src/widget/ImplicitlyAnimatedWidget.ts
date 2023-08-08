@@ -42,15 +42,15 @@ export class ImplicitlyAnimatedWidgetState<
 
   constructor() {
     super();
-    this.controller = new AnimationController({
-      duration: 0,
-    });
-    this.animation = this.createCurve();
   }
 
   initState(context: BuildContext): void {
     super.initState(context);
 
+    this.controller = new AnimationController({
+      duration: this.widget.duration,
+    });
+    this.animation = this.createCurve();
     this.constructTweens();
     this.didUpdateTweens();
   }
