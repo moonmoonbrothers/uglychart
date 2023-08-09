@@ -14,7 +14,8 @@ import {
 	Radius,
 	Alignment,
 	BoxShadow,
-	Offset
+	Offset,
+	Matrix4
 } from '@moonmoonbrothers/flutterjs';
 
 class CustomWidget extends StatefulWidget {
@@ -29,6 +30,7 @@ class CustomWidgetState extends State<CustomWidget> {
 		{
 			width: 150,
 			height: 200,
+			transform: Matrix4.identity(),
 			decoration: new BoxDecoration({
 				color: 'yellow',
 				border: Border.all({ width: 5, color: 'black' }),
@@ -45,6 +47,7 @@ class CustomWidgetState extends State<CustomWidget> {
 		{
 			height: 150,
 			width: 200,
+			transform: Matrix4.skewY(0.5),
 			decoration: new BoxDecoration({
 				color: 'red',
 				border: Border.all({ width: 20, color: 'white' }),

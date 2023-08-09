@@ -13,7 +13,7 @@ class Transform extends SingleChildRenderObjectWidget {
     child,
     transform,
     origin,
-    alignment,
+    alignment = Alignment.center,
   }: {
     child?: Widget;
     transform: Matrix4;
@@ -168,7 +168,7 @@ class RenderTransform extends SingleChildRenderObject {
     return this._transform;
   }
   set transform(value: Matrix4) {
-    if (this.transform.equal(value)) return;
+    if (this.transform.equals(value)) return;
     this._transform = value;
     this.markNeedsLayout();
   }
@@ -213,14 +213,14 @@ class RenderTransform extends SingleChildRenderObject {
     const result = Matrix4.identity();
 
     result.translate(effectiveOrigin.x, effectiveOrigin.y);
-    result.multiply(this.transform);
+    result.multiplyMatrix(this.transform);
     result.translate(-effectiveOrigin.x, -effectiveOrigin.y);
 
     return result;
   }
 
   override getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
-    return parentMatrix.multiplied(this._effectiveTransform);
+    return parentMatrix.multipliedMatrix(this._effectiveTransform);
   }
 }
 

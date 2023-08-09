@@ -95,7 +95,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
   private transformAlignment: Tween<Alignment> | Nullable;
   // private constrains: Tween<Constraints> | Nullable
   private decoration: Tween<Decoration> | Nullable;
-  // private transform: Tween<Matrix4> | Nullable
+  private transform: Tween<Matrix4> | Nullable;
 
   forEachTween(
     visitor: <V extends number | Data, T extends Tween<V>>(props: {
@@ -143,6 +143,12 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       targetValue: this.widget.decoration,
       constructor: (value) => new DecorationTween({ begin: value, end: value }),
     });
+    this.transform = visitor({
+      tween: this.transform,
+      targetValue: this.widget.transform,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
+    });
   }
 
   build(): Widget {
@@ -156,8 +162,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       margin: this.margin?.evaluate(this.animation),
       transformAlignment: this.transformAlignment?.evaluate(this.animation),
       decoration: this.decoration?.evaluate(this.animation),
-      //transform
-      //decoration
+      transform: this.transform?.evaluate(this.animation),
       //constraints
     });
   }
