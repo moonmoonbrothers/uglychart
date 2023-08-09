@@ -43,7 +43,7 @@ export class BoxBorder extends Data implements ShapeBorder {
     assert(side.style !== "none");
     const border = paths.top;
     border.setAttribute("stroke-width", "0");
-    border.setAttribute("fill", side.color);
+    border.setAttribute("fill", side.color.value);
 
     const borderRect = borderRadius.toRRect(rect);
     const inner = borderRect.deflate(side.strokeInset);
@@ -306,7 +306,7 @@ class Border extends BoxBorder {
 
     switch (this.top.style) {
       case "solid":
-        pathEls.top.setAttribute("fill", this.top.color);
+        pathEls.top.setAttribute("fill", this.top.color.value);
         const topPath = new Path();
         topPath.moveTo({ x: rect.left, y: rect.top });
         topPath.lineTo({ x: rect.right, y: rect.top });
@@ -333,7 +333,7 @@ class Border extends BoxBorder {
 
     switch (this.right.style) {
       case "solid":
-        pathEls.right.setAttribute("fill", this.right.color);
+        pathEls.right.setAttribute("fill", this.right.color.value);
         const rightPath = new Path();
         rightPath.moveTo({ x: rect.right, y: rect.top });
         rightPath.lineTo({ x: rect.right, y: rect.bottom });
@@ -360,7 +360,7 @@ class Border extends BoxBorder {
 
     switch (this.bottom.style) {
       case "solid":
-        pathEls.bottom.setAttribute("fill", this.bottom.color);
+        pathEls.bottom.setAttribute("fill", this.bottom.color.value);
         const bottomPath = new Path();
         bottomPath.moveTo({ x: rect.right, y: rect.bottom });
         bottomPath.lineTo({ x: rect.left, y: rect.bottom });
@@ -387,7 +387,7 @@ class Border extends BoxBorder {
 
     switch (this.left.style) {
       case "solid":
-        pathEls.left.setAttribute("fill", this.left.color);
+        pathEls.left.setAttribute("fill", this.left.color.value);
         const leftPath = new Path();
         leftPath.moveTo({ x: rect.left, y: rect.bottom });
         leftPath.lineTo({ x: rect.left, y: rect.top });

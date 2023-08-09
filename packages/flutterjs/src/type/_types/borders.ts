@@ -1,4 +1,5 @@
 import { assert } from "../../utils";
+import Color from "./Color";
 import Data from "./Data";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
@@ -15,7 +16,7 @@ export interface ShapeBorder {
 }
 
 export class BorderSide extends Data {
-  readonly color: string;
+  readonly color: Color;
   readonly width: number;
   readonly style: BorderStyle;
   readonly strokeAlign: StrokeAlign;
@@ -31,7 +32,7 @@ export class BorderSide extends Data {
     strokeAlign?: StrokeAlign;
   } = {}) {
     super();
-    this.color = color;
+    this.color = Color.of(color);
     this.style = style;
     this.width = width;
     assert(
@@ -81,7 +82,7 @@ export class BorderSide extends Data {
       path.setAttribute("stroke", "transparent");
     } else {
       path.setAttribute("stroke-width", `${this.width}`);
-      path.setAttribute("stroke", `${this.color}`);
+      path.setAttribute("stroke", `${this.color.value}`);
     }
 
     path.setAttribute("fill", "none");

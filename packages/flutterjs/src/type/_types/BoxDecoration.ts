@@ -169,7 +169,7 @@ class BoxDecorationPainter implements BoxPainter {
     const filter = this.decoration.boxShadow.reduce(
       (acc, shadow) =>
         acc +
-        ` drop-shadow(${shadow.offset.x} ${shadow.offset.y} ${shadow.blurRadius} ${shadow.color})`,
+        ` drop-shadow(${shadow.offset.x} ${shadow.offset.y} ${shadow.blurRadius} ${shadow.color.value})`,
       ""
     );
     box.setAttribute("filter", filter);

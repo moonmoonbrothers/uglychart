@@ -1,8 +1,9 @@
 import Calculatable from "./Caculatable";
+import Color from "./Color";
 import Offset from "./Offset";
 
 class BoxShadow extends Calculatable {
-  readonly color: string;
+  readonly color: Color;
   readonly offset: Offset;
   readonly blurRadius: number;
 
@@ -16,7 +17,7 @@ class BoxShadow extends Calculatable {
     blurRadius?: number;
   } = {}) {
     super();
-    this.color = color;
+    this.color = Color.of(color);
     this.offset = new Offset({ x: offset.x, y: offset.y });
     this.blurRadius = blurRadius;
   }
