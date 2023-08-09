@@ -6,7 +6,7 @@ import {
   Tween,
 } from "../animation";
 import { State, type BuildContext } from "../element";
-import { Data } from "../type";
+import { Calculatable, Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
@@ -78,30 +78,30 @@ export class ImplicitlyAnimatedWidgetState<
 
   private constructTweens() {
     let shouldStartAnimation = false;
-    this.forEachTween(({ tween, targetValue }) => {
+    this.forEachTween(({ tween, targetValue, constructor }) => {
       if (targetValue == null) {
         return null;
       }
 
       if (tween == null) {
-        return new Tween({ begin: targetValue, end: targetValue });
-      } else if (this.shouldAnimateTween(tween, targetValue)) {
+        return constructor(targetValue);
+      }
+
+      if (this.shouldAnimateTween(tween, targetValue)) {
         shouldStartAnimation = true;
         this.updateTween(tween, targetValue);
-        return tween;
       }
+
+      return tween as any;
     });
 
     return shouldStartAnimation;
   }
 
   private updateTween(
-    tween: Tween<Data | number> | Nullable,
+    tween: Tween<Data | number>,
     targetValue: Data | number
   ): void {
-    if (tween == null) {
-      return;
-    }
     tween.begin = tween.evaluate(this.animation);
     tween.end = targetValue;
   }
@@ -115,7 +115,7 @@ export class ImplicitlyAnimatedWidgetState<
       const target = targetValue as number;
       return end !== target;
     } else {
-      const target = targetValue as Data;
+      const target = targetValue as Calculatable;
       return !end.equals(target);
     }
   }
@@ -123,10 +123,11 @@ export class ImplicitlyAnimatedWidgetState<
   didUpdateTweens() {}
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
-      tween: Tween<T> | Nullable;
-      targetValue: T | Nullable;
-    }) => Tween<T> | Nullable
+    visitor: <V extends Data | number, T extends Tween<V>>(props: {
+      tween: T | Nullable;
+      targetValue: V | Nullable;
+      constructor: (value: V) => T;
+    }) => T | Nullable
   ) {
     throw new Error("forEachTween must be implemented");
   }

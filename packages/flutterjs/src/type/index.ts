@@ -24,11 +24,13 @@ import TextWidthBasis from "./_types/TextWidthBasis";
 import TextBaseline from "./_types/TextBaseline";
 import TextStyle from "./_types/TextStyle";
 import TextSpan from "./_types/TextSpan";
+import Calculatable from "./_types/Caculatable";
+import Color from "./_types/Color";
 import Data from "./_types/Data";
 export * from "./_types/Borders";
 
 export {
-  Data,
+  Calculatable,
   Offset,
   Alignment,
   BorderStyle,
@@ -56,4 +58,6 @@ export {
   TextBaseline,
   TextStyle,
   TextSpan,
+  Color,
+  Data,
 };

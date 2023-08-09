@@ -1,10 +1,10 @@
-import Data from "./Data";
+import Calculatable from "./Caculatable";
 import Offset from "./Offset";
 import Rect from "./Rect";
 import Size from "./Size";
 import TextDirection from "./TextDirection";
 
-class Alignment extends Data {
+class Alignment extends Calculatable {
   x: number; // -1 ~ 1
   y: number; // -1 ~ 1
 

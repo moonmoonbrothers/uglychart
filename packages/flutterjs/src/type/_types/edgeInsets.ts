@@ -1,4 +1,4 @@
-import Data from "./Data";
+import Calculatable from "./Caculatable";
 import Rect from "./Rect";
 
 type EdgeInsetsProps = {
@@ -8,7 +8,7 @@ type EdgeInsetsProps = {
   right: number;
 };
 
-export class EdgeInsetsGeometry extends Data {
+export class EdgeInsetsGeometry extends Calculatable {
   top: number;
   bottom: number;
   left: number;

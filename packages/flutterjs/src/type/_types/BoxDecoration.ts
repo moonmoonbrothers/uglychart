@@ -1,34 +1,60 @@
-import { BoxBorder } from "./Border";
-import { BorderRadiusGeometry } from "./BorderRadius";
+import Border, { BoxBorder } from "./Border";
+import BorderRadiusGeometry from "./BorderRadiusGeometry";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 import Size from "./Size";
 import RRect from "./RRect";
+import Color from "./Color";
 import BoxShadow from "./BoxShadow";
+import Utils, { assert } from "../../utils";
+import { BorderSide } from "./Borders";
+import BorderRadius from "./BorderRadius";
+import Radius from "./Radius";
+import Data from "./Data";
 
-export interface Decoration {
-  get padding(): EdgeInsetsGeometry | undefined;
-  getClipPath(rect: Rect): Path;
-  createBoxPainter(): BoxPainter;
-  equal(decoration: Decoration): boolean;
-}
+export type Decoration = BoxDecoration;
 
-export default class BoxDecoration implements Decoration {
-  readonly color?: string;
-  readonly border?: BoxBorder;
+export default class BoxDecoration extends Data {
+  readonly color: Color;
+  readonly border?: Border;
   readonly borderRadius?: BorderRadiusGeometry;
   readonly boxShadow?: BoxShadow[];
   readonly shape: BoxShape;
 
-  equal(other: Decoration): boolean {
+  static lerp(a: BoxDecoration, b: BoxDecoration, t: number) {
+    assert(t >= 0 && t <= 1, "t must be between 0 and 1");
+    return new BoxDecoration({
+      color: Utils.lerp(a.color, b.color, t),
+      border: Border.lerp(
+        a.border ?? Border.fromBorderSide(BorderSide.none),
+        b.border ?? Border.fromBorderSide(BorderSide.none),
+        t
+      ),
+      borderRadius: BorderRadius.lerp(
+        a.borderRadius ?? BorderRadius.all(Radius.zero),
+        b.borderRadius ?? BorderRadius.all(Radius.zero),
+        t
+      ),
+      boxShadow: BoxShadow.lerp(a.boxShadow ?? [], b.boxShadow ?? [], t),
+      shape: t < 0.5 ? a.shape : b.shape,
+    });
+  }
+
+  equals(other: BoxDecoration): boolean {
     if (this === other) return true;
     if (!(other instanceof BoxDecoration)) return false;
-    if (this.color !== other.color) return false;
+    if (
+      !(this.color == null && other.color == null) &&
+      (!(this.color != null && other.color != null) ||
+        !this.color.equals(other.color))
+    ) {
+      return false;
+    }
     if (
       !(this.border == null && other.border == null) &&
       (!(this.border != null && other.border != null) ||
-        !this.border.equal(other.border))
+        !this.border.equals(other.border))
     ) {
       return false;
     }
@@ -51,6 +77,13 @@ export default class BoxDecoration implements Decoration {
 
     return true;
   }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  equal(other: BoxDecoration): boolean {
+    return this.equals(other);
+  }
   /*
     Those are not implemented
     gradient?: Gradient
@@ -65,13 +98,14 @@ export default class BoxDecoration implements Decoration {
     shape = "rectangle",
     boxShadow,
   }: {
-    color?: string;
+    color?: string | Color;
     border?: BoxBorder;
     borderRadius?: BorderRadiusGeometry;
     shape?: BoxShape;
     boxShadow?: BoxShadow[];
   }) {
-    this.color = color;
+    super();
+    this.color = typeof color === "string" ? Color.of(color) : color;
     this.border = border;
     this.borderRadius = borderRadius;
     this.shape = shape;
@@ -153,7 +187,7 @@ class BoxDecorationPainter implements BoxPainter {
     const filter = this.decoration.boxShadow.reduce(
       (acc, shadow) =>
         acc +
-        ` drop-shadow(${shadow.offset.x} ${shadow.offset.y} ${shadow.blurRadius} ${shadow.color})`,
+        ` drop-shadow(${shadow.offset.x} ${shadow.offset.y} ${shadow.blurRadius} ${shadow.color.value})`,
       ""
     );
     box.setAttribute("filter", filter);
@@ -161,7 +195,7 @@ class BoxDecorationPainter implements BoxPainter {
 
   private paintBackgroundColor(box: SVGPathElement, rect: Rect) {
     box.setAttribute("stroke-width", "0");
-    box.setAttribute("fill", this.decoration.color || "none");
+    box.setAttribute("fill", this.decoration.color.value || "none");
 
     if (this.decoration.shape == "circle") {
       box.setAttribute("d", new Path().addOval(rect).getD());

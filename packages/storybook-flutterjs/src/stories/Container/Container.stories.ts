@@ -51,16 +51,6 @@ const meta = {
 				### Alignment
 				**Value: Alignment | undefined**
 
-				This define alignment of the child widget.
-
-				### border
-				**Value: BorderStyle | undefined**
-
-				### radius
-				**Value: Radius**
-
-				This define roundness of the container's edges.
-
 				### child
 				**Value: Widget | undefined**
 				`

@@ -1,3 +1,6 @@
+import Utils, { assert } from "../../utils";
+import Color from "./Color";
+import Data from "./Data";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
@@ -12,29 +15,50 @@ export interface ShapeBorder {
   paint(svgEls: Record<string, SVGElement>, _: { rect: Rect }): void;
 }
 
-export class BorderSide {
-  readonly color: string;
+export class BorderSide extends Data {
+  readonly color: Color;
   readonly width: number;
   readonly style: BorderStyle;
-  readonly strokeAlign: StrokeAlign;
+  readonly strokeAlign: number;
   constructor({
     style = "solid",
     width = 1,
     color = "black",
     strokeAlign = BorderSide.strokeAlignInside,
   }: {
-    color?: string;
+    color?: string | Color;
     width?: number;
     style?: BorderStyle;
     strokeAlign?: StrokeAlign;
   } = {}) {
-    this.color = color;
+    super();
+    this.color = typeof color === "string" ? Color.of(color) : color;
     this.style = style;
     this.width = width;
+    assert(
+      strokeAlign >= -1 && strokeAlign <= 1,
+      "strokeAlign must be between -1 and 1"
+    );
     this.strokeAlign = strokeAlign;
   }
 
+  static lerp(a: BorderSide, b: BorderSide, t: number) {
+    return new BorderSide({
+      style: t < 0.5 ? a.style : b.style,
+      color: Utils.lerp(a.color, b.color, t),
+      width: Utils.lerp(a.width, b.width, t),
+      strokeAlign: Utils.lerp(a.strokeAlign, b.strokeAlign, t) as StrokeAlign,
+    });
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
   equal(other: BorderSide) {
+    return this.equals(other);
+  }
+
+  equals(other: BorderSide): boolean {
     if (this === other) return true;
     return (
       this.color === other.color &&
@@ -67,7 +91,7 @@ export class BorderSide {
       path.setAttribute("stroke", "transparent");
     } else {
       path.setAttribute("stroke-width", `${this.width}`);
-      path.setAttribute("stroke", `${this.color}`);
+      path.setAttribute("stroke", `${this.color.value}`);
     }
 
     path.setAttribute("fill", "none");

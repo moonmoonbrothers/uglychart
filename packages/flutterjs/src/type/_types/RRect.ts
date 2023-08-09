@@ -16,11 +16,11 @@ type RRectProps = {
 };
 export class RRect {
   get width() {
-    return this.right - this.left
+    return this.right - this.left;
   }
 
   get height() {
-    return this.bottom - this.top
+    return this.bottom - this.top;
   }
 
   static fromLTRBXY({

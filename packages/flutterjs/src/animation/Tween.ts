@@ -1,7 +1,7 @@
 import { Data } from "../type";
 import Animitable from "./Animitable";
 
-class Tween<T extends Data | number = Data | number> extends Animitable<T> {
+class Tween<T extends number | Data = number | Data> extends Animitable<T> {
   begin: T;
   end: T;
   constructor({ begin, end }: { begin: T; end?: T }) {
@@ -16,14 +16,13 @@ class Tween<T extends Data | number = Data | number> extends Animitable<T> {
     return this.lerp(value);
   }
 
-  private lerp(t: number): T {
+  protected lerp(t: number): T {
     const { begin } = this;
     if (typeof begin === "number") {
       const end = this.end as number;
       return (begin + (end - begin) * t) as T;
     } else {
-      const end = this.end as Data;
-      return begin.plus(end.minus(begin).multiply(t)) as T;
+      throw new Error("not implemented lerp on tween");
     }
   }
 }

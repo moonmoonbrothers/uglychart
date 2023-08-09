@@ -1,3 +1,5 @@
+import Calculatable from "./Caculatable";
+import Data from "./Data";
 import Matrix2 from "./Matrix2";
 import Matrix3 from "./Matrix3";
 import Vector2 from "./Vector2";
@@ -23,7 +25,7 @@ type Array16 = [
   number
 ];
 
-class Matrix4 {
+class Matrix4 extends Calculatable {
   // 4 x 4 matrix
   _m4storage: Array16;
   get storage() {
@@ -33,13 +35,31 @@ class Matrix4 {
   get dimension() {
     return 4;
   }
+  plus(other: Matrix4): Matrix4 {
+    const cloned = this.clone();
+    cloned.add(other);
+    return cloned;
+  }
 
-  equal(other: Matrix4) {
+  multiply(value: number): Matrix4 {
+    const cloned = this.clone();
+    cloned._m4storage = cloned._m4storage.map((v) => v * value) as Array16;
+    return cloned;
+  }
+
+  equals(other: Matrix4): boolean {
     if (this === other) return true;
 
     return this.storage.every((value, i) => {
       return other._m4storage[i] === value;
     });
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  equal(other: Matrix4) {
+    this.equals(other);
   }
 
   static zero(): Matrix4 {
@@ -279,6 +299,7 @@ class Matrix4 {
     arg14: number,
     arg15: number
   ) {
+    super();
     this._m4storage = [
       arg0,
       arg1,
@@ -1628,7 +1649,7 @@ Rotate this matrix [angle] radians around [axis].
   }
 
   /// Multiply this by [arg].
-  multiply(arg: Matrix4) {
+  multiplyMatrix(arg: Matrix4) {
     const m00 = this._m4storage[0];
     const m01 = this._m4storage[4];
     const m02 = this._m4storage[8];
@@ -1680,9 +1701,9 @@ Rotate this matrix [angle] radians around [axis].
     this._m4storage[15] = m30 * n03 + m31 * n13 + m32 * n23 + m33 * n33;
   }
   /// Multiply a copy of this with [arg].
-  multiplied(arg: Matrix4) {
+  multipliedMatrix(arg: Matrix4) {
     const result = this.clone();
-    result.multiply(arg);
+    result.multiplyMatrix(arg);
     return result;
   }
 
