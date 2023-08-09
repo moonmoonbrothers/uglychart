@@ -1,11 +1,11 @@
 import { CalculatableTween, Curve, Tween } from "../../animation";
 import {
   Alignment,
-  BoxDecoration,
   Constraints,
   Decoration,
   Matrix4,
   Data,
+  BoxDecoration,
 } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
@@ -94,7 +94,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
   private margin: Tween<EdgeInsetsGeometry> | Nullable;
   private transformAlignment: Tween<Alignment> | Nullable;
   // private constrains: Tween<Constraints> | Nullable
-  // private decoration: Tween<BoxDecoration> | Nullable
+  private decoration: Tween<Decoration> | Nullable;
   // private transform: Tween<Matrix4> | Nullable
 
   forEachTween(
@@ -138,10 +138,16 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       constructor: (value) =>
         new CalculatableTween({ begin: value, end: value }),
     });
+    this.decoration = visitor({
+      tween: this.decoration,
+      targetValue: this.widget.decoration,
+      constructor: (value) => new DecorationTween({ begin: value, end: value }),
+    });
   }
 
   build(): Widget {
     return Container({
+      child: this.widget.child,
       alignment: this.alignment?.evaluate(this.animation),
       width: this.width?.evaluate(this.animation),
       height: this.height?.evaluate(this.animation),
@@ -149,17 +155,22 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       padding: this.padding?.evaluate(this.animation),
       margin: this.margin?.evaluate(this.animation),
       transformAlignment: this.transformAlignment?.evaluate(this.animation),
+      decoration: this.decoration?.evaluate(this.animation),
       //transform
       //decoration
       //constraints
-      color: "red",
-      child: this.widget.child,
     });
   }
 }
 
-class BoxDecorationTween extends Tween<BoxDecoration> {
-  protected lerp(t: number): BoxDecoration {}
+class DecorationTween extends Tween<Decoration> {
+  constructor({ begin, end }: { begin: Decoration; end?: Decoration }) {
+    super({ begin, end });
+  }
+
+  protected lerp(t: number): Decoration {
+    return BoxDecoration.lerp(this.begin, this.end, t);
+  }
 }
 
 export default BaseAnimatedContainer;

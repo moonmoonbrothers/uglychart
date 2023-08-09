@@ -1,11 +1,11 @@
-import { assert } from "../../utils";
+import Utils, { assert } from "../../utils";
 import Color from "./Color";
 import Data from "./Data";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 
-export type StrokeAlign = number; //-1 | 0 | 1;
+export type StrokeAlign = -1 | 0 | 1;
 
 export interface ShapeBorder {
   get dimensions(): EdgeInsetsGeometry;
@@ -19,20 +19,20 @@ export class BorderSide extends Data {
   readonly color: Color;
   readonly width: number;
   readonly style: BorderStyle;
-  readonly strokeAlign: StrokeAlign;
+  readonly strokeAlign: number;
   constructor({
     style = "solid",
     width = 1,
     color = "black",
     strokeAlign = BorderSide.strokeAlignInside,
   }: {
-    color?: string;
+    color?: string | Color;
     width?: number;
     style?: BorderStyle;
     strokeAlign?: StrokeAlign;
   } = {}) {
     super();
-    this.color = Color.of(color);
+    this.color = typeof color === "string" ? Color.of(color) : color;
     this.style = style;
     this.width = width;
     assert(
@@ -40,6 +40,15 @@ export class BorderSide extends Data {
       "strokeAlign must be between -1 and 1"
     );
     this.strokeAlign = strokeAlign;
+  }
+
+  static lerp(a: BorderSide, b: BorderSide, t: number) {
+    return new BorderSide({
+      style: t < 0.5 ? a.style : b.style,
+      color: Utils.lerp(a.color, b.color, t),
+      width: Utils.lerp(a.width, b.width, t),
+      strokeAlign: Utils.lerp(a.strokeAlign, b.strokeAlign, t) as StrokeAlign,
+    });
   }
 
   /**

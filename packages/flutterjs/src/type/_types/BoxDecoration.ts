@@ -1,4 +1,4 @@
-import { BoxBorder } from "./Border";
+import Border, { BoxBorder } from "./Border";
 import BorderRadiusGeometry from "./BorderRadiusGeometry";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
@@ -7,21 +7,39 @@ import Size from "./Size";
 import RRect from "./RRect";
 import Color from "./Color";
 import BoxShadow from "./BoxShadow";
+import Utils, { assert } from "../../utils";
+import { BorderSide } from "./Borders";
+import BorderRadius from "./BorderRadius";
+import Radius from "./Radius";
 import Data from "./Data";
 
-export interface Decoration {
-  get padding(): EdgeInsetsGeometry | undefined;
-  getClipPath(rect: Rect): Path;
-  createBoxPainter(): BoxPainter;
-  equal(decoration: Decoration): boolean;
-}
+export type Decoration = BoxDecoration;
 
-export default class BoxDecoration extends Data implements Decoration {
-  readonly color?: Color;
-  readonly border?: BoxBorder;
+export default class BoxDecoration extends Data {
+  readonly color: Color;
+  readonly border?: Border;
   readonly borderRadius?: BorderRadiusGeometry;
   readonly boxShadow?: BoxShadow[];
   readonly shape: BoxShape;
+
+  static lerp(a: BoxDecoration, b: BoxDecoration, t: number) {
+    assert(t >= 0 && t <= 1, "t must be between 0 and 1");
+    return new BoxDecoration({
+      color: Utils.lerp(a.color, b.color, t),
+      border: Border.lerp(
+        a.border ?? Border.fromBorderSide(BorderSide.none),
+        b.border ?? Border.fromBorderSide(BorderSide.none),
+        t
+      ),
+      borderRadius: BorderRadius.lerp(
+        a.borderRadius ?? BorderRadius.all(Radius.zero),
+        b.borderRadius ?? BorderRadius.all(Radius.zero),
+        t
+      ),
+      boxShadow: BoxShadow.lerp(a.boxShadow ?? [], b.boxShadow ?? [], t),
+      shape: t < 0.5 ? a.shape : b.shape,
+    });
+  }
 
   equals(other: BoxDecoration): boolean {
     if (this === other) return true;
@@ -80,14 +98,14 @@ export default class BoxDecoration extends Data implements Decoration {
     shape = "rectangle",
     boxShadow,
   }: {
-    color?: string;
+    color?: string | Color;
     border?: BoxBorder;
     borderRadius?: BorderRadiusGeometry;
     shape?: BoxShape;
     boxShadow?: BoxShadow[];
   }) {
     super();
-    this.color = Color.of(color);
+    this.color = typeof color === "string" ? Color.of(color) : color;
     this.border = border;
     this.borderRadius = borderRadius;
     this.shape = shape;

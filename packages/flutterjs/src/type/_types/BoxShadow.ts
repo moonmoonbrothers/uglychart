@@ -1,3 +1,4 @@
+import Utils from "../../utils";
 import Calculatable from "./Caculatable";
 import Color from "./Color";
 import Offset from "./Offset";
@@ -12,12 +13,12 @@ class BoxShadow extends Calculatable {
     offset = { x: 0, y: 0 },
     blurRadius = 0,
   }: {
-    color?: string;
+    color?: string | Color;
     offset?: { x: number; y: number };
     blurRadius?: number;
   } = {}) {
     super();
-    this.color = Color.of(color);
+    this.color = typeof color === "string" ? Color.of(color) : color;
     this.offset = new Offset({ x: offset.x, y: offset.y });
     this.blurRadius = blurRadius;
   }
@@ -34,7 +35,38 @@ class BoxShadow extends Calculatable {
     return true;
   }
 
-  static lerp(a: BoxShadow[], b: BoxShadow[], t: number) {}
+  static lerp(a: BoxShadow[], b: BoxShadow[], t: number) {
+    const diff = a.length - b.length;
+    let froms = a;
+    let tos = b;
+
+    if (diff < 0) {
+      froms = [...a, ...Array.from({ length: -diff }, () => new BoxShadow())];
+    } else {
+      tos = [...b, ...Array.from({ length: diff }, () => new BoxShadow())];
+    }
+
+    return froms.map((from, i) => {
+      const to = tos[i];
+      return Utils.lerp(from, to, t);
+    });
+  }
+
+  plus(other: BoxShadow): BoxShadow {
+    return new BoxShadow({
+      color: this.color.plus(other.color),
+      offset: this.offset.plus(other.offset),
+      blurRadius: this.blurRadius + other.blurRadius,
+    });
+  }
+
+  multiply(value: number): BoxShadow {
+    return new BoxShadow({
+      color: this.color.multiply(value),
+      offset: this.offset.multiply(value),
+      blurRadius: this.blurRadius * value,
+    });
+  }
 
   equals(other: BoxShadow): boolean {
     if (this === other) return true;

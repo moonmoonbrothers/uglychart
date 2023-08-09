@@ -66,6 +66,24 @@ export default class BorderRadius extends BorderRadiusGeometry {
     });
   }
 
+  plus(other: BorderRadiusGeometry): BorderRadiusGeometry {
+    return new BorderRadius({
+      topLeft: this.topLeft.plus(other.topLeft),
+      topRight: this.topRight.plus(other.topRight),
+      bottomLeft: this.bottomLeft.plus(other.bottomLeft),
+      bottomRight: this.bottomRight.plus(other.bottomRight),
+    });
+  }
+
+  multiply(value: number): BorderRadiusGeometry {
+    return new BorderRadius({
+      topLeft: this.topLeft.multiply(value),
+      topRight: this.topRight.multiply(value),
+      bottomLeft: this.bottomLeft.multiply(value),
+      bottomRight: this.bottomRight.multiply(value),
+    });
+  }
+
   copyWith({
     topLeft = this.topLeft,
     topRight = this.topRight,

@@ -8,7 +8,7 @@ import { BoxShape } from "./BoxDecoration";
 import BorderRadiusGeometry from "./BorderRadiusGeometry";
 import Data from "./Data";
 
-export class BoxBorder extends Data implements ShapeBorder {
+class _BoxBorder extends Data implements ShapeBorder {
   get dimensions(): EdgeInsetsGeometry {
     throw new Error("Method not implemented.");
   }
@@ -38,7 +38,7 @@ export class BoxBorder extends Data implements ShapeBorder {
       side,
       borderRadius,
       rect,
-    }: { side: BorderSide; borderRadius: BorderRadius; rect: Rect }
+    }: { side: BorderSide; borderRadius: BorderRadiusGeometry; rect: Rect }
   ) {
     assert(side.style !== "none");
     const border = paths.top;
@@ -101,7 +101,7 @@ export class BoxBorder extends Data implements ShapeBorder {
   }
 }
 
-class Border extends BoxBorder {
+class Border extends _BoxBorder {
   top: BorderSide;
   right: BorderSide;
   bottom: BorderSide;
@@ -124,6 +124,16 @@ class Border extends BoxBorder {
     this.left = left;
   }
 
+  static lerp(a: Border, b: Border, t: number) {
+    assert(t >= 0 && t <= 1);
+    return new Border({
+      top: BorderSide.lerp(a.top, b.top, t),
+      left: BorderSide.lerp(a.left, b.left, t),
+      bottom: BorderSide.lerp(a.bottom, b.bottom, t),
+      right: BorderSide.lerp(a.right, b.right, t),
+    });
+  }
+
   equals(other: BoxBorder): boolean {
     if (this === other) return true;
     if (!(other instanceof Border)) return false;
@@ -142,7 +152,7 @@ class Border extends BoxBorder {
     return this.equals(other);
   }
 
-  static fromBorderSide(side: BorderSide) {
+  static fromBorderSide(side: BorderSide): Border {
     return new Border({ left: side, right: side, bottom: side, top: side });
   }
 
@@ -190,12 +200,13 @@ class Border extends BoxBorder {
   }
 
   get isUniform() {
-    return (
+    const result =
       this._colorIsUniform &&
       this._styleIsUniform &&
       this._strokeAlignIsUniform &&
-      this._widthIsUniform
-    );
+      this._widthIsUniform;
+
+    return result;
   }
 
   paint(
@@ -204,7 +215,7 @@ class Border extends BoxBorder {
       rect,
       borderRadius,
       shape = "rectangle",
-    }: { rect: Rect; borderRadius?: BorderRadius; shape?: BoxShape }
+    }: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
   ): void {
     if (this.isUniform) {
       switch (this.top.style) {
@@ -222,14 +233,14 @@ class Border extends BoxBorder {
                 borderRadius == null,
                 "A borderRadius can only be given for rectangular boxes."
               );
-              BoxBorder.paintUniformBorderWidthCircle(paths, {
+              _BoxBorder.paintUniformBorderWidthCircle(paths, {
                 side: this.top,
                 rect,
               });
               break;
             case "rectangle":
               if (borderRadius != null && borderRadius != BorderRadius.zero) {
-                BoxBorder.paintUniformBorderWidthRadius(paths, {
+                _BoxBorder.paintUniformBorderWidthRadius(paths, {
                   side: this.top,
                   borderRadius,
                   rect,
@@ -237,7 +248,7 @@ class Border extends BoxBorder {
 
                 return;
               }
-              BoxBorder.paintUniformBorderWidthRectangle(paths, {
+              _BoxBorder.paintUniformBorderWidthRectangle(paths, {
                 side: this.top,
                 rect,
               });
@@ -416,9 +427,9 @@ class Border extends BoxBorder {
   private get _colorIsUniform(): boolean {
     const topColor = this.top.color;
     return (
-      this.right.color == topColor &&
-      this.bottom.color == topColor &&
-      this.left.color == topColor
+      this.right.color.equals(topColor) &&
+      this.bottom.color.equals(topColor) &&
+      this.left.color.equals(topColor)
     );
   }
 
@@ -457,5 +468,7 @@ type BorderPathEls = {
   left: SVGPathElement;
   right: SVGPathElement;
 };
+
+export type BoxBorder = Border;
 
 export default Border;

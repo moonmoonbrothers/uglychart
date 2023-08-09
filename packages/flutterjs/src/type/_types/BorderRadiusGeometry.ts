@@ -2,6 +2,7 @@ import Radius from "./Radius";
 import RRect from "./RRect";
 import Rect from "./Rect";
 import Calculatable from "./Caculatable";
+import Utils from "../../utils";
 
 class BorderRadiusGeometry extends Calculatable {
   topLeft: Radius;
@@ -27,6 +28,11 @@ class BorderRadiusGeometry extends Calculatable {
     this.topRight = topRight;
   }
 
+  static lerp(a: BorderRadiusGeometry, b: BorderRadiusGeometry, t) {
+    const result = Utils.lerp(a, b, t);
+    return result;
+  }
+
   equals(other: BorderRadiusGeometry): boolean {
     if (this === other) return true;
     return (
@@ -35,24 +41,6 @@ class BorderRadiusGeometry extends Calculatable {
       this.bottomLeft.equals(other.bottomLeft) &&
       this.bottomRight.equals(other.bottomRight)
     );
-  }
-
-  plus(other: BorderRadiusGeometry): BorderRadiusGeometry {
-    return new BorderRadiusGeometry({
-      topLeft: this.topLeft.plus(other.topLeft),
-      topRight: this.topRight.plus(other.topRight),
-      bottomLeft: this.bottomLeft.plus(other.bottomLeft),
-      bottomRight: this.bottomRight.plus(other.bottomRight),
-    });
-  }
-
-  multiply(value: number): BorderRadiusGeometry {
-    return new BorderRadiusGeometry({
-      topLeft: this.topLeft.multiply(value),
-      topRight: this.topRight.multiply(value),
-      bottomLeft: this.bottomLeft.multiply(value),
-      bottomRight: this.bottomRight.multiply(value),
-    });
   }
 
   /**

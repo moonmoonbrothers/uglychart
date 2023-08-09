@@ -2,8 +2,12 @@ import Utils from "../../utils";
 import Calculatable from "./Caculatable";
 
 export class Radius extends Calculatable {
-  constructor(public readonly x: number, public readonly y: number) {
+  readonly x: number;
+  readonly y: number;
+  constructor(x: number, y: number) {
     super();
+    this.x = x;
+    this.y = y;
   }
   static circular(r: number) {
     return Radius.elliptical({ x: r, y: r });

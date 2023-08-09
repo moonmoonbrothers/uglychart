@@ -2,10 +2,10 @@ import Calculatable from "./Caculatable";
 import rgba from "color-rgba";
 
 class Color extends Calculatable {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
+  private readonly r: number;
+  private readonly g: number;
+  private readonly b: number;
+  private readonly a: number;
 
   static of(value: string) {
     const [r, g, b, a] = rgba(value);

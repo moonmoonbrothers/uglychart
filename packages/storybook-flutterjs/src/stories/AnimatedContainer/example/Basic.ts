@@ -12,7 +12,9 @@ import {
 	Border,
 	BorderRadius,
 	Radius,
-	Alignment
+	Alignment,
+	BoxShadow,
+	Offset
 } from '@moonmoonbrothers/flutterjs';
 
 class CustomWidget extends StatefulWidget {
@@ -25,21 +27,34 @@ class CustomWidgetState extends State<CustomWidget> {
 	index = 0;
 	props = [
 		{
-			width: 100,
-			height: 100,
+			width: 150,
+			height: 200,
 			decoration: new BoxDecoration({
 				color: 'yellow',
-				border: Border.all({ color: 'black', width: 10 }),
-				borderRadius: BorderRadius.all(Radius.circular(10))
+				border: Border.all({ width: 5, color: 'black' }),
+				borderRadius: BorderRadius.all(Radius.circular(0)),
+				boxShadow: [
+					new BoxShadow({
+						blurRadius: 10,
+						color: 'blue',
+						offset: new Offset({ x: -10, y: -10 })
+					})
+				]
 			})
 		},
 		{
+			height: 150,
 			width: 200,
-			height: 200,
 			decoration: new BoxDecoration({
 				color: 'red',
-				border: Border.all({ color: 'gray', width: 20 }),
-				borderRadius: BorderRadius.all(Radius.circular(20))
+				border: Border.all({ width: 20, color: 'white' }),
+				borderRadius: BorderRadius.all(Radius.circular(10)),
+				boxShadow: [
+					new BoxShadow({
+						blurRadius: 10,
+						offset: new Offset({ x: 20, y: -20 })
+					})
+				]
 			})
 		}
 	];

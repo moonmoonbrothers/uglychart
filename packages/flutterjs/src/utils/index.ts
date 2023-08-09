@@ -29,13 +29,14 @@ export default class Utils {
     return a.every((value, i) => value === b[i]);
   }
 
-  static lerp<T extends Calculatable | number>(a: T, b: T, t: number) {
+  static lerp<T extends Calculatable | number>(a: T, b: T, t: number): T {
+    assert(t >= 0 && t <= 1);
     if (typeof a === "number") {
-      return lerp(a, b as number, t);
+      return lerp(a, b as number, t) as T;
     }
 
     assert(b instanceof Calculatable);
 
-    return a.plus((b as Calculatable).minus(a).multiply(-1));
+    return a.plus((b as Calculatable).minus(a).multiply(t)) as T;
   }
 }
