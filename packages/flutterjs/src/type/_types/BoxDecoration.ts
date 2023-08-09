@@ -7,6 +7,7 @@ import Size from "./Size";
 import RRect from "./RRect";
 import Color from "./Color";
 import BoxShadow from "./BoxShadow";
+import Calculatable from "./Caculatable";
 
 export interface Decoration {
   get padding(): EdgeInsetsGeometry | undefined;
@@ -15,7 +16,7 @@ export interface Decoration {
   equal(decoration: Decoration): boolean;
 }
 
-export default class BoxDecoration implements Decoration {
+export default class BoxDecoration extends Calculatable implements Decoration {
   readonly color?: Color;
   readonly border?: BoxBorder;
   readonly borderRadius?: BorderRadiusGeometry;
@@ -78,6 +79,7 @@ export default class BoxDecoration implements Decoration {
     shape?: BoxShape;
     boxShadow?: BoxShadow[];
   }) {
+    super();
     this.color = Color.of(color);
     this.border = border;
     this.borderRadius = borderRadius;

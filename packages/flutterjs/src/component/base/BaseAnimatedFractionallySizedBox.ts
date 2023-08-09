@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Alignment, Data } from "../../type";
+import { Alignment, Calculatable } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import FractionallySizedBox from "../FractionallySizedBox";
@@ -48,7 +48,7 @@ class BaseAnimatedFractionallySizedBoxState extends AnimatedBaseWidgetState<Base
   private alignment: Tween<Alignment> | Nullable;
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Nullable | Tween<T>;
       targetValue: T | Nullable;
     }) => Nullable | Tween<T>

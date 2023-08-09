@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Data } from "../../type";
+import { Calculatable } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Padding from "../Padding";
@@ -40,7 +40,7 @@ class BaseAnimatedPaddingState extends AnimatedBaseWidgetState<BaseAnimatedPaddi
   private paddingTween: Tween<EdgeInsetsGeometry> | Nullable;
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Nullable | Tween<T>;
       targetValue: T | Nullable;
     }) => Nullable | Tween<T>

@@ -1,7 +1,7 @@
-import Data from "./Data";
+import Calculatable from "./Caculatable";
 import rgba from "color-rgba";
 
-class Color extends Data {
+class Color extends Calculatable {
   r: number;
   g: number;
   b: number;

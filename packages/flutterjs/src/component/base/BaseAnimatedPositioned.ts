@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Data } from "../../type";
+import { Calculatable } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Positioned from "../Positioned";
@@ -63,7 +63,7 @@ class BaseAnimatedPositionedState extends AnimatedBaseWidgetState<BaseAnimatedPo
   private right: Tween<number> | Nullable;
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Nullable | Tween<T>;
       targetValue: T | Nullable;
     }) => Nullable | Tween<T>

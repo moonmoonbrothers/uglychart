@@ -1,5 +1,6 @@
 import applyMixins from "./applyMixins";
 import assert from "./assert";
+import lerp from "./lerp";
 import { getTextHeight, getTextWidth } from "./getTextSize";
 
 export { assert, applyMixins, getTextHeight, getTextWidth };
@@ -25,5 +26,9 @@ export default class Utils {
     if (a.length !== b.length) return false;
 
     return a.every((value, i) => value === b[i]);
+  }
+
+  static lerp(a: number, b: number, t: number) {
+    return lerp(a, b, t);
   }
 }

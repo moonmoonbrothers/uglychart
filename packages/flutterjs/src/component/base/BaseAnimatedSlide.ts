@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Alignment, Data, Offset } from "../../type";
+import { Alignment, Calculatable, Offset } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Transform from "../Transform";
@@ -40,7 +40,7 @@ class BaseAnimatedSlideState extends AnimatedBaseWidgetState<BaseAnimatedSlide> 
   private offset: Tween<Offset>;
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Nullable | Tween<T>;
       targetValue: T | Nullable;
     }) => Nullable | Tween<T>

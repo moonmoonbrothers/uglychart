@@ -1,11 +1,11 @@
-import Data from "./Data";
+import Calculatable from "./Caculatable";
 
 type OffsetProps = {
   x: number;
   y: number;
 };
 
-class Offset extends Data {
+class Offset extends Calculatable {
   x: number;
   y: number;
   constructor({ x, y }: OffsetProps) {

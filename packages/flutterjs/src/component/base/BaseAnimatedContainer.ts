@@ -3,7 +3,7 @@ import {
   Alignment,
   BoxDecoration,
   Constraints,
-  Data,
+  Calculatable,
   Decoration,
   Matrix4,
 } from "../../type";
@@ -98,7 +98,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
   // private transform: Tween<Matrix4> | Nullable
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Nullable | Tween<T>;
       targetValue: T | Nullable;
     }) => Nullable | Tween<T>

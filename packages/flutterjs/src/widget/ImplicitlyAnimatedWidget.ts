@@ -6,7 +6,7 @@ import {
   Tween,
 } from "../animation";
 import { State, type BuildContext } from "../element";
-import { Data } from "../type";
+import { Calculatable } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
@@ -99,23 +99,23 @@ export class ImplicitlyAnimatedWidgetState<
   }
 
   private updateTween(
-    tween: Tween<Data | number>,
-    targetValue: Data | number
+    tween: Tween<Calculatable | number>,
+    targetValue: Calculatable | number
   ): void {
     tween.begin = tween.evaluate(this.animation);
     tween.end = targetValue;
   }
 
   private shouldAnimateTween(
-    tween: Tween<Data | number>,
-    targetValue: Data | number
+    tween: Tween<Calculatable | number>,
+    targetValue: Calculatable | number
   ): boolean {
     const { end } = tween;
     if (typeof end === "number") {
       const target = targetValue as number;
       return end !== target;
     } else {
-      const target = targetValue as Data;
+      const target = targetValue as Calculatable;
       return !end.equals(target);
     }
   }
@@ -123,7 +123,7 @@ export class ImplicitlyAnimatedWidgetState<
   didUpdateTweens() {}
 
   forEachTween(
-    visitor: <T extends Data | number>(props: {
+    visitor: <T extends Calculatable | number>(props: {
       tween: Tween<T> | Nullable;
       targetValue: T | Nullable;
     }) => Tween<T> | Nullable
