@@ -1,3 +1,5 @@
+import Utils, { assert } from "../../utils";
+import Data from "./Data";
 import EdgeInsets from "./EdgeInsets";
 import Size from "./Size";
 
@@ -11,7 +13,7 @@ type ConstraintsProps = {
 /*
   It is like BoxConstraints on Flutter.
 */
-class Constraints {
+class Constraints extends Data {
   minWidth: number;
   maxWidth: number;
   minHeight: number;
@@ -23,10 +25,49 @@ class Constraints {
     minHeight = 0,
     minWidth = 0,
   }: ConstraintsProps = {}) {
+    super();
     this.minWidth = minWidth;
     this.maxWidth = maxWidth;
     this.minHeight = minHeight;
     this.maxHeight = maxHeight;
+  }
+
+  static lerp(a: Constraints, b: Constraints, t: number): Constraints {
+    assert(
+      (Number.isFinite(a.minWidth) && Number.isFinite(b.minWidth)) ||
+        (a.minWidth === Infinity && b.minWidth === Infinity),
+      "Cannot interpolate between finite constraints and unbounded constraints."
+    );
+    assert(
+      (Number.isFinite(a.maxWidth) && Number.isFinite(b.maxWidth)) ||
+        (a.maxWidth === Infinity && b.maxWidth === Infinity),
+      "Cannot interpolate between finite constraints and unbounded constraints."
+    );
+    assert(
+      (Number.isFinite(a.minHeight) && Number.isFinite(b.minHeight)) ||
+        (a.minHeight === Infinity && b.minHeight === Infinity),
+      "Cannot interpolate between finite constraints and unbounded constraints."
+    );
+    assert(
+      (Number.isFinite(a.minHeight) && Number.isFinite(b.minHeight)) ||
+        (a.minHeight === Infinity && b.minHeight === Infinity),
+      "Cannot interpolate between finite constraints and unbounded constraints."
+    );
+
+    return new Constraints({
+      minWidth: Number.isFinite(a.minWidth)
+        ? Utils.lerp(a.minWidth, b.minWidth, t)
+        : Infinity,
+      maxWidth: Number.isFinite(a.maxWidth)
+        ? Utils.lerp(a.maxWidth, b.maxWidth, t)
+        : Infinity,
+      minHeight: Number.isFinite(a.minHeight)
+        ? Utils.lerp(a.minHeight, b.minHeight, t)
+        : Infinity,
+      maxHeight: Number.isFinite(a.maxHeight)
+        ? Utils.lerp(a.maxHeight, b.maxHeight, t)
+        : Infinity,
+    });
   }
 
   static expand({
@@ -239,7 +280,14 @@ class Constraints {
     });
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   equal(other: Constraints): boolean {
+    return this.equals(other);
+  }
+
+  equals(other: Constraints): boolean {
     if (this === other) return true;
     return (
       this.maxWidth === other.maxWidth &&

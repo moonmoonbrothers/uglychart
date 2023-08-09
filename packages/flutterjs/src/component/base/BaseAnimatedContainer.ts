@@ -93,7 +93,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
   private padding: Tween<EdgeInsetsGeometry> | Nullable;
   private margin: Tween<EdgeInsetsGeometry> | Nullable;
   private transformAlignment: Tween<Alignment> | Nullable;
-  // private constrains: Tween<Constraints> | Nullable
+  private constraints: Tween<Constraints> | Nullable;
   private decoration: Tween<Decoration> | Nullable;
   private transform: Tween<Matrix4> | Nullable;
 
@@ -149,6 +149,12 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       constructor: (value) =>
         new CalculatableTween({ begin: value, end: value }),
     });
+    this.constraints = visitor({
+      tween: this.constraints,
+      targetValue: this.widget.constraints,
+      constructor: (value) =>
+        new ConstraintsTween({ begin: value, end: value }),
+    });
   }
 
   build(): Widget {
@@ -163,7 +169,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       transformAlignment: this.transformAlignment?.evaluate(this.animation),
       decoration: this.decoration?.evaluate(this.animation),
       transform: this.transform?.evaluate(this.animation),
-      //constraints
+      constraints: this.constraints?.evaluate(this.animation),
     });
   }
 }
@@ -175,6 +181,16 @@ class DecorationTween extends Tween<Decoration> {
 
   protected lerp(t: number): Decoration {
     return BoxDecoration.lerp(this.begin, this.end, t);
+  }
+}
+
+class ConstraintsTween extends Tween<Constraints> {
+  constructor({ begin, end }: { begin: Constraints; end?: Constraints }) {
+    super({ begin, end });
+  }
+
+  protected lerp(t: number): Constraints {
+    return Constraints.lerp(this.begin, this.end, t);
   }
 }
 

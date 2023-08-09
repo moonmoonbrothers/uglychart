@@ -47,7 +47,7 @@ class CustomWidgetState extends State<CustomWidget> {
 		{
 			height: 150,
 			width: 200,
-			transform: Matrix4.skewY(0.5),
+			transform: Matrix4.skewY(0.2),
 			decoration: new BoxDecoration({
 				color: 'red',
 				border: Border.all({ width: 20, color: 'white' }),
