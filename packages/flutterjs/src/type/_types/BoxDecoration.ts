@@ -5,6 +5,7 @@ import Path from "./Path";
 import Rect from "./Rect";
 import Size from "./Size";
 import RRect from "./RRect";
+import Color from "./Color";
 import BoxShadow from "./BoxShadow";
 
 export interface Decoration {
@@ -15,7 +16,7 @@ export interface Decoration {
 }
 
 export default class BoxDecoration implements Decoration {
-  readonly color?: string;
+  readonly color?: Color;
   readonly border?: BoxBorder;
   readonly borderRadius?: BorderRadiusGeometry;
   readonly boxShadow?: BoxShadow[];
@@ -24,7 +25,13 @@ export default class BoxDecoration implements Decoration {
   equal(other: Decoration): boolean {
     if (this === other) return true;
     if (!(other instanceof BoxDecoration)) return false;
-    if (this.color !== other.color) return false;
+    if (
+      !(this.color == null && other.color == null) &&
+      (!(this.color != null && other.color != null) ||
+        !this.color.equals(other.color))
+    ) {
+      return false;
+    }
     if (
       !(this.border == null && other.border == null) &&
       (!(this.border != null && other.border != null) ||
@@ -71,7 +78,7 @@ export default class BoxDecoration implements Decoration {
     shape?: BoxShape;
     boxShadow?: BoxShadow[];
   }) {
-    this.color = color;
+    this.color = Color.of(color);
     this.border = border;
     this.borderRadius = borderRadius;
     this.shape = shape;
@@ -161,7 +168,7 @@ class BoxDecorationPainter implements BoxPainter {
 
   private paintBackgroundColor(box: SVGPathElement, rect: Rect) {
     box.setAttribute("stroke-width", "0");
-    box.setAttribute("fill", this.decoration.color || "none");
+    box.setAttribute("fill", this.decoration.color.value || "none");
 
     if (this.decoration.shape == "circle") {
       box.setAttribute("d", new Path().addOval(rect).getD());

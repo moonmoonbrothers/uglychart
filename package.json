@@ -33,5 +33,7 @@
     "packages/storybook-flutterjs"
   ],
   "type": "module",
-  "devDependencies": {}
+  "dependencies": {
+    "color-rgba": "^2.4.0"
+  }
 }
