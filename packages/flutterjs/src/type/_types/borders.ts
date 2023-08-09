@@ -1,8 +1,10 @@
+import { assert } from "../../utils";
+import Data from "./Data";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
 
-export type StrokeAlign = -1 | 0 | 1;
+export type StrokeAlign = number; //-1 | 0 | 1;
 
 export interface ShapeBorder {
   get dimensions(): EdgeInsetsGeometry;
@@ -12,7 +14,7 @@ export interface ShapeBorder {
   paint(svgEls: Record<string, SVGElement>, _: { rect: Rect }): void;
 }
 
-export class BorderSide {
+export class BorderSide extends Data {
   readonly color: string;
   readonly width: number;
   readonly style: BorderStyle;
@@ -28,13 +30,25 @@ export class BorderSide {
     style?: BorderStyle;
     strokeAlign?: StrokeAlign;
   } = {}) {
+    super();
     this.color = color;
     this.style = style;
     this.width = width;
+    assert(
+      strokeAlign >= -1 && strokeAlign <= 1,
+      "strokeAlign must be between -1 and 1"
+    );
     this.strokeAlign = strokeAlign;
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   equal(other: BorderSide) {
+    return this.equals(other);
+  }
+
+  equals(other: BorderSide): boolean {
     if (this === other) return true;
     return (
       this.color === other.color &&

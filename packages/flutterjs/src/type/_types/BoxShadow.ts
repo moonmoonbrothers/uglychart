@@ -1,9 +1,10 @@
-class BoxShadow {
-  color: string;
-  offset: { x: number; y: number };
-  blurRadius: number;
-  // spreadRadius: number = 0
-  // blurStyle = normal
+import Calculatable from "./Caculatable";
+import Offset from "./Offset";
+
+class BoxShadow extends Calculatable {
+  readonly color: string;
+  readonly offset: Offset;
+  readonly blurRadius: number;
 
   constructor({
     color = "black",
@@ -14,8 +15,9 @@ class BoxShadow {
     offset?: { x: number; y: number };
     blurRadius?: number;
   } = {}) {
+    super();
     this.color = color;
-    this.offset = offset;
+    this.offset = new Offset({ x: offset.x, y: offset.y });
     this.blurRadius = blurRadius;
   }
 
@@ -24,21 +26,30 @@ class BoxShadow {
       return false;
     }
     for (let i = 0; i < targets.length; i++) {
-      if (!targets[i].eqaul(others[i])) {
+      if (!targets[i].equals(others[i])) {
         return false;
       }
     }
     return true;
   }
 
-  eqaul(other: BoxShadow): boolean {
+  static lerp(a: BoxShadow[], b: BoxShadow[], t: number) {}
+
+  equals(other: BoxShadow): boolean {
     if (this === other) return true;
 
     return (
       this.color === other.color &&
-      this.offset === other.offset &&
+      this.offset.equals(other.offset) &&
       this.blurRadius === other.blurRadius
     );
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  eqaul(other: BoxShadow): boolean {
+    return this.equals(other);
   }
 }
 

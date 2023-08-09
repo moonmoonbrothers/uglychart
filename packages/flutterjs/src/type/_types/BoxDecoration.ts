@@ -1,5 +1,5 @@
 import { BoxBorder } from "./Border";
-import { BorderRadiusGeometry } from "./BorderRadius";
+import BorderRadiusGeometry from "./BorderRadiusGeometry";
 import { EdgeInsetsGeometry } from "./EdgeInsets";
 import Path from "./Path";
 import Rect from "./Rect";
@@ -7,7 +7,7 @@ import Size from "./Size";
 import RRect from "./RRect";
 import Color from "./Color";
 import BoxShadow from "./BoxShadow";
-import Calculatable from "./Caculatable";
+import Data from "./Data";
 
 export interface Decoration {
   get padding(): EdgeInsetsGeometry | undefined;
@@ -16,14 +16,14 @@ export interface Decoration {
   equal(decoration: Decoration): boolean;
 }
 
-export default class BoxDecoration extends Calculatable implements Decoration {
+export default class BoxDecoration extends Data implements Decoration {
   readonly color?: Color;
   readonly border?: BoxBorder;
   readonly borderRadius?: BorderRadiusGeometry;
   readonly boxShadow?: BoxShadow[];
   readonly shape: BoxShape;
 
-  equal(other: Decoration): boolean {
+  equals(other: BoxDecoration): boolean {
     if (this === other) return true;
     if (!(other instanceof BoxDecoration)) return false;
     if (
@@ -36,7 +36,7 @@ export default class BoxDecoration extends Calculatable implements Decoration {
     if (
       !(this.border == null && other.border == null) &&
       (!(this.border != null && other.border != null) ||
-        !this.border.equal(other.border))
+        !this.border.equals(other.border))
     ) {
       return false;
     }
@@ -58,6 +58,13 @@ export default class BoxDecoration extends Calculatable implements Decoration {
     if (this.shape !== other.shape) return false;
 
     return true;
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  equal(other: BoxDecoration): boolean {
+    return this.equals(other);
   }
   /*
     Those are not implemented

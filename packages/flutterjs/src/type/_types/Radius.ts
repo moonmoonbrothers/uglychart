@@ -1,7 +1,10 @@
 import Utils from "../../utils";
+import Calculatable from "./Caculatable";
 
-export class Radius {
-  constructor(public x: number, public y: number) {}
+export class Radius extends Calculatable {
+  constructor(public readonly x: number, public readonly y: number) {
+    super();
+  }
   static circular(r: number) {
     return Radius.elliptical({ x: r, y: r });
   }
@@ -9,9 +12,25 @@ export class Radius {
     return new Radius(x, y);
   }
   static zero = Radius.circular(0);
-  equal(other: Radius): boolean {
+
+  plus(other: Radius): Radius {
+    return new Radius(this.x + other.x, this.y + other.y);
+  }
+
+  multiply(value: number): Radius {
+    return new Radius(this.x * value, this.y * value);
+  }
+
+  equals(other: Radius): boolean {
     if (this === other) return true;
     return this.x === other.x && this.y === other.y;
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  equal(other: Radius): boolean {
+    return this.equals(other);
   }
 
   clamp({ minimum, maximum }: { minimum?: Radius; maximum?: Radius }) {

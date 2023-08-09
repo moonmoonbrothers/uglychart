@@ -3,7 +3,6 @@ import {
   Alignment,
   BoxDecoration,
   Constraints,
-  Calculatable,
   Decoration,
   Matrix4,
   Data,
@@ -105,7 +104,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       constructor: (value: V) => T;
     }) => Nullable | T
   ): void {
-    let result = visitor({
+    this.alignment = visitor({
       tween: this.alignment,
       targetValue: this.widget.alignment,
       constructor: (value) =>
@@ -157,6 +156,10 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
       child: this.widget.child,
     });
   }
+}
+
+class BoxDecorationTween extends Tween<BoxDecoration> {
+  protected lerp(t: number): BoxDecoration {}
 }
 
 export default BaseAnimatedContainer;

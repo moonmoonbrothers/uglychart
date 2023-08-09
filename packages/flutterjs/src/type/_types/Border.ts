@@ -6,8 +6,9 @@ import BorderRadius from "./BorderRadius";
 import { assert } from "../../utils";
 import { BoxShape } from "./BoxDecoration";
 import BorderRadiusGeometry from "./BorderRadiusGeometry";
+import Data from "./Data";
 
-export class BoxBorder implements ShapeBorder {
+export class BoxBorder extends Data implements ShapeBorder {
   get dimensions(): EdgeInsetsGeometry {
     throw new Error("Method not implemented.");
   }
@@ -24,6 +25,9 @@ export class BoxBorder implements ShapeBorder {
     throw new Error("Method not implemented.");
   }
 
+  /**
+   * @deprecated The method should not be used
+   */
   equal(other: BoxBorder): boolean {
     throw new Error("Method not implemented.");
   }
@@ -120,15 +124,22 @@ class Border extends BoxBorder {
     this.left = left;
   }
 
-  equal(other: BoxBorder): boolean {
+  equals(other: BoxBorder): boolean {
     if (this === other) return true;
     if (!(other instanceof Border)) return false;
     return (
-      this.top.equal(other.top) &&
-      this.right.equal(other.right) &&
-      this.bottom.equal(other.bottom) &&
-      this.left.equal(other.left)
+      this.top.equals(other.top) &&
+      this.right.equals(other.right) &&
+      this.bottom.equals(other.bottom) &&
+      this.left.equals(other.left)
     );
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  equal(other: BoxBorder): boolean {
+    return this.equals(other);
   }
 
   static fromBorderSide(side: BorderSide) {

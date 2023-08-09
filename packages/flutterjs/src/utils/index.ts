@@ -2,6 +2,7 @@ import applyMixins from "./applyMixins";
 import assert from "./assert";
 import lerp from "./lerp";
 import { getTextHeight, getTextWidth } from "./getTextSize";
+import { Calculatable } from "../type";
 
 export { assert, applyMixins, getTextHeight, getTextWidth };
 
@@ -28,7 +29,13 @@ export default class Utils {
     return a.every((value, i) => value === b[i]);
   }
 
-  static lerp(a: number, b: number, t: number) {
-    return lerp(a, b, t);
+  static lerp<T extends Calculatable | number>(a: T, b: T, t: number) {
+    if (typeof a === "number") {
+      return lerp(a, b as number, t);
+    }
+
+    assert(b instanceof Calculatable);
+
+    return a.plus((b as Calculatable).minus(a).multiply(-1));
   }
 }

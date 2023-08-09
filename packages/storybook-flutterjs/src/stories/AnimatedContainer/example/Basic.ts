@@ -53,11 +53,11 @@ class CustomWidgetState extends State<CustomWidget> {
 				},
 				child: AnimatedContainer({
 					duration: 1000,
-					alignment: Alignment.center,
 					child: Text('Tab me', {
 						style: new TextStyle({ fontSize: 16 })
 					}),
-					...this.props[this.index]
+					...this.props[this.index],
+					alignment: Alignment.center
 				})
 			})
 		});
