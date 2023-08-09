@@ -1,5 +1,5 @@
-import { Curve, Tween } from "../../animation";
-import { Alignment, Calculatable, Offset } from "../../type";
+import { CalculatableTween, Curve, Tween } from "../../animation";
+import { Alignment, Calculatable, Data, Offset } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Transform from "../Transform";
@@ -40,14 +40,16 @@ class BaseAnimatedSlideState extends AnimatedBaseWidgetState<BaseAnimatedSlide> 
   private offset: Tween<Offset>;
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Nullable | Tween<T>;
-      targetValue: T | Nullable;
-    }) => Nullable | Tween<T>
+    visitor: <V extends number | Data, T extends Tween<V>>(props: {
+      tween: T;
+      targetValue: V;
+      constructor: (value: V) => T;
+    }) => T
   ): void {
     this.offset = visitor({
       tween: this.offset,
       targetValue: this.widget.offset,
+      constructor: (value) => new CalculatableTween({ begin: value }),
     })!;
   }
 

@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Alignment, Calculatable } from "../../type";
+import { Alignment, Calculatable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Transform from "../Transform";
@@ -42,14 +42,16 @@ class BaseAnimatedScaleState extends AnimatedBaseWidgetState<BaseAnimatedScale> 
   private scaleTween: Tween<number> | Nullable;
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Nullable | Tween<T>;
-      targetValue: T | Nullable;
-    }) => Nullable | Tween<T>
+    visitor: <V extends number | Data, T extends Tween<V>>(props: {
+      tween: T;
+      targetValue: V;
+      constructor: (value: V) => T;
+    }) => T
   ): void {
     this.scaleTween = visitor({
       tween: this.scaleTween,
       targetValue: this.widget.scale,
+      constructor: (value) => new Tween({ begin: value }),
     });
   }
 

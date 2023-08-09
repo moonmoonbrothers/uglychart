@@ -1,4 +1,4 @@
-import { Curve, Tween } from "../../animation";
+import { CalculatableTween, Curve, Tween } from "../../animation";
 import {
   Alignment,
   BoxDecoration,
@@ -6,6 +6,7 @@ import {
   Calculatable,
   Decoration,
   Matrix4,
+  Data,
 } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
@@ -98,35 +99,45 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
   // private transform: Tween<Matrix4> | Nullable
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Nullable | Tween<T>;
-      targetValue: T | Nullable;
-    }) => Nullable | Tween<T>
+    visitor: <V extends number | Data, T extends Tween<V>>(props: {
+      tween: Nullable | T;
+      targetValue: V | Nullable;
+      constructor: (value: V) => T;
+    }) => Nullable | T
   ): void {
     let result = visitor({
       tween: this.alignment,
       targetValue: this.widget.alignment,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
     });
-    this.alignment = result;
     this.width = visitor({
       tween: this.width,
       targetValue: this.widget.width,
+      constructor: (value) => new Tween({ begin: value, end: value }),
     });
     this.height = visitor({
       tween: this.height,
       targetValue: this.widget.height,
+      constructor: (value) => new Tween({ begin: value, end: value }),
     });
     this.padding = visitor({
       tween: this.padding,
       targetValue: this.widget.padding,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
     });
     this.margin = visitor({
       tween: this.margin,
       targetValue: this.widget.margin,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
     });
     this.transformAlignment = visitor({
       tween: this.transformAlignment,
       targetValue: this.widget.transformAlignment,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
     });
   }
 

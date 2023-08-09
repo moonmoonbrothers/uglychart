@@ -26,6 +26,7 @@ import TextStyle from "./_types/TextStyle";
 import TextSpan from "./_types/TextSpan";
 import Calculatable from "./_types/Caculatable";
 import Color from "./_types/Color";
+import Data from "./_types/Data";
 export * from "./_types/Borders";
 
 export {
@@ -58,4 +59,5 @@ export {
   TextStyle,
   TextSpan,
   Color,
+  Data,
 };

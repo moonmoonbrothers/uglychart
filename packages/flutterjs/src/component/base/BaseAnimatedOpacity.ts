@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Calculatable } from "../../type";
+import { Calculatable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Opacity from "../Opacity";
@@ -38,14 +38,16 @@ class BaseAnimatedOpacityState extends AnimatedBaseWidgetState<BaseAnimatedOpaci
   private opacityTween: Tween<number> | Nullable;
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Nullable | Tween<T>;
-      targetValue: T | Nullable;
-    }) => Nullable | Tween<T>
+    visitor: <V extends number | Data, T extends Tween<V>>(props: {
+      tween: T;
+      targetValue: V;
+      constructor: (value: V) => T;
+    }) => T
   ): void {
     this.opacityTween = visitor({
       tween: this.opacityTween,
       targetValue: this.widget.opacity,
+      constructor: (value) => new Tween({ begin: value, end: value }),
     });
   }
 

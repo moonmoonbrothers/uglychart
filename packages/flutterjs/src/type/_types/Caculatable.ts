@@ -1,4 +1,5 @@
-abstract class Calculatable {
+import Data from "./Data";
+abstract class Calculatable extends Data {
   plus(other: Calculatable): Calculatable {
     throw Error("plus is not implemented");
   }
@@ -9,10 +10,6 @@ abstract class Calculatable {
 
   multiply(value: number): Calculatable {
     throw Error("multiply is not implemented");
-  }
-
-  equals(other: Calculatable): boolean {
-    throw Error("equals is not implemented");
   }
 }
 

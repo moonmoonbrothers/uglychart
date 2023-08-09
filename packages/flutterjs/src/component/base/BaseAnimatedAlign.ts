@@ -1,5 +1,5 @@
-import { Curve, Tween } from "../../animation";
-import { Alignment, Calculatable } from "../../type";
+import { Curve, Tween, CalculatableTween } from "../../animation";
+import { Alignment, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Align from "../Align";
@@ -48,22 +48,31 @@ class BaseAnimatedAlignWidgetState extends AnimatedBaseWidgetState<BaseAnimatedA
   private heightFactorTween: Tween<number> | Nullable;
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Nullable | Tween<T>;
-      targetValue: T | Nullable;
-    }) => Nullable | Tween<T>
+    visitor: <V extends number | Data, T extends Tween<V>>({
+      tween,
+      targetValue,
+      constructor,
+    }: {
+      tween: T;
+      targetValue: V;
+      constructor: (value: V) => T;
+    }) => T
   ): void {
     this.alignmentTween = visitor({
       tween: this.alignmentTween,
       targetValue: this.widget.alignment,
+      constructor: (value) =>
+        new CalculatableTween({ begin: value, end: value }),
     });
     this.widthFactorTween = visitor({
       tween: this.widthFactorTween,
       targetValue: this.widget.widthFactor,
+      constructor: (value) => new Tween({ begin: value, end: value }),
     });
     this.heightFactorTween = visitor({
       tween: this.heightFactorTween,
       targetValue: this.widget.heightFactor,
+      constructor: (value) => new Tween({ begin: value, end: value }),
     });
   }
 

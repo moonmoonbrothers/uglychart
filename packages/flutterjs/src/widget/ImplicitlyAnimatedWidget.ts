@@ -6,7 +6,7 @@ import {
   Tween,
 } from "../animation";
 import { State, type BuildContext } from "../element";
-import { Calculatable } from "../type";
+import { Calculatable, Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
@@ -78,13 +78,13 @@ export class ImplicitlyAnimatedWidgetState<
 
   private constructTweens() {
     let shouldStartAnimation = false;
-    this.forEachTween(({ tween, targetValue }) => {
+    this.forEachTween(({ tween, targetValue, constructor }) => {
       if (targetValue == null) {
         return null;
       }
 
       if (tween == null) {
-        return new Tween({ begin: targetValue, end: targetValue });
+        return constructor(targetValue);
       }
 
       if (this.shouldAnimateTween(tween, targetValue)) {
@@ -92,23 +92,23 @@ export class ImplicitlyAnimatedWidgetState<
         this.updateTween(tween, targetValue);
       }
 
-      return tween;
+      return tween as any;
     });
 
     return shouldStartAnimation;
   }
 
   private updateTween(
-    tween: Tween<Calculatable | number>,
-    targetValue: Calculatable | number
+    tween: Tween<Data | number>,
+    targetValue: Data | number
   ): void {
     tween.begin = tween.evaluate(this.animation);
     tween.end = targetValue;
   }
 
   private shouldAnimateTween(
-    tween: Tween<Calculatable | number>,
-    targetValue: Calculatable | number
+    tween: Tween<Data | number>,
+    targetValue: Data | number
   ): boolean {
     const { end } = tween;
     if (typeof end === "number") {
@@ -123,10 +123,11 @@ export class ImplicitlyAnimatedWidgetState<
   didUpdateTweens() {}
 
   forEachTween(
-    visitor: <T extends Calculatable | number>(props: {
-      tween: Tween<T> | Nullable;
-      targetValue: T | Nullable;
-    }) => Tween<T> | Nullable
+    visitor: <V extends Data | number, T extends Tween<V>>(props: {
+      tween: T | Nullable;
+      targetValue: V | Nullable;
+      constructor: (value: V) => T;
+    }) => T | Nullable
   ) {
     throw new Error("forEachTween must be implemented");
   }
