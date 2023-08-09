@@ -43,6 +43,7 @@ import AnimatedScale from "./AnimatedScale";
 import AnimatedFractionallySizedBox from "./AnimatedFractionallySizedBox";
 import AnimatedPositioned from "./AnimatedPositioned";
 import AnimatedRotation from "./AnimatedRotation";
+import AnimatedSlide from "./AnimatedSlide";
 
 export {
   ConstrainedBox,
@@ -90,4 +91,5 @@ export {
   AnimatedFractionallySizedBox,
   AnimatedPositioned,
   AnimatedRotation,
+  AnimatedSlide,
 };
