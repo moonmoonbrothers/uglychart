@@ -85,23 +85,23 @@ export class ImplicitlyAnimatedWidgetState<
 
       if (tween == null) {
         return new Tween({ begin: targetValue, end: targetValue });
-      } else if (this.shouldAnimateTween(tween, targetValue)) {
+      }
+
+      if (this.shouldAnimateTween(tween, targetValue)) {
         shouldStartAnimation = true;
         this.updateTween(tween, targetValue);
-        return tween;
       }
+
+      return tween;
     });
 
     return shouldStartAnimation;
   }
 
   private updateTween(
-    tween: Tween<Data | number> | Nullable,
+    tween: Tween<Data | number>,
     targetValue: Data | number
   ): void {
-    if (tween == null) {
-      return;
-    }
     tween.begin = tween.evaluate(this.animation);
     tween.end = targetValue;
   }
