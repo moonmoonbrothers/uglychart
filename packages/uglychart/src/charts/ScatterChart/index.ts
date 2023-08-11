@@ -48,26 +48,29 @@ class ScatterChart extends ChartContextRootWidget<
 
   get scale(): Scale {
     const { datasets } = this.data;
-    if (this.scaleConfig != null) return this.scaleConfig;
 
     const valueEdge = {
       x: getValueEdge(datasets.map(({ data }) => data.map(({ x }) => x))),
       y: getValueEdge(datasets.map(({ data }) => data.map(({ y }) => y))),
     };
 
-    const roughEdge = valueEdge
+    const roughEdge = valueEdge;
 
     const roughStepCount = 10;
     const roughScale: Scale = {
       x: {
-        min: roughEdge.x.min,
-        max: roughEdge.x.max,
-        step: (roughEdge.x.max - roughEdge.x.min) / roughStepCount,
+        min: this.scaleConfig?.x?.min ?? roughEdge.x.min,
+        max: this.scaleConfig?.x?.max ?? roughEdge.x.max,
+        step:
+          this.scaleConfig?.x?.step ??
+          (roughEdge.x.max - roughEdge.x.min) / roughStepCount,
       },
       y: {
-        min: roughEdge.y.min,
-        max: roughEdge.y.max,
-        step: (roughEdge.y.max - roughEdge.y.min) / roughStepCount,
+        min: this.scaleConfig?.y?.min ?? roughEdge.y.min,
+        max: this.scaleConfig?.y?.max ?? roughEdge.y.max,
+        step:
+          this.scaleConfig?.y?.step ??
+          (roughEdge.y.max - roughEdge.y.min) / roughStepCount,
       },
     };
 
