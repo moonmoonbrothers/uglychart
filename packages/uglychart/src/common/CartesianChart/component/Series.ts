@@ -5,12 +5,9 @@ import {
   Text,
 } from "@moonmoonbrothers/flutterjs";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
-import { Scale } from "../util";
 import { Custom } from "../types";
 
-export type SeriesProps = {
-  direction: "horizontal" | "vertical";
-};
+export type SeriesProps = {};
 
 export type SeriesConfig = {};
 

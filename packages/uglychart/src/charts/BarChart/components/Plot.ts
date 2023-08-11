@@ -1,13 +1,7 @@
 import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
-import { Plot as BasePlot } from "../../../common/CartesianChart/component/Plot";
-
-type PlotLine = {
-  color?: string;
-  thickness?: number;
-  count?: number;
-};
+import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 
 const defaultPlotConfig = {
   verticalLine: {
@@ -18,7 +12,14 @@ const defaultPlotConfig = {
   },
 };
 
-export class Plot extends BasePlot {
+type PlotProps = {
+  direction: "vertical" | "horizontal";
+};
+
+export class Plot extends CartesianChartContextWidget {
+  constructor(protected props: PlotProps) {
+    super();
+  }
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);

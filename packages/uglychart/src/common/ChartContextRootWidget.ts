@@ -8,7 +8,7 @@ import { DeepPartial } from "../utils";
 
 class ChartContextRootWidget<
   CUSTOM,
-  DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
+  DEPENDENCIES,
   THEME,
   DATA,
   SCALE

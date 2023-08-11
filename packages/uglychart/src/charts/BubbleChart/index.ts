@@ -2,22 +2,11 @@ import type { Custom, Theme, Data, Scale, Dependencies } from "./types";
 import * as defaultComponents from "./components/default";
 import { Series, Plot, Chart } from "./components";
 import { getScale, getValueEdge } from "../../common/CartesianChart/util";
-import ChartContextRootWidget from "../../common/ChartContextRootWidget";
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { DeepPartial } from "../../utils";
-import {
-  XAxis,
-  XAxisLabel,
-  XAxisTick,
-  YAxis,
-  YAxisLabel,
-  YAxisTick,
-  DataLabel,
-  Layout,
-  Title,
-} from "../../common/CartesianChart/component";
+import CartesianChartContextRootWidget from "../../common/CartesianChart/CartesianChartContextRootWidget";
 
-class BubbleChart extends ChartContextRootWidget<
+class BubbleChart extends CartesianChartContextRootWidget<
   Custom,
   Dependencies,
   Theme,
@@ -29,18 +18,11 @@ class BubbleChart extends ChartContextRootWidget<
   }
 
   get dependencies(): Dependencies {
+    const base = super.dependencies;
     return {
-      Title,
-      XAxis,
-      XAxisLabel,
-      XAxisTick,
-      YAxis,
-      YAxisLabel,
-      YAxisTick,
+      ...base,
       Plot,
       Chart,
-      DataLabel,
-      Layout,
       Series,
     };
   }
@@ -91,19 +73,9 @@ class BubbleChart extends ChartContextRootWidget<
   }
 
   mergeWithDefaultCustom(custom: Partial<Custom>): Custom {
+    const base = super.mergeWithDefaultCustom(custom);
     return {
-      plot: custom?.plot ?? { type: "config" },
-      layout: custom?.layout ?? { type: "config" },
-      title: custom?.title ?? { type: "config" },
-      xAxis: custom?.xAxis ?? { type: "config" },
-      yAxis: custom?.yAxis ?? { type: "config" },
-      xAxisLabel: custom?.xAxisLabel ?? { type: "config" },
-      yAxisLabel: custom?.yAxisLabel ?? { type: "config" },
-      chart: custom?.chart ?? { type: "config" },
-      dataLabel: custom?.dataLabel ?? { type: "config" },
-      xAxisTick: custom?.xAxisTick ?? { type: "config" },
-      yAxisTick: custom?.yAxisTick ?? { type: "config" },
-      series: custom?.series ?? { type: "config" },
+      ...base,
       bubble: custom?.bubble ?? { type: "config" },
     };
   }

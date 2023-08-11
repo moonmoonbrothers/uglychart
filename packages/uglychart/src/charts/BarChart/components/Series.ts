@@ -7,9 +7,16 @@ import BarGroup from "./BarGroup";
 
 export type SeriesConfig = {};
 
-export type SeriesProps = ConstructorParameters<typeof BaseSeries>;
+export type SeriesProps = {
+  direction: "horizontal" | "vertical";
+};
 
 export class Series extends BaseSeries<Custom> {
+  declare props: SeriesProps;
+  constructor(props: SeriesProps) {
+    super(props);
+    this.props = props;
+  }
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);

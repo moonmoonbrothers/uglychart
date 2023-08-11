@@ -3,22 +3,10 @@ import type { Custom, Theme, Data, Scale, Dependencies } from "./types";
 import * as defaultComponents from "./components/default";
 import { Series, Plot, Chart } from "./components";
 import { getScale, getValueEdge } from "../../common/CartesianChart/util";
-import ChartContextRootWidget from "../../common/ChartContextRootWidget";
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { DeepPartial } from "../../utils";
-import {
-  XAxis,
-  XAxisLabel,
-  XAxisTick,
-  YAxis,
-  YAxisLabel,
-  YAxisTick,
-  DataLabel,
-  Layout,
-  Title,
-} from "../../common/CartesianChart/component";
 
-class ScatterChart extends ChartContextRootWidget<
+class ScatterChart extends CartesianChartContextRootWidget<
   Custom,
   Dependencies,
   Theme,
@@ -31,43 +19,38 @@ class ScatterChart extends ChartContextRootWidget<
 
   get dependencies(): Dependencies {
     return {
-      Title,
-      XAxis,
-      XAxisLabel,
-      XAxisTick,
-      YAxis,
-      YAxisLabel,
-      YAxisTick,
+      ...super.dependencies,
       Plot,
       Chart,
-      DataLabel,
-      Layout,
       Series,
     };
   }
 
   get scale(): Scale {
     const { datasets } = this.data;
-    if (this.scaleConfig != null) return this.scaleConfig;
 
     const valueEdge = {
       x: getValueEdge(datasets.map(({ data }) => data.map(({ x }) => x))),
       y: getValueEdge(datasets.map(({ data }) => data.map(({ y }) => y))),
     };
 
-    const roughEdge = valueEdge
+    const roughEdge = valueEdge;
 
     const roughStepCount = 10;
     const roughScale: Scale = {
       x: {
-        min: roughEdge.x.min,
-        max: roughEdge.x.max,
-        step: (roughEdge.x.max - roughEdge.x.min) / roughStepCount,
+        min: this.scaleConfig?.x?.min ?? roughEdge.x.min,
+        max: this.scaleConfig?.x?.max ?? roughEdge.x.max,
+        step:
+          this.scaleConfig?.x?.step ??
+          (roughEdge.x.max - roughEdge.x.min) / roughStepCount,
       },
       y: {
-        min: roughEdge.y.min,
-        max: roughEdge.y.max,
-        step: (roughEdge.y.max - roughEdge.y.min) / roughStepCount,
+        min: this.scaleConfig?.y?.min ?? roughEdge.y.min,
+        max: this.scaleConfig?.y?.max ?? roughEdge.y.max,
+        step:
+          this.scaleConfig?.y?.step ??
+          (roughEdge.y.max - roughEdge.y.min) / roughStepCount,
       },
     };
 
@@ -79,18 +62,7 @@ class ScatterChart extends ChartContextRootWidget<
 
   mergeWithDefaultCustom(custom: Partial<Custom>): Custom {
     return {
-      plot: custom?.plot ?? { type: "config" },
-      layout: custom?.layout ?? { type: "config" },
-      title: custom?.title ?? { type: "config" },
-      xAxis: custom?.xAxis ?? { type: "config" },
-      yAxis: custom?.yAxis ?? { type: "config" },
-      xAxisLabel: custom?.xAxisLabel ?? { type: "config" },
-      yAxisLabel: custom?.yAxisLabel ?? { type: "config" },
-      chart: custom?.chart ?? { type: "config" },
-      dataLabel: custom?.dataLabel ?? { type: "config" },
-      xAxisTick: custom?.xAxisTick ?? { type: "config" },
-      yAxisTick: custom?.yAxisTick ?? { type: "config" },
-      series: custom?.series ?? { type: "config" },
+      ...super.mergeWithDefaultCustom(custom),
       scatter: custom?.scatter ?? { type: "config" },
     };
   }

@@ -84,7 +84,7 @@ export class Plot extends CartesianChartContextWidget {
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
       child: Series({
-        direction,
+        direction: direction,
       }),
     });
   }
