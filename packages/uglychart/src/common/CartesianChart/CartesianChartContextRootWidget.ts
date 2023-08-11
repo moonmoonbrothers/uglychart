@@ -16,10 +16,14 @@ import {
   Title,
 } from "./component";
 import { DeepPartial } from "../../utils";
+import ChartContextWidget from "../ChartContextWidget";
 
 class CartesianChartContextRootWidget<
-  CUSTOM extends Custom = Custom,
-  DEPENDENCIES extends Dependencies = Dependencies,
+  CUSTOM extends Custom<any, any> = Custom,
+  DEPENDENCIES extends Record<
+    string,
+    (...arg: any) => ChartContextWidget<any, any, any, any, any>
+  > = Dependencies,
   THEME extends Theme = Theme,
   DATA = Data,
   SCALE = Scale
@@ -42,7 +46,7 @@ class CartesianChartContextRootWidget<
       DataLabel,
       Layout,
       Series,
-    } as DEPENDENCIES;
+    } as any;
   }
 
   mergeWithDefaultTheme(theme: DeepPartial<Theme>): THEME {

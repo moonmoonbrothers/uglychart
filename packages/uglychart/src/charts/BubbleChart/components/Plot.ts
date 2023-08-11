@@ -39,6 +39,7 @@ export class Plot extends ChartContextWidget<
   constructor(protected props: PlotProps) {
     super();
   }
+
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
