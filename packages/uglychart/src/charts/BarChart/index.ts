@@ -1,7 +1,6 @@
 import CartesianChartContextRootWidget from "../../common/CartesianChart/CartesianChartContextRootWidget";
-import type { Custom } from "./types";
+import type { Custom, Dependencies } from "./types";
 import * as defaultComponents from "./components/default";
-import { Dependencies } from "../../common/CartesianChart/types";
 import {
   Scale,
   getScale,
@@ -11,7 +10,7 @@ import Series from "./components/Series";
 import XAxis from "./components/XAxis";
 import YAxis from "./components/YAxis";
 import Plot from "./components/Plot";
-class BarChart extends CartesianChartContextRootWidget<Custom> {
+class BarChart extends CartesianChartContextRootWidget<Custom, Dependencies> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
     return {

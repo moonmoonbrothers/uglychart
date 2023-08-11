@@ -9,9 +9,7 @@ export type SeriesConfig = {
   dotColors?: string[];
 };
 
-export type SeriesProps = {
-  direction: "horizontal" | "vertical";
-};
+export type SeriesProps = {};
 
 export class Series extends ChartContextWidget<
   Custom,

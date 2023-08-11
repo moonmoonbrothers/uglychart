@@ -7,9 +7,7 @@ import {
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
 import { Custom } from "../types";
 
-export type SeriesProps = {
-  direction: "horizontal" | "vertical";
-};
+export type SeriesProps = {};
 
 export type SeriesConfig = {};
 

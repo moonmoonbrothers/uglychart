@@ -9,11 +9,13 @@ import { BarConfig, BarProps } from "./components/Bar";
 import { BarGroupProps, BarGroupConfig } from "./components/BarGroup";
 import { SeriesConfig } from "./components/Series";
 import type { CustomConfig, CustomWidget } from "../../common/type";
+import { Dependencies as CartesianDependencies } from "../../common/CartesianChart/types";
+import Plot from "./components/Plot";
 
 export type Custom = CartesianChartCustom & {
   bar: CustomBar;
   barGroup: CustomBarGroup;
-  series: CustomSeries
+  series: CustomSeries;
 };
 
 type CustomSeries =
@@ -53,5 +55,8 @@ type CustomBarGroup =
       }
     >;
 
-export type Theme = CartesianChartTheme
-export type Data = CartesianChartData
+export type Theme = CartesianChartTheme;
+export type Data = CartesianChartData;
+export type Dependencies = Omit<CartesianDependencies, "Plot"> & {
+  Plot: (...props: Parameters<typeof Plot>) => ReturnType<typeof Plot>;
+};
