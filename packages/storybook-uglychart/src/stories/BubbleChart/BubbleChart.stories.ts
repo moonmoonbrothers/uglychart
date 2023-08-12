@@ -164,13 +164,6 @@ export const Bubble: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

@@ -2,15 +2,7 @@ import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
-
-const defaultPlotConfig = {
-  verticalLine: {
-    color: "#D3D3D3",
-  },
-  horizontalLine: {
-    color: "#D3D3D3",
-  },
-};
+import { defaultPlotConfig } from "../../../common/CartesianChart/component/Plot";
 
 type PlotProps = {
   direction: "vertical" | "horizontal";

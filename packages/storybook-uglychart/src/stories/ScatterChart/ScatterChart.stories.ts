@@ -561,13 +561,6 @@ export const Scatter: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

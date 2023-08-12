@@ -69,13 +69,6 @@ export const Basic: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -146,13 +139,6 @@ export const HorizontalWithMinusValue: Story = {
 				layout: {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -203,13 +189,6 @@ export const VerticalWithMinusValues: Story = {
 				layout: {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -404,13 +383,6 @@ export const WithPlotSize: Story = {
 					type: 'config',
 					height: 300,
 					width: 400
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

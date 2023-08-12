@@ -1,7 +1,4 @@
-import {
-  BuildContext,
-  type Widget,
-} from "@moonmoonbrothers/flutterjs";
+import { BuildContext, type Widget } from "@moonmoonbrothers/flutterjs";
 import { XAxisTick as DefaultXAxisTick } from "./default";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
@@ -22,7 +19,7 @@ export class XAxisTick extends CartesianChartContextWidget {
 
     return DefaultXAxisTick({
       thickness: xAxisTick.thickness ?? xAxis.thickness ?? theme.border.width,
-      length: xAxisTick.length ?? 10,
+      length: xAxisTick.length ?? 5,
       color: xAxisTick.color ?? xAxis.color ?? theme.border.color,
     });
   }

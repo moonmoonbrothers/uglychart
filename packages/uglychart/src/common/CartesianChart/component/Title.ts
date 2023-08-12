@@ -14,11 +14,12 @@ export type TitleConfig = {
   font?: Font;
 };
 
-const defaultTitleConfig = {
+export const defaultTitleConfig = {
   font: {
-    fontSize: 24,
+    fontSize: 18,
   },
   alignment: "start" as const,
+  margin: EdgeInsets.only({ bottom: 10 }),
 };
 
 export class Title extends CartesianChartContextWidget {
@@ -32,18 +33,16 @@ export class Title extends CartesianChartContextWidget {
       return title.Custom({}, { theme, data, text });
     }
 
-    const { alignment, font, margin } = title;
-
     return DefaultTitle({
-      align: alignment,
+      align: title.alignment ?? defaultTitleConfig.alignment,
       text,
       style: new TextStyle({
-        fontFamily: font?.fontFamily ?? theme.text.fontFamily,
-        fontSize: font?.fontSize ?? defaultTitleConfig.font.fontSize,
-        color: font?.color ?? theme.text.color,
-        height: font?.lineHeight ?? theme.text.lineHeight,
+        fontFamily: title.font?.fontFamily ?? theme.text.fontFamily,
+        fontSize: title.font?.fontSize ?? defaultTitleConfig.font.fontSize,
+        color: title.font?.color ?? theme.text.color,
+        height: title.font?.lineHeight ?? theme.text.lineHeight,
       }),
-      margin,
+      margin: title.margin ?? defaultTitleConfig.margin,
     });
   }
 }

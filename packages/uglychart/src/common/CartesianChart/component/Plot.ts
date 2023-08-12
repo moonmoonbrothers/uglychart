@@ -15,12 +15,12 @@ export type PlotConfig = {
   foregroundAdditions?: Widget[];
 };
 
-const defaultPlotConfig = {
+export const defaultPlotConfig = {
   verticalLine: {
-    color: "#D3D3D3",
+    color: "rgba(0, 0, 0, 0.05)",
   },
   horizontalLine: {
-    color: "#D3D3D3",
+    color: "rgba(0, 0, 0, 0.05)",
   },
 };
 
