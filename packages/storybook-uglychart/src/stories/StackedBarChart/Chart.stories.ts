@@ -37,10 +37,6 @@ export const Basic: Story = {
 				]
 			},
 			custom: {
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
@@ -104,10 +100,6 @@ export const HorizontalWithMinusValue: Story = {
 				]
 			},
 			custom: {
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					direction: 'horizontal',
@@ -188,10 +180,6 @@ export const Vertical: Story = {
 					type: 'config',
 					visible: true
 				},
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					direction: 'vertical'
@@ -248,10 +236,6 @@ export const VerticalWithMinusValues: Story = {
 				dataLabel: {
 					type: 'config',
 					visible: true
-				},
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
 				},
 				chart: {
 					type: 'config',

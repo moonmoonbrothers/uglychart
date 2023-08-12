@@ -38,7 +38,7 @@ export const Basic: Story = {
 					},
 					{
 						legend: 'B',
-						data: [60, 20.5, 20.2, 22.5, 10, -10, 10, -30, 20]
+						data: [60, 20.5, 20.2, 22.5, 10, 10, 10, 30, 20]
 					},
 					{
 						legend: 'C',
@@ -48,8 +48,7 @@ export const Basic: Story = {
 			},
 			custom: {
 				series: {
-					type: 'config',
-					lineColors: ['blue', 'green', 'yellow']
+					type: 'config'
 				},
 				chart: {
 					type: 'config',

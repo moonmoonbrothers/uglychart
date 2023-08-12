@@ -144,9 +144,6 @@ export const Bubble: Story = {
 				]
 			},
 			custom: {
-				series: {
-					type: 'config'
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [

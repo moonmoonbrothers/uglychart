@@ -4,6 +4,7 @@ import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
 import ChartContextWidget from "../../../common/ChartContextWidget";
 import Scatter from "./Scatter";
+import { defaultColors } from "../../../utils";
 
 export type SeriesConfig = {
   dotColors?: string[];
@@ -28,7 +29,7 @@ export class Series extends ChartContextWidget<
       return series.Custom({}, { theme, data });
     }
 
-    const { dotColors = ["black"] } = series;
+    const { dotColors = defaultColors } = series;
 
     return DefaultSeries({
       children: datasets.map(({ data: values }, i) =>
