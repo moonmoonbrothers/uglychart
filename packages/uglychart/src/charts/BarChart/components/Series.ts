@@ -1,9 +1,8 @@
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Series as DefaultSeries } from "./default";
-import { Series as BaseSeries } from "../../../common/CartesianChart/component/Series";
-import type { Custom } from "../types";
-import BarGroup from "./BarGroup";
+import type { Custom, Dependencies } from "../types";
+import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 
 export type SeriesConfig = {};
 
@@ -11,17 +10,16 @@ export type SeriesProps = {
   direction: "horizontal" | "vertical";
 };
 
-export class Series extends BaseSeries<Custom> {
-  declare props: SeriesProps;
-  constructor(props: SeriesProps) {
-    super(props);
-    this.props = props;
+export class Series extends CartesianChartContextWidget<Custom, Dependencies> {
+  constructor(protected props: SeriesProps = { direction: "vertical" }) {
+    super();
   }
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { labels } = data;
     const { series } = this.getCustom(context);
+    const { BarGroup } = this.getDependencies(context);
 
     if (series.type === "custom") {
       return series.Custom({}, { theme, data });

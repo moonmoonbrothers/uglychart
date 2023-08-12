@@ -11,7 +11,12 @@ import XAxis from "./components/XAxis";
 import YAxis from "./components/YAxis";
 import Plot from "./components/Plot";
 import Chart from "./components/Chart";
-class BarChart extends CartesianChartContextRootWidget<Custom, Dependencies> {
+import BarGroup from "./components/BarGroup";
+import Bar from "./components/Bar";
+export class BarChart extends CartesianChartContextRootWidget<
+  Custom,
+  Dependencies
+> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
     return {
@@ -21,6 +26,8 @@ class BarChart extends CartesianChartContextRootWidget<Custom, Dependencies> {
       YAxis,
       Plot,
       Chart,
+      BarGroup,
+      Bar,
     };
   }
 

@@ -5,8 +5,8 @@ import {
   Data as CartesianChartData,
   Scale,
 } from "../../common/CartesianChart/types";
-import { BarConfig, BarProps } from "./components/Bar";
-import { BarGroupProps, BarGroupConfig } from "./components/BarGroup";
+import Bar, { BarConfig, BarProps } from "./components/Bar";
+import BarGroup, { BarGroupProps, BarGroupConfig } from "./components/BarGroup";
 import { ChartConfig } from "./components/Chart";
 import { SeriesConfig } from "./components/Series";
 import type { CustomConfig, CustomWidget } from "../../common/type";
@@ -75,4 +75,8 @@ export type Theme = CartesianChartTheme;
 export type Data = CartesianChartData;
 export type Dependencies = Omit<CartesianDependencies, "Plot"> & {
   Plot: (...props: Parameters<typeof Plot>) => ReturnType<typeof Plot>;
+  BarGroup: (
+    ...props: Parameters<typeof BarGroup>
+  ) => ReturnType<typeof BarGroup>;
+  Bar: (...props: Parameters<typeof Bar>) => ReturnType<typeof Bar>;
 };
