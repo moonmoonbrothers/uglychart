@@ -1,7 +1,13 @@
-import { Alignment, Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
+import {
+  Alignment,
+  Widget,
+  BuildContext,
+  Data,
+} from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { Custom, Theme } from "../types";
 
 export type ChartConfig = {
   scale?: Scale;
@@ -10,7 +16,9 @@ export type ChartConfig = {
   backgroundAdditions?: Widget[];
 };
 
-export class Chart extends CartesianChartContextWidget {
+export class Chart<
+  CUSTOM extends Custom<any, any> = Custom
+> extends CartesianChartContextWidget<CUSTOM> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -23,10 +31,12 @@ export class Chart extends CartesianChartContextWidget {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
     const { foregroundAdditions = [], backgroundAdditions = [] } = chart;
+    const direction = this.getDirection(context);
 
     const { xLabels, yLabels } = this.getXAnxYLabels({
       scale,
       labels,
+      direction,
     });
 
     return DefaultChart({
@@ -36,12 +46,12 @@ export class Chart extends CartesianChartContextWidget {
       plotWidth: plot.width,
       YAxis: YAxis({
         labels: yLabels,
-        type: "index",
+        type: direction === "horizontal" ? "index" : "value",
       }),
-      Plot: Plot(),
+      Plot: Plot({ direction }),
       XAxis: XAxis({
         labels: xLabels,
-        type: "value",
+        type: direction === "vertical" ? "index" : "value",
       }),
       yAxisThickness: yAxis.thickness ?? theme.border.width,
       xAxisThickness: xAxis.thickness ?? theme.border.width,
@@ -50,7 +60,15 @@ export class Chart extends CartesianChartContextWidget {
     });
   }
 
-  getXAnxYLabels({ scale, labels }: { scale: Scale; labels: string[] }): {
+  getXAnxYLabels({
+    scale,
+    labels,
+    direction,
+  }: {
+    scale: Scale;
+    labels: string[];
+    direction: "horizontal" | "vertical";
+  }): {
     xLabels: string[];
     yLabels: string[];
   } {
@@ -63,9 +81,13 @@ export class Chart extends CartesianChartContextWidget {
     const indexLabels = labels;
 
     return {
-      xLabels: indexLabels,
-      yLabels: valueLabels,
+      xLabels: direction === "horizontal" ? valueLabels : indexLabels,
+      yLabels: direction === "horizontal" ? indexLabels : valueLabels,
     };
+  }
+
+  getDirection(context: BuildContext): "horizontal" | "vertical" {
+    return "vertical";
   }
 }
 

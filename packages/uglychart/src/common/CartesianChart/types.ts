@@ -14,20 +14,45 @@ import { XAxisTickProps, XAxisTick } from "./component/XAxisTick";
 import { YAxisTickProps, YAxisTick } from "./component/YAxisTick";
 import CustomSeries, { SeriesConfig, Series } from "./component/Series";
 import type { CustomConfig, CustomWidget } from "../type";
+import ChartContextWidget from "../ChartContextWidget";
 
 export type Dependencies = {
-  Plot: (...args: ConstructorParameters<typeof Plot>) => Plot;
-  XAxis: (...args: ConstructorParameters<typeof XAxis>) => XAxis;
-  YAxis: (...args: ConstructorParameters<typeof YAxis>) => YAxis;
-  YAxisLabel: (...args: ConstructorParameters<typeof YAxisLabel>) => YAxisLabel;
-  XAxisLabel: (...args: ConstructorParameters<typeof XAxisLabel>) => XAxisLabel;
-  Title: (...args: ConstructorParameters<typeof Title>) => Title;
-  XAxisTick: (...args: ConstructorParameters<typeof XAxisTick>) => XAxisTick;
-  YAxisTick: (...args: ConstructorParameters<typeof YAxisTick>) => YAxisTick;
-  DataLabel: (...args: ConstructorParameters<typeof DataLabel>) => DataLabel;
-  Layout: (...args: ConstructorParameters<typeof Layout>) => Layout;
-  Chart: (...args: ConstructorParameters<typeof Chart>) => Chart;
-  Series: (...args: ConstructorParameters<typeof Series>) => Series;
+  Plot: (
+    ...args: ConstructorParameters<typeof Plot>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  XAxis: (
+    ...args: ConstructorParameters<typeof XAxis>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  YAxis: (
+    ...args: ConstructorParameters<typeof YAxis>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  YAxisLabel: (
+    ...args: ConstructorParameters<typeof YAxisLabel>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  XAxisLabel: (
+    ...args: ConstructorParameters<typeof XAxisLabel>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  Title: (
+    ...args: ConstructorParameters<typeof Title>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  XAxisTick: (
+    ...args: ConstructorParameters<typeof XAxisTick>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  YAxisTick: (
+    ...args: ConstructorParameters<typeof YAxisTick>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  DataLabel: (
+    ...args: ConstructorParameters<typeof DataLabel>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  Layout: (
+    ...args: ConstructorParameters<typeof Layout>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  Chart: (
+    ...args: ConstructorParameters<typeof Chart>
+  ) => ChartContextWidget<any, any, any, any, any>;
+  Series: (
+    ...args: ConstructorParameters<typeof Series>
+  ) => ChartContextWidget<any, any, any, any, any>;
 };
 
 export type Theme = {

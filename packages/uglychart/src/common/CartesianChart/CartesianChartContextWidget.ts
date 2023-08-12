@@ -1,7 +1,6 @@
 import { Custom, Theme, Data, Dependencies } from "./types";
 import ChartContextWidget from "../ChartContextWidget";
 import { Scale } from "./util";
-import { Widget } from "@moonmoonbrothers/flutterjs";
 
 class CartesianChartContextWidget<
   CUSTOM extends Custom<any, any> = Custom,
