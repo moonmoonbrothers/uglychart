@@ -58,7 +58,7 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
       if (data < 0 || scale.max < 0) return 0;
 
       const max = scale.max;
-      const min = Math.min(scale.min, 0);
+      const min = Math.max(scale.min, 0);
 
       return (data - min) / (max - min);
     });
