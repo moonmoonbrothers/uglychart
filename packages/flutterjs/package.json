@@ -5,18 +5,22 @@
   "main": "src/index.ts",
   "devDependencies": {
     "cp": "^0.2.0",
-    "typescript": "^5.0.4",
+    "ts-node": "^10.9.1",
+    "ts-patch": "^3.0.2",
+    "typescript": "^5.1.6",
     "vite": "^4.2.1"
   },
   "dependencies": {
     "popmotion": "^11.0.5",
-    "short-unique-id": "^4.4.4"
+    "short-unique-id": "^4.4.4",
+    "typia": "^4.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build && tsc",
     "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\": {\"import\": \"./index.mjs\", \n \"require\": \"./index.umd.js\"}}' --json"
+    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\": {\"import\": \"./index.mjs\", \n \"require\": \"./index.umd.js\"}}' --json",
+    "postinstall": "ts-patch install"
   },
   "repository": {
     "type": "git",

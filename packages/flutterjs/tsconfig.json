@@ -8,8 +8,19 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "package"
+    "outDir": "package",
+    "plugins": [
+      {
+        "transform": "typia/lib/transform"
+      }
+    ],
+    "strictNullChecks": true,
+    "strict": true
   },
-  "include": ["src/index.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

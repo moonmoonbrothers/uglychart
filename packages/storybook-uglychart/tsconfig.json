@@ -7,6 +7,11 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
+		"plugins": [
+			{
+				"transform": "typia/lib/transform"
+			}
+		],
 		"sourceMap": true,
 		"strict": true
 	}
