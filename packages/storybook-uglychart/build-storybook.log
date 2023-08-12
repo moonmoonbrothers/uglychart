@@ -1,6 +1,6 @@
 @storybook/cli v7.0.5
 
-info => Cleaning outputDir: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq
+info => Cleaning outputDir: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp
 info => Loading presets
 WARN The "@storybook/addon-mdx-gfm" addon is meant as a migration assistant for Storybook 7.0; and will likely be removed in a future version.
 WARN It's recommended you read this document:
@@ -8,74 +8,167 @@ WARN https://storybook.js.org/docs/react/writing-docs/mdx#lack-of-github-flavore
 WARN 
 WARN Once you've made the necessary changes, you can remove the addon from your package.json and storybook config.
 info => Building manager..
-info => Manager built (118 ms)
-info => Copying static files: /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/manager/static at /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/sb-common-assets
-
+info => Manager built (99 ms)
+info => Copying static files: /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/manager/static at /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/sb-common-assets
+WARN 🚨 Unable to index files:
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--basic
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--horizontal-with-minus-value
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical-with-minus-values
+WARN 🚨 Unable to index files:
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--basic
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--horizontal-with-minus-value
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical
+WARN - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical-with-minus-values
+ERR! Error: Unable to index files:
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--basic
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--horizontal-with-minus-value
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical-with-minus-values
+ERR!     at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3796)
+ERR!     at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!     at async Promise.all (index 3)
+ERR!     at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!     at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!     at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!     at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125)
+ERR!  MultipleIndexingError: Unable to index files:
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--basic
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--horizontal-with-minus-value
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical
+ERR! - ./src/stories/BarChart/Chart.stories.ts,./src/stories/StackedBarChart/Chart.stories.ts: Duplicate stories with id: widget-barchart-cases--vertical-with-minus-values
+ERR!     at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3796)
+ERR!     at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!     at async Promise.all (index 3)
+ERR!     at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!     at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!     at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!     at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125) {
+ERR!   indexingErrors: [
+ERR!     IndexingError: Duplicate stories with id: widget-barchart-cases--basic
+ERR!         at StoryIndexGenerator.chooseDuplicate (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:1387)
+ERR!         at /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3666
+ERR!         at Array.forEach (<anonymous>)
+ERR!         at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3573)
+ERR!         at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!         at async Promise.all (index 3)
+ERR!         at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!         at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!         at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!         at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125) {
+ERR!       importPaths: [Array]
+ERR!     },
+ERR!     IndexingError: Duplicate stories with id: widget-barchart-cases--horizontal-with-minus-value
+ERR!         at StoryIndexGenerator.chooseDuplicate (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:1387)
+ERR!         at /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3666
+ERR!         at Array.forEach (<anonymous>)
+ERR!         at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3573)
+ERR!         at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!         at async Promise.all (index 3)
+ERR!         at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!         at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!         at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!         at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125) {
+ERR!       importPaths: [Array]
+ERR!     },
+ERR!     IndexingError: Duplicate stories with id: widget-barchart-cases--vertical
+ERR!         at StoryIndexGenerator.chooseDuplicate (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:1387)
+ERR!         at /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3666
+ERR!         at Array.forEach (<anonymous>)
+ERR!         at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3573)
+ERR!         at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!         at async Promise.all (index 3)
+ERR!         at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!         at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!         at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!         at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125) {
+ERR!       importPaths: [Array]
+ERR!     },
+ERR!     IndexingError: Duplicate stories with id: widget-barchart-cases--vertical-with-minus-values
+ERR!         at StoryIndexGenerator.chooseDuplicate (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:1387)
+ERR!         at /Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3666
+ERR!         at Array.forEach (<anonymous>)
+ERR!         at StoryIndexGenerator.getIndex (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:17:3573)
+ERR!         at async extractStoriesJson (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:10:4413)
+ERR!         at async Promise.all (index 3)
+ERR!         at async buildStaticStandalone (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:31:1793)
+ERR!         at async withTelemetry (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/core-server/dist/index.js:35:3422)
+ERR!         at async build (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:434:1058)
+ERR!         at async Command.<anonymous> (/Users/daeseungmoon/work/uglychart-space/node_modules/@storybook/cli/dist/generate.js:437:125) {
+ERR!       importPaths: [Array]
+ERR!     }
+ERR!   ]
+ERR! }
+[?25l[2K[1G[36m?[39m [1mWould you like to help improve Storybook by sending anonymous crash reports?[22m [90m›[39m [90m(Y/n)[39m
 vite v4.2.1 building for production...
 
 ./sb-common-assets/fonts.css doesn't exist at build time, it will remain unchanged to be resolved at runtime
 transforming...
 Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
 Use of eval in "../../node_modules/telejson/dist/index.mjs" is strongly discouraged as it poses security risks and may cause issues with minification.
-✓ 1286 modules transformed.
-9:08:22 AM [vite-plugin-svelte] dom compile done.
+✓ 1295 modules transformed.
+6:02:50 PM [vite-plugin-svelte] dom compile done.
 package                              	files	  time	   avg
-svelte-highlight                     	    5	60.1ms	12.0ms
-@storybook/svelte                    	    2	51.1ms	25.6ms
-@moonmoonbrothers/storybook-uglychart	    1	28.5ms	28.5ms
-@moonmoonbrothers/flutterjs-svelte   	    1	 7.0ms	 7.0ms
+svelte-highlight                     	    5	58.8ms	11.8ms
+@storybook/svelte                    	    2	53.2ms	26.6ms
+@moonmoonbrothers/storybook-uglychart	    1	28.7ms	28.7ms
+@moonmoonbrothers/flutterjs-svelte   	    1	 8.2ms	 8.2ms
 rendering chunks...
 computing gzip size...
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/iframe.html                                          12.79 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/getValueEdge-536123d3.css                      1.01 kB │ gzip:   0.48 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-d475d2ea.js                              0.21 kB │ gzip:   0.17 kB │ map:     0.83 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-04419daf.js                            0.21 kB │ gzip:   0.20 kB │ map:     0.58 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/chunk-R4NKYYJA-96bb58e6.js                     0.30 kB │ gzip:   0.23 kB │ map:     0.81 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/WithTooltip-FBT32F6Q-1862f2e8.js               0.39 kB │ gzip:   0.25 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/syntaxhighlighter-QTQ2UBB4-8606dd92.js         0.41 kB │ gzip:   0.27 kB │ map:     0.12 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-e8abd1aa.js                              0.43 kB │ gzip:   0.26 kB │ map:     0.10 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/DocsRenderer-7FRJXR4N-6f348695.js              0.44 kB │ gzip:   0.28 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-6df7e8a9.js                              0.53 kB │ gzip:   0.34 kB │ map:     4.28 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-a72d0eb5.js                            0.59 kB │ gzip:   0.36 kB │ map:     0.57 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-0435c720.js                            0.69 kB │ gzip:   0.49 kB │ map:     3.82 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/_commonjsHelpers-87174ba5.js                   0.78 kB │ gzip:   0.45 kB │ map:     0.11 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-356e4a49.js                              0.81 kB │ gzip:   0.51 kB │ map:     3.26 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-b1164a2e.js                            0.88 kB │ gzip:   0.58 kB │ map:     2.82 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/Chart-622d40d9.js                              0.99 kB │ gzip:   0.52 kB │ map:     1.24 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/jsx-runtime-93a3f9b7.js                        1.01 kB │ gzip:   0.64 kB │ map:     2.30 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/AreaChart-310c8ba3.js                          1.04 kB │ gzip:   0.54 kB │ map:     1.26 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/LineChart-db85ee80.js                          1.04 kB │ gzip:   0.54 kB │ map:     1.26 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/BubbleChart-166dda4f.js                        1.05 kB │ gzip:   0.54 kB │ map:     1.27 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/ScatterChart-eb406aa6.js                       1.05 kB │ gzip:   0.54 kB │ map:     1.28 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/Introduction-ce0ed869.js                       1.22 kB │ gzip:   0.63 kB │ map:     1.54 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/chunk-PCJTTTQV-bff54868.js                     1.52 kB │ gzip:   0.82 kB │ map:     4.82 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/CustomPaint-ddcd9c97.js                        1.56 kB │ gzip:   0.66 kB │ map:     5.28 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-4b5eb985.js                            2.38 kB │ gzip:   1.26 kB │ map:    10.31 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-d37d4223.js                              2.63 kB │ gzip:   1.30 kB │ map:     7.47 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-f96f0111.js                            3.29 kB │ gzip:   1.41 kB │ map:    10.10 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-b7949e8c.js                              3.46 kB │ gzip:   1.46 kB │ map:    10.24 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/LineChart.stories-65545013.js                  5.10 kB │ gzip:   2.09 kB │ map:     9.94 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/AreaChart.stories-95edaf0c.js                  5.35 kB │ gzip:   2.16 kB │ map:    10.60 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-62235626.js                            7.69 kB │ gzip:   1.60 kB │ map:    13.70 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-e6f1f377.js                            7.97 kB │ gzip:   3.03 kB │ map:    28.19 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/iframe-1d7924c4.js                             8.16 kB │ gzip:   1.94 kB │ map:     7.45 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-f09cf579.js                              9.33 kB │ gzip:   3.72 kB │ map:    98.30 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/GlobalScrollAreaStyles-XIHNDKUY-93f820a4.js   10.37 kB │ gzip:   2.33 kB │ map:    15.71 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/config-671d8969.js                            10.39 kB │ gzip:   3.73 kB │ map:    18.04 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/preview-08a1f54c.js                           21.08 kB │ gzip:   7.00 kB │ map:    68.02 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/BubbleChart.stories-90a015a4.js               22.07 kB │ gzip:   6.07 kB │ map:    22.65 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/Color-3YIJY6X7-e3d8823e.js                    27.59 kB │ gzip:  10.18 kB │ map:   102.37 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/Chart.stories-a5f799f9.js                     28.78 kB │ gzip:   6.27 kB │ map:    52.92 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/ScatterChart.stories-8a095923.js              44.30 kB │ gzip:   7.61 kB │ map:    21.21 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/OverlayScrollbars-VAV6LJAB-7c54b746.js        58.94 kB │ gzip:  25.27 kB │ map:   277.31 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-1324115e.js                             64.29 kB │ gzip:  18.38 kB │ map:   255.68 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/getValueEdge-d4de7f90.js                     438.57 kB │ gzip: 121.12 kB │ map: 1,695.35 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/formatter-S4K5WUZV-4ebf491c.js               601.60 kB │ gzip: 185.05 kB │ map: 1,315.97 kB
-../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq/assets/index-e3025b48.js                            650.69 kB │ gzip: 213.50 kB │ map: 1,827.97 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/iframe.html                                          12.79 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/getScale-536123d3.css                          1.01 kB │ gzip:   0.48 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/getValueEdge-3f141169.js                       0.18 kB │ gzip:   0.17 kB │ map:     0.87 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-d475d2ea.js                              0.21 kB │ gzip:   0.17 kB │ map:     0.83 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-04419daf.js                            0.21 kB │ gzip:   0.20 kB │ map:     0.58 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/chunk-R4NKYYJA-96bb58e6.js                     0.30 kB │ gzip:   0.23 kB │ map:     0.81 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/WithTooltip-FBT32F6Q-bec30166.js               0.39 kB │ gzip:   0.25 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/syntaxhighlighter-QTQ2UBB4-b733ef7c.js         0.41 kB │ gzip:   0.27 kB │ map:     0.12 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-b64973bb.js                              0.43 kB │ gzip:   0.26 kB │ map:     0.10 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/DocsRenderer-7FRJXR4N-9edc876f.js              0.44 kB │ gzip:   0.28 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/defaultChartColors-97ca361d.js                 0.46 kB │ gzip:   0.29 kB │ map:     1.04 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-be0c32e7.js                              0.53 kB │ gzip:   0.34 kB │ map:     4.28 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-320fdaec.js                            0.59 kB │ gzip:   0.36 kB │ map:     0.57 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-0435c720.js                            0.69 kB │ gzip:   0.49 kB │ map:     3.82 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/_commonjsHelpers-87174ba5.js                   0.78 kB │ gzip:   0.45 kB │ map:     0.11 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-356e4a49.js                              0.81 kB │ gzip:   0.51 kB │ map:     3.26 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-b1164a2e.js                            0.88 kB │ gzip:   0.58 kB │ map:     2.82 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/jsx-runtime-2efe44b8.js                        1.01 kB │ gzip:   0.63 kB │ map:     2.30 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Chart-baffcded.js                              1.05 kB │ gzip:   0.53 kB │ map:     1.24 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/AreaChart-5a231d7e.js                          1.07 kB │ gzip:   0.54 kB │ map:     1.26 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/LineChart-1c3de059.js                          1.07 kB │ gzip:   0.54 kB │ map:     1.26 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Chart-cf2a38fd.js                              1.07 kB │ gzip:   0.55 kB │ map:     1.27 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/ScatterChart-8732faa2.js                       1.08 kB │ gzip:   0.54 kB │ map:     1.28 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/BubbleChart-0819fa12.js                        1.12 kB │ gzip:   0.56 kB │ map:     1.27 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Introduction-4ba59e23.js                       1.22 kB │ gzip:   0.63 kB │ map:     1.54 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/chunk-PCJTTTQV-008ada28.js                     1.52 kB │ gzip:   0.82 kB │ map:     4.82 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/CustomPaint-016d3cf6.js                        1.56 kB │ gzip:   0.66 kB │ map:     5.28 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-4b5eb985.js                            2.38 kB │ gzip:   1.26 kB │ map:    10.31 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-d37d4223.js                              2.63 kB │ gzip:   1.30 kB │ map:     7.47 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-f96f0111.js                            3.29 kB │ gzip:   1.41 kB │ map:    10.10 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-b7949e8c.js                              3.46 kB │ gzip:   1.46 kB │ map:    10.24 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/LineChart.stories-d1d20eee.js                  5.13 kB │ gzip:   2.10 kB │ map:     9.94 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/AreaChart.stories-db81ab77.js                  5.38 kB │ gzip:   2.17 kB │ map:    10.60 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Bar-d72bda1f.js                                7.10 kB │ gzip:   2.18 kB │ map:    29.63 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-62235626.js                            7.69 kB │ gzip:   1.60 kB │ map:    13.70 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-e6f1f377.js                            7.97 kB │ gzip:   3.03 kB │ map:    28.19 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-f09cf579.js                              9.33 kB │ gzip:   3.72 kB │ map:    98.30 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/iframe-25aebb7b.js                             9.34 kB │ gzip:   2.07 kB │ map:     7.89 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/GlobalScrollAreaStyles-XIHNDKUY-70e001e2.js   10.37 kB │ gzip:   2.33 kB │ map:    15.71 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/config-671d8969.js                            10.39 kB │ gzip:   3.73 kB │ map:    18.04 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Chart.stories-3a87a761.js                     14.18 kB │ gzip:   2.86 kB │ map:    16.07 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/preview-08a1f54c.js                           21.08 kB │ gzip:   7.00 kB │ map:    68.02 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Chart.stories-dd6bd68f.js                     21.33 kB │ gzip:   4.60 kB │ map:    20.77 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/BubbleChart.stories-56e186ac.js               21.77 kB │ gzip:   5.91 kB │ map:    21.71 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/Color-3YIJY6X7-d7af0bff.js                    27.59 kB │ gzip:  10.18 kB │ map:   102.37 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/ScatterChart.stories-e6cdc536.js              44.34 kB │ gzip:   7.62 kB │ map:    21.21 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/OverlayScrollbars-VAV6LJAB-3aa8ec06.js        58.94 kB │ gzip:  25.27 kB │ map:   277.31 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-1324115e.js                             64.29 kB │ gzip:  18.38 kB │ map:   255.68 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/getScale-2559eef3.js                         438.64 kB │ gzip: 121.13 kB │ map: 1,695.32 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/formatter-S4K5WUZV-775bd482.js               601.60 kB │ gzip: 185.05 kB │ map: 1,315.97 kB
+../../../../../../var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--29706-wh4Jaysm4XEp/assets/index-fbf7f9f1.js                            650.69 kB │ gzip: 213.49 kB │ map: 1,827.97 kB
 
 (!) Some chunks are larger than 500 kBs after minification. Consider:
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 8.65s
-info => Output directory: /var/folders/1x/8yjjyfvx5fngxx7tjs46t5r00000gn/T/chromatic--13703-eCXJFhxBG3Fq
+✓ built in 8.82s

@@ -5,7 +5,7 @@ import { TextStyle, Text, Container, EdgeInsets, Positioned } from '@moonmoonbro
 import { StackedBarChart } from '@moonmoonbrothers/uglychart';
 
 const meta = {
-	title: 'Widget/BarChart/Cases',
+	title: 'Widget/StackedBarChart/Cases',
 	component: Widget
 } satisfies Meta<Widget>;
 
