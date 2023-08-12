@@ -7,10 +7,6 @@ export type LayoutConfig = {
   backgroundColor?: string;
 };
 
-const defaultLayoutConfig = {
-  padding: EdgeInsets.all(30),
-};
-
 export class Layout extends CartesianChartContextWidget {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
@@ -20,8 +16,7 @@ export class Layout extends CartesianChartContextWidget {
     if (layout.type === "custom")
       return layout.Custom({ Title, Chart }, { theme, data });
 
-    const { padding = defaultLayoutConfig.padding, backgroundColor = "white" } =
-      layout;
+    const { padding, backgroundColor } = layout;
 
     return DefaultLayout({
       padding,

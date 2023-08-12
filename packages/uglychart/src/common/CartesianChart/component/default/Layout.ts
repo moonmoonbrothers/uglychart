@@ -6,10 +6,10 @@ import {
   EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 export default function Layout({
-  padding,
+  padding = EdgeInsets.all(30),
   Title,
   Chart,
-  backgroundColor,
+  backgroundColor = "white",
 }: LayoutProps) {
   return Container({
     padding,

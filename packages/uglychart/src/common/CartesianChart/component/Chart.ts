@@ -1,13 +1,8 @@
-import {
-  Alignment,
-  Widget,
-  BuildContext,
-  Data,
-} from "@moonmoonbrothers/flutterjs";
+import { Alignment, Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
-import { Custom, Theme } from "../types";
+import { Custom } from "../types";
 
 export type ChartConfig = {
   scale?: Scale;

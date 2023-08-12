@@ -2,7 +2,7 @@ import { type Decoration, Container } from "@moonmoonbrothers/flutterjs";
 
 export default function YAxisTick({
   thickness,
-  length,
+  length = 5,
   color,
   decoration,
 }: TickProp) {
@@ -16,7 +16,7 @@ export default function YAxisTick({
 
 type TickProp = {
   thickness: number;
-  length: number;
+  length?: number;
   color?: string;
   decoration?: Decoration;
 };

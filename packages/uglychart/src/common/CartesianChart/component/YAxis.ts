@@ -7,13 +7,6 @@ export type YAxisProps = {
   labels: string[];
 };
 
-export const defaultYAxisConfig = {
-  tick: {
-    thickness: 2,
-    length: 10,
-  },
-};
-
 export class YAxis extends CartesianChartContextWidget {
   constructor(protected props: YAxisProps) {
     super();

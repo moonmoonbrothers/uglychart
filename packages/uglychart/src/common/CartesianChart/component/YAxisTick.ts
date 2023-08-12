@@ -19,7 +19,7 @@ export class YAxisTick extends CartesianChartContextWidget {
 
     return DefaultYAxisTick({
       thickness: yAxisTick.thickness ?? yAxis.thickness ?? theme.border.width,
-      length: yAxisTick.length ?? 5,
+      length: yAxisTick.length,
       color: yAxisTick.color ?? yAxis.color ?? theme.border.color,
     });
   }

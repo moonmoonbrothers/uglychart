@@ -1,11 +1,8 @@
-import {
-  type Decoration,
-  Container,
-} from "@moonmoonbrothers/flutterjs";
+import { type Decoration, Container } from "@moonmoonbrothers/flutterjs";
 
 export default function XAxisTick({
   thickness,
-  length,
+  length = 5,
   color,
   decoration,
 }: TickProp) {
@@ -19,7 +16,7 @@ export default function XAxisTick({
 
 type TickProp = {
   thickness: number;
-  length: number;
+  length?: number;
   color?: string;
   decoration?: Decoration;
 };

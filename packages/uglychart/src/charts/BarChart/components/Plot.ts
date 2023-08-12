@@ -2,7 +2,6 @@ import { Widget, BuildContext, Container } from "@moonmoonbrothers/flutterjs";
 import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
-import { defaultPlotConfig } from "../../../common/CartesianChart/component/Plot";
 
 type PlotProps = {
   direction: "vertical" | "horizontal";
@@ -44,17 +43,16 @@ export class Plot extends CartesianChartContextWidget {
     );
 
     return DefaultPlot({
-      direction: direction,
       height: height,
       width: width,
       verticalLine: {
         thickness: verticalLine?.thickness ?? theme.border.width,
-        color: verticalLine?.color ?? defaultPlotConfig.verticalLine.color,
+        color: verticalLine?.color,
         count: direction === "horizontal" ? valueLineCount : labelLineCount,
       },
       horizontalLine: {
         thickness: horizontalLine?.thickness ?? theme.border.width,
-        color: horizontalLine?.color ?? defaultPlotConfig.horizontalLine.color,
+        color: horizontalLine?.color,
         count: direction === "vertical" ? valueLineCount : labelLineCount,
       },
       BackgroundAdditions: foregroundAdditions,
