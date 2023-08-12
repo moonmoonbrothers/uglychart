@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
+		ssrSize: { width: 600, height: 480 },
+		width: '600px',
 		height: '480px',
 		widget: StackedBarChart({
 			data: {
@@ -37,6 +37,10 @@ export const Basic: Story = {
 				]
 			},
 			custom: {
+				bar: {
+					type: 'config',
+					thickness: 30
+				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
@@ -122,7 +126,7 @@ export const HorizontalWithMinusValue: Story = {
 				},
 				bar: {
 					type: 'config',
-					thickness: 15
+					thickness: 30
 				},
 				layout: {
 					type: 'config',
@@ -172,7 +176,7 @@ export const Vertical: Story = {
 				},
 				bar: {
 					type: 'config',
-					thickness: 15
+					thickness: 30
 				},
 				layout: {
 					type: 'config',
@@ -222,7 +226,7 @@ export const VerticalWithMinusValues: Story = {
 				},
 				bar: {
 					type: 'config',
-					thickness: 15
+					thickness: 30
 				},
 				layout: {
 					type: 'config',
