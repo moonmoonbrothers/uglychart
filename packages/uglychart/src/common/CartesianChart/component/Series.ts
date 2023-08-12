@@ -14,7 +14,7 @@ export type SeriesConfig = {};
 export class Series<
   CUSTOM extends Custom = Custom
 > extends CartesianChartContextWidget<CUSTOM> {
-  constructor(protected props: SeriesProps) {
+  constructor(protected props: SeriesProps = {}) {
     super();
   }
   build(context: BuildContext): Widget {

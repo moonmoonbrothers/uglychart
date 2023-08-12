@@ -122,6 +122,7 @@ export const HorizontalWithMinusValue: Story = {
 				},
 				chart: {
 					type: 'config',
+					direction: 'horizontal',
 					foregroundAdditions: [
 						Positioned({
 							bottom: -20,

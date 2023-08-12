@@ -1,17 +1,24 @@
-import { Alignment, Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
-import { getScale, getValueEdge, Scale } from "../util";
+import {
+  Alignment,
+  Widget,
+  BuildContext,
+  Data,
+} from "@moonmoonbrothers/flutterjs";
+import { Scale } from "../util";
 import { Chart as DefaultChart } from "./default";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
+import { Custom, Theme } from "../types";
 
 export type ChartConfig = {
   scale?: Scale;
-  direction?: "horizontal" | "vertical";
   alignment?: Alignment;
   foregroundAdditions?: Widget[];
   backgroundAdditions?: Widget[];
 };
 
-export class Chart extends CartesianChartContextWidget {
+export class Chart<
+  CUSTOM extends Custom<any, any> = Custom
+> extends CartesianChartContextWidget<CUSTOM> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
@@ -23,11 +30,8 @@ export class Chart extends CartesianChartContextWidget {
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
-    const {
-      direction = "vertical",
-      foregroundAdditions = [],
-      backgroundAdditions = [],
-    } = chart;
+    const { foregroundAdditions = [], backgroundAdditions = [] } = chart;
+    const direction = this.getDirection(context);
 
     const { xLabels, yLabels } = this.getXAnxYLabels({
       scale,
@@ -80,6 +84,10 @@ export class Chart extends CartesianChartContextWidget {
       xLabels: direction === "horizontal" ? valueLabels : indexLabels,
       yLabels: direction === "horizontal" ? indexLabels : valueLabels,
     };
+  }
+
+  getDirection(context: BuildContext): "horizontal" | "vertical" {
+    return "vertical";
   }
 }
 
