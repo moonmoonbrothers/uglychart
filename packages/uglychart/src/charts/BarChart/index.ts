@@ -6,12 +6,12 @@ import {
   getScale,
   getValueEdge,
 } from "../../common/CartesianChart/util";
-import Series from "./components/Series";
-import XAxis from "./components/XAxis";
-import YAxis from "./components/YAxis";
-import Plot from "./components/Plot";
-import Chart from "./components/Chart";
-class BarChart extends CartesianChartContextRootWidget<Custom, Dependencies> {
+import { Series, XAxis, YAxis, Plot, Chart, BarGroup, Bar } from "./components";
+
+export class BarChart extends CartesianChartContextRootWidget<
+  Custom,
+  Dependencies
+> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
     return {
@@ -21,6 +21,8 @@ class BarChart extends CartesianChartContextRootWidget<Custom, Dependencies> {
       YAxis,
       Plot,
       Chart,
+      BarGroup,
+      Bar,
     };
   }
 
