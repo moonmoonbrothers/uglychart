@@ -16,7 +16,11 @@ import ScatterChart, {
 
 import BubbleChart, {
   DefaultComponents as BubbleChartDefaultComponents,
-} from './charts/BubbleChart'
+} from "./charts/BubbleChart";
+
+import StackedBarChart, {
+  DefaultComponents as StackedBarChartDefaultComponents,
+} from "./charts/StackedBarChart";
 
 export {
   BarChart,
@@ -28,5 +32,7 @@ export {
   ScatterChart,
   ScatterChartDefaultComponents,
   BubbleChart,
-  BubbleChartDefaultComponents
+  BubbleChartDefaultComponents,
+  StackedBarChart,
+  StackedBarChartDefaultComponents,
 };

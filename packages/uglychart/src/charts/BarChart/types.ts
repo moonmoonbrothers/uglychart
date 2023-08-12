@@ -5,12 +5,12 @@ import {
   Data as CartesianChartData,
   Scale,
 } from "../../common/CartesianChart/types";
+import { Dependencies as CartesianDependencies } from "../../common/CartesianChart/types";
 import Bar, { BarConfig, BarProps } from "./components/Bar";
 import BarGroup, { BarGroupProps, BarGroupConfig } from "./components/BarGroup";
 import { ChartConfig } from "./components/Chart";
 import { SeriesConfig } from "./components/Series";
 import type { CustomConfig, CustomWidget } from "../../common/type";
-import { Dependencies as CartesianDependencies } from "../../common/CartesianChart/types";
 import Plot from "./components/Plot";
 import { PlotProps } from "../../common/CartesianChart/component/Plot";
 import { XAxisProps } from "../../common/CartesianChart/component/XAxis";

@@ -1,6 +1,6 @@
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../common/CartesianChart/types";
-import { BarGroupConfig } from "./components/BarGroup";
+import BarGroup, { BarGroupConfig } from "./components/BarGroup";
 import type { CustomConfig, CustomWidget } from "../../common/type";
 import type { BarProps } from "../BarChart/components/Bar";
 import type {
@@ -24,4 +24,8 @@ type CustomBarGroup =
       }
     >;
 
-export type Dependencies = BarChartDependencies;
+export type Dependencies = Omit<BarChartDependencies, "BarGroup"> & {
+  BarGroup: (
+    ...props: Parameters<typeof BarGroup>
+  ) => ReturnType<typeof BarGroup>;
+};

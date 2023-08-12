@@ -1,9 +1,36 @@
-import { Widget, SizedBox, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { getStackValueEdge } from "./util/getStackValueEdge";
 import { Scale, getScale } from "../../common/CartesianChart/util";
-import { BarChart } from "../BarChart/";
+import * as defaultComponents from "./components/default";
+import type { Custom, Dependencies } from "./types";
+import CartesianChartContextRootWidget from "../../common/CartesianChart/CartesianChartContextRootWidget";
+import { Series, XAxis, YAxis, Plot, Chart, BarGroup, Bar } from "./components";
 
-export class StackedBarChart extends BarChart {
+export class StackedBarChart extends CartesianChartContextRootWidget<
+  Custom,
+  Dependencies
+> {
+  get dependencies(): Dependencies {
+    return {
+      ...super.dependencies,
+      Series,
+      XAxis,
+      YAxis,
+      Plot,
+      Chart,
+      BarGroup,
+      Bar,
+    };
+  }
+
+  mergeWithDefaultCustom(custom: Partial<Custom>): Custom {
+    const base = super.mergeWithDefaultCustom(custom);
+
+    return {
+      ...base,
+      bar: custom.bar ?? { type: "config" },
+      barGroup: custom.barGroup ?? { type: "config" },
+    };
+  }
   get scale(): Scale {
     const { datasets } = this.data;
     const valueEdge = getStackValueEdge(datasets.map(({ data }) => data));
@@ -26,3 +53,4 @@ export class StackedBarChart extends BarChart {
 
 export default (...props: ConstructorParameters<typeof StackedBarChart>) =>
   new StackedBarChart(...props);
+export { defaultComponents as DefaultComponents };
