@@ -3,6 +3,8 @@ import {
   ComponentWidget,
   Provider,
   Widget,
+  ReactiveChangeNotifier,
+  ChangeNotifierProvider,
 } from "@moonmoonbrothers/flutterjs";
 import { DeepPartial } from "../utils";
 
@@ -54,12 +56,12 @@ class ChartContextRootWidget<
   }
 
   build(context: BuildContext): Widget {
-    return Provider({
+    return ChangeNotifierProvider({
       providerKey: "THEME",
-      value: this.theme,
-      child: Provider({
+      create: () => ReactiveChangeNotifier(this.theme),
+      child: ChangeNotifierProvider({
         providerKey: "DATA",
-        value: this.data,
+        create: () => ReactiveChangeNotifier(this.data),
         child: Provider({
           providerKey: "CUSTOM",
           value: this.custom,
