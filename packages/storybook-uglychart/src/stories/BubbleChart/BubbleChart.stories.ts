@@ -144,9 +144,6 @@ export const Bubble: Story = {
 				]
 			},
 			custom: {
-				series: {
-					type: 'config'
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
@@ -167,13 +164,6 @@ export const Bubble: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

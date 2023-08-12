@@ -79,21 +79,6 @@ class BubbleChart extends CartesianChartContextRootWidget<
       bubble: custom?.bubble ?? { type: "config" },
     };
   }
-
-  mergeWithDefaultTheme(theme: DeepPartial<Theme>): Theme {
-    return {
-      text: {
-        color: theme?.text?.color || "black",
-        fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
-        fontSize: theme?.text?.fontSize || 16,
-        lineHeight: theme?.text?.lineHeight || 1,
-      },
-      border: {
-        width: theme?.border?.width || 2,
-        color: theme?.border?.color || "black",
-      },
-    };
-  }
 }
 
 export default (...props: ConstructorParameters<typeof BubbleChart>) =>

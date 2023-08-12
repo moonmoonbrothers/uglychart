@@ -13,7 +13,6 @@ export class XAxis extends CartesianChartContextWidget {
   }
 
   build(context: BuildContext): Widget {
-    const { type } = this.props;
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { xAxis } = this.getCustom(context);

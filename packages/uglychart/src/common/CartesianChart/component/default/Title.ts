@@ -2,20 +2,28 @@ import {
   Container,
   Text,
   type TextStyle,
-  type EdgeInsets,
+  EdgeInsets,
   BoxDecoration,
   Row,
   MainAxisAlignment,
 } from "@moonmoonbrothers/flutterjs";
 
+export const defaultTitleConfig = {
+  font: {
+    fontSize: 18,
+  },
+  alignment: "start" as const,
+  margin: EdgeInsets.only({ bottom: 10 }),
+};
+
 export default function Title({
   text,
   style,
-  margin,
+  margin = defaultTitleConfig.margin,
   backgroundColor,
   padding,
   decoration,
-  align = "start",
+  align = defaultTitleConfig.alignment,
 }: {
   text: string;
   style?: TextStyle;

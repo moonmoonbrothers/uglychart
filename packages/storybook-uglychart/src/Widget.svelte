@@ -41,7 +41,6 @@
 	.widget {
 		width: fit-content;
 		position: relative;
-		background-color: 	#F0F0F0;
 		color: gray;
 	}
 	.size {

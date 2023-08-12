@@ -3,6 +3,7 @@ import { BarGroup as DefaultBarGroup } from "./default";
 import { Scale } from "../../../common/CartesianChart/types";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 import type { Custom, Dependencies } from "../types";
+import { defaultColors } from "../../../utils";
 
 export type BarGroupProps = {
   direction: "vertical" | "horizontal";
@@ -32,7 +33,7 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
       return barGroup.Custom({ Bar }, { theme, data, scale, direction });
     }
 
-    const { barBackgroundColors: backgroundColors = ["gray"], gap = 2 } =
+    const { barBackgroundColors: backgroundColors = defaultColors, gap = 2 } =
       barGroup;
     const { datasets } = data;
 

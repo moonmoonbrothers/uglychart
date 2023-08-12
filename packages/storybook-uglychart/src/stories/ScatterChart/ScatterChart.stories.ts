@@ -541,10 +541,6 @@ export const Scatter: Story = {
 				]
 			},
 			custom: {
-				series: {
-					type: 'config',
-					dotColors: ['blue', 'green', 'yellow']
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
@@ -565,13 +561,6 @@ export const Scatter: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

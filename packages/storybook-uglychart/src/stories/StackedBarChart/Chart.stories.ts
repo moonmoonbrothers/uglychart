@@ -37,10 +37,6 @@ export const Basic: Story = {
 				]
 			},
 			custom: {
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
@@ -61,13 +57,6 @@ export const Basic: Story = {
 							})
 						})
 					]
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -104,10 +93,6 @@ export const HorizontalWithMinusValue: Story = {
 				]
 			},
 			custom: {
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					direction: 'horizontal',
@@ -142,13 +127,6 @@ export const HorizontalWithMinusValue: Story = {
 				layout: {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -188,10 +166,6 @@ export const Vertical: Story = {
 					type: 'config',
 					visible: true
 				},
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					direction: 'vertical'
@@ -203,13 +177,6 @@ export const Vertical: Story = {
 				layout: {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),
@@ -249,10 +216,6 @@ export const VerticalWithMinusValues: Story = {
 					type: 'config',
 					visible: true
 				},
-				barGroup: {
-					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
-				},
 				chart: {
 					type: 'config',
 					direction: 'vertical'
@@ -264,13 +227,6 @@ export const VerticalWithMinusValues: Story = {
 				layout: {
 					type: 'config',
 					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				title: {
-					type: 'config',
-					alignment: 'center',
-					font: {
-						fontSize: 40
-					}
 				}
 			}
 		}),

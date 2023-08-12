@@ -14,15 +14,6 @@ export type PlotConfig = {
   foregroundAdditions?: Widget[];
 };
 
-const defaultPlotConfig = {
-  verticalLine: {
-    color: "#D3D3D3",
-  },
-  horizontalLine: {
-    color: "#D3D3D3",
-  },
-};
-
 type PlotLine = {
   color?: string;
   thickness?: number;
@@ -69,12 +60,12 @@ export class Plot extends ChartContextWidget<
       width: width,
       verticalLine: {
         thickness: verticalLine?.thickness ?? theme.border.width,
-        color: verticalLine?.color ?? defaultPlotConfig.verticalLine.color,
+        color: verticalLine?.color,
         count: verticalLine?.count ?? defaultVerticalLineCount,
       },
       horizontalLine: {
         thickness: horizontalLine?.thickness ?? theme.border.width,
-        color: horizontalLine?.color ?? defaultPlotConfig.horizontalLine.color,
+        color: horizontalLine?.color,
         count: horizontalLine?.count ?? defaultHorizontalLineCount,
       },
       BackgroundAdditions: foregroundAdditions,

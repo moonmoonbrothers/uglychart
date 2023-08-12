@@ -4,6 +4,7 @@ import { Series as DefaultSeries } from "./default";
 import { Series as BaseSeries } from "../../../common/CartesianChart/component/Series";
 import type { Custom } from "../types";
 import Line from "./Line";
+import { defaultColors } from "../../../utils";
 
 export type SeriesConfig = {
   lineColors?: string[];
@@ -22,7 +23,7 @@ export class Series extends BaseSeries<Custom> {
       return series.Custom({}, { theme, data });
     }
 
-    const { lineColors = ["black"] } = series;
+    const { lineColors = defaultColors } = series;
 
     const scale = this.getScale(context);
 

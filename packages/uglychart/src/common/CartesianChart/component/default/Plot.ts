@@ -13,6 +13,11 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 
+export const defaultPlotConfig = {
+  LINE_COLOR: "rgba(0, 0, 0, 0.05)",
+  LINE_WIDTH: 1,
+};
+
 export default function Plot({
   child,
   BackgroundAdditions,
@@ -54,8 +59,8 @@ export default function Plot({
                 constraintsTransform:
                   ConstraintsTransformBox.maxWidthUnconstrained,
                 child: Container({
-                  color: verticalLine.color,
-                  width: verticalLine.thickness,
+                  color: verticalLine.color ?? defaultPlotConfig.LINE_COLOR,
+                  width: verticalLine.thickness ?? defaultPlotConfig.LINE_WIDTH,
                 }),
               }),
             })
@@ -80,8 +85,9 @@ export default function Plot({
                 constraintsTransform:
                   ConstraintsTransformBox.maxHeightUnconstrained,
                 child: Container({
-                  color: horizontalLine.color,
-                  height: horizontalLine.thickness,
+                  color: horizontalLine.color ?? defaultPlotConfig.LINE_COLOR,
+                  height:
+                    horizontalLine.thickness ?? defaultPlotConfig.LINE_WIDTH,
                 }),
               }),
             })
@@ -113,7 +119,6 @@ type PlotProps = {
   height?: number;
   backgroundColor?: string;
   padding?: EdgeInsets;
-  direction?: "vertical" | "horizontal";
   BackgroundAdditions: Widget[];
   ForegroundAdditions: Widget[];
   child: Widget;
@@ -122,7 +127,7 @@ type PlotProps = {
 };
 
 type PlotLine = {
-  color: string;
+  color?: string;
   thickness: number;
   count: number;
 };
