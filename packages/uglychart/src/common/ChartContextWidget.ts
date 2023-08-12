@@ -9,7 +9,7 @@ class ChartContextWidget<
   DEPENDENCIES extends Record<string, (...arg: any) => Widget>,
   THEME,
   DATA,
-  SCALE,
+  SCALE
 > extends ComponentWidget {
   getData(context: BuildContext): DATA {
     return Provider.of("DATA", context);
@@ -28,8 +28,8 @@ class ChartContextWidget<
   }
 
   getScale(context: BuildContext): SCALE {
-      return Provider.of("SCALE", context);
-    }
+    return Provider.of("SCALE", context);
+  }
 }
 
 export default ChartContextWidget;

@@ -54,7 +54,7 @@ export default function Scatter({
         bubbleEl.setAttribute("fill", color);
         bubbleEl.setAttribute("stroke-width", `0`);
         bubbleEl.setAttribute("d", pathHelper.getD());
-        bubbleEl.setAttribute("opacity", "0.3");
+        bubbleEl.setAttribute("opacity", "0.8");
       },
     },
   });

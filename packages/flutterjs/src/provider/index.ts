@@ -1,18 +1,13 @@
-import type Widget from "../widget/Widget"
-import ProviderWidget from "./ProviderWidget"
+import Provider from "./Provider";
+import ChangeNotifier from "./ChangeNotifier";
+import ChangeNotifierProvider from "./ChangeNotifierProvider";
+import ReactiveChangeNotifier from "./ReactiveChangeNotifier";
 
-export type ProviderProps<ProviderKey, Value> = {
-  providerKey: ProviderKey
-  value: Value
-  child: Widget
-}
+export {
+  Provider,
+  ChangeNotifier,
+  ChangeNotifierProvider,
+  ReactiveChangeNotifier,
+};
 
-export function Provider<ProviderKey, Value>(
-  props: ProviderProps<ProviderKey, Value>
-) {
-  return new ProviderWidget(props)
-}
-
-Provider.of = ProviderWidget.of
-
-export default Provider
+export default Provider;
