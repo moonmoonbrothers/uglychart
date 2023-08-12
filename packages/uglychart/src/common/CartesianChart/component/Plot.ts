@@ -4,9 +4,7 @@ import { Plot as DefaultPlot } from "./default";
 import { assert } from "@moonmoonbrothers/flutterjs/src/utils";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
 
-export type PlotProps = {
-  direction: "vertical" | "horizontal";
-};
+export type PlotProps = {};
 
 export type PlotConfig = {
   width?: number;
@@ -33,7 +31,7 @@ type PlotLine = {
 };
 
 export class Plot extends CartesianChartContextWidget {
-  constructor(protected props: PlotProps) {
+  constructor(protected props: PlotProps = {}) {
     super();
   }
   build(context: BuildContext): Widget {
@@ -54,7 +52,6 @@ export class Plot extends CartesianChartContextWidget {
       foregroundAdditions = [],
     } = plot;
     const { labels } = data;
-    const { direction } = this.props;
     const scale = this.getScale(context);
 
     const [labelLineCount, valueLineCount] = [
@@ -68,24 +65,22 @@ export class Plot extends CartesianChartContextWidget {
     );
 
     return DefaultPlot({
-      direction: direction,
+      direction: "vertical",
       height: height,
       width: width,
       verticalLine: {
         thickness: verticalLine?.thickness ?? theme.border.width,
         color: verticalLine?.color ?? defaultPlotConfig.verticalLine.color,
-        count: direction === "horizontal" ? valueLineCount : labelLineCount,
+        count: labelLineCount,
       },
       horizontalLine: {
         thickness: horizontalLine?.thickness ?? theme.border.width,
         color: horizontalLine?.color ?? defaultPlotConfig.horizontalLine.color,
-        count: direction === "vertical" ? valueLineCount : labelLineCount,
+        count: valueLineCount,
       },
       BackgroundAdditions: foregroundAdditions,
       ForegroundAdditions: backgroundAdditions,
-      child: Series({
-        direction: direction,
-      }),
+      child: Series(),
     });
   }
 }
