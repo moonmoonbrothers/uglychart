@@ -7,15 +7,18 @@ export default function ClipOval({
   borderRadius = BorderRadius.zero,
   clipped = true,
   clipper,
+  key,
 }: {
   child: Widget;
   borderRadius?: BorderRadius;
   clipped?: boolean;
   clipper?: (size: Size) => RRect;
+  key?: any;
 }) {
   if (!clipped) return child;
   return new BaseClipPath({
     child,
+    key,
     clipper: (size) =>
       new Path().addRRect(
         clipper

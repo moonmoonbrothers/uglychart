@@ -32,6 +32,7 @@ type ContainerProps = {
   constraints?: Constraints;
   transform?: Matrix4;
   transformAlignment?: Alignment;
+  key?: any;
 };
 
 export default function Container({
@@ -47,6 +48,7 @@ export default function Container({
   clipped = false,
   transform,
   transformAlignment,
+  key,
 }: ContainerProps = {}) {
   constraints =
     width != null || height != null
