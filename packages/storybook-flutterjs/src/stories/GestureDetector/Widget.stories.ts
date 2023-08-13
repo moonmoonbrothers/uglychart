@@ -1,15 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import {
-	Alignment,
-	Container,
-	GestureDetector,
-	Text,
-	TextStyle,
-	ComponentWidget
-} from '@moonmoonbrothers/flutterjs';
-import { dedent } from 'ts-dedent';
-import { BasicStory, ColorChangeStory, SizeChangeStory, TestStatefulWidgetStory } from './examples';
+	BasicStory,
+	ColorChangeStory,
+	DynamicallyExistsStory,
+	SizeChangeStory,
+	TestStatefulWidgetStory
+} from './examples';
 
 const meta = {
 	title: 'Widget/GestureDetector',
@@ -41,4 +38,8 @@ export const SizeChange: Story = {
 
 export const TestStatefulWidget: Story = {
 	args: TestStatefulWidgetStory
+};
+
+export const DynamicallyExists: Story = {
+	args: DynamicallyExistsStory
 };
