@@ -3,8 +3,10 @@ import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWi
 import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies } from "../types";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
+import { SeriesConfig as BaseSeriesConfig } from "../../../common/CartesianChart/component/Series";
+import { defaultColors } from "../../../utils";
 
-export type SeriesConfig = {};
+export type SeriesConfig = BaseSeriesConfig;
 
 export type SeriesProps = {
   direction: "horizontal" | "vertical";
@@ -25,6 +27,8 @@ export class Series extends CartesianChartContextWidget<Custom, Dependencies> {
       return series.Custom({}, { theme, data });
     }
 
+    const { colors = defaultColors } = series;
+
     const { direction } = this.props;
     const scale = this.getScale(context);
 
@@ -33,6 +37,7 @@ export class Series extends CartesianChartContextWidget<Custom, Dependencies> {
       direction,
       children: labels.map((label, index) =>
         BarGroup({
+          colors,
           index,
           scale: scale,
           label,

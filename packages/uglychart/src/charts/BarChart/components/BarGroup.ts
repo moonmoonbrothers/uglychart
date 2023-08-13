@@ -10,11 +10,10 @@ export type BarGroupProps = {
   index: number;
   label: string;
   scale: Scale;
+  colors: string[];
 };
 
 export type BarGroupConfig = {
-  barBackgroundColors?: string[];
-  barBorderColors?: string[];
   gap?: number;
 };
 
@@ -26,15 +25,14 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { barGroup } = this.getCustom(context);
-    const { scale, direction, label } = this.props;
+    const { scale, direction, label, colors } = this.props;
     const { DataLabel, Bar } = this.getDependencies(context);
 
     if (barGroup.type === "custom") {
       return barGroup.Custom({ Bar }, { theme, data, scale, direction });
     }
 
-    const { barBackgroundColors: backgroundColors = defaultColors, gap = 2 } =
-      barGroup;
+    const { gap = 2 } = barGroup;
     const { datasets } = data;
 
     const barGroupRatio = {
@@ -84,7 +82,7 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
         Bar({
           value: data,
           direction,
-          backgroundColor: backgroundColors[index % backgroundColors.length],
+          backgroundColor: colors[index % colors.length],
           index,
           label,
           legend,

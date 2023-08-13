@@ -4,11 +4,10 @@ import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
 import ChartContextWidget from "../../../common/ChartContextWidget";
 import Scatter from "./Bubble";
+import { SeriesConfig as BaseSeriesConfig } from "../../../common/CartesianChart/component/Series";
 import { defaultColors } from "../../../utils";
 
-export type SeriesConfig = {
-  bubbleColors?: string[];
-};
+export type SeriesConfig = BaseSeriesConfig;
 
 export type SeriesProps = {};
 
@@ -29,7 +28,7 @@ export class Series extends ChartContextWidget<
       return series.Custom({}, { theme, data });
     }
 
-    const { bubbleColors = defaultColors } = series;
+    const { colors: bubbleColors = defaultColors } = series;
 
     return DefaultSeries({
       children: datasets.map(({ data: values }, i) =>

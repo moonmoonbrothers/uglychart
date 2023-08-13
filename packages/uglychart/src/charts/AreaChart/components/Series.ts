@@ -1,14 +1,15 @@
 import { Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Series as DefaultSeries } from "./default";
-import { Series as BaseSeries } from "../../../common/CartesianChart/component/Series";
+import {
+  Series as BaseSeries,
+  SeriesConfig as BaseSeriesConfig,
+} from "../../../common/CartesianChart/component/Series";
 import type { Custom } from "../types";
 import Line from "./Area";
 import { defaultColors } from "../../../utils";
 
-export type SeriesConfig = {
-  lineColors?: string[];
-};
+export type SeriesConfig = BaseSeriesConfig;
 
 export type SeriesProps = ConstructorParameters<typeof BaseSeries>;
 
@@ -23,7 +24,7 @@ export class Series extends BaseSeries<Custom> {
       return series.Custom({}, { theme, data });
     }
 
-    const { lineColors = defaultColors } = series;
+    const { colors: lineColors = defaultColors } = series;
 
     const scale = this.getScale(context);
 

@@ -1,14 +1,13 @@
-import { SizedBox, Widget } from "@moonmoonbrothers/flutterjs";
+import { Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
 import ChartContextWidget from "../../../common/ChartContextWidget";
 import Scatter from "./Scatter";
 import { defaultColors } from "../../../utils";
+import { SeriesConfig as BaseSeriesConfig } from "../../../common/CartesianChart/component/Series";
 
-export type SeriesConfig = {
-  dotColors?: string[];
-};
+export type SeriesConfig = BaseSeriesConfig;
 
 export type SeriesProps = {};
 
@@ -29,7 +28,7 @@ export class Series extends ChartContextWidget<
       return series.Custom({}, { theme, data });
     }
 
-    const { dotColors = defaultColors } = series;
+    const { colors: dotColors = defaultColors } = series;
 
     return DefaultSeries({
       children: datasets.map(({ data: values }, i) =>
