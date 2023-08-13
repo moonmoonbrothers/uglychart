@@ -4,7 +4,7 @@ import CustomPlot, { PlotProps, PlotConfig, Plot } from "./component/Plot";
 import { XAxisProps, XAxis } from "./component/XAxis";
 import { YAxisProps, YAxis } from "./component/YAxis";
 import { YAxisLabelProps, YAxisLabel } from "./component/YAxisLabel";
-import { XAxisLabelProps, XAxisLabel } from "./component/XAxisLabel";
+import { XAxisLabel } from "./component/XAxisLabel";
 import { LayoutConfig, Layout } from "./component/Layout";
 import { Scale as _Scale } from "./util/getScale";
 import { ChartConfig, Chart } from "./component/Chart";
@@ -13,6 +13,7 @@ import type { DeepPartial } from "../../utils";
 import { XAxisTickProps, XAxisTick } from "./component/XAxisTick";
 import { YAxisTickProps, YAxisTick } from "./component/YAxisTick";
 import CustomSeries, { SeriesConfig, Series } from "./component/Series";
+import { LegendConfig, Legend } from "./component/Legend";
 import type { CustomConfig, CustomWidget } from "../type";
 import ChartContextWidget from "../ChartContextWidget";
 
@@ -53,6 +54,15 @@ export type Dependencies = {
   Series: (
     ...args: ConstructorParameters<typeof Series>
   ) => ChartContextWidget<any, any, any, any, any>;
+  Legend: (
+    ...args: ConstructorParameters<typeof Legend>
+  ) => ChartContextWidget<any, any, any, any, any>;
+};
+
+export type LegendState = {
+  visible: boolean;
+  color: string;
+  label: string;
 };
 
 export type Theme = {
@@ -60,6 +70,9 @@ export type Theme = {
   border: {
     color: string;
     width: number;
+  };
+  series: {
+    colors: string[];
   };
 };
 
@@ -91,6 +104,7 @@ export type Custom<THEME = Theme, DATA = Data> = {
   yAxisTick: CustomYAxisTick<THEME, DATA>;
   plot: CustomPlot<THEME, DATA>;
   series: CustomSeries<THEME, DATA>;
+  legend: CustomLegend<THEME, DATA>;
 };
 
 export type Data = {
@@ -212,3 +226,7 @@ export type CustomChart<THEME, DATA> =
 export type CustomSeries<THEME, DATA> =
   | CustomConfig<SeriesConfig>
   | CustomWidget<{}, {}, THEME, DATA>;
+
+export type CustomLegend<THEME, DATA> =
+  | CustomConfig<LegendConfig>
+  | CustomWidget<{}, { legendStates: LegendState[] }, THEME, DATA>;

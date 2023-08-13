@@ -9,6 +9,7 @@ export default function Layout({
   padding = EdgeInsets.all(30),
   Title,
   Chart,
+  Legend,
   backgroundColor = "white",
 }: LayoutProps) {
   return Container({
@@ -20,6 +21,7 @@ export default function Layout({
         Flexible({
           child: Chart,
         }),
+        Legend,
       ],
     }),
   });
@@ -30,4 +32,5 @@ type LayoutProps = {
   padding?: EdgeInsets;
   Title: Widget;
   Chart: Widget;
+  Legend: Widget;
 };

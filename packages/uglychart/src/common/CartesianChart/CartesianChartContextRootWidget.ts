@@ -14,8 +14,9 @@ import {
   Layout,
   Series,
   Title,
+  Legend,
 } from "./component";
-import { DeepPartial } from "../../utils";
+import { DeepPartial, defaultColors } from "../../utils";
 import ChartContextWidget from "../ChartContextWidget";
 
 class CartesianChartContextRootWidget<
@@ -46,20 +47,24 @@ class CartesianChartContextRootWidget<
       DataLabel,
       Layout,
       Series,
+      Legend,
     } as any;
   }
 
   mergeWithDefaultTheme(theme: DeepPartial<Theme>): THEME {
     return {
       text: {
-        color: theme?.text?.color || "black",
-        fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
-        fontSize: theme?.text?.fontSize || 11,
-        lineHeight: theme?.text?.lineHeight || 1,
+        color: theme?.text?.color ?? "black",
+        fontFamily: theme?.text?.fontFamily ?? "Noto Sans KR, sans-serif",
+        fontSize: theme?.text?.fontSize ?? 11,
+        lineHeight: theme?.text?.lineHeight ?? 1,
       },
       border: {
-        width: theme?.border?.width || 1,
-        color: theme?.border?.color || "black",
+        width: theme?.border?.width ?? 1,
+        color: theme?.border?.color ?? "black",
+      },
+      series: {
+        colors: theme?.series?.colors ?? defaultColors,
       },
     } as THEME;
   }
@@ -77,7 +82,8 @@ class CartesianChartContextRootWidget<
       dataLabel: custom?.dataLabel ?? { type: "config" },
       xAxisTick: custom?.xAxisTick ?? { type: "config" },
       yAxisTick: custom?.yAxisTick ?? { type: "config" },
-      series: custom?.series ?? { type: "config" },
+      series: custom?.series ?? { type: "config", colors: defaultColors },
+      legend: custom?.legend ?? { type: "config" },
     } as CUSTOM;
   }
 }

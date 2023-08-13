@@ -33,15 +33,15 @@ export const Basic: Story = {
 				],
 				datasets: [
 					{
-						legend: 'A',
+						legend: 'Legend 1',
 						data: [30, 40.5, 50.12, 30.5, 40, 90, 50, 20, 10]
 					},
 					{
-						legend: 'B',
+						legend: 'Legend 2',
 						data: [60, 20.5, 20.2, 22.5, 10, 10, 10, 30, 20]
 					},
 					{
-						legend: 'C',
+						legend: 'Legend 3',
 						data: [6, 10.5, 20.2, 12.5, 1, 23, 17, 91, 0, 21]
 					}
 				]

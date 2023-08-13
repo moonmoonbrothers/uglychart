@@ -5,10 +5,11 @@ import XAxisTick from "./XAxisTick";
 import YAxisTick from "./YAxisTick";
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
-import Plot from './Plot'
-import Layout from './Layout'
-import Chart from './Chart'
-import DataLabel from './DataLabel';
+import Plot from "./Plot";
+import Layout from "./Layout";
+import Chart from "./Chart";
+import DataLabel from "./DataLabel";
+import Legend from "./Legend";
 
 export {
   Title,
@@ -21,5 +22,6 @@ export {
   Plot,
   Layout,
   Chart,
-  DataLabel
+  DataLabel,
+  Legend,
 };

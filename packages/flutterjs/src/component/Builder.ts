@@ -1,19 +1,26 @@
-import ComponentWidget, { BuildContext } from "../widget/ComponentWidget"
-import type Widget from "../widget/Widget"
+import StatelessWidget from "../widget/ComponentWidget";
+import { BuildContext } from "../widget/ComponentWidget";
+import type Widget from "../widget/Widget";
 
-function Builder(builder: (context: BuildContext) => Widget) {
-  return new _Builder(builder)
+function Builder(...props: ConstructorParameters<typeof _Builder>) {
+  return new _Builder(...props);
 }
 
-class _Builder extends ComponentWidget {
-  builder: (context: BuildContext) => Widget
-  constructor(builder: (context: BuildContext) => Widget) {
-    super()
-    this.builder = builder
+class _Builder extends StatelessWidget {
+  builder: (context: BuildContext) => Widget;
+  constructor({
+    builder,
+    key,
+  }: {
+    builder: (context: BuildContext) => Widget;
+    key?: any;
+  }) {
+    super(key);
+    this.builder = builder;
   }
   override build(context: BuildContext): Widget {
-    return this.builder(context)
+    return this.builder(context);
   }
 }
 
-export default Builder
+export default Builder;
