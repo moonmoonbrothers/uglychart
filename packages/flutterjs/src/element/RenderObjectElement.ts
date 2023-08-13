@@ -62,7 +62,7 @@ class RenderObjectElement extends Element {
 
     oldChildren.forEach((oldChild, i) => {
       if (updatedChildIndexes.includes(i)) return;
-      oldChild.unmount();
+      this.updateChild(oldChild, null);
     });
 
     this.children = newChildren as Element[];
