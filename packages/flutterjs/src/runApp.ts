@@ -65,7 +65,7 @@ export class AppRunner {
       renderContext: this.renderContext,
     }).createElement();
     this.root.mount(undefined);
-    this.draw();
+    this.root.renderObject.constraints = Constraints.tight(this.viewSize);
     return this.renderContext.view.innerHTML;
   }
 

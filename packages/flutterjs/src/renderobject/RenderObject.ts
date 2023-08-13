@@ -3,7 +3,6 @@ import type { PaintContext } from "../utils/type";
 import ShortUniqueId from "short-unique-id";
 import { RenderObjectElement } from "../element";
 import { RenderOwner } from "../scheduler";
-import { assert } from "../utils";
 
 const uid = new ShortUniqueId({ dictionary: "hex" });
 
@@ -75,7 +74,7 @@ class RenderObject {
     const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (
       this.clipId === clipId &&
-      this.matrix.equal(translatedMatrix4) &&
+      this.matrix.equals(translatedMatrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
@@ -145,7 +144,6 @@ class RenderObject {
     if (this.isPainter) {
       context.findSvgEl(this.id)?.remove();
     }
-    this.children.forEach((child) => child.dispose(context));
   }
 
   //It is like computeIntrinsicMinWidth on Flutter

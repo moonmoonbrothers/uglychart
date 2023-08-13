@@ -10,6 +10,11 @@ class ComponentElement extends Element {
     this.widget = widget;
   }
 
+  override unmount(): void {
+    super.unmount();
+    this.child.unmount();
+  }
+
   override mount(newParent?: Element | undefined): void {
     super.mount(newParent);
     this._firstBuild();
