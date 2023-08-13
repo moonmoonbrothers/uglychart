@@ -10,7 +10,7 @@ class CartesianChartContextWidget<
     (...arg: any) => ChartContextWidget<any, any, any, any, any>
   > = Dependencies,
   THEME extends Theme = Theme,
-  DATA extends Data<any> = Data,
+  DATA extends Omit<Data<any>, "labels"> = Data,
   SCALE = Scale
 > extends ChartContextWidget<CUSTOM, DEPENDENCIES, THEME, DATA, SCALE> {
   getLegendState(context: BuildContext) {

@@ -15,7 +15,7 @@ export class Series extends BaseSeries<Custom> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const { datasets } = data;
+    const datasets = this.getVisibleDatasets(context);
     const { series } = this.getCustom(context);
 
     if (series.type === "custom") {
@@ -27,10 +27,10 @@ export class Series extends BaseSeries<Custom> {
     const scale = this.getScale(context);
 
     return DefaultSeries({
-      children: datasets.map(({ data: values }, i) =>
+      children: datasets.map(({ data: values, color }, i) =>
         Line({
           values,
-          color: lineColors[i % lineColors.length],
+          color,
           maxValue: scale.max,
           minValue: scale.min,
         })
