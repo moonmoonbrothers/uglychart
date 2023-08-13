@@ -74,7 +74,6 @@ class Element {
 
   unmount() {
     this.parent = undefined;
-    this.renderObject.dispose(this.renderContext.paintContext);
   }
 
   mount(newParent?: Element) {

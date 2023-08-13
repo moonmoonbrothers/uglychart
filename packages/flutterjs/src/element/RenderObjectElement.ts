@@ -19,6 +19,15 @@ class RenderObjectElement extends Element {
     super(widget);
   }
 
+  override unmount(): void {
+    super.unmount();
+    this.renderObject.dispose(this.renderContext.paintContext);
+    this.children.forEach((child) => {
+      child.unmount();
+    });
+    this._renderObject.markNeedsParentLayout();
+  }
+
   override mount(newParent?: Element | undefined): void {
     super.mount(newParent);
     this._renderObject = this.createRenderObject();
@@ -32,6 +41,7 @@ class RenderObjectElement extends Element {
     this.children = (this.widget as RenderObjectWidget).children.map(
       (childWidget) => this.inflateWidget(childWidget)
     );
+    this._renderObject.markNeedsParentLayout();
   }
 
   override update(newWidget: Widget): void {
@@ -62,7 +72,7 @@ class RenderObjectElement extends Element {
 
     oldChildren.forEach((oldChild, i) => {
       if (updatedChildIndexes.includes(i)) return;
-      oldChild.unmount();
+      this.updateChild(oldChild, null);
     });
 
     this.children = newChildren as Element[];

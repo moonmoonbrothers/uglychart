@@ -12,9 +12,9 @@ class SingleChildRenderObjectWidget extends RenderObjectWidget {
   set child(value: Widget | undefined) {
     this._child = value;
     if (value) {
-      this.children[0] = value;
+      this.children = [value];
     } else {
-      this.children;
+      this.children = [];
     }
   }
   get child(): Widget | undefined {

@@ -31,7 +31,7 @@ class RenderConstrainedBox extends SingleChildRenderObject {
     return this._additionalConstraint;
   }
   set additionalConstraint(constraint: Constraints) {
-    if (constraint.equal(this._additionalConstraint)) return;
+    if (constraint.equals(this._additionalConstraint)) return;
     this._additionalConstraint = constraint;
     this.markNeedsLayout();
   }

@@ -85,7 +85,7 @@ export default class TextPainter {
 
   paint(textEl: SVGTextElement, { createSvgEl }: PaintContext) {
     this.resetText(textEl);
-    assert(this.paragraph != null);
+    assert(this.paragraph != null, "paragraph should not be null");
 
     this.paragraph!.lines.forEach((line) => {
       line.spanBoxes.forEach(
