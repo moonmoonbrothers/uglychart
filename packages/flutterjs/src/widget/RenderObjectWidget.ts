@@ -5,7 +5,7 @@ import Widget from "./Widget";
 class RenderObjectWidget extends Widget {
   children: Widget[];
 
-  constructor({ children = [], key }: { children: Widget[]; key?: string }) {
+  constructor({ children = [], key }: { children: Widget[]; key?: any }) {
     super(key);
     this.children = children;
   }

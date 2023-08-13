@@ -11,13 +11,15 @@ class IndexedStack extends Stack {
     index = 0,
     sizing = StackFit.loose,
     alignment,
+    key,
   }: {
     children: Widget[];
     sizing?: StackFit;
     alignment?: Alignment;
     index?: number;
+    key?: any;
   }) {
-    super({ children, fit: sizing, alignment });
+    super({ children, fit: sizing, alignment, key });
     this.index = index;
   }
   createRenderObject(): RenderIndexedStack {

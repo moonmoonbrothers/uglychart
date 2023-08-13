@@ -9,8 +9,16 @@ type Clipper = (size: Size) => Path;
 
 class BaseClipPath extends SingleChildRenderObjectWidget {
   public clipper: Clipper;
-  constructor({ child, clipper }: { child?: Widget; clipper: Clipper }) {
-    super({ child });
+  constructor({
+    child,
+    clipper,
+    key,
+  }: {
+    child?: Widget;
+    clipper: Clipper;
+    key?: any;
+  }) {
+    super({ child, key });
     this.clipper = clipper;
   }
 
