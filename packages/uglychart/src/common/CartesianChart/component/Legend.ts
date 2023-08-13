@@ -22,10 +22,7 @@ export class Legend extends CartesianChartContextWidget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { legend } = this.getCustom(context);
-    const { legendStates } = Provider.of<{ legendStates: LegendState[] }>(
-      "LEGEND_STATES",
-      context
-    );
+    const legendStates = this.getLegendState(context);
 
     if (legend.type === "custom") {
       return legend.Custom({}, { theme, data, legendStates });

@@ -107,12 +107,12 @@ export type Custom<THEME = Theme, DATA = Data> = {
   legend: CustomLegend<THEME, DATA>;
 };
 
-export type Data = {
+export type Data<V = number> = {
   title?: string;
   labels: string[];
   datasets: {
     legend: string;
-    data: number[];
+    data: V[];
   }[];
 };
 

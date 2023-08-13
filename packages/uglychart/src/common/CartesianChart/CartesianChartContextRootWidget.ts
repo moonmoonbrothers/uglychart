@@ -1,6 +1,11 @@
 import { Custom, Theme, Data, Dependencies, Font, Scale } from "./types";
 import ChartContextRootWidget from "../ChartContextRootWidget";
-import { Widget } from "@moonmoonbrothers/flutterjs";
+import {
+  ChangeNotifierProvider,
+  Element,
+  ReactiveChangeNotifier,
+  Widget,
+} from "@moonmoonbrothers/flutterjs";
 import {
   XAxis,
   XAxisLabel,
@@ -26,7 +31,7 @@ class CartesianChartContextRootWidget<
     (...arg: any) => ChartContextWidget<any, any, any, any, any>
   > = Dependencies,
   THEME extends Theme = Theme,
-  DATA = Data,
+  DATA extends Data<any> = Data,
   SCALE = Scale
 > extends ChartContextRootWidget<CUSTOM, DEPENDENCIES, THEME, DATA, SCALE> {
   get root(): Widget {
@@ -85,6 +90,23 @@ class CartesianChartContextRootWidget<
       series: custom?.series ?? { type: "config", colors: defaultColors },
       legend: custom?.legend ?? { type: "config" },
     } as CUSTOM;
+  }
+
+  build(context: Element): Widget {
+    const legendStates = [
+      ...new Set(this.data.datasets.map(({ legend }) => legend)),
+    ].map((label, i) => ({
+      label,
+      visible: true,
+      color: this.theme.series.colors[i % this.theme.series.colors.length],
+    }));
+    return ChangeNotifierProvider({
+      providerKey: "LEGEND_STATES",
+      create() {
+        return ReactiveChangeNotifier({ legendStates });
+      },
+      child: super.build(context),
+    });
   }
 }
 

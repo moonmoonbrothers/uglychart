@@ -2,7 +2,7 @@ import { Widget, BuildContext } from "@moonmoonbrothers/flutterjs";
 import { BarGroup as DefaultBarGroup } from "./default";
 import { Scale } from "../../../common/CartesianChart/types";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
-import type { Custom, Dependencies } from "../types";
+import type { Custom, Data, Dependencies, Theme } from "../types";
 import { defaultColors } from "../../../utils";
 
 export type BarGroupProps = {
@@ -17,7 +17,12 @@ export type BarGroupConfig = {
   gap?: number;
 };
 
-class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
+class BarGroup extends CartesianChartContextWidget<
+  Custom,
+  Dependencies,
+  Theme,
+  Data
+> {
   constructor(private props: BarGroupProps) {
     super();
   }
@@ -33,16 +38,17 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
     }
 
     const { gap = 2 } = barGroup;
-    const { datasets } = data;
+    const datasets = this.getVisibleDatasets(context);
 
     const barGroupRatio = {
       negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
       positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
     };
 
-    const values = datasets.map(({ data, legend }) => ({
+    const values = datasets.map(({ data, legend, color }) => ({
       data: data[this.props.index],
       legend,
+      color,
     }));
 
     const negativeBarRatios = values.map(({ data }) => {
@@ -78,11 +84,11 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
         })
       ),
 
-      Bars: values.map(({ data, legend }, index) =>
+      Bars: values.map(({ data, legend, color }, index) =>
         Bar({
           value: data,
           direction,
-          backgroundColor: colors[index % colors.length],
+          backgroundColor: color,
           index,
           label,
           legend,

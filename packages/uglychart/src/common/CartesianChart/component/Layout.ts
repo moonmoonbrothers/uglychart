@@ -24,24 +24,12 @@ export class Layout extends CartesianChartContextWidget {
 
     const { padding, backgroundColor } = layout;
 
-    const legendStates = [
-      ...new Set(data.datasets.map(({ legend }) => legend)),
-    ].map((label, i) => ({
-      label,
-      visible: true,
-      color: theme.series.colors[i % theme.series.colors.length],
-    }));
-
-    return ChangeNotifierProvider({
-      providerKey: "LEGEND_STATES",
-      create: () => ReactiveChangeNotifier({ legendStates }),
-      child: DefaultLayout({
-        padding,
-        Title: Title(),
-        Chart: Chart(),
-        backgroundColor,
-        Legend: Legend(),
-      }),
+    return DefaultLayout({
+      padding,
+      Title: Title(),
+      Chart: Chart(),
+      backgroundColor,
+      Legend: Legend(),
     });
   }
 }
