@@ -20,7 +20,7 @@ export class Layout extends CartesianChartContextWidget {
     const { layout } = this.getCustom(context);
     const { Title, Chart, Legend } = this.getDependencies(context);
     if (layout.type === "custom")
-      return layout.Custom({ Title, Chart }, { theme, data });
+      return layout.Custom({ Title, Chart, Legend }, { theme, data });
 
     const { padding, backgroundColor } = layout;
 

@@ -167,7 +167,7 @@ export type CustomYAxis<THEME = Theme, DATA = Data> =
 
 type CustomLayout<THEME, DATA> =
   | CustomConfig<LayoutConfig>
-  | CustomWidget<"Title" | "Chart", { data: DATA; theme: THEME }>;
+  | CustomWidget<"Title" | "Chart" | "Legend", { data: DATA; theme: THEME }>;
 
 export type CUstomXAxisTick<THEME, DATA> =
   | CustomConfig<Tick>
