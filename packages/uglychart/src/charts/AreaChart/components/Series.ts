@@ -24,8 +24,6 @@ export class Series extends BaseSeries<Custom> {
       return series.Custom({}, { theme, data });
     }
 
-    const { colors: lineColors = defaultColors } = series;
-
     const scale = this.getScale(context);
 
     return DefaultSeries({

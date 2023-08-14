@@ -3,14 +3,12 @@ import { BarGroup as DefaultBarGroup } from "./default";
 import { Scale } from "../../../common/CartesianChart/types";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 import type { Custom, Data, Dependencies, Theme } from "../types";
-import { defaultColors } from "../../../utils";
 
 export type BarGroupProps = {
   direction: "vertical" | "horizontal";
   index: number;
   label: string;
   scale: Scale;
-  colors: string[];
 };
 
 export type BarGroupConfig = {
@@ -30,7 +28,7 @@ class BarGroup extends CartesianChartContextWidget<
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { barGroup } = this.getCustom(context);
-    const { scale, direction, label, colors } = this.props;
+    const { scale, direction, label } = this.props;
     const { DataLabel, Bar } = this.getDependencies(context);
 
     if (barGroup.type === "custom") {

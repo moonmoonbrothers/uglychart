@@ -27,8 +27,6 @@ export class Series extends CartesianChartContextWidget<Custom, Dependencies> {
       return series.Custom({}, { theme, data });
     }
 
-    const { colors = defaultColors } = series;
-
     const { direction } = this.props;
     const scale = this.getScale(context);
 
@@ -37,7 +35,6 @@ export class Series extends CartesianChartContextWidget<Custom, Dependencies> {
       direction,
       children: labels.map((label, index) =>
         BarGroup({
-          colors,
           index,
           scale: scale,
           label,

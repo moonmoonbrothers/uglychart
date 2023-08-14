@@ -9,9 +9,7 @@ import { Custom } from "../types";
 
 export type SeriesProps = {};
 
-export type SeriesConfig = {
-  colors?: string[];
-};
+export type SeriesConfig = {};
 
 export class Series<
   CUSTOM extends Custom = Custom
