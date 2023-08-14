@@ -30,8 +30,8 @@ export default function BarGroup({
   DataLabels: _DataLabels,
   gap,
 }: BarGroupProps) {
-  const isAllNegative = positiveBarRatios.reduce(Utils.sum) === 0;
-  const isAllPositive = negativeBarRatios.reduce(Utils.sum) === 0;
+  const isAllNegative = positiveBarRatios.reduce(Utils.sum, 0) === 0;
+  const isAllPositive = negativeBarRatios.reduce(Utils.sum, 0) === 0;
 
   const Bars = ({ type }: { type: "negative" | "positive" }) =>
     _Bars.map((bar, index) => {
@@ -61,7 +61,6 @@ export default function BarGroup({
         type === "negative"
           ? negativeBarRatios[index]
           : positiveBarRatios[index];
-        
 
       return Flex({
         direction: direction === "horizontal" ? Axis.horizontal : Axis.vertical,

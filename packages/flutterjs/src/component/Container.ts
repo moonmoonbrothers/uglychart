@@ -79,7 +79,7 @@ export default function Container({
   } else if (padding == null) {
     paddingIncludingDecoration = decoration.padding;
   } else {
-    padding.add(decoration.padding);
+    paddingIncludingDecoration = padding.add(decoration.padding);
   }
 
   if (paddingIncludingDecoration != null) {

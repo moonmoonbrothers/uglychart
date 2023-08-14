@@ -1,4 +1,5 @@
 import defaultColors from "./defaultChartColors";
+import funcionalizeClass from "./functionalizeClass";
 
 export const Utils = {
   notNullOrUndefined<T>(value: T | undefined | null): value is T {
@@ -15,4 +16,4 @@ export type DeepPartial<T> = {
     : DeepPartial<T[P]>;
 };
 
-export { defaultColors };
+export { defaultColors, funcionalizeClass };

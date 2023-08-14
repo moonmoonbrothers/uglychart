@@ -1,6 +1,11 @@
 import { Custom, Theme, Data, Dependencies, Font, Scale } from "./types";
 import ChartContextRootWidget from "../ChartContextRootWidget";
-import { Widget } from "@moonmoonbrothers/flutterjs";
+import {
+  ChangeNotifierProvider,
+  Element,
+  ReactiveChangeNotifier,
+  Widget,
+} from "@moonmoonbrothers/flutterjs";
 import {
   XAxis,
   XAxisLabel,
@@ -14,8 +19,9 @@ import {
   Layout,
   Series,
   Title,
+  Legend,
 } from "./component";
-import { DeepPartial } from "../../utils";
+import { DeepPartial, defaultColors } from "../../utils";
 import ChartContextWidget from "../ChartContextWidget";
 
 class CartesianChartContextRootWidget<
@@ -25,7 +31,7 @@ class CartesianChartContextRootWidget<
     (...arg: any) => ChartContextWidget<any, any, any, any, any>
   > = Dependencies,
   THEME extends Theme = Theme,
-  DATA = Data,
+  DATA extends Data<any> = Data,
   SCALE = Scale
 > extends ChartContextRootWidget<CUSTOM, DEPENDENCIES, THEME, DATA, SCALE> {
   get root(): Widget {
@@ -46,20 +52,24 @@ class CartesianChartContextRootWidget<
       DataLabel,
       Layout,
       Series,
+      Legend,
     } as any;
   }
 
   mergeWithDefaultTheme(theme: DeepPartial<Theme>): THEME {
     return {
       text: {
-        color: theme?.text?.color || "black",
-        fontFamily: theme?.text?.fontFamily || "Noto Sans KR, sans-serif",
-        fontSize: theme?.text?.fontSize || 11,
-        lineHeight: theme?.text?.lineHeight || 1,
+        color: theme?.text?.color ?? "black",
+        fontFamily: theme?.text?.fontFamily ?? "Noto Sans KR, sans-serif",
+        fontSize: theme?.text?.fontSize ?? 11,
+        lineHeight: theme?.text?.lineHeight ?? 1,
       },
       border: {
-        width: theme?.border?.width || 1,
-        color: theme?.border?.color || "black",
+        width: theme?.border?.width ?? 1,
+        color: theme?.border?.color ?? "black",
+      },
+      series: {
+        colors: theme?.series?.colors ?? defaultColors,
       },
     } as THEME;
   }
@@ -77,8 +87,26 @@ class CartesianChartContextRootWidget<
       dataLabel: custom?.dataLabel ?? { type: "config" },
       xAxisTick: custom?.xAxisTick ?? { type: "config" },
       yAxisTick: custom?.yAxisTick ?? { type: "config" },
-      series: custom?.series ?? { type: "config" },
+      series: custom?.series ?? { type: "config", colors: defaultColors },
+      legend: custom?.legend ?? { type: "config" },
     } as CUSTOM;
+  }
+
+  build(context: Element): Widget {
+    const legendStates = [
+      ...new Set(this.data.datasets.map(({ legend }) => legend)),
+    ].map((label, i) => ({
+      label,
+      visible: true,
+      color: this.theme.series.colors[i % this.theme.series.colors.length],
+    }));
+    return ChangeNotifierProvider({
+      providerKey: "LEGEND_STATES",
+      create() {
+        return ReactiveChangeNotifier({ legendStates });
+      },
+      child: super.build(context),
+    });
   }
 }
 

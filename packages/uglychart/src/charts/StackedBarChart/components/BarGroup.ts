@@ -12,10 +12,7 @@ export type BarGroupProps = {
   scale: Scale;
 };
 
-export type BarGroupConfig = {
-  barBackgroundColors?: string[];
-  barBorderColors?: string[];
-};
+export type BarGroupConfig = {};
 
 class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
   constructor(private props: BarGroupProps) {
@@ -32,17 +29,17 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
       return barGroup.Custom({ Bar }, { theme, data, scale, direction });
     }
 
-    const { barBackgroundColors: backgroundColors = defaultColors } = barGroup;
-    const { datasets } = data;
+    const datasets = this.getVisibleDatasets(context);
 
     const barGroupRatio = {
       negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
       positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
     };
 
-    const values = datasets.map(({ data, legend }) => ({
+    const values = datasets.map(({ data, legend, color }) => ({
       data: data[this.props.index],
       legend,
+      color,
     }));
 
     const negativeBarRatios = values.map(({ data }) => {
@@ -77,11 +74,11 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
         })
       ),
 
-      Bars: values.map(({ data, legend }, index) =>
+      Bars: values.map(({ data, legend, color }, index) =>
         Bar({
           value: data,
           direction,
-          backgroundColor: backgroundColors[index % backgroundColors.length],
+          backgroundColor: color,
           index,
           label,
           legend,
