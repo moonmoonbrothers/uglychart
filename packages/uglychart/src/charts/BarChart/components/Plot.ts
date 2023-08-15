@@ -55,8 +55,8 @@ export class Plot extends CartesianChartContextWidget {
         color: horizontalLine?.color,
         count: direction === "vertical" ? valueLineCount : labelLineCount,
       },
-      BackgroundAdditions: foregroundAdditions,
-      ForegroundAdditions: backgroundAdditions,
+      BackgroundAdditions: backgroundAdditions,
+      ForegroundAdditions: foregroundAdditions,
       child: Series({
         direction,
       }),

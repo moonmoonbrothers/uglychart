@@ -15,10 +15,16 @@ import {
 	SizedBox
 } from '@moonmoonbrothers/flutterjs';
 import { BarChart } from '@moonmoonbrothers/uglychart';
+import Examples from './example';
 
 const meta = {
 	title: 'Widget/BarChart/Cases',
-	component: Widget
+	component: Widget,
+	args: {
+		ssrSize: { width: 800, height: 480 },
+		width: '800px',
+		height: '480px'
+	}
 } satisfies Meta<Widget>;
 
 export default meta;
@@ -52,11 +58,6 @@ export const Basic: Story = {
 				chart: {
 					type: 'config',
 					foregroundAdditions: [
-						Positioned({
-							bottom: -20,
-							right: -15,
-							child: Text('%ile')
-						}),
 						Positioned({
 							bottom: -25,
 							left: 20,
@@ -391,4 +392,12 @@ export const WithPlotSize: Story = {
 		import { BarChart } from '@moonmoonbrothers/uglychart';
 	`
 	}
+};
+
+export const CustomBar: Story = {
+	args: Examples.CustomBar
+};
+
+export const Bonobono: Story = {
+	args: Examples.Bonobono
 };

@@ -130,6 +130,9 @@ class AnimationController extends Animation<number> {
         this.internalSetValue(latest);
         this.notifyListeners();
       },
+      onStop: () => {
+        this.isAnimating = false;
+      },
       onComplete: () => {
         this.isAnimating = false;
       },
