@@ -31,7 +31,7 @@ class CartesianChartContextRootWidget<
     (...arg: any) => ChartContextWidget<any, any, any, any, any>
   > = Dependencies,
   THEME extends Theme = Theme,
-  DATA extends Data<any> = Data,
+  DATA extends Omit<Data<any>, "labels"> = Data,
   SCALE = Scale
 > extends ChartContextRootWidget<CUSTOM, DEPENDENCIES, THEME, DATA, SCALE> {
   get root(): Widget {
