@@ -1,6 +1,6 @@
-import { Alignment, TextDirection } from "../type"
-import Widget from "../widget/Widget"
-import ConstraintsTransformBox from "./ConstraintsTransformBox"
+import { Alignment, TextDirection } from "../type";
+import Widget from "../widget/Widget";
+import ConstraintsTransformBox from "./ConstraintsTransformBox";
 
 function UnconstrainedBox({
   alignment = Alignment.center,
@@ -8,31 +8,34 @@ function UnconstrainedBox({
   child,
   textDirection,
   constrainedAxis,
+  key,
 }: {
-  child: Widget
-  textDirection?: TextDirection
-  alignment?: Alignment
-  clipped?: boolean
-  constrainedAxis?: "vertical" | "horizontal"
+  child: Widget;
+  textDirection?: TextDirection;
+  alignment?: Alignment;
+  clipped?: boolean;
+  constrainedAxis?: "vertical" | "horizontal";
+  key?: any;
 }) {
   return ConstraintsTransformBox({
     alignment,
     child,
     clipped,
     textDirection,
+    key,
     constraintsTransform: (function () {
       if (constrainedAxis == null) {
-        return ConstraintsTransformBox.unconstrained
+        return ConstraintsTransformBox.unconstrained;
       }
 
       switch (constrainedAxis) {
         case "vertical":
-          return ConstraintsTransformBox.widthUnconstrained
+          return ConstraintsTransformBox.widthUnconstrained;
         case "horizontal":
-          return ConstraintsTransformBox.heightUnconstrained
+          return ConstraintsTransformBox.heightUnconstrained;
       }
     })(),
-  })
+  });
 }
 
-export default UnconstrainedBox
+export default UnconstrainedBox;

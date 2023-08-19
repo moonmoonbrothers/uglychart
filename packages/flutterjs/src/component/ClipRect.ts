@@ -1,6 +1,6 @@
 import { Path, Rect, Size } from "../type";
 import Widget from "../widget/Widget";
-import BaseClipPath from "./base/BaseClipPath";
+import ClipPath from "./ClipPath";
 
 export default function ClipRect({
   child,
@@ -13,9 +13,9 @@ export default function ClipRect({
   clipped?: boolean;
   key?: any;
 }) {
-  if (!clipped) return child;
-  return new BaseClipPath({
+  return ClipPath({
     child,
+    clipped,
     key,
     clipper: (size) => new Path().addRect(clipper(size)),
   });
