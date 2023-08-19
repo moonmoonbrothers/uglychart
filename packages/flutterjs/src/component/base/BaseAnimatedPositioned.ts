@@ -29,7 +29,7 @@ class BaseAnimatedPositioned extends ImplicitlyAnimatedWidget {
     right,
     bottom,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

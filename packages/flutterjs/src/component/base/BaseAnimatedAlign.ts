@@ -23,7 +23,7 @@ class BaseAnimatedAlignWidget extends ImplicitlyAnimatedWidget {
     widthFactor,
     heightFactor,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

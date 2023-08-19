@@ -11,13 +11,15 @@ class BaseFractionallySizedBox extends SingleChildRenderObjectWidget {
     widthFactor,
     heightFactor,
     alignment = Alignment.center,
+    key,
   }: {
     child?: Widget;
     alignment?: Alignment;
     widthFactor?: number;
     heightFactor?: number;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.alignment = alignment;
     this.widthFactor = widthFactor;
     this.heightFactor = heightFactor;

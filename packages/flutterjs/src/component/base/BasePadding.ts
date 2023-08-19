@@ -8,11 +8,13 @@ export default class Padding extends SingleChildRenderObjectWidget {
   constructor({
     padding = EdgeInsets.all(0),
     child,
+    key,
   }: {
     padding?: EdgeInsets;
     child?: Widget;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.padding = padding;
   }
 

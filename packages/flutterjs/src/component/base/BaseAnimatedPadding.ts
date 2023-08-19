@@ -21,7 +21,7 @@ class BaseAnimatedPadding extends ImplicitlyAnimatedWidget {
     key,
     padding = EdgeInsets.all(0),
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

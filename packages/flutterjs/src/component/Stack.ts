@@ -8,13 +8,16 @@ export default function Stack({
   children,
   alignment = Alignment.topLeft,
   fit,
+  key,
 }: {
   children: Widget[];
   clipped?: boolean;
   alignment?: Alignment;
   fit?: StackFit;
+  key?: any;
 }) {
   return ClipRect({
+    key,
     clipped,
     clipper: (size) =>
       Rect.fromLTWH({

@@ -3,11 +3,13 @@ import BaseGrid, { GridTemplate, type BaseGridProps } from "./base/BaseGrid";
 
 function Grid({
   childrenByRow,
+  key,
   ...props
 }: BaseGridProps & {
+  key?: any;
   childrenByRow: (Widget | null | undefined)[][];
 }): BaseGrid {
-  return new BaseGrid({ childrenByRow, ...props });
+  return new BaseGrid({ childrenByRow, key, ...props });
 }
 
 Grid.Fr = GridTemplate.Fr;

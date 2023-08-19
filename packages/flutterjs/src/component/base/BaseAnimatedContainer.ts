@@ -48,7 +48,7 @@ class BaseAnimatedContainer extends ImplicitlyAnimatedWidget {
     transform,
     transformAlignment,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

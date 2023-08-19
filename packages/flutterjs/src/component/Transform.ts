@@ -7,17 +7,20 @@ function Transform({
   transform,
   origin,
   alignment,
+  key,
 }: {
   child?: Widget;
   transform: Matrix4;
   origin?: Offset;
   alignment?: Alignment;
+  key?: any;
 }) {
   return new BaseTransform({
     child,
     transform,
     alignment,
     origin,
+    key,
   });
 }
 

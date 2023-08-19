@@ -9,11 +9,13 @@ class DecoratedBox extends SingleChildRenderObjectWidget {
   constructor({
     decoration,
     child,
+    key,
   }: {
     decoration: Decoration;
     child?: Widget;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.decoration = decoration;
   }
 

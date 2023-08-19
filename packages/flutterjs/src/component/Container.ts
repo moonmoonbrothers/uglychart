@@ -3,11 +3,10 @@ import {
   type Alignment,
   Constraints,
   Decoration,
-  BoxDecoration,
   Matrix4,
   Rect,
 } from "../type";
-import { assert } from "../utils";
+import { assert, functionalizeClass } from "../utils";
 import type Widget from "../widget/Widget";
 import Align from "./Align";
 import ConstrainedBox from "./ConstrainedBox";
@@ -18,6 +17,8 @@ import Padding from "./Padding";
 import { EdgeInsetsGeometry } from "../type/_types/EdgeInsets";
 import Transform from "./Transform";
 import ClipPath from "./ClipPath";
+import { StatelessWidget } from "../widget";
+import { Element } from "../element";
 
 type ContainerProps = {
   padding?: EdgeInsets;
@@ -32,115 +33,164 @@ type ContainerProps = {
   constraints?: Constraints;
   transform?: Matrix4;
   transformAlignment?: Alignment;
+  key?: any;
 };
 
-export default function Container({
-  padding,
-  margin,
-  child,
-  color,
-  width,
-  height,
-  alignment,
-  decoration,
-  constraints,
-  clipped = false,
-  transform,
-  transformAlignment,
-}: ContainerProps = {}) {
-  constraints =
-    width != null || height != null
-      ? constraints?.tighten({ width, height }) ??
-        Constraints.tightFor({ width, height })
-      : constraints;
-  assert(
-    color == null || decoration == null,
-    "Color must be null when decoration is defined"
-  );
-
-  let current: Widget | undefined = child;
-
-  if (current == null && (constraints == null || !constraints.isTight)) {
-    current = LimitedBox({
-      maxHeight: 0,
-      maxWidth: 0,
-      child: ConstrainedBox({
-        constraints: Constraints.expand(),
-      }),
-    });
-  } else if (alignment != null) {
-    current = Align({ child: current, alignment });
+class _Container extends StatelessWidget {
+  padding?: EdgeInsets;
+  margin?: EdgeInsets;
+  width?: number;
+  height?: number;
+  color?: string;
+  decoration?: Decoration;
+  child?: Widget;
+  alignment?: Alignment;
+  clipped?: boolean;
+  constraints?: Constraints;
+  transform?: Matrix4;
+  transformAlignment?: Alignment;
+  constructor({
+    key,
+    padding,
+    margin,
+    width,
+    height,
+    color,
+    decoration,
+    child,
+    alignment,
+    clipped,
+    constraints,
+    transform,
+    transformAlignment,
+  }: ContainerProps) {
+    super(key);
+    this.padding = padding;
+    this.margin = margin;
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.decoration = decoration;
+    this.child = child;
+    this.alignment = alignment;
+    this.clipped = clipped;
+    this.constraints = constraints;
+    this.transform = transform;
+    this.transformAlignment = transformAlignment;
   }
-
-  let paddingIncludingDecoration: EdgeInsetsGeometry | undefined;
-
-  if (decoration == null || decoration.padding == null) {
-    paddingIncludingDecoration = padding;
-  } else if (padding == null) {
-    paddingIncludingDecoration = decoration.padding;
-  } else {
-    paddingIncludingDecoration = padding.add(decoration.padding);
-  }
-
-  if (paddingIncludingDecoration != null) {
-    current = Padding({ padding: paddingIncludingDecoration, child: current });
-  }
-
-  if (color != null) {
-    current = ColoredBox({
+  build(context: Element): Widget {
+    let {
+      constraints,
+      padding,
+      margin,
+      width,
+      height,
       color,
-      child: current,
-    });
-  }
-
-  if (clipped) {
-    assert(
-      decoration != null,
-      "Decoration must not be null when clipped is true"
-    );
-    current = ClipPath({
-      clipper: (size) =>
-        decoration!.getClipPath(
-          Rect.fromLTWH({
-            width: size.width,
-            height: size.height,
-            left: 0,
-            top: 0,
-          })
-        ),
+      decoration,
+      child,
+      alignment,
       clipped,
-      child: current,
-    });
-  }
+      transform,
+      transformAlignment,
+    } = this;
+    constraints =
+      width != null || height != null
+        ? constraints?.tighten({ width, height }) ??
+          Constraints.tightFor({ width, height })
+        : constraints;
+    assert(
+      color == null || decoration == null,
+      "Color must be null when decoration is defined"
+    );
 
-  if (decoration != null) {
-    current = DecoratedBox({
-      decoration: decoration!,
-      child: current,
-    });
-  }
+    let current: Widget | undefined = child;
 
-  if (constraints != null) {
-    current = ConstrainedBox({
-      child: current,
-      constraints: constraints,
-    });
-  }
+    if (current == null && (constraints == null || !constraints.isTight)) {
+      current = LimitedBox({
+        maxHeight: 0,
+        maxWidth: 0,
+        child: ConstrainedBox({
+          constraints: Constraints.expand(),
+        }),
+      });
+    } else if (alignment != null) {
+      current = Align({ child: current, alignment });
+    }
+    let paddingIncludingDecoration: EdgeInsetsGeometry | undefined;
 
-  if (margin != null) {
-    current = Padding({
-      child: current,
-      padding: margin,
-    });
-  }
+    if (decoration == null || decoration.padding == null) {
+      paddingIncludingDecoration = padding;
+    } else if (padding == null) {
+      paddingIncludingDecoration = decoration.padding;
+    } else {
+      paddingIncludingDecoration = padding.add(decoration.padding);
+    }
 
-  if (transform != null) {
-    current = Transform({
-      transform: transform,
-      alignment: transformAlignment,
-      child: current,
-    });
-  }
+    if (paddingIncludingDecoration != null) {
+      current = Padding({
+        padding: paddingIncludingDecoration,
+        child: current,
+      });
+    }
 
-  return current!;
+    if (color != null) {
+      current = ColoredBox({
+        color,
+        child: current,
+      });
+    }
+
+    if (clipped) {
+      assert(
+        decoration != null,
+        "Decoration must not be null when clipped is true"
+      );
+      current = ClipPath({
+        clipper: (size) =>
+          decoration!.getClipPath(
+            Rect.fromLTWH({
+              width: size.width,
+              height: size.height,
+              left: 0,
+              top: 0,
+            })
+          ),
+        clipped,
+        child: current,
+      });
+    }
+
+    if (decoration != null) {
+      current = DecoratedBox({
+        decoration: decoration!,
+        child: current,
+      });
+    }
+
+    if (constraints != null) {
+      current = ConstrainedBox({
+        child: current,
+        constraints: constraints,
+      });
+    }
+
+    if (margin != null) {
+      current = Padding({
+        child: current,
+        padding: margin,
+      });
+    }
+
+    if (transform != null) {
+      current = Transform({
+        transform: transform,
+        alignment: transformAlignment,
+        child: current,
+      });
+    }
+
+    return current!;
+  }
 }
+
+export default functionalizeClass(_Container);

@@ -20,7 +20,7 @@ class BaseAnimatedSlide extends ImplicitlyAnimatedWidget {
     key,
     offset,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

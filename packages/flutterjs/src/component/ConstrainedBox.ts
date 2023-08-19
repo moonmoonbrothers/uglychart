@@ -1,18 +1,9 @@
-import { Constraints } from "../type"
-import Widget from "../widget/Widget"
-import BaseConstrainedBox from "./base/BaseConstrainedBox"
+import BaseConstrainedBox from "./base/BaseConstrainedBox";
 
-function ConstrainedBox({
-  child,
-  constraints,
-}: {
-  child?: Widget
-  constraints: Constraints
-}) {
-  return new BaseConstrainedBox({
-    child,
-    constraints,
-  })
+function ConstrainedBox(
+  ...props: ConstructorParameters<typeof BaseConstrainedBox>
+) {
+  return new BaseConstrainedBox(...props);
 }
 
-export default ConstrainedBox
+export default ConstrainedBox;
