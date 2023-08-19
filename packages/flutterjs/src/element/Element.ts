@@ -84,9 +84,8 @@ class Element {
     }
     this.parent = newParent;
 
-    const key = this.widget.key;
-
     if (this.widget.key instanceof GlobalKey) {
+      this.buildOwner.registerGlobalKey(this.widget.key, this);
     }
   }
 

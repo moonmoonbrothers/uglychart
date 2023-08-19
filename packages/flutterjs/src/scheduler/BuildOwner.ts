@@ -31,6 +31,7 @@ class BuildOwner {
   }
 
   registerGlobalKey(key: GlobalKey, elememt: Element) {
+    key.buildOwner = this;
     this.globalKeyRegistry.set(key, elememt);
   }
 
