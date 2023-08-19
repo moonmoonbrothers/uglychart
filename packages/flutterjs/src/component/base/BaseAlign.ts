@@ -14,7 +14,7 @@ class Align extends SingleChildRenderObjectWidget {
     alignment = Alignment.center,
     key,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     alignment?: Alignment;
     widthFactor?: number;

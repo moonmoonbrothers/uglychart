@@ -14,12 +14,14 @@ export default function Row({
   crossAxisAlignment,
   verticalDirection,
   mainAxisSize,
+  key,
 }: {
   children: Widget[];
   mainAxisAlignment?: MainAxisAlignment;
   crossAxisAlignment?: CrossAxisAlignment;
   verticalDirection?: VerticalDirection;
   mainAxisSize?: MainAxisSize;
+  key?: any;
 }) {
   return Flex({
     children,
@@ -28,5 +30,6 @@ export default function Row({
     crossAxisAlignment,
     verticalDirection,
     mainAxisSize,
+    key,
   });
 }

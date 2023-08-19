@@ -23,7 +23,7 @@ class BaseAnimatedFractionallySizedBox extends ImplicitlyAnimatedWidget {
     heightFactor,
     alignment = Alignment.center,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

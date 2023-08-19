@@ -21,7 +21,7 @@ class BaseAnimatedRotation extends ImplicitlyAnimatedWidget {
     turns,
     alignment = Alignment.center,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

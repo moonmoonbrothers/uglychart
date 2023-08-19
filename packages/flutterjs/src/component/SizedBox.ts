@@ -6,13 +6,16 @@ function SizedBox({
   width,
   height,
   child,
+  key,
 }: {
   width?: number;
   height?: number;
   child?: Widget;
+  key?: any;
 }) {
   return ConstrainedBox({
     child,
+    key,
     constraints: Constraints.tightFor({ width, height }),
   });
 }

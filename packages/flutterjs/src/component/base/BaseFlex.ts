@@ -25,6 +25,7 @@ class Flex extends MultiChildRenderObjectWidget {
     crossAxisAlignment = CrossAxisAlignment.center,
     verticalDirection = VerticalDirection.down,
     mainAxisSize = MainAxisSize.max,
+    key,
   }: {
     children: Widget[];
     direction: Axis;
@@ -32,8 +33,9 @@ class Flex extends MultiChildRenderObjectWidget {
     crossAxisAlignment?: CrossAxisAlignment;
     verticalDirection?: VerticalDirection;
     mainAxisSize?: MainAxisSize;
+    key?: any;
   }) {
-    super({ children });
+    super({ children, key });
     this.direction = direction;
     this.mainAxisAlignment = mainAxisAlignment;
     this.crossAxisAlignment = crossAxisAlignment;

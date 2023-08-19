@@ -5,16 +5,19 @@ import BaseCustomPaint, { type Painter } from "./base/BaseCustomPaint";
 function CustomPaint<T extends Record<string, SVGElement>>({
   size = Size.zero,
   painter,
-  child
+  child,
+  key,
 }: {
   painter: Painter<T>;
   size?: Size;
-  child?: Widget
+  child?: Widget;
+  key?: any;
 }) {
   return new BaseCustomPaint({
     child,
     painter,
     size,
+    key,
   });
 }
 

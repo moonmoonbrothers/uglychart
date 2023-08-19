@@ -6,8 +6,16 @@ import type Widget from "../../widget/Widget";
 
 class AspectRatio extends SingleChildRenderObjectWidget {
   aspectRatio: number;
-  constructor({ child, aspectRatio }: { child?: Widget; aspectRatio: number }) {
-    super({ child });
+  constructor({
+    child,
+    aspectRatio,
+    key,
+  }: {
+    child?: Widget;
+    aspectRatio: number;
+    key?: string;
+  }) {
+    super({ child, key });
     this.aspectRatio = aspectRatio;
   }
 

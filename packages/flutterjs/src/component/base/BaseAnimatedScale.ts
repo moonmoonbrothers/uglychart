@@ -21,7 +21,7 @@ class BaseAnimatedScale extends ImplicitlyAnimatedWidget {
     scale,
     alignment = Alignment.center,
   }: {
-    key?: string;
+    key?: any;
     child?: Widget;
     curve?: Curve;
     duration: number;

@@ -16,6 +16,7 @@ class BaseOverflowBox extends SingleChildRenderObjectWidget {
     minWidth,
     alignment = Alignment.center,
     child,
+    key,
   }: {
     minWidth?: number;
     maxWidth?: number;
@@ -23,8 +24,9 @@ class BaseOverflowBox extends SingleChildRenderObjectWidget {
     maxHeight?: number;
     child?: Widget;
     alignment?: Alignment;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.maxHeight = maxHeight;
     this.maxWidth = maxWidth;
     this.minHeight = minHeight;

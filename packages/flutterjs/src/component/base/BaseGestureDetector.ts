@@ -5,8 +5,16 @@ import type Widget from "../../widget/Widget";
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onClick?: () => void;
-  constructor({ child, onClick }: { child?: Widget; onClick?: () => void }) {
-    super({ child });
+  constructor({
+    child,
+    onClick,
+    key,
+  }: {
+    child?: Widget;
+    onClick?: () => void;
+    key?: any;
+  }) {
+    super({ child, key });
     this.onClick = onClick;
   }
 

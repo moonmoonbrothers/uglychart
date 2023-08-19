@@ -1,6 +1,4 @@
-import Widget from "../widget/Widget"
-import BaseIntrinsicWidth from "./base/BaseIntrinsicWidth"
+import { functionalizeClass } from "../utils";
+import BaseIntrinsicWidth from "./base/BaseIntrinsicWidth";
 
-export default function IntrinsicWidth({ child }: { child?: Widget }) {
-  return new BaseIntrinsicWidth({ child })
-}
+export default functionalizeClass(BaseIntrinsicWidth);

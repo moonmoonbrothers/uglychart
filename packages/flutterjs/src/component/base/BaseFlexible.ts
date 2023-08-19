@@ -9,8 +9,14 @@ class Flexible extends SingleChildRenderObjectWidget {
     flex = 1,
     child,
     fit = "loose",
-  }: { flex?: number; child?: Widget; fit?: "tight" | "loose" } = {}) {
-    super({ child });
+    key,
+  }: {
+    flex?: number;
+    child?: Widget;
+    fit?: "tight" | "loose";
+    key?: any;
+  } = {}) {
+    super({ child, key });
     if (flex < 0) throw { message: "flex must not be under zero" };
     this.flex = flex;
     this.fit = fit;
