@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
-import { dedent } from 'ts-dedent';
-import { Container } from '@moonmoonbrothers/diagram';
+import { BasicStory } from './example';
 
 const meta = {
 	title: 'Diagram',
@@ -16,12 +15,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Diagram: Story = {
-	args: {
-		widget: Container({
-			width: 200,
-			height: 200,
-			color: 'red'
-		})
-	}
+export const Basic: Story = {
+	args: BasicStory
 };

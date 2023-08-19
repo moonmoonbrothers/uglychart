@@ -1,4 +1,4 @@
-import funcionalizeClass from "./functionalizeClass";
+import functionalizeClass from "./functionalizeClass";
 
 export const Utils = {
   notNullOrUndefined<T>(value: T | undefined | null): value is T {
@@ -9,4 +9,4 @@ export const Utils = {
   },
 };
 
-export { funcionalizeClass };
+export { functionalizeClass };
