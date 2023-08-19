@@ -1,6 +1,6 @@
 import type RenderObject from "../renderobject/RenderObject";
 import type { RenderContext } from "../runApp";
-import { BuildOwner, RenderOwner } from "../scheduler";
+import { BuildOwner, GlobalKey, RenderOwner } from "../scheduler";
 import Widget from "../widget/Widget";
 import RenderObjectElement from "./RenderObjectElement";
 
@@ -83,6 +83,11 @@ class Element {
       this.depth = newParent.depth + 1;
     }
     this.parent = newParent;
+
+    const key = this.widget.key;
+
+    if (this.widget.key instanceof GlobalKey) {
+    }
   }
 
   update(newWidget: Widget) {

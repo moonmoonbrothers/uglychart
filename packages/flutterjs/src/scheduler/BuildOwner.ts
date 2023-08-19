@@ -1,7 +1,10 @@
 import Element from "../element/Element";
+import GlobalKey from "./Globalkey";
+
 class BuildOwner {
   private onNeedVisualUpdate: () => void;
   private dirtyElements: Element[] = [];
+  private globalKeyRegistry: WeakMap<GlobalKey, Element> = new WeakMap();
   constructor({ onNeedVisualUpdate }: { onNeedVisualUpdate: () => void }) {
     this.onNeedVisualUpdate = () => onNeedVisualUpdate();
   }
@@ -25,6 +28,15 @@ class BuildOwner {
         if (!elememt.dirty) return;
         elememt.rebuild();
       });
+  }
+
+  registerGlobalKey(key: GlobalKey, elememt: Element) {
+    this.globalKeyRegistry.set(key, elememt);
+  }
+
+  findByGlobalKey(key: GlobalKey): Element {
+    const result = this.globalKeyRegistry.get(key);
+    return result;
   }
 }
 
