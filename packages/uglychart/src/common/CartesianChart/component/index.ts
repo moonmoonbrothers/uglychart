@@ -11,6 +11,7 @@ import YAxisTick from "./YAxisTick";
 import Chart from "./Chart";
 import DataLabel from "./DataLabel";
 import Series from "./Series";
+import Legend from "./Legend";
 
 export {
   DataLabel,
@@ -25,5 +26,6 @@ export {
   XAxisTick,
   YAxisTick,
   Chart,
-  Series
+  Series,
+  Legend,
 };

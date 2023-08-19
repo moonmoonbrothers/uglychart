@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
 import Widget from '../../Widget.svelte';
 import { dedent } from 'ts-dedent';
-import { TextStyle, Text, Container, EdgeInsets, Positioned } from '@moonmoonbrothers/flutterjs';
 import { ScatterChart } from '@moonmoonbrothers/uglychart';
 
 const meta = {
@@ -539,29 +538,6 @@ export const Scatter: Story = {
 						]
 					}
 				]
-			},
-			custom: {
-				chart: {
-					type: 'config',
-					foregroundAdditions: [
-						Positioned({
-							bottom: -20,
-							right: -15,
-							child: Text('%ile')
-						}),
-						Positioned({
-							bottom: -25,
-							left: 20,
-							child: Container({
-								color: 'black',
-								padding: EdgeInsets.symmetric({ horizontal: 2, vertical: 4 }),
-								child: Text('made by moon', {
-									style: new TextStyle({ fontSize: 12, color: 'white' })
-								})
-							})
-						})
-					]
-				}
 			}
 		}),
 		code: dedent`

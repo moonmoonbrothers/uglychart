@@ -77,7 +77,7 @@
 			custom: {
 				barGroup: {
 					type: 'config',
-					barBackgroundColors: ['black', 'grey', 'brown', 'black']
+					colors: ['black', 'grey', 'brown', 'black']
 				},
 				chart: {
 					type: 'config',

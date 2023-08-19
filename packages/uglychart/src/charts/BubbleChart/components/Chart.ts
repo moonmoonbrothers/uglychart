@@ -5,7 +5,6 @@ import ChartContextWidget from "../../../common/ChartContextWidget";
 
 export type ChartConfig = {
   scale?: Scale;
-  direction?: "horizontal" | "vertical";
   alignment?: Alignment;
   foregroundAdditions?: Widget[];
   backgroundAdditions?: Widget[];
@@ -28,11 +27,7 @@ export class Chart extends ChartContextWidget<
     if (chart.type === "custom") {
       return chart.Custom({ XAxis, YAxis, Plot }, { theme, data });
     }
-    const {
-      direction = "vertical",
-      foregroundAdditions = [],
-      backgroundAdditions = [],
-    } = chart;
+    const { foregroundAdditions = [], backgroundAdditions = [] } = chart;
 
     const { xLabels, yLabels } = this.getXAnxYLabels({
       scale,
@@ -45,12 +40,12 @@ export class Chart extends ChartContextWidget<
       plotWidth: plot.width,
       YAxis: YAxis({
         labels: yLabels,
-        type: direction === "horizontal" ? "index" : "value",
+        type: "value",
       }),
-      Plot: Plot({ direction }),
+      Plot: Plot({}),
       XAxis: XAxis({
         labels: xLabels,
-        type: direction === "vertical" ? "index" : "value",
+        type: "value",
       }),
       yAxisThickness: yAxis.thickness ?? theme.border.width,
       xAxisThickness: xAxis.thickness ?? theme.border.width,

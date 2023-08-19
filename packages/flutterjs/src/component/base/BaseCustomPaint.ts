@@ -53,7 +53,6 @@ export class RenderCustomPaint<
   set painter(value) {
     if (this._painter === value) return;
     this._painter = value;
-    this.markNeedsPaint();
   }
   _preferredSize: Size;
   get preferredSize() {

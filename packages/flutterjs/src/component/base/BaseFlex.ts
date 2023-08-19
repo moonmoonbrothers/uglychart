@@ -211,7 +211,7 @@ class RenderFlex extends MultiChildRenderObject {
             ? this.constraints.getMax(this.mainAxisSizeName)
             : sortedChildren
                 .map((child) => child.size[this.mainAxisSizeName])
-                .reduce((acc, childMainAxisSize) => acc + childMainAxisSize),
+                .reduce((acc, childMainAxisSize) => acc + childMainAxisSize, 0),
         [this.crossAxisSizeName]: crossAxisValue,
       } as any)
     );

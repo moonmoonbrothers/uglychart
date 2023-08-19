@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/uglychart",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "main": "src/index.ts",
   "description": "",
   "scripts": {

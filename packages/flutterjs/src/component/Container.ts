@@ -116,7 +116,6 @@ class _Container extends StatelessWidget {
     } else if (alignment != null) {
       current = Align({ child: current, alignment });
     }
-
     let paddingIncludingDecoration: EdgeInsetsGeometry | undefined;
 
     if (decoration == null || decoration.padding == null) {
@@ -124,7 +123,7 @@ class _Container extends StatelessWidget {
     } else if (padding == null) {
       paddingIncludingDecoration = decoration.padding;
     } else {
-      padding.add(decoration.padding);
+      paddingIncludingDecoration = padding.add(decoration.padding);
     }
 
     if (paddingIncludingDecoration != null) {
