@@ -13,10 +13,13 @@ import {
   MainAxisSize,
   Row,
   Transform,
+  SizedBox,
+  GlobalKey,
+  State,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../utils";
 
-class Temp extends StatelessWidget {
+class Temp extends StatefulWidget {
   content: Widget;
   childNodes: Widget[];
   translation: Offset;
@@ -36,21 +39,44 @@ class Temp extends StatelessWidget {
     this.childNodes = childNodes;
     this.translation = translation;
   }
+  createState(): State<StatefulWidget> {
+    return new TempState();
+  }
+}
+
+class TempState extends State<Temp> {
+  key1 = new GlobalKey();
+  initState(context: Element): void {
+    super.initState(context);
+    this.getOffset(this.key1);
+  }
 
   build(context: Element): Widget {
+    const { translation, content, childNodes } = this.widget;
     return Column({
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Transform.translate({
-          offset: this.translation,
-          child: this.content,
+          offset: translation,
+          child: Column({
+            mainAxisSize: MainAxisSize.min,
+            children: [content, Vortex({ key: this.key1 })],
+          }),
         }),
+        SizedBox({ height: 30 }),
         Row({
           mainAxisSize: MainAxisSize.min,
-          children: this.childNodes,
+          children: childNodes,
         }),
       ],
+    });
+  }
+
+  private getOffset(key: GlobalKey) {
+    this.element.scheduler.addPostFrameCallbacks(() => {
+      const offset = this.key1.currentContext.renderObject.offset;
+      console.log(offset);
     });
   }
 }
@@ -112,4 +138,8 @@ class RenderNode extends MultiChildRenderObject {
   ): void {}
 }
 
-export default functionalizeClass(Node);
+function Vortex({ key }: { key: GlobalKey }) {
+  return SizedBox({ width: 0, height: 0, key });
+}
+
+export default functionalizeClass(Temp);

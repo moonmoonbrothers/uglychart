@@ -17,6 +17,10 @@ export class StatefulElement extends ComponentElement {
     return this.state.initState(this);
   }
 
+  mount(newParent?: BuildContext): void {
+    super.mount(newParent);
+  }
+
   build(): Widget {
     return this.state.build(this);
   }
