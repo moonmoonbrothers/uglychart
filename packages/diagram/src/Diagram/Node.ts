@@ -1,12 +1,7 @@
 import {
   Offset,
-  PaintContext,
-  RenderObject,
   Widget,
-  MultiChildRenderObject,
-  MultiChildRenderObjectWidget,
   StatefulWidget,
-  StatelessWidget,
   Element,
   Column,
   MainAxisAlignment,
@@ -16,6 +11,13 @@ import {
   SizedBox,
   GlobalKey,
   State,
+  Matrix4,
+  Stack,
+  CustomPaint,
+  Size,
+  Path,
+  Padding,
+  EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../utils";
 
@@ -45,101 +47,102 @@ class Temp extends StatefulWidget {
 }
 
 class TempState extends State<Temp> {
-  key1 = new GlobalKey();
+  vortextPosition: Offset;
+  childVortextPositions: Offset[];
+
+  vortexKey: GlobalKey;
+  childVortextKeys: GlobalKey[];
   initState(context: Element): void {
     super.initState(context);
-    this.getOffset(this.key1);
+    this.vortexKey = new GlobalKey();
+    this.childVortextKeys = this.widget.childNodes.map(() => new GlobalKey());
+    context.scheduler.addPostFrameCallbacks(() => {
+      this.setState(() => {
+        const origin = matrixToOffset(this.element.renderObject.matrix);
+        this.vortextPosition = matrixToOffset(
+          this.vortexKey.currentContext.renderObject.matrix
+        ).minus(origin);
+        this.childVortextPositions = this.childVortextKeys.map(
+          ({ currentContext }) =>
+            matrixToOffset(currentContext.renderObject.matrix).minus(origin)
+        );
+      });
+    });
   }
 
   build(context: Element): Widget {
     const { translation, content, childNodes } = this.widget;
-    return Column({
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
+
+    return Stack({
       children: [
-        Transform.translate({
-          offset: translation,
-          child: Column({
-            mainAxisSize: MainAxisSize.min,
-            children: [content, Vortex({ key: this.key1 })],
-          }),
+        CustomPaint({
+          size: Size.infinite,
+          painter: {
+            createDefaultSvgEl(context) {
+              return {
+                path: context.createSvgEl("path"),
+              };
+            },
+            paint: ({ path }, size) => {
+              if (
+                this.childVortextPositions == null ||
+                this.vortextPosition == null
+              )
+                return;
+
+              const painter = new Path();
+              this.childVortextPositions.forEach((childPosition) => {
+                painter.moveTo(this.vortextPosition).lineTo(childPosition);
+              });
+              path.setAttribute("stroke-width", "2");
+              path.setAttribute("stroke", "black");
+              path.setAttribute("d", painter.getD());
+            },
+          },
         }),
-        SizedBox({ height: 30 }),
-        Row({
+        Column({
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: childNodes,
+          children: [
+            Transform.translate({
+              offset: translation,
+              child: Column({
+                mainAxisSize: MainAxisSize.min,
+                children: [content, Vortex({ key: this.vortexKey })],
+              }),
+            }),
+            SizedBox({ height: 30 }),
+            Row({
+              mainAxisSize: MainAxisSize.min,
+              children: this.childVortextKeys.map((key, i) =>
+                Column({
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Vortex({ key }),
+                    Padding({
+                      padding: EdgeInsets.symmetric({ horizontal: 10 }),
+                      child: childNodes[i],
+                    }),
+                  ],
+                })
+              ),
+            }),
+          ],
         }),
       ],
     });
   }
-
-  private getOffset(key: GlobalKey) {
-    this.element.scheduler.addPostFrameCallbacks(() => {
-      const offset = this.key1.currentContext.renderObject.offset;
-      console.log(offset);
-    });
-  }
-}
-
-class Node extends MultiChildRenderObjectWidget {
-  translation: Offset = Offset.zero();
-  constructor({
-    translation: offset = Offset.zero(),
-    children,
-    key,
-  }: {
-    translation?: Offset;
-    children: Widget[];
-    key?: any;
-  }) {
-    super({ children, key });
-    this.translation = offset;
-  }
-  createRenderObject(): RenderObject {
-    return new RenderNode({ isPainter: true, translation: this.translation });
-  }
-  updateRenderObject(renderObject: RenderNode): void {
-    renderObject.translation = this.translation;
-  }
-}
-
-class RenderNode extends MultiChildRenderObject {
-  private _translation: Offset;
-  get translation() {
-    return this._translation;
-  }
-  set translation(value: Offset) {
-    if (this._translation.equals(value)) return;
-    this._translation = value;
-  }
-  constructor({
-    isPainter,
-    translation,
-  }: {
-    isPainter: boolean;
-    translation: Offset;
-  }) {
-    super({ isPainter });
-  }
-
-  protected createDefaultSvgEl(paintContext: PaintContext): {
-    path: SVGElement;
-  } {
-    return {
-      path: paintContext.createSvgEl("path"),
-    };
-  }
-
-  protected preformLayout(): void {}
-
-  protected performPaint(
-    { path }: { path: SVGElement },
-    context: PaintContext
-  ): void {}
 }
 
 function Vortex({ key }: { key: GlobalKey }) {
   return SizedBox({ width: 0, height: 0, key });
+}
+
+function matrixToOffset(matrix: Matrix4) {
+  return new Offset({
+    x: matrix.storage[12],
+    y: matrix.storage[13],
+  });
 }
 
 export default functionalizeClass(Temp);
