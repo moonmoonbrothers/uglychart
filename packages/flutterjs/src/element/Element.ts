@@ -1,10 +1,11 @@
 import type RenderObject from "../renderobject/RenderObject";
 import type { RenderContext } from "../runApp";
-import { BuildOwner, GlobalKey, RenderOwner } from "../scheduler";
+import { BuildOwner, GlobalKey, RenderOwner, Scheduler } from "../scheduler";
 import Widget from "../widget/Widget";
 import RenderObjectElement from "./RenderObjectElement";
 
 class Element {
+  scheduler: Scheduler;
   renderContext!: RenderContext;
   buildOwner!: BuildOwner;
   widget: Widget;
@@ -81,6 +82,7 @@ class Element {
       this.renderContext = newParent.renderContext;
       this.buildOwner = newParent.buildOwner;
       this.depth = newParent.depth + 1;
+      this.scheduler = newParent.scheduler;
     }
     this.parent = newParent;
 
