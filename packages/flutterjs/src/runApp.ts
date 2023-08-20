@@ -63,6 +63,7 @@ export class AppRunner {
       buildOwner: this.buildOwner,
       renderOwner: this.renderOwner,
       renderContext: this.renderContext,
+      scheduler: this.scheduler,
     }).createElement();
     this.root.mount(undefined);
     this.root.renderObject.constraints = Constraints.tight(this.viewSize);
