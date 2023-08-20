@@ -1,7 +1,7 @@
-import { Alignment, Constraints, Rect, TextDirection } from "../type"
-import Widget from "../widget/Widget"
-import BaseConstraintsTransformBox from "./base/BaseConstraintsTransformBox"
-import ClipRect from "./ClipRect"
+import { Alignment, Constraints, Rect, TextDirection } from "../type";
+import Widget from "../widget/Widget";
+import BaseConstraintsTransformBox from "./base/BaseConstraintsTransformBox";
+import ClipRect from "./ClipRect";
 
 function ConstraintsTransformBox({
   clipped = false,
@@ -9,14 +9,17 @@ function ConstraintsTransformBox({
   textDirection = TextDirection.ltr,
   constraintsTransform,
   child,
+  key,
 }: {
-  clipped?: boolean
-  alignment?: Alignment
-  textDirection?: TextDirection
-  child?: Widget
-  constraintsTransform: (constraints: Constraints) => Constraints
+  clipped?: boolean;
+  alignment?: Alignment;
+  textDirection?: TextDirection;
+  child?: Widget;
+  constraintsTransform: (constraints: Constraints) => Constraints;
+  key?: any;
 }) {
   return ClipRect({
+    key,
     clipped,
     clipper: (size) =>
       Rect.fromLTWH({
@@ -26,26 +29,27 @@ function ConstraintsTransformBox({
         height: size.height,
       }),
     child: new BaseConstraintsTransformBox({
+      key,
       alignment,
       textDirection,
       constraintsTransform,
       child,
     }),
-  })
+  });
 }
 
 ConstraintsTransformBox.heightUnconstrained =
-  BaseConstraintsTransformBox.heightUnconstrained
+  BaseConstraintsTransformBox.heightUnconstrained;
 ConstraintsTransformBox.maxHeightUnconstrained =
-  BaseConstraintsTransformBox.maxHeightUnconstrained
+  BaseConstraintsTransformBox.maxHeightUnconstrained;
 ConstraintsTransformBox.maxUnconstrained =
-  BaseConstraintsTransformBox.maxUnconstrained
+  BaseConstraintsTransformBox.maxUnconstrained;
 ConstraintsTransformBox.maxWidthUnconstrained =
-  BaseConstraintsTransformBox.maxWidthUnconstrained
+  BaseConstraintsTransformBox.maxWidthUnconstrained;
 ConstraintsTransformBox.unconstrained =
-  BaseConstraintsTransformBox.unconstrained
-ConstraintsTransformBox.unmodified = BaseConstraintsTransformBox.unmodified
+  BaseConstraintsTransformBox.unconstrained;
+ConstraintsTransformBox.unmodified = BaseConstraintsTransformBox.unmodified;
 ConstraintsTransformBox.widthUnconstrained =
-  BaseConstraintsTransformBox.widthUnconstrained
+  BaseConstraintsTransformBox.widthUnconstrained;
 
-export default ConstraintsTransformBox
+export default ConstraintsTransformBox;

@@ -11,12 +11,14 @@ class BaseLimitedBox extends SingleChildRenderObjectWidget {
     child,
     maxHeight = Infinity,
     maxWidth = Infinity,
+    key,
   }: {
     child?: Widget;
     maxWidth?: number;
     maxHeight?: number;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.maxHeight = maxHeight;
     this.maxWidth = maxWidth;
   }

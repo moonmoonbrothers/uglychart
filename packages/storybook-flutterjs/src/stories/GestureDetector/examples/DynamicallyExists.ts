@@ -6,7 +6,6 @@ import {
 	TextStyle,
 	StatefulWidget,
 	State,
-	SizedBox,
 	Stack,
 	Positioned,
 	EdgeInsets

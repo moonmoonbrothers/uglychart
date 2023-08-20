@@ -18,12 +18,14 @@ class BaseCustomPaint<
     child,
     size = Size.zero,
     painter,
+    key,
   }: {
     child?: Widget;
     size?: Size;
     painter: Painter<T>;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.painter = painter;
     this.size = size;
   }

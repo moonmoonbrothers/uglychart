@@ -6,8 +6,16 @@ import type Widget from "../../widget/Widget";
 
 class ColoredBox extends SingleChildRenderObjectWidget {
   color: string;
-  constructor({ color, child }: { color: string; child?: Widget }) {
-    super({ child });
+  constructor({
+    color,
+    child,
+    key,
+  }: {
+    color: string;
+    child?: Widget;
+    key?: any;
+  }) {
+    super({ child, key });
     this.color = color;
   }
 

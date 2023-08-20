@@ -10,11 +10,13 @@ class FractionalTranslation extends SingleChildRenderObjectWidget {
   constructor({
     child,
     translation,
+    key,
   }: {
     child?: Widget;
     translation: BriefOffset;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.translation = translation;
   }
 

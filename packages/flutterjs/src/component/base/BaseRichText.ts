@@ -41,8 +41,9 @@ class RichText extends RenderObjectWidget {
     textScaleFactor = 1,
     maxLines,
     textWidthBasis = TextWidthBasis.parent,
-  }: RichTextProps) {
-    super({ children: [] });
+    key,
+  }: RichTextProps & { key?: any }) {
+    super({ children: [], key });
     this.text = text;
     this.textAlign = textAlign;
     this.textDirection = textDirection;

@@ -14,13 +14,15 @@ class Transform extends SingleChildRenderObjectWidget {
     transform,
     origin,
     alignment = Alignment.center,
+    key,
   }: {
     child?: Widget;
     transform: Matrix4;
     origin?: Offset;
     alignment?: Alignment;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.transform = transform;
     this.origin = origin;
     this.alignment = alignment;

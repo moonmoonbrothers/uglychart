@@ -18,6 +18,7 @@ export default function Flex({
   clipped = false,
   verticalDirection,
   mainAxisSize,
+  key,
 }: {
   children: Widget[];
   mainAxisAlignment?: MainAxisAlignment;
@@ -26,9 +27,11 @@ export default function Flex({
   mainAxisSize?: MainAxisSize;
   clipped?: boolean;
   direction: Axis;
+  key?: any;
 }) {
   return ClipRect({
     clipped,
+    key,
     clipper: (size) =>
       Rect.fromLTWH({
         left: 0,
@@ -37,6 +40,7 @@ export default function Flex({
         height: size.height,
       }),
     child: new BaseFlex({
+      key,
       children,
       direction,
       verticalDirection,

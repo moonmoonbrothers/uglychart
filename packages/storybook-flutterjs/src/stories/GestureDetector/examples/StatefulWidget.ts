@@ -77,7 +77,7 @@ class CounterState extends State<CounterWidget> {
 		});
 	}
 
-	build(context: BuildContext): Widget {
+	build(): Widget {
 		return Stack({
 			children: [
 				Positioned({

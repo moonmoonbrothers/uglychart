@@ -1,8 +1,8 @@
 import type Element from "../element/Element";
 
 class Widget {
-  key?: string;
-  constructor(key?: string) {
+  key?: any;
+  constructor(key?: any) {
     this.key = key;
     //
   }

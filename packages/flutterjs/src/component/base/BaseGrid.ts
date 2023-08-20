@@ -24,10 +24,12 @@ class BaseGrid extends MultiChildRenderObjectWidget {
     autoColumn = GridTemplate.Fr(1),
     autoRow = GridTemplate.Fr(1),
     childrenByRow,
+    key,
   }: BaseGridProps & {
     childrenByRow: Widget[][];
+    key?: any;
   }) {
-    super({ children: childrenByRow.flat() });
+    super({ children: childrenByRow.flat(), key });
     this.columnCounts = childrenByRow.map((children) => children.length);
     this.templateRows = templateRows;
     this.templateColumns = templateColumns;

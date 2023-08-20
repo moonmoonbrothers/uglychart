@@ -2,9 +2,10 @@ import applyMixins from "./applyMixins";
 import assert from "./assert";
 import lerp from "./lerp";
 import { getTextHeight, getTextWidth } from "./getTextSize";
+import functionalizeClass from "./functionalizeClass";
 import { Calculatable } from "../type";
 
-export { assert, applyMixins, getTextHeight, getTextWidth };
+export { assert, applyMixins, getTextHeight, getTextWidth, functionalizeClass };
 
 export default class Utils {
   static sumReducer = (acc: number, value: number) => acc + value;
