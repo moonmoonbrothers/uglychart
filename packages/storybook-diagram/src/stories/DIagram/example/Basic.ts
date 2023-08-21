@@ -11,17 +11,17 @@ const BasicStory = {
 		}),
 		childNodes: [
 			Container({
-				width: 50,
-				height: 100,
+				width: 70,
+				height: 50,
 				color: 'blue'
 			}),
 			Container({
 				width: 50,
-				height: 100,
+				height: 150,
 				color: 'green'
 			}),
 			Container({
-				width: 50,
+				width: 30,
 				height: 100,
 				color: 'yellow'
 			})

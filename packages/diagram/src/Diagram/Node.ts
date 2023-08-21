@@ -131,15 +131,20 @@ class TempState extends State<Temp> {
             Row({
               mainAxisSize: MainAxisSize.min,
               children: this.childVortextKeys.map((key, i) =>
-                Column({
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Vortex({ key }),
-                    Padding({
-                      padding: EdgeInsets.symmetric({ horizontal: 10 }),
-                      child: childNodes[i],
-                    }),
-                  ],
+                Draggable({
+                  onDrag: () => {
+                    this.didChangePosition();
+                  },
+                  child: Column({
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Vortex({ key }),
+                      Padding({
+                        padding: EdgeInsets.symmetric({ horizontal: 10 }),
+                        child: childNodes[i],
+                      }),
+                    ],
+                  }),
                 })
               ),
             }),
