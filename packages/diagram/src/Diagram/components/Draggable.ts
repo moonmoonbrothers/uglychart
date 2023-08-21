@@ -7,6 +7,7 @@ import {
   Transform,
   Widget,
 } from "@moonmoonbrothers/flutterjs";
+import { functionalizeClass } from "@moonmoonbrothers/flutterjs/src/utils";
 
 class Draggable extends StatefulWidget {
   onDrag?: (event: { offset: Offset }) => void;
@@ -33,20 +34,28 @@ class Draggable extends StatefulWidget {
 class DraggableState extends State<Draggable> {
   origin?: Offset;
   delta: Offset = Offset.zero();
+  lastDelta: Offset = this.delta;
 
-  handleMouseDown({ x, y }: MouseEvent): void {
-    this.origin = new Offset({ x, y });
-  }
+  handleMouseDown = ({ x, y }: MouseEvent): void => {
+    this.setState(() => {
+      this.origin = new Offset({ x, y });
+    });
+  };
 
-  handleMouseMove({ x, y }: MouseEvent): void {
+  handleMouseMove = ({ x, y }: MouseEvent): void => {
     if (this.origin == null) return;
-    this.delta = new Offset({ x, y }).minus(this.origin);
-    this.widget.onDrag?.({ offset: this.delta });
-  }
+    this.setState(() => {
+      this.delta = this.lastDelta.plus(new Offset({ x, y }).minus(this.origin));
+      this.widget.onDrag?.({ offset: this.delta });
+    });
+  };
 
-  handleMouseUp(event: MouseEvent): void {
-    this.origin = undefined;
-  }
+  handleMouseUp = (event: MouseEvent): void => {
+    this.setState(() => {
+      this.origin = undefined;
+      this.lastDelta = this.delta;
+    });
+  };
 
   build(context: Element): Widget {
     return Transform.translate({
@@ -60,3 +69,5 @@ class DraggableState extends State<Draggable> {
     });
   }
 }
+
+export default functionalizeClass(Draggable);

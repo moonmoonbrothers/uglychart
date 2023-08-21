@@ -20,26 +20,23 @@ import {
   EdgeInsets,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../utils";
+import { Draggable } from "./components";
 
 class Temp extends StatefulWidget {
   content: Widget;
   childNodes: Widget[];
-  translation: Offset;
   constructor({
     key,
     childNodes,
     content,
-    translation = Offset.zero(),
   }: {
     key?: any;
     content: Widget;
     childNodes: Widget[];
-    translation?: Offset;
   }) {
     super(key);
     this.content = content;
     this.childNodes = childNodes;
-    this.translation = translation;
   }
   createState(): State<StatefulWidget> {
     return new TempState();
@@ -49,14 +46,12 @@ class Temp extends StatefulWidget {
 class TempState extends State<Temp> {
   vortextPosition: Offset;
   childVortextPositions: Offset[];
-
   vortexKey: GlobalKey;
   childVortextKeys: GlobalKey[];
-  initState(context: Element): void {
-    super.initState(context);
-    this.vortexKey = new GlobalKey();
-    this.childVortextKeys = this.widget.childNodes.map(() => new GlobalKey());
-    context.scheduler.addPostFrameCallbacks(() => {
+
+  didChangePosition() {
+    if (this.element == null) return;
+    this.element.scheduler.addPostFrameCallbacks(() => {
       this.setState(() => {
         const origin = matrixToOffset(this.element.renderObject.matrix);
         this.vortextPosition = matrixToOffset(
@@ -69,9 +64,15 @@ class TempState extends State<Temp> {
       });
     });
   }
+  initState(context: Element): void {
+    super.initState(context);
+    this.vortexKey = new GlobalKey();
+    this.childVortextKeys = this.widget.childNodes.map(() => new GlobalKey());
+    this.didChangePosition();
+  }
 
   build(context: Element): Widget {
-    const { translation, content, childNodes } = this.widget;
+    const { content, childNodes } = this.widget;
 
     return Stack({
       children: [
@@ -104,8 +105,10 @@ class TempState extends State<Temp> {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Transform.translate({
-              offset: translation,
+            Draggable({
+              onDrag: () => {
+                this.didChangePosition();
+              },
               child: Column({
                 mainAxisSize: MainAxisSize.min,
                 children: [content, Vortex({ key: this.vortexKey })],
