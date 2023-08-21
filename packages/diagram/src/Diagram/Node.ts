@@ -79,6 +79,19 @@ class TempState extends State<Temp> {
         CustomPaint({
           size: Size.infinite,
           painter: {
+            dependencies: {
+              childVortextPositions: this.childVortextPositions,
+              vortextPosition: this.vortextPosition,
+            },
+            shouldRepaint: ({ dependencies }) => {
+              if (dependencies == null) return true;
+
+              return (
+                dependencies.childVortextPositions !==
+                  this.childVortextPositions ||
+                dependencies.vortextPosition !== this.vortextPosition
+              );
+            },
             createDefaultSvgEl(context) {
               return {
                 path: context.createSvgEl("path"),

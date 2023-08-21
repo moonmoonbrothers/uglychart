@@ -4,9 +4,11 @@ import { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 
-export type Painter<T extends Record<string, SVGElement>> = {
+export type Painter<T extends Record<string, SVGElement>, D = any> = {
   paint: (els: T, size: Size) => void;
   createDefaultSvgEl: (context: PaintContext) => T;
+  dependencies?: D;
+  shouldRepaint?: (oldPainter: Painter<T, D>) => boolean;
 };
 
 class BaseCustomPaint<
@@ -14,6 +16,7 @@ class BaseCustomPaint<
 > extends SingleChildRenderObjectWidget {
   painter: Painter<T>;
   size: Size;
+
   constructor({
     child,
     size = Size.zero,
@@ -52,7 +55,15 @@ export class RenderCustomPaint<
   }
   set painter(value) {
     if (this._painter === value) return;
+    const oldPainter = this._painter;
     this._painter = value;
+    this.didUpdatePainter(this._painter, oldPainter);
+  }
+  private didUpdatePainter(newPainter, oldPainter) {
+    const { shouldRepaint } = newPainter;
+    if (shouldRepaint == null) return;
+    if (!shouldRepaint(oldPainter)) return;
+    this.markNeedsPaint();
   }
   _preferredSize: Size;
   get preferredSize() {
