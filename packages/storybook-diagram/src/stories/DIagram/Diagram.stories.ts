@@ -6,9 +6,9 @@ const meta = {
 	title: 'Diagram',
 	component: Widget,
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
-		height: '480px'
+		ssrSize: { width: 2000, height: 2000 },
+		width: '2000px',
+		height: '2000px'
 	}
 } satisfies Meta<Widget>;
 
