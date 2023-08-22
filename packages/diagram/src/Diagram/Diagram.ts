@@ -24,6 +24,7 @@ import {
 import { functionalizeClass } from "../utils";
 import { Draggable } from "./components";
 import { Node } from "./Node";
+import pathPatiner from "./pathPatiner";
 
 class Diagram extends StatefulWidget {
   node: Node;
@@ -115,7 +116,11 @@ class DiagramState extends State<Diagram> {
 
               const painter = new Path();
               this.childVortextPositions.forEach((childPosition) => {
-                painter.moveTo(this.vortextPosition).lineTo(childPosition);
+                pathPatiner({
+                  from: this.vortextPosition,
+                  to: childPosition,
+                  path: painter,
+                });
               });
               path.setAttribute("stroke-width", "2");
               path.setAttribute("stroke", "black");
