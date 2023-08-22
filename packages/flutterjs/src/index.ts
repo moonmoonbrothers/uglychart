@@ -9,5 +9,6 @@ export * from "./component";
 export * from "./animation";
 export * from "./listenable";
 export * from "./utils/type";
+export * from "./scheduler";
 import Utils from "./utils";
 export { Utils };

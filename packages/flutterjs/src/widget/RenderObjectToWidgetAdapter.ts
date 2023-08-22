@@ -35,6 +35,7 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
     const el = super.createElement();
     el.renderContext = this.renderContext;
     el.buildOwner = this.buidlOwner;
+    el.scheduler = this.scheduler;
     return el;
   }
 

@@ -65,7 +65,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this.markNeedsPaint();
   }
   private _onMouseMove: (e: MouseEvent) => void;
-  get onMoseMove(): (e: MouseEvent) => void {
+  get onMouseMove(): (e: MouseEvent) => void {
     return this._onMouseMove;
   }
   set onMouseMove(prop: ((e: MouseEvent) => void) | undefined) {
@@ -107,6 +107,13 @@ class RenderGestureDetector extends SingleChildRenderObject {
     if (!this.mountedOnBroswer && isOnBrowser) {
       this.mountedOnBroswer = true;
       rect.addEventListener("click", () => this.onClick());
+      rect.addEventListener("mousedown", (e: MouseEvent) =>
+        this.onMouseDown(e)
+      );
+      rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
+      rect.addEventListener("mousemove", (e: MouseEvent) =>
+        this.onMouseMove(e)
+      );
     }
     rect.setAttribute("width", `${this.size.width}`);
     rect.setAttribute("height", `${this.size.height}`);
