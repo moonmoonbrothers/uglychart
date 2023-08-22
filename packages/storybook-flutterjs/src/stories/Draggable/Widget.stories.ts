@@ -1,14 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import { BasicStory } from './example';
-import Widget from '../Widget.svelte';
+import Widget from '../../Widget.svelte';
+import { BasicStory } from './examples';
 
 const meta = {
-	title: 'Diagram',
+	title: 'Widget/Draggable',
 	component: Widget,
+	parameters: {
+		layout: 'fullscreen'
+	},
 	args: {
-		ssrSize: { width: 2000, height: 2000 },
-		width: '2000px',
-		height: '2000px'
+		width: '400px',
+		height: '400px',
+		ssrSize: { width: 400, height: 400 }
 	}
 } satisfies Meta<Widget>;
 

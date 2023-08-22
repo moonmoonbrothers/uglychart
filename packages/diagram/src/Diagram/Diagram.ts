@@ -20,9 +20,9 @@ import {
   StackFit,
   VoidCallback,
   CrossAxisAlignment,
+  Draggable,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../utils";
-import { Draggable } from "./components";
 import { Node } from "./Node";
 import pathPatiner from "./pathPatiner";
 
@@ -133,7 +133,7 @@ class DiagramState extends State<Diagram> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Draggable({
-              onDrag: () => {
+              onDragUpdate: () => {
                 this.didChangePosition();
                 this.widget.onPositionChange();
               },
