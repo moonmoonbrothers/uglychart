@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/svelte';
-import Widget from '../../Widget.svelte';
 import { BasicStory } from './example';
+import Widget from '../Widget.svelte';
 
 const meta = {
 	title: 'Diagram',
