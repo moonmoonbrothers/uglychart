@@ -47,9 +47,18 @@ class Transform extends SingleChildRenderObjectWidget {
     });
   }
 
-  static translate({ child, offset }: { child?: Widget; offset: Offset }) {
+  static translate({
+    child,
+    offset,
+    key,
+  }: {
+    child?: Widget;
+    offset: Offset;
+    key?: any;
+  }) {
     return new Transform({
       child,
+      key,
       transform: Matrix4.translationValues(offset.x, offset.y, 0),
       origin: undefined,
       alignment: undefined,
