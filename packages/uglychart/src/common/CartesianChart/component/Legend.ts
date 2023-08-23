@@ -6,7 +6,7 @@ import {
 } from "@moonmoonbrothers/flutterjs";
 import { Legend as DefaultLegend } from "./default";
 import CartesianChartContextWidget from "../CartesianChartContextWidget";
-import { funcionalizeClass } from "../../../utils";
+import { functionalizeClass } from "../../../utils";
 import { LegendState } from "../types";
 
 export type LegendConfig = {};
@@ -40,4 +40,4 @@ export class Legend extends CartesianChartContextWidget {
   }
 }
 
-export default funcionalizeClass(Legend);
+export default functionalizeClass(Legend);

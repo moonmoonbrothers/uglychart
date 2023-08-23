@@ -4,6 +4,7 @@ import Tween from "./Tween";
 import Curve from "./Curve";
 import CurvedAnimation from "./CurvedAnimation";
 import CalculatableTween from "./CalculatableTween";
+import Animation from "./Animation";
 
 export {
   AnimationController,
@@ -12,4 +13,5 @@ export {
   Curve,
   CurvedAnimation,
   CalculatableTween,
+  Animation,
 };
