@@ -17,7 +17,7 @@ import {
   Tween,
   CurvedAnimation,
 } from "@moonmoonbrothers/flutterjs";
-import { funcionalizeClass } from "../../../../utils";
+import { functionalizeClass } from "../../../../utils";
 
 type XAxisProps = {
   ticks: Widget[];
@@ -117,4 +117,4 @@ function IgnoreChildWidth({
   });
 }
 
-export default funcionalizeClass(XAxis);
+export default functionalizeClass(XAxis);

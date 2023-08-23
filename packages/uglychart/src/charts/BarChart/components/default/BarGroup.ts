@@ -25,7 +25,7 @@ import {
   Tween,
   CurvedAnimation,
 } from "@moonmoonbrothers/flutterjs";
-import { Utils, funcionalizeClass } from "../../../../utils";
+import { Utils, functionalizeClass } from "../../../../utils";
 import { IgnoreChildSize } from "../../../../common/components";
 
 class BarGroup extends StatefulWidget {
@@ -67,7 +67,7 @@ class BarGroupState extends State<BarGroup> {
   animationController: AnimationController;
   tweenAnimation: Animation<number>;
   initState(context: Element): void {
-    this.animationController = new AnimationController({ duration: 200 });
+    this.animationController = new AnimationController({ duration: 300 });
     this.animationController.addListener(() => {
       this.setState();
     });
@@ -240,7 +240,7 @@ class BarGroupState extends State<BarGroup> {
     });
   }
 }
-export default funcionalizeClass(BarGroup);
+export default functionalizeClass(BarGroup);
 
 type BarGroupProps = {
   negativeAreaRatio: number;

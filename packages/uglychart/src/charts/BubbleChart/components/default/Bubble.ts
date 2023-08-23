@@ -15,7 +15,7 @@ import {
   Transform,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../types";
-import { funcionalizeClass } from "../../../../utils";
+import { functionalizeClass } from "../../../../utils";
 
 class Bubble extends StatefulWidget {
   bubbleMinRadius: number;
@@ -132,4 +132,4 @@ function _Bubble({
   });
 }
 
-export default funcionalizeClass(Bubble);
+export default functionalizeClass(Bubble);

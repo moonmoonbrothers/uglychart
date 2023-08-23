@@ -12,7 +12,7 @@ import {
   ClipRect,
   Rect,
 } from "@moonmoonbrothers/flutterjs";
-import { funcionalizeClass } from "../../../../utils";
+import { functionalizeClass } from "../../../../utils";
 
 class Series extends StatefulWidget {
   children: Widget[];
@@ -58,4 +58,4 @@ class SeriesState extends State<Series> {
   }
 }
 
-export default funcionalizeClass(Series);
+export default functionalizeClass(Series);

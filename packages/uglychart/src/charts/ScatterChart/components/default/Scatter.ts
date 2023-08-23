@@ -16,7 +16,7 @@ import {
   BuildContext,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../types";
-import { funcionalizeClass } from "../../../../utils";
+import { functionalizeClass } from "../../../../utils";
 
 class Scatter extends StatefulWidget {
   dotRadius: number;
@@ -119,4 +119,4 @@ function _Scatter({
   });
 }
 
-export default funcionalizeClass(Scatter);
+export default functionalizeClass(Scatter);

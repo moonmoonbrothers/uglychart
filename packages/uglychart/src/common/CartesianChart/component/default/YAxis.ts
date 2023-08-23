@@ -17,7 +17,7 @@ import {
   Tween,
   Element,
 } from "@moonmoonbrothers/flutterjs";
-import { funcionalizeClass } from "../../../../utils";
+import { functionalizeClass } from "../../../../utils";
 
 type YAxisProps = {
   ticks: Widget[];
@@ -116,4 +116,4 @@ function IgnoreChildWidth({
     }),
   });
 }
-export default funcionalizeClass(YAxis);
+export default functionalizeClass(YAxis);
