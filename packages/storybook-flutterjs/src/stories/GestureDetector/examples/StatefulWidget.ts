@@ -20,7 +20,7 @@ class SizeChageWidget extends StatefulWidget {
 	constructor({ count }: { count: number }) {
 		super();
 		this.count = count;
-		console.log('created!');
+		console.log('created!', count);
 	}
 	createState(): State<StatefulWidget> {
 		return new SizeChangeState();
@@ -38,6 +38,7 @@ class SizeChangeState extends State<SizeChageWidget> {
 		});
 	};
 	build() {
+		console.log('rebuild!', this.widget.count);
 		return GestureDetector({
 			onClick: () => {
 				this.handleClick();
