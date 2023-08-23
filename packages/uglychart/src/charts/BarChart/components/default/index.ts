@@ -1,8 +1,6 @@
 import Bar from "./Bar";
 import BarGroup from "./BarGroup";
 import Series from "./Series";
-import XAxis from "./XAxis";
-import YAxis from "./YAxis";
 
 import {
   Title,
@@ -10,6 +8,8 @@ import {
   YAxisLabel,
   XAxisTick,
   YAxisTick,
+  XAxis,
+  YAxis,
   Plot,
   Layout,
   Chart,

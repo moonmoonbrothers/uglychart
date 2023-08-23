@@ -4,45 +4,100 @@ import {
   ConstraintsTransformBox,
   Container,
   CrossAxisAlignment,
+  FractionallySizedBox,
   MainAxisAlignment,
   MainAxisSize,
   Row,
+  Animation,
+  StatefulWidget,
   Widget,
+  State,
+  Element,
+  AnimationController,
+  Tween,
+  CurvedAnimation,
 } from "@moonmoonbrothers/flutterjs";
+import { funcionalizeClass } from "../../../../utils";
 
-export default function XAxis({ color, thickness, labels, ticks }: XAxisProps) {
-  const HorizontalLine = () =>
-    Container({
-      height: thickness,
-      color,
+type XAxisProps = {
+  ticks: Widget[];
+  labels: Widget[];
+  color: string;
+  thickness: number;
+};
+
+class XAxis extends StatefulWidget {
+  ticks: Widget[];
+  labels: Widget[];
+  color: string;
+  thickness: number;
+  constructor({ color, thickness, labels, ticks }: XAxisProps) {
+    super();
+    this.color = color;
+    this.thickness = thickness;
+    this.labels = labels;
+    this.ticks = ticks;
+  }
+  createState(): State<StatefulWidget> {
+    return new XAxisState();
+  }
+}
+
+class XAxisState extends State<XAxis> {
+  animationController: AnimationController;
+  tweenAnimation: Animation<number>;
+  initState(context: Element): void {
+    this.animationController = new AnimationController({ duration: 200 });
+    this.animationController.addListener(() => {
+      this.setState();
     });
+    const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
+    this.tweenAnimation = tween.animated(
+      new CurvedAnimation({ parent: this.animationController })
+    );
+    this.animationController.forward();
+  }
+  build(context: Element): Widget {
+    const { thickness, color, labels, ticks } = this.widget;
+    const HorizontalLine = () =>
+      Container({
+        height: thickness,
+        color,
+      });
 
-  const Labels = () =>
-    Row({
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: labels.map((label, index) =>
-        IgnoreChildWidth({
-          child: label,
-        })
-      ),
+    const Labels = () =>
+      Row({
+        mainAxisAlignment:
+          ticks.length !== labels.length
+            ? MainAxisAlignment.spaceAround
+            : MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: labels.map((label, index) =>
+          IgnoreChildWidth({
+            child: label,
+          })
+        ),
+      });
+
+    const Ticks = () =>
+      Row({
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: ticks.map((tick, index) =>
+          IgnoreChildWidth({
+            child: tick,
+            isEdge: index === 0 || index === ticks.length - 1,
+          })
+        ),
+      });
+
+    return FractionallySizedBox({
+      widthFactor: this.tweenAnimation.value,
+      child: Column({
+        mainAxisSize: MainAxisSize.min,
+        children: [HorizontalLine(), Ticks(), Labels()],
+      }),
     });
-
-  const Ticks = () =>
-    Row({
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: ticks.map((tick, index) =>
-        IgnoreChildWidth({
-          child: tick,
-          isEdge: index === 0 || index === ticks.length - 1,
-        })
-      ),
-    });
-
-  return Column({
-    mainAxisSize: MainAxisSize.min,
-    children: [HorizontalLine(), Ticks(), Labels()],
-  });
+  }
 }
 
 function IgnoreChildWidth({
@@ -62,9 +117,4 @@ function IgnoreChildWidth({
   });
 }
 
-type XAxisProps = {
-  ticks: Widget[];
-  labels: Widget[];
-  color: string;
-  thickness: number;
-};
+export default funcionalizeClass(XAxis);
