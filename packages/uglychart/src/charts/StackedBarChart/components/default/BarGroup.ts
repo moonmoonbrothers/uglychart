@@ -21,6 +21,7 @@ import {
   BuildContext,
   ClipRect,
   Rect,
+  Curves,
 } from "@moonmoonbrothers/flutterjs";
 import { Utils, functionalizeClass } from "../../../../utils";
 import { IgnoreChildSize } from "../../../../common/components";
@@ -77,7 +78,10 @@ class BarGroupState extends State<BarGroup> {
     });
     const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
     this.tweenAnimation = tween.animated(
-      new CurvedAnimation({ parent: this.animationController })
+      new CurvedAnimation({
+        parent: this.animationController,
+        curve: Curves.easeInOut,
+      })
     );
     this.animationController.forward();
   }

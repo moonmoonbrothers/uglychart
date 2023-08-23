@@ -14,6 +14,7 @@ import {
   Transform,
   Element,
   BuildContext,
+  Curves,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../types";
 import { functionalizeClass } from "../../../../utils";
@@ -56,7 +57,10 @@ class ScatterState extends State<Scatter> {
     });
     const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
     this.tweenAnimation = tween.animated(
-      new CurvedAnimation({ parent: this.animationController })
+      new CurvedAnimation({
+        parent: this.animationController,
+        curve: Curves.easeInOut,
+      })
     );
     this.animationController.forward();
   }

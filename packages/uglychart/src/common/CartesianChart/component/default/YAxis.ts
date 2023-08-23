@@ -16,6 +16,7 @@ import {
   CurvedAnimation,
   Tween,
   Element,
+  Curves,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../../../../utils";
 
@@ -53,7 +54,10 @@ class YAxisState extends State<YAxis> {
     });
     const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
     this.tweenAnimation = tween.animated(
-      new CurvedAnimation({ parent: this.animationController })
+      new CurvedAnimation({
+        parent: this.animationController,
+        curve: Curves.easeInOut,
+      })
     );
     this.animationController.forward();
   }
