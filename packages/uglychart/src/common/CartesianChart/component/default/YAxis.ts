@@ -94,12 +94,20 @@ class YAxisState extends State<YAxis> {
         ),
       });
 
-    return FractionallySizedBox({
-      heightFactor: this.tweenAnimation.value,
-      child: Row({
-        mainAxisSize: MainAxisSize.min,
-        children: [Labels(), Ticks(), VerticalLine()],
-      }),
+    return Row({
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FractionallySizedBox({
+          heightFactor: this.tweenAnimation.value,
+          child: Labels(),
+        }),
+        FractionallySizedBox({
+          heightFactor: this.tweenAnimation.value,
+          child: Ticks(),
+        }),
+        VerticalLine(),
+      ],
     });
   }
 }

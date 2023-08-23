@@ -94,12 +94,20 @@ class XAxisState extends State<XAxis> {
         ),
       });
 
-    return FractionallySizedBox({
-      widthFactor: this.tweenAnimation.value,
-      child: Column({
-        mainAxisSize: MainAxisSize.min,
-        children: [HorizontalLine(), Ticks(), Labels()],
-      }),
+    return Column({
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        HorizontalLine(),
+        FractionallySizedBox({
+          widthFactor: this.tweenAnimation.value,
+          child: Ticks(),
+        }),
+        FractionallySizedBox({
+          widthFactor: this.tweenAnimation.value,
+          child: Labels(),
+        }),
+      ],
     });
   }
 }
