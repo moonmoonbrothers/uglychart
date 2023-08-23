@@ -6,7 +6,7 @@ import {
   SeriesConfig as BaseSeriesConfig,
 } from "../../../common/CartesianChart/component/Series";
 import type { Custom } from "../types";
-import Line from "./Area";
+import Area from "./Area";
 import { defaultColors } from "../../../utils";
 
 export type SeriesConfig = BaseSeriesConfig;
@@ -27,8 +27,8 @@ export class Series extends BaseSeries<Custom> {
     const scale = this.getScale(context);
 
     return DefaultSeries({
-      children: datasets.map(({ data: values, color }, i) =>
-        Line({
+      children: datasets.map(({ data: values, color, visible }, i) =>
+        Area({
           values,
           color: color,
           maxValue: scale.max,
