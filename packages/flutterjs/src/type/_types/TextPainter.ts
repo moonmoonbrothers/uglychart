@@ -94,7 +94,7 @@ export default class TextPainter {
           tspanEl.setAttribute("x", `${offset.x}`);
           tspanEl.setAttribute("y", `${offset.y}`);
           tspanEl.setAttribute("text-anchor", "start");
-          tspanEl.setAttribute("alignment-baseline", "text-before-edge");
+          tspanEl.setAttribute("dominant-baseline", "hanging");
           tspanEl.setAttribute("fill", color);
           tspanEl.setAttribute("font-size", `${fontSize}`);
           tspanEl.setAttribute("font-family", `${fontFamily}`);
@@ -405,7 +405,7 @@ class ParagraphLine {
     { paragraphWidth, offsetY }: { offsetY: number; paragraphWidth: number }
   ) {
     this.spanBoxes.forEach((spanBox) => {
-      spanBox.offset.y = offsetY + this.height - spanBox.size.height;
+      spanBox.offset.y = offsetY - spanBox.size.height + this.height;
     });
 
     switch (textAlign) {
