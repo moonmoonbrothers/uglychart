@@ -1,7 +1,6 @@
 import { dedent } from 'ts-dedent';
 import { Diagram, Node } from '@moonmoonbrothers/diagram';
 import {
-	Alignment,
 	Border,
 	BorderSide,
 	BoxDecoration,
@@ -47,7 +46,7 @@ function DBNode({
 									})
 								})
 							}),
-							padding: EdgeInsets.only({ bottom: 5, left: 5, right: 5 }),
+							padding: EdgeInsets.symmetric({ horizontal: 5, vertical: 2 }),
 							child: Row({
 								mainAxisAlignment: MainAxisAlignment.center,
 								children: [
