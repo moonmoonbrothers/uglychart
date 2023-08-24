@@ -14,7 +14,7 @@ export class Series extends BaseSeries<Custom> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const datasets = this.getVisibleDatasets(context);
+    const datasets = this.getDatasets(context);
     const { series } = this.getCustom(context);
 
     if (series.type === "custom") {
@@ -24,14 +24,16 @@ export class Series extends BaseSeries<Custom> {
     const scale = this.getScale(context);
 
     return DefaultSeries({
-      children: datasets.map(({ data: values, color }, i) =>
-        Line({
-          values,
-          color,
-          maxValue: scale.max,
-          minValue: scale.min,
-        })
-      ),
+      children: datasets
+        .filter(({ visible }) => visible)
+        .map(({ data: values, color }, i) =>
+          Line({
+            values,
+            color,
+            maxValue: scale.max,
+            minValue: scale.min,
+          })
+        ),
     });
   }
 }

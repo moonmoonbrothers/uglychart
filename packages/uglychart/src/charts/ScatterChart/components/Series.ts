@@ -1,10 +1,8 @@
-import { Widget } from "@moonmoonbrothers/flutterjs";
+import { Opacity, Widget } from "@moonmoonbrothers/flutterjs";
 import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
 import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies, Data, Scale, Theme } from "../types";
-import ChartContextWidget from "../../../common/ChartContextWidget";
 import Scatter from "./Scatter";
-import { defaultColors } from "../../../utils";
 import { SeriesConfig as BaseSeriesConfig } from "../../../common/CartesianChart/component/Series";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 
@@ -22,7 +20,7 @@ export class Series extends CartesianChartContextWidget<
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const datasets = this.getVisibleDatasets(context);
+    const datasets = this.getDatasets(context);
     const { series } = this.getCustom(context);
 
     if (series.type === "custom") {
@@ -30,10 +28,13 @@ export class Series extends CartesianChartContextWidget<
     }
 
     return DefaultSeries({
-      children: datasets.map(({ data: values, color }, i) =>
-        Scatter({
-          color,
-          points: values,
+      children: datasets.map(({ data: values, color, visible }, i) =>
+        Opacity({
+          opacity: visible ? 1 : 0,
+          child: Scatter({
+            color,
+            points: values,
+          }),
         })
       ),
     });
