@@ -21,21 +21,19 @@ class CartesianChartContextWidget<
     return legendStates;
   }
 
-  getVisibleDatasets(context: BuildContext) {
+  getDatasets(context: BuildContext) {
     const legendStates = this.getLegendState(context);
     const { datasets } = this.getData(context);
-    return datasets
-      .map((dataset) => {
-        const state = legendStates.find(
-          (state) => state.label === dataset.legend
-        )!;
-        return {
-          ...dataset,
-          color: state.color,
-          visible: state.visible,
-        };
-      })
-      .filter((value) => value.visible);
+    return datasets.map((dataset) => {
+      const state = legendStates.find(
+        (state) => state.label === dataset.legend
+      )!;
+      return {
+        ...dataset,
+        color: state.color,
+        visible: state.visible,
+      };
+    });
   }
 }
 
