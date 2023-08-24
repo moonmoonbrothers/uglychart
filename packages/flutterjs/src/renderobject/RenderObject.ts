@@ -90,10 +90,10 @@ class RenderObject {
       }
       container.setAttribute("opacity", `${opacity}`);
       container.setAttribute("pointer-events", "none");
-      this.performPaint(svgEls, context);
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, translatedMatrix4)
       );
+      this.performPaint(svgEls, context);
     }
     this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);

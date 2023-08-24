@@ -192,7 +192,19 @@ class RenderParagraph extends RenderObject {
     },
     context: PaintContext
   ): void {
-    this.textPainter.paint(textEl, context);
+    /**
+     * Safari has issue that tspan inherit text's transform only when mounted.
+     * even if existing text's transform style is changed, tspan still inherit previous position.
+     * so we need to remove text and create whenever paint is called.
+     */
+    const newTextEl = context.createSvgEl("text") as SVGTextElement;
+    newTextEl.setAttribute("style", textEl.getAttribute("style"));
+    newTextEl.setAttribute("data-render-name", "text");
+    textEl.parentNode.appendChild(newTextEl);
+    textEl.remove();
+    /*
+     */
+    this.textPainter.paint(newTextEl, context);
   }
 
   protected preformLayout(): void {
