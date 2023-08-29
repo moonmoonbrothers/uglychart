@@ -32,8 +32,8 @@ type CustomLine =
       {},
       {
         color: string;
-        points: number[]
-        minPoint: number
-        maxPoint: number
+        points: number[];
+        minPoint: number;
+        maxPoint: number;
       }
     >;

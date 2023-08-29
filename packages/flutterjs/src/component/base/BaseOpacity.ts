@@ -5,8 +5,16 @@ import type Widget from "../../widget/Widget";
 
 class Opacity extends SingleChildRenderObjectWidget {
   opacity: number;
-  constructor({ child, opacity }: { child?: Widget; opacity: number }) {
-    super({ child });
+  constructor({
+    child,
+    opacity,
+    key,
+  }: {
+    child?: Widget;
+    opacity: number;
+    key?: any;
+  }) {
+    super({ child, key });
     this.opacity = opacity;
   }
 

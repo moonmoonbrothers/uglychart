@@ -14,14 +14,17 @@ class BaseConstraintsTransformBox extends SingleChildRenderObjectWidget {
     child,
     constraintsTransform,
     textDirection = TextDirection.ltr,
+    key,
   }: {
     child?: Widget;
     alignment?: Alignment;
     textDirection?: TextDirection;
     constraintsTransform: (constraints: Constraints) => Constraints;
+    key?: any;
   }) {
     super({
       child,
+      key,
     });
     this.alignment = alignment;
     this.textDirection = textDirection;

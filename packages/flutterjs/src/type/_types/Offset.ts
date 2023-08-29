@@ -33,6 +33,10 @@ class Offset extends Calculatable {
   equals(other: Offset): boolean {
     return this.x === other.x && this.y === other.y;
   }
+
+  minus(other: Offset): Offset {
+    return super.minus(other) as Offset;
+  }
 }
 
 export default Offset;

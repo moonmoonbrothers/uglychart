@@ -62,7 +62,7 @@ class CartesianChartContextRootWidget<
         color: theme?.text?.color ?? "black",
         fontFamily: theme?.text?.fontFamily ?? "Noto Sans KR, sans-serif",
         fontSize: theme?.text?.fontSize ?? 11,
-        lineHeight: theme?.text?.lineHeight ?? 1,
+        lineHeight: theme?.text?.lineHeight,
       },
       border: {
         width: theme?.border?.width ?? 1,

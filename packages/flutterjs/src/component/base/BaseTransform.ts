@@ -14,13 +14,15 @@ class Transform extends SingleChildRenderObjectWidget {
     transform,
     origin,
     alignment = Alignment.center,
+    key,
   }: {
     child?: Widget;
     transform: Matrix4;
     origin?: Offset;
     alignment?: Alignment;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.transform = transform;
     this.origin = origin;
     this.alignment = alignment;
@@ -45,9 +47,18 @@ class Transform extends SingleChildRenderObjectWidget {
     });
   }
 
-  static translate({ child, offset }: { child?: Widget; offset: Offset }) {
+  static translate({
+    child,
+    offset,
+    key,
+  }: {
+    child?: Widget;
+    offset: Offset;
+    key?: any;
+  }) {
     return new Transform({
       child,
+      key,
       transform: Matrix4.translationValues(offset.x, offset.y, 0),
       origin: undefined,
       alignment: undefined,

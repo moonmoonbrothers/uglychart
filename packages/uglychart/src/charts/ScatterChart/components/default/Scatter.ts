@@ -4,10 +4,82 @@ import {
   Path,
   Rect,
   Size,
+  State,
+  StatefulWidget,
+  Widget,
+  Animation,
+  AnimationController,
+  Tween,
+  CurvedAnimation,
+  Transform,
+  Element,
+  BuildContext,
+  Curves,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../types";
+import { functionalizeClass } from "../../../../utils";
 
-export default function Scatter({
+class Scatter extends StatefulWidget {
+  dotRadius: number;
+  color: string;
+  points: { x: number; y: number }[];
+  scale: Scale;
+  constructor({
+    color,
+    points,
+    dotRadius,
+    scale,
+  }: {
+    dotRadius: number;
+    color: string;
+    points: { x: number; y: number }[];
+    scale: Scale;
+  }) {
+    super();
+    this.color = color;
+    this.points = points;
+    this.dotRadius = dotRadius;
+    this.scale = scale;
+  }
+
+  createState(): State<StatefulWidget> {
+    return new ScatterState();
+  }
+}
+
+class ScatterState extends State<Scatter> {
+  animationController: AnimationController;
+  tweenAnimation: Animation<number>;
+  initState(context: BuildContext): void {
+    this.animationController = new AnimationController({ duration: 200 });
+    this.animationController.addListener(() => {
+      this.setState();
+    });
+    const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
+    this.tweenAnimation = tween.animated(
+      new CurvedAnimation({
+        parent: this.animationController,
+        curve: Curves.easeInOut,
+      })
+    );
+    this.animationController.forward();
+  }
+
+  build(context: Element): Widget {
+    const { color, points, dotRadius, scale } = this.widget;
+    return Transform.scale({
+      scale: this.tweenAnimation.value,
+      child: _Scatter({
+        color,
+        points,
+        dotRadius,
+        scale,
+      }),
+    });
+  }
+}
+
+function _Scatter({
   color,
   points,
   dotRadius,
@@ -50,3 +122,5 @@ export default function Scatter({
     },
   });
 }
+
+export default functionalizeClass(Scatter);

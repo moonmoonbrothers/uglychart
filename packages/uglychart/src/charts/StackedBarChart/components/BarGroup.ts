@@ -29,18 +29,20 @@ class BarGroup extends CartesianChartContextWidget<Custom, Dependencies> {
       return barGroup.Custom({ Bar }, { theme, data, scale, direction });
     }
 
-    const datasets = this.getVisibleDatasets(context);
+    const datasets = this.getDatasets(context);
 
     const barGroupRatio = {
       negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
       positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
     };
 
-    const values = datasets.map(({ data, legend, color }) => ({
-      data: data[this.props.index],
-      legend,
-      color,
-    }));
+    const values = datasets
+      .filter(({ visible }) => visible)
+      .map(({ data, legend, color }) => ({
+        data: data[this.props.index],
+        legend,
+        color,
+      }));
 
     const negativeBarRatios = values.map(({ data }) => {
       if (data > 0 || scale.min > 0) return 0;

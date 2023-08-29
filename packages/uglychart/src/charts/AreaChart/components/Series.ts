@@ -6,7 +6,7 @@ import {
   SeriesConfig as BaseSeriesConfig,
 } from "../../../common/CartesianChart/component/Series";
 import type { Custom } from "../types";
-import Line from "./Area";
+import Area from "./Area";
 import { defaultColors } from "../../../utils";
 
 export type SeriesConfig = BaseSeriesConfig;
@@ -17,7 +17,7 @@ export class Series extends BaseSeries<Custom> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const datasets = this.getVisibleDatasets(context);
+    const datasets = this.getDatasets(context);
     const { series } = this.getCustom(context);
 
     if (series.type === "custom") {
@@ -27,14 +27,16 @@ export class Series extends BaseSeries<Custom> {
     const scale = this.getScale(context);
 
     return DefaultSeries({
-      children: datasets.map(({ data: values, color }, i) =>
-        Line({
-          values,
-          color: color,
-          maxValue: scale.max,
-          minValue: scale.min,
-        })
-      ),
+      children: datasets
+        .filter(({ visible }) => visible)
+        .map(({ data: values, color }, i) =>
+          Area({
+            values,
+            color: color,
+            maxValue: scale.max,
+            minValue: scale.min,
+          })
+        ),
     });
   }
 }

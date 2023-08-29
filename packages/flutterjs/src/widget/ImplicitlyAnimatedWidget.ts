@@ -18,7 +18,7 @@ export class ImplicitlyAnimatedWidget extends StatefulWidget {
     curve = Curves.linear,
     duration,
   }: {
-    key?: string;
+    key?: any;
     curve?: Curve;
     duration: number;
   }) {

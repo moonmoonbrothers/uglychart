@@ -30,7 +30,7 @@ class RenderObject {
     return this.ownerElement.children.map((child) => child.renderObject);
   }
   constraints: Constraints = Constraints.loose(Size.maximum());
-  _offset: Offset = Offset.zero();
+  private _offset: Offset = Offset.zero();
   get offset() {
     return this._offset;
   }
@@ -38,7 +38,7 @@ class RenderObject {
     if (this.offset.x === value.x && this.offset.y === value.y) return;
     this._offset = value;
   }
-  _size: Size = Size.zero;
+  private _size: Size = Size.zero;
   get size() {
     return this._size;
   }
@@ -90,10 +90,10 @@ class RenderObject {
       }
       container.setAttribute("opacity", `${opacity}`);
       container.setAttribute("pointer-events", "none");
-      this.performPaint(svgEls, context);
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, translatedMatrix4)
       );
+      this.performPaint(svgEls, context);
     }
     this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);

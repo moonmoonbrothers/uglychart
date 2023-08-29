@@ -16,7 +16,6 @@ export class StatefulElement extends ComponentElement {
   initState(): void {
     return this.state.initState(this);
   }
-
   build(): Widget {
     return this.state.build(this);
   }
@@ -27,10 +26,10 @@ export class StatefulElement extends ComponentElement {
   }
 
   update(newWidget: StatefulWidget): void {
-    super.update(newWidget);
     const oldWidget = this.state.widget;
     this.state.widget = newWidget;
     this.state.didUpdateWidget(oldWidget);
+    super.update(newWidget);
   }
 }
 

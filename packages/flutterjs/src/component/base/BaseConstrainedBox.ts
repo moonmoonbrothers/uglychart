@@ -8,11 +8,13 @@ class BaseConstrainedBox extends SingleChildRenderObjectWidget {
   constructor({
     child,
     constraints,
+    key,
   }: {
     child?: Widget;
     constraints: Constraints;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.constraints = constraints;
   }
 

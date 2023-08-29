@@ -2,7 +2,7 @@ import { RenderObjectElement } from "../element";
 import type RenderObject from "../renderobject/RenderObject";
 import RenderView from "../renderobject/RenderView";
 import { RenderContext } from "../runApp";
-import { BuildOwner, RenderOwner } from "../scheduler";
+import { BuildOwner, RenderOwner, Scheduler } from "../scheduler";
 import RenderObjectWidget from "./RenderObjectWidget";
 import type Widget from "./Widget";
 
@@ -10,27 +10,32 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   renderOwner: RenderOwner;
   buidlOwner: BuildOwner;
   renderContext: RenderContext;
+  scheduler: Scheduler;
   constructor({
     app,
     renderOwner,
     buildOwner,
     renderContext,
+    scheduler,
   }: {
     app: Widget;
     renderOwner: RenderOwner;
     buildOwner: BuildOwner;
     renderContext: RenderContext;
+    scheduler: Scheduler;
   }) {
     super({ children: [app] });
     this.renderOwner = renderOwner;
     this.buidlOwner = buildOwner;
     this.renderContext = renderContext;
+    this.scheduler = scheduler;
   }
 
   createElement(): RenderObjectElement {
     const el = super.createElement();
     el.renderContext = this.renderContext;
     el.buildOwner = this.buidlOwner;
+    el.scheduler = this.scheduler;
     return el;
   }
 

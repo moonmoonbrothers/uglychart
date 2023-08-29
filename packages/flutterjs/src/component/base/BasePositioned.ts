@@ -17,6 +17,7 @@ class BasePositioned extends SingleChildRenderObjectWidget {
     width,
     height,
     child,
+    key,
   }: {
     top?: number;
     bottom?: number;
@@ -25,8 +26,9 @@ class BasePositioned extends SingleChildRenderObjectWidget {
     width?: number;
     height?: number;
     child?: Widget;
+    key?: any;
   }) {
-    super({ child });
+    super({ child, key });
     this.top = top;
     this.bottom = bottom;
     this.left = left;

@@ -13,10 +13,7 @@ export type AreaProps = {
 
 export type AreaConfig = {
   thickness?: number;
-};
-
-const AreaConfig = {
-  thickness: 2,
+  spline?: boolean;
 };
 
 export class Area extends CartesianChartContextWidget<Custom> {
@@ -27,7 +24,7 @@ export class Area extends CartesianChartContextWidget<Custom> {
   build(context: BuildContext): Widget {
     const theme = this.getTheme(context);
     const data = this.getData(context);
-    const { area: line } = this.getCustom(context);
+    const { area } = this.getCustom(context);
     const {
       color,
       values: values,
@@ -35,8 +32,8 @@ export class Area extends CartesianChartContextWidget<Custom> {
       minValue: minValue,
     } = this.props;
 
-    if (line.type === "custom") {
-      return line.Custom(
+    if (area.type === "custom") {
+      return area.Custom(
         {},
         {
           color,
@@ -49,10 +46,11 @@ export class Area extends CartesianChartContextWidget<Custom> {
       );
     }
 
-    const { thickness = AreaConfig.thickness } = line;
+    const { thickness, spline } = area;
 
     return DefaultArea({
       thickness,
+      spline,
       color,
       values,
       minValue,

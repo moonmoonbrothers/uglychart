@@ -1,13 +1,89 @@
 import {
   CustomPaint,
+  Element,
   Offset,
   Path,
   Rect,
   Size,
+  State,
+  StatefulWidget,
+  Widget,
+  Animation,
+  AnimationController,
+  Tween,
+  CurvedAnimation,
+  Transform,
+  Curves,
 } from "@moonmoonbrothers/flutterjs";
 import { Scale } from "../../types";
+import { functionalizeClass } from "../../../../utils";
 
-export default function Scatter({
+class Bubble extends StatefulWidget {
+  bubbleMinRadius: number;
+  bubbleMaxRadius: number;
+  color: string;
+  points: { x: number; y: number; value: number }[];
+  scale: Scale;
+  constructor({
+    color,
+    points,
+    bubbleMinRadius,
+    bubbleMaxRadius,
+    scale,
+  }: {
+    bubbleMinRadius: number;
+    bubbleMaxRadius: number;
+    color: string;
+    points: { x: number; y: number; value: number }[];
+    scale: Scale;
+  }) {
+    super();
+    this.color = color;
+    this.points = points;
+    this.bubbleMinRadius = bubbleMinRadius;
+    this.bubbleMaxRadius = bubbleMaxRadius;
+    this.scale = scale;
+  }
+  createState(): State<StatefulWidget> {
+    return new BubbleState();
+  }
+}
+
+class BubbleState extends State<Bubble> {
+  animationController: AnimationController;
+  tweenAnimation: Animation<number>;
+  initState(context: Element): void {
+    this.animationController = new AnimationController({ duration: 200 });
+    this.animationController.addListener(() => {
+      this.setState();
+    });
+    const tween: Tween<number> = new Tween({ begin: 0, end: 1 });
+    this.tweenAnimation = tween.animated(
+      new CurvedAnimation({
+        parent: this.animationController,
+        curve: Curves.easeInOut,
+      })
+    );
+    this.animationController.forward();
+  }
+  build(context: Element): Widget {
+    const { color, points, bubbleMinRadius, bubbleMaxRadius, scale } =
+      this.widget;
+
+    return Transform.scale({
+      scale: this.tweenAnimation.value,
+      child: _Bubble({
+        color,
+        points,
+        bubbleMinRadius,
+        bubbleMaxRadius,
+        scale,
+      }),
+    });
+  }
+}
+
+function _Bubble({
   color,
   points,
   bubbleMinRadius,
@@ -59,3 +135,5 @@ export default function Scatter({
     },
   });
 }
+
+export default functionalizeClass(Bubble);

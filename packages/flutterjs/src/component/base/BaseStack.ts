@@ -19,12 +19,14 @@ export default class BaseStack extends MultiChildRenderObjectWidget {
     children,
     fit = StackFit.loose,
     alignment = Alignment.topLeft,
+    key,
   }: {
     fit?: StackFit;
     alignment?: Alignment;
     children: Widget[];
+    key?: any;
   }) {
-    super({ children });
+    super({ children, key });
     this.alignment = alignment;
     this.fit = fit;
   }
