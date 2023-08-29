@@ -8,7 +8,7 @@ import {
   getScale,
   getValueEdge,
 } from "../../common/CartesianChart/util";
-class BarChart extends CartesianChartContextRootWidget<Custom> {
+class LineChart extends CartesianChartContextRootWidget<Custom> {
   get dependencies(): Dependencies {
     const base = super.dependencies;
     return {
@@ -22,7 +22,7 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
 
     return {
       ...base,
-      line: base?.line ?? { type: "config" },
+      line: custom?.line ?? { type: "config" },
     };
   }
 
@@ -49,6 +49,6 @@ class BarChart extends CartesianChartContextRootWidget<Custom> {
   }
 }
 
-export default (...props: ConstructorParameters<typeof BarChart>) =>
-  new BarChart(...props);
+export default (...props: ConstructorParameters<typeof LineChart>) =>
+  new LineChart(...props);
 export { defaultComponents as DefaultComponents };
