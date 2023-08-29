@@ -11,7 +11,8 @@ import {
 	Widget,
 	Transform,
 	GestureDetector,
-	Positioned
+	Positioned,
+	Path
 } from '@moonmoonbrothers/flutterjs';
 import Assets from './assets';
 import { BarChart } from '@moonmoonbrothers/uglychart';
@@ -31,6 +32,7 @@ class AnimatedBononoState extends State<AnimatedBonono> {
 		this.animationController.addListener(() => {
 			this.setState();
 		});
+		this.animationController.repeat();
 	}
 
 	build(): Widget {
@@ -101,6 +103,34 @@ const Bonobono = {
 						})
 					})
 				]
+			},
+			bar: {
+				type: 'custom',
+				Custom(child, { backgroundColor }) {
+					return CustomPaint({
+						size: new Size({ width: 20, height: Infinity }),
+						painter: {
+							createDefaultSvgEl(context) {
+								return {
+									path: context.createSvgEl('path')
+								};
+							},
+							paint({ path }, { width, height }) {
+								const p = new Path();
+								p.moveTo({ x: 0, y: 0 });
+								for (let i = 1; i <= 10; ++i) {
+									p.lineTo({ x: i % 2 === 1 ? width / 4 : 0, y: (height / 10) * i });
+								}
+								for (let i = 10; i >= 0; --i) {
+									p.lineTo({ x: width - (i % 2 === 1 ? width / 4 : 0), y: (height / 10) * i });
+								}
+								p.close();
+								path.setAttribute('fill', backgroundColor);
+								path.setAttribute('d', p.getD());
+							}
+						}
+					});
+				}
 			}
 		}
 	}),
@@ -158,6 +188,34 @@ BarChart({
 					})
 				})
 			]
+		},
+		bar: {
+			type: 'custom',
+			Custom(child, { backgroundColor }) {
+				return CustomPaint({
+					size: new Size({ width: 20, height: Infinity }),
+					painter: {
+						createDefaultSvgEl(context) {
+							return {
+								path: context.createSvgEl('path')
+							};
+						},
+						paint({ path }, { width, height }) {
+							const p = new Path();
+							p.moveTo({ x: 0, y: 0 });
+							for (let i = 1; i <= 10; ++i) {
+								p.lineTo({ x: i % 2 === 1 ? width / 4 : 0, y: (height / 10) * i });
+							}
+							for (let i = 10; i >= 0; --i) {
+								p.lineTo({ x: width - (i % 2 === 1 ? width / 4 : 0), y: (height / 10) * i });
+							}
+							p.close();
+							path.setAttribute('fill', backgroundColor);
+							path.setAttribute('d', p.getD());
+						}
+					}
+				});
+			}
 		}
 	}
 

@@ -1,12 +1,113 @@
 import { Meta, Story } from '@storybook/blocks';
 import { Source } from '@storybook/addon-docs';
 import { dedent } from 'ts-dedent';
+import * as Assets from './assets';
+import * as AreaStories from './AreaChart/AreaChart.stories';
+import * as BarStories from './BarChart/Chart.stories';
 
 <Meta title="Introduction" />
 
-# Uglychart
-This is Chart library based on svg. This library use **Flutterjs**
+# UglayChart:Customizable Chart Library
 
+We are thrilled to present our newly developed charting library that brings a host of innovative features to the world of data visualization. Crafted with precision and designed for versatility, our library offers a seamless experience for creating interactive and dynamic charts using SVG technology. Here's a closer look at what sets our charting library apart:
+
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+	<Story of={AreaStories.Spline} />
+</div>
+
+1. **SVG-Powered Excellence**: Our charting library leverages the power of Scalable Vector Graphics (SVG) to deliver visually stunning charts. SVG ensures crisp rendering on various screen sizes and resolutions, providing an exceptional level of clarity and detail in your data representations.
+
+2. **Server Side Rendering**: We understand the importance of accessibility and compatibility. That's why our library offers server-side rendering support, enabling you to generate charts on the server and deliver them as part of your web pages. This ensures that your charts are viewable by all users, regardless of their device or browser.
+
+3. **Built with FlutterJS and SVG Brilliance**: The very essence of our charting library is rooted in FlutterJS, an ingenious SVG framework that masterfully emulates the renowned Flutter widget interface. This strategic choice means that individuals familiar with Flutter can effortlessly craft intricate charts, capitalizing on their existing knowledge and skills.
+
+   see: [Storybook Flutterjs](https://637c944f61fbd5154eb3e034-ijxaaherbp.chromatic.com/?path=/docs/introduction--docs)
+
+4. **Customization with FlutterJS Widgets**: Personalization is key in data visualization. With our library, you can harness the flexibility of FlutterJS widgets to customize and tailor your charts to suit your specific needs. Whether it's tweaking colors, fonts, or layouts, our intuitive widget-based approach makes customization a breeze.
+
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+	<Story of={BarStories.CustomBar} />
+</div>
+
+5. **Responsive Layouts**: The digital landscape is diverse, and so are the devices that users employ to access content. Our charting library is designed with responsiveness in mind. Your charts will seamlessly adapt to different screen sizes and orientations, ensuring a consistent and engaging experience across devices.
+
+Whether you're a data scientist, web developer, or designer, our charting library empowers you to bring your data to life with style and functionality. Join us in revolutionizing the way data is visualized – one SVG chart at a time.
+
+## Why is this named UglyChart
+
+Because uglychart has a high level of customizability,
+allowing users to even make it look ugly if they choose to do so, due to its high degree of freedom in customizatio
+
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+	<Story of={BarStories.Bonobono} />
+</div>
+
+## Usage example
+
+### vanila javascript
+
+```
+  npm install @moonmoonbrothers/flutterjs @moonmoonbrothers/uglychart
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ <script>
+  import { Widget } from '@moonmoonbrothers/flutterjs';
+  import { AreaChart } from '@moonmoonbrothers/uglychart';
+  const svgElement = document.getElementById('mySvg');
+  const runner = new AppRunner({
+   // Size is automatically calculated by svgElement size.
+   view: svgElement,
+   /*
+    this is not required if javascript is running on only brower.
+    If server sider redering is needed, you should configure below props.
+    Third party libraries may be required for window, document, and svgElement running on server side.
+   */
+   /*
+    window: window,
+    document: document,
+    ssrSize: {width: 600, height: 300},
+   */
+  });
+  const widget = AreaChart({
+    //...props
+  })
+  runner.runApp(widget);
+</script>
+
+<svg id="mySvg" style="width: 600px; height: 300px;" />
+`} />
+
+### Svelte
+
+```
+ npm install @moonmoonbrothers/flutterjs @moonmoonbrothers/uglychart @moonmoonbrothers/flutterjs-svelte
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+ <script>
+  import Widget from '@moonmoonbrothers/flutterjs-svelte';
+  import { AreaChart } from '@moonmoonbrothers/uglychart';
+ </script>
+
+<div style="width: 600px; height: 300px;">
+	<Widget
+		width="100%"
+		height="100%"
+		widget={AreaChart({
+			// ...props
+		})}
+	/>
+</div>
+`} />
 
 ## Github
 

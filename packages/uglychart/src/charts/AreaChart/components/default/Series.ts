@@ -30,7 +30,7 @@ class SeriesState extends State<Series> {
   animationController: AnimationController;
   tweenAnimation: Animation<number>;
   initState(context: Element): void {
-    this.animationController = new AnimationController({ duration: 300 });
+    this.animationController = new AnimationController({ duration: 500 });
     this.animationController.addListener(() => {
       this.setState();
     });
