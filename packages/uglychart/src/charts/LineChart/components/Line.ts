@@ -13,6 +13,7 @@ export type LineProps = {
 
 export type LineConfig = {
   thickness?: number;
+  spline?: boolean;
 };
 
 const defaultLineConfig = {
@@ -49,9 +50,10 @@ export class Line extends CartesianChartContextWidget<Custom> {
       );
     }
 
-    const { thickness = defaultLineConfig.thickness } = line;
+    const { thickness, spline } = line;
 
     return DefaultLine({
+      spline,
       thickness,
       color,
       values,

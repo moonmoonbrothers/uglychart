@@ -43,7 +43,7 @@ class AreaChart extends CartesianChartContextRootWidget<Custom> {
 
     return {
       ...base,
-      area: base?.area ?? { type: "config" },
+      area: custom?.area ?? { type: "config" },
     };
   }
 }
