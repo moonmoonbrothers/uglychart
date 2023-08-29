@@ -1,10 +1,4 @@
-import {
-  CustomPaint,
-  Offset,
-  Path,
-  Size,
-  Text,
-} from "@moonmoonbrothers/flutterjs";
+import { CustomPaint, Path, Size } from "@moonmoonbrothers/flutterjs";
 export default function Line({
   thickness = 2,
   color,
@@ -30,22 +24,15 @@ export default function Line({
       },
 
       paint({ path: pathEl }, { width, height }) {
-        const count = values.length;
-        const points = values.map((value, i) => {
-          const x = (i / (count - 1)) * width;
-          const y =
-            height - ((value - minValue) / (maxValue - minValue)) * height;
-          return {
-            x,
-            y,
-          };
-        });
         const path = new Path();
-        if (spline) {
-          drawSpline(points, path);
-        } else {
-          drawLine(points, path);
-        }
+        drawLine(path, {
+          width,
+          height,
+          maxValue,
+          minValue,
+          values,
+          spline,
+        });
 
         pathEl.setAttribute("stroke", color);
         pathEl.setAttribute("fill", "none");
@@ -59,7 +46,41 @@ export default function Line({
 type BezierPoint = Point & { controlPoint: { prev: Point; next: Point } };
 type Point = { x: number; y: number };
 
-function drawLine(points: Point[], path: Path) {
+export function drawLine(
+  path: Path,
+  {
+    width,
+    height,
+    spline,
+    values,
+    maxValue,
+    minValue,
+  }: {
+    width: number;
+    height: number;
+    spline: boolean;
+    values: number[];
+    minValue: number;
+    maxValue: number;
+  }
+) {
+  const count = values.length;
+  const points = values.map((value, i) => {
+    const x = (i / (count - 1)) * width;
+    const y = height - ((value - minValue) / (maxValue - minValue)) * height;
+    return {
+      x,
+      y,
+    };
+  });
+  if (spline) {
+    drawSplineLine(points, path);
+  } else {
+    drawStraightLine(points, path);
+  }
+}
+
+function drawStraightLine(points: Point[], path: Path) {
   points.forEach((point, i) => {
     if (i === 0) {
       path.moveTo(point);
@@ -70,7 +91,7 @@ function drawLine(points: Point[], path: Path) {
   });
 }
 
-function drawSpline(points: Point[], path: Path) {
+function drawSplineLine(points: Point[], path: Path) {
   const bezierPoints = points as BezierPoint[];
   setSplineControlPoint(bezierPoints);
   bezierPoints.forEach((point, idx) => {
@@ -121,6 +142,7 @@ function setSplineControlPoint(points: (BezierPoint | null)[]) {
     prev = point;
   }
 }
+
 function getControlPoints(
   prev: BezierPoint,
   cur: BezierPoint,
@@ -147,6 +169,6 @@ function getControlPoints(
   };
 }
 
-export function getDistance(point1: Point, point2: Point) {
+function getDistance(point1: Point, point2: Point) {
   return Math.sqrt((point2.x - point1.x) ** 2 + (point2.y - point1.y) ** 2);
 }

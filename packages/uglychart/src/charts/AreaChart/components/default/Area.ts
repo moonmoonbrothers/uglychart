@@ -1,4 +1,5 @@
-import { CustomPaint, Path, Size, Text } from "@moonmoonbrothers/flutterjs";
+import { CustomPaint, Path, Size } from "@moonmoonbrothers/flutterjs";
+import { drawLine } from "../../../LineChart/components/default/Line";
 export default function Area({
   thickness = 2,
   color,
@@ -25,27 +26,17 @@ export default function Area({
       },
 
       paint({ line: lineEl, area: areaEl }, { width, height }) {
-        const count = values.length;
-        const points = values.map((value, i) => {
-          const x = (i / (count - 1)) * width;
-          const y =
-            height - ((value - minValue) / (maxValue - minValue)) * height;
-          return {
-            x,
-            y,
-          };
+        const path = new Path();
+        drawLine(path, {
+          width,
+          height,
+          maxValue,
+          minValue,
+          values,
+          spline,
         });
         const y0Height =
           height - ((0 - minValue) / (maxValue - minValue)) * height;
-        const path = new Path();
-        points.forEach((point, i) => {
-          if (i === 0) {
-            path.moveTo(point);
-            return;
-          }
-
-          path.lineTo(point);
-        });
 
         lineEl.setAttribute("stroke", color);
         lineEl.setAttribute("fill", "none");
