@@ -48,7 +48,7 @@ class XAxisState extends State<XAxis> {
   animationController: AnimationController;
   tweenAnimation: Animation<number>;
   initState(context: Element): void {
-    this.animationController = new AnimationController({ duration: 200 });
+    this.animationController = new AnimationController({ duration: 300 });
     this.animationController.addListener(() => {
       this.setState();
     });

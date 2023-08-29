@@ -14,10 +14,16 @@ import {
 	TextStyle,
 	CrossAxisAlignment
 } from '@moonmoonbrothers/flutterjs';
+import * as Examples from './example';
 
 const meta = {
 	title: 'Widget/Flex',
-	component: Widget
+	component: Widget,
+	args: {
+		ssrSize: { width: 600, height: 300 },
+		width: '600px',
+		height: '300px'
+	}
 } satisfies Meta<Widget>;
 
 export default meta;
@@ -70,37 +76,7 @@ export const Row: Story = {
 };
 
 export const Column: Story = {
-	args: {
-		ssrSize: { width: 600, height: 300 },
-		width: '600px',
-		height: '300px',
-		code:
-			dedent`import { Flex, Container, Axis } from '@moonmoonbrothers/flutterjs'\n\n\n` +
-			BasicWidget,
-		widget: Container({
-			color: 'lightblue',
-			child: Flex({
-				direction: Axis.vertical,
-				children: [
-					Container({
-						width: 50,
-						height: 50,
-						color: 'red'
-					}),
-					Container({
-						width: 50,
-						height: 100,
-						color: 'blue'
-					}),
-					Container({
-						width: 50,
-						height: 50,
-						color: 'green'
-					})
-				]
-			})
-		})
-	}
+	args: Examples.Column
 };
 
 const MainAxisSize_minCode = dedent`
