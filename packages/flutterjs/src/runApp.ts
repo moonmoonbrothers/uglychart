@@ -66,7 +66,7 @@ export class AppRunner {
       scheduler: this.scheduler,
     }).createElement();
     this.root.mount(undefined);
-    this.root.renderObject.constraints = Constraints.tight(this.viewSize);
+    this.draw();
     return this.renderContext.view.innerHTML;
   }
 
@@ -170,7 +170,7 @@ export class RenderContext {
   get paintContext(): PaintContext {
     const { document: _document, view } = this;
     return {
-      isOnBrowser: this.window === window,
+      isOnBrowser: typeof this.window !== "undefined",
       createSvgEl(tagName) {
         const el = _document.createElementNS(
           "http://www.w3.org/2000/svg",
