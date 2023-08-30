@@ -37,7 +37,6 @@
 			document: document,
 			ssrSize
 		});
-		svgEl.innerHTML = '';
 		runner.runApp(widget);
 		runner.onMount({
 			resizeTarget: containerEl

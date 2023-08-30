@@ -12,7 +12,9 @@ class RenderFrameDispatcher {
   // so Here we just call onFrame callback.
   dispatch() {
     if (typeof window === "undefined") {
-      this.onFrame?.();
+      setTimeout(() => {
+        this.onFrame?.();
+      }, 0);
     } else {
       window.requestAnimationFrame(() => {
         this.onFrame?.();
