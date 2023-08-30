@@ -12,12 +12,7 @@
 	import CustomWidget from './temp';
 </script>
 
-<Widget
-	width="400px"
-	height="400px"
-	ssrSize={{ width: 400, height: 400 }}
-	widget={new CustomWidget()}
-/>
+<Widget width="400px" height="400px" widget={new CustomWidget()} />
 
 <style>
 	.box1 {
