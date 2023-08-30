@@ -66,7 +66,7 @@ export class AppRunner {
       scheduler: this.scheduler,
     }).createElement();
     this.root.mount(undefined);
-    this.draw();
+    this.root.renderObject.constraints = Constraints.tight(this.viewSize);
     return this.renderContext.view.innerHTML;
   }
 
@@ -116,7 +116,6 @@ export class AppRunner {
   }
 
   draw() {
-    if (this.viewSize.width === 0 || this.viewSize.height === 0) return;
     this.layout();
     this.paint();
   }
