@@ -7,7 +7,7 @@ import {
   TextWidthBasis,
 } from "../type";
 import InlineSpan from "../type/_types/InlineSpan";
-import ComponentWidget, { BuildContext } from "../widget/ComponentWidget";
+import { BuildContext, StatelessWidget } from "../widget";
 import Widget from "../widget/Widget";
 import RichText from "./RichText";
 
@@ -21,7 +21,7 @@ Text.rich = (textSpan: InlineSpan, props: TextProps = {}) => {
 
 export default Text;
 
-class _Text extends ComponentWidget {
+class _Text extends StatelessWidget {
   data?: string;
   //This will be null if a data is provided instead
   textSpan?: InlineSpan;
