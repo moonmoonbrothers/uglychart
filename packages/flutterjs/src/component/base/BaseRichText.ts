@@ -140,6 +140,7 @@ class RenderParagraph extends RenderObject {
   }
 
   set textWidthBasis(value: TextWidthBasis) {
+    if (this.textPainter.textWidthBasis === value) return;
     this.textPainter.textWidthBasis = value;
     this.markNeedsLayout();
   }
