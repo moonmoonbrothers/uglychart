@@ -55,7 +55,7 @@ class RenderObject {
     { parentUsesSize = true }: { parentUsesSize?: boolean } = {}
   ) {
     const normalizedConstraints = constraint.normalize();
-    if (this.constraints.equal(normalizedConstraints) && !this.needsLayout) {
+    if (this.constraints.equals(normalizedConstraints) && !this.needsLayout) {
       return;
     }
     this.constraints = normalizedConstraints;

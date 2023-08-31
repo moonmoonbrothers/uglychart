@@ -8,6 +8,7 @@
 		BoxDecoration,
 		Column,
 		Container,
+		Draggable,
 		EdgeInsets,
 		IntrinsicWidth,
 		MainAxisAlignment,
@@ -295,12 +296,21 @@
 <h1>Welcome to your library project</h1>
 <p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<button>hi</button>
 
 <Widget
 	ssrSize={{ width: 1000, height: 3000 }}
 	height="3000px"
 	width="1000px"
-	widget={Diagram({
-		node: space
-	})}
+	widget={typeof window === 'undefined'
+		? SizedBox.shrink()
+		: true
+		? Diagram({ node: space })
+		: Draggable({
+				child: Container({
+					width: 200,
+					height: 200,
+					color: 'black'
+				})
+		  })}
 />
