@@ -71,18 +71,18 @@ class RenderObject {
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
-    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (
       this.clipId === clipId &&
-      this.matrix.equals(translatedMatrix4) &&
+      this.matrix.equals(matrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
       return;
     }
+    this.matrix = matrix4;
     this.clipId = clipId;
-    this.matrix = translatedMatrix4;
     this.opacity = opacity;
+    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {

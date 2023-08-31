@@ -9,10 +9,10 @@ type EdgeInsetsProps = {
 };
 
 export class EdgeInsetsGeometry extends Calculatable {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+  readonly top: number;
+  readonly bottom: number;
+  readonly left: number;
+  readonly right: number;
 
   plus(other: EdgeInsetsGeometry): EdgeInsetsGeometry {
     return new EdgeInsetsGeometry({

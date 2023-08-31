@@ -5,6 +5,7 @@ import {
   CrossAxisAlignment,
   MainAxisAlignment,
   MainAxisSize,
+  Offset,
   Size,
   VerticalDirection,
 } from "../../type";
@@ -224,10 +225,12 @@ class RenderFlex extends MultiChildRenderObject {
       const [mainAxisOffset, crossAxisOffset]: ("x" | "y")[] =
         this.direction === "horizontal" ? ["x", "y"] : ["y", "x"];
 
-      child.offset[mainAxisOffset] = mainAxisOffsets[i];
-      child.offset[crossAxisOffset] = this.getChildOffsetOnCrossAxis(
-        child.size[this.crossAxisSizeName]
-      );
+      child.offset = new Offset({
+        [mainAxisOffset]: mainAxisOffsets[i],
+        [crossAxisOffset]: this.getChildOffsetOnCrossAxis(
+          child.size[this.crossAxisSizeName]
+        ),
+      } as { x: number; y: number });
     });
   }
 

@@ -6,8 +6,8 @@ type OffsetProps = {
 };
 
 class Offset extends Calculatable {
-  x: number;
-  y: number;
+ readonly x: number;
+ readonly y: number;
   constructor({ x, y }: OffsetProps) {
     super();
     this.x = x;
