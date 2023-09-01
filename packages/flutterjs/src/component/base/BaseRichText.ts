@@ -198,7 +198,10 @@ class RenderParagraph extends RenderObject {
      * even if existing text's transform style is changed, tspan still inherit previous position.
      * so we need to remove text and create whenever paint is called.
      */
-    if (context.isOnBrowser && /Safari/i.test(navigator.userAgent)) {
+    if (
+      context.isOnBrowser &&
+      /^(?!.*Chrome).*Safari.*/i.test(navigator.userAgent)
+    ) {
       const newTextEl = context.createSvgEl("text") as SVGTextElement;
       newTextEl.setAttribute("style", textEl.getAttribute("style"));
       newTextEl.setAttribute("data-render-name", "text");
@@ -208,6 +211,7 @@ class RenderParagraph extends RenderObject {
       return;
     }
 
+    if (!this.needsPaint && !this.chagnedLayout) return;
     this.textPainter.paint(textEl, context);
   }
 
@@ -225,6 +229,10 @@ class RenderParagraph extends RenderObject {
     );
   }
 
+  previousWidth: number;
+  previousHeight: number;
+  chagnedLayout: boolean;
+
   private layoutText({
     maxWidth = Infinity,
     minWidth = 0,
@@ -234,10 +242,18 @@ class RenderParagraph extends RenderObject {
   }) {
     const widthMatters =
       this.softWrap || this.overflow === TextOverflow.ellipsis;
+
+    this.previousWidth = this.textPainter.width;
+    this.previousHeight = this.textPainter.height;
+
     this.textPainter.layout({
       minWidth: minWidth,
       maxWidth: widthMatters ? maxWidth : Infinity,
     });
+
+    this.chagnedLayout =
+      this.textPainter.width !== this.previousWidth ||
+      this.textPainter.height !== this.previousHeight;
   }
 
   override getIntrinsicHeight(): number {
