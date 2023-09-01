@@ -11,15 +11,15 @@ const uid = new ShortUniqueId({ dictionary: "hex" });
   Actually, It is more like RenderShiftedBox
 */
 class RenderObject {
-  isPainter: boolean;
+  private readonly isPainter: boolean;
   id = uid.randomUUID(6);
   ownerElement!: RenderObjectElement;
   renderOwner!: RenderOwner;
   parent?: RenderObject;
   needsPaint = true;
   needsLayout = true;
-  clipId?: string;
-  matrix: Matrix4 = Matrix4.identity();
+  private clipId?: string;
+  private matrix: Matrix4 = Matrix4.identity();
   opacity = 0;
   depth = 0;
   constructor({ isPainter }: { isPainter: boolean }) {
@@ -55,7 +55,7 @@ class RenderObject {
     { parentUsesSize = true }: { parentUsesSize?: boolean } = {}
   ) {
     const normalizedConstraints = constraint.normalize();
-    if (this.constraints.equal(normalizedConstraints) && !this.needsLayout) {
+    if (this.constraints.equals(normalizedConstraints) && !this.needsLayout) {
       return;
     }
     this.constraints = normalizedConstraints;
@@ -71,18 +71,18 @@ class RenderObject {
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
-    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (
       this.clipId === clipId &&
-      this.matrix.equals(translatedMatrix4) &&
+      this.matrix.equals(matrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
       return;
     }
+    this.matrix = matrix4;
     this.clipId = clipId;
-    this.matrix = translatedMatrix4;
     this.opacity = opacity;
+    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
       const { svgEls, container } = this.findOrAppendSvgEl(context);
       if (clipId) {
@@ -247,6 +247,10 @@ class RenderObject {
     this.layout(this.constraints, { parentUsesSize: this.parentUsesSize });
   }
 
+  paintWithoutLayout(context: PaintContext) {
+    this.paint(context, this.clipId, this.matrix, this.opacity);
+  }
+
   markNeedsParentLayout() {
     this.parent?.markNeedsLayout();
   }
@@ -264,6 +268,13 @@ class RenderObject {
   markNeedsPaint() {
     this.needsPaint = true;
     this.renderOwner.needsPaintRenderObjects.push(this);
+  }
+
+  localToGlobal(additionalOffset: Offset = Offset.zero()) {
+    return new Offset({
+      x: this.matrix.storage[12] + this.offset.x + additionalOffset.x,
+      y: this.matrix.storage[13] + this.offset.y + additionalOffset.y,
+    });
   }
 }
 

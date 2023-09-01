@@ -61,13 +61,13 @@ class DiagramState extends State<Diagram> {
     if (this.element == null) return;
     this.element.scheduler.addPostFrameCallbacks(() => {
       this.setState(() => {
-        const origin = matrixToOffset(this.element.renderObject.matrix);
-        this.vortextPosition = matrixToOffset(
-          this.vortexKey.currentContext.renderObject.matrix
-        ).minus(origin);
+        const origin = this.element.renderObject.localToGlobal();
+        this.vortextPosition = this.vortexKey.currentContext.renderObject
+          .localToGlobal()
+          .minus(origin);
         this.childVortextPositions = this.childVortextKeys.map(
           ({ currentContext }) =>
-            matrixToOffset(currentContext.renderObject.matrix).minus(origin)
+            currentContext.renderObject.localToGlobal().minus(origin)
         );
       });
     });
@@ -177,13 +177,6 @@ class DiagramState extends State<Diagram> {
 
 function Vortex({ key }: { key: GlobalKey }) {
   return SizedBox({ width: 0, height: 0, key });
-}
-
-function matrixToOffset(matrix: Matrix4) {
-  return new Offset({
-    x: matrix.storage[12],
-    y: matrix.storage[13],
-  });
 }
 
 export default functionalizeClass(Diagram);

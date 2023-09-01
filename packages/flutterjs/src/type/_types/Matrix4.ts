@@ -67,7 +67,7 @@ class Matrix4 extends Calculatable {
   }
 
   static copy(arg: Matrix4): Matrix4 {
-    return new Matrix4(...arg._m4storage);
+    return new Matrix4(...arg.storage);
   }
   /**
    * Solve [A] * [x] = [b].
