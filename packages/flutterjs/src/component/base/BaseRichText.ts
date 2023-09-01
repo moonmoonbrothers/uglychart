@@ -198,14 +198,17 @@ class RenderParagraph extends RenderObject {
      * even if existing text's transform style is changed, tspan still inherit previous position.
      * so we need to remove text and create whenever paint is called.
      */
-    const newTextEl = context.createSvgEl("text") as SVGTextElement;
-    newTextEl.setAttribute("style", textEl.getAttribute("style"));
-    newTextEl.setAttribute("data-render-name", "text");
-    textEl.parentNode.appendChild(newTextEl);
-    textEl.remove();
-    /*
-     */
-    this.textPainter.paint(newTextEl, context);
+    if (context.isOnBrowser && /Safari/i.test(navigator.userAgent)) {
+      const newTextEl = context.createSvgEl("text") as SVGTextElement;
+      newTextEl.setAttribute("style", textEl.getAttribute("style"));
+      newTextEl.setAttribute("data-render-name", "text");
+      textEl.parentNode.appendChild(newTextEl);
+      textEl.remove();
+      this.textPainter.paint(newTextEl, context);
+      return;
+    }
+
+    this.textPainter.paint(textEl, context);
   }
 
   protected preformLayout(): void {
