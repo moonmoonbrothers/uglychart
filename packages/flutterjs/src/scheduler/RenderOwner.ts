@@ -45,12 +45,7 @@ class RenderOwner {
       .sort((a, b) => a.depth - b.depth)
       .forEach((renderObject) => {
         if (!renderObject.needsPaint) return;
-        renderObject.paint(
-          this.paintContext,
-          renderObject.clipId,
-          renderObject.matrix,
-          renderObject.opacity
-        );
+        renderObject.paintWithoutLayout(this.paintContext);
       });
   }
 }

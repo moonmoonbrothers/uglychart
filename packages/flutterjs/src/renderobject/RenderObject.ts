@@ -11,15 +11,15 @@ const uid = new ShortUniqueId({ dictionary: "hex" });
   Actually, It is more like RenderShiftedBox
 */
 class RenderObject {
-  isPainter: boolean;
+  private readonly isPainter: boolean;
   id = uid.randomUUID(6);
   ownerElement!: RenderObjectElement;
   renderOwner!: RenderOwner;
   parent?: RenderObject;
   needsPaint = true;
   needsLayout = true;
-  clipId?: string;
-  matrix: Matrix4 = Matrix4.identity();
+  private clipId?: string;
+  private matrix: Matrix4 = Matrix4.identity();
   opacity = 0;
   depth = 0;
   constructor({ isPainter }: { isPainter: boolean }) {
@@ -247,6 +247,10 @@ class RenderObject {
     this.layout(this.constraints, { parentUsesSize: this.parentUsesSize });
   }
 
+  paintWithoutLayout(context: PaintContext) {
+    this.paint(context, this.clipId, this.matrix, this.opacity);
+  }
+
   markNeedsParentLayout() {
     this.parent?.markNeedsLayout();
   }
@@ -264,6 +268,13 @@ class RenderObject {
   markNeedsPaint() {
     this.needsPaint = true;
     this.renderOwner.needsPaintRenderObjects.push(this);
+  }
+
+  localToGlobal(additionalOffset: Offset = Offset.zero()) {
+    return new Offset({
+      x: this.matrix.storage[12] + this.offset.x + additionalOffset.x,
+      y: this.matrix.storage[13] + this.offset.y + additionalOffset.y,
+    });
   }
 }
 
