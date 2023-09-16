@@ -7,7 +7,7 @@ on:
       - packages/storybook-flutterjs/**/*
       - .github/workflows/flutter-chromatic.yml
     branches:
-      - develop
+      - dev
 
 jobs:
   chromatic-deployment:
