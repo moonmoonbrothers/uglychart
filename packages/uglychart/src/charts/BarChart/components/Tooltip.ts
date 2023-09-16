@@ -1,67 +1,43 @@
-// import { BuildContext, Widget } from "@moonmoonbrothers/flutterjs";
-// import { Bar as DefaultBar } from "./default";
-// import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
-// import type { Custom } from "../types";
+import {
+  BuildContext,
+  EdgeInsets,
+  ToolTipPosition,
+  Widget,
+} from "@moonmoonbrothers/flutterjs";
+import { Tooltip as DefaultTooltip } from "./default";
+import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
+import type { Custom } from "../types";
+import { functionalizeClass } from "@moonmoonbrothers/flutterjs/src/utils";
 
-// export type TooltipProps = {
-//   position: "top";
-//   value: number;
-//   label: string;
-//   legend: {
-//     name: string;
-//     color: string;
-//   };
-// };
+export type TooltipProps = {
+  child: Widget;
+  position: ToolTipPosition;
+  value: number;
+  label: string;
+  legend: {
+    name: string;
+    color: string;
+  };
+  margin: EdgeInsets;
+};
 
-// export type BarConfig = {
-//   thickness?: number;
-// };
+export type TooltipConfig = {};
 
-// const defaultBarConfig = {
-//   thickness: 16,
-// };
+export class Tooltip extends CartesianChartContextWidget<Custom> {
+  constructor(protected props: TooltipProps) {
+    super();
+  }
+  build(context: BuildContext): Widget {
+    const theme = this.getTheme(context);
+    const data = this.getData(context);
+    const { tooltip } = this.getCustom(context);
+    if (tooltip.type === "custom") {
+      return tooltip.Custom({}, { data, theme });
+    }
+    return DefaultTooltip({
+      ...this.props,
+    });
+  }
+}
 
-// export class Bar extends CartesianChartContextWidget<Custom> {
-//   constructor(private props: TooltipProps) {
-//     super();
-//   }
-
-//   build(context: BuildContext): Widget {
-//     const theme = this.getTheme(context);
-//     const data = this.getData(context);
-//     const { bar } = this.getCustom(context);
-
-//     const {
-//       legendColor: backgroundColor,
-//       index,
-//       label,
-//       legend,
-//       direction,
-//     } = this.props;
-
-//     if (bar.type === "custom") {
-//       return bar.Custom(
-//         {},
-//         {
-//           backgroundColor,
-//           index,
-//           theme,
-//           label,
-//           legend,
-//           data,
-//           direction,
-//         }
-//       );
-//     }
-
-//     const { thickness = defaultBarConfig.thickness } = bar;
-
-//     return DefaultBar({
-//       color: backgroundColor,
-//       direction,
-//       thickness,
-//     });
-//   }
-// }
-
-// export default (props: TooltipProps) => new Bar(props);
+export default functionalizeClass(Tooltip);

@@ -1,5 +1,4 @@
-import { Widget } from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import { BuildContext, Widget } from "@moonmoonbrothers/flutterjs";
 import { Series as DefaultSeries } from "./default";
 import type { Custom, Dependencies } from "../types";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";

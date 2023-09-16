@@ -5,5 +5,6 @@ import Plot from "./Plot";
 import Chart from "./Chart";
 import BarGroup from "./BarGroup";
 import Bar from "./Bar";
+import Tooltip from "./Tooltip";
 
-export { Series, Bar, XAxis, YAxis, Plot, Chart, BarGroup };
+export { Tooltip, Series, Bar, XAxis, YAxis, Plot, Chart, BarGroup };

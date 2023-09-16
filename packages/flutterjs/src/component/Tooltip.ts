@@ -69,11 +69,14 @@ class ToolTipState extends State<ToolTip> {
 
   handleMouseEnter() {
     this.show = true;
-    this.setState();
+    this.setState(() => {
+      this.show = true;
+    });
   }
   handleMouseLeave() {
-    this.show = false;
-    this.setState();
+    this.setState(() => {
+      this.show = false;
+    });
   }
 
   build(context: Element): Widget {
