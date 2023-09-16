@@ -46,6 +46,7 @@ import AnimatedRotation from "./AnimatedRotation";
 import AnimatedSlide from "./AnimatedSlide";
 import AnimatedContainer from "./AnimatedContainer";
 import Draggable from "./Draggable";
+import Tooltip from "./Tooltip";
 
 export {
   ConstrainedBox,
@@ -96,4 +97,5 @@ export {
   AnimatedSlide,
   AnimatedContainer,
   Draggable,
+  Tooltip,
 };
