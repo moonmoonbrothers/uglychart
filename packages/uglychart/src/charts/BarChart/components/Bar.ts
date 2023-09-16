@@ -1,9 +1,4 @@
-import {
-  ComponentWidget,
-  Container,
-  Widget,
-} from "@moonmoonbrothers/flutterjs";
-import { BuildContext } from "@moonmoonbrothers/flutterjs/src/widget/ComponentWidget";
+import { BuildContext, Widget } from "@moonmoonbrothers/flutterjs";
 import { Bar as DefaultBar } from "./default";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 import type { Custom } from "../types";

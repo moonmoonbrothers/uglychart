@@ -4,16 +4,18 @@ import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectW
 import type Widget from "../../widget/Widget";
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
-  onClick?: () => void;
-  onMouseUp?: (e: MouseEvent) => void;
-  onMouseMove?: (e: MouseEvent) => void;
-  onMouseDown?: (e: MouseEvent) => void;
+  onClick: () => void;
+  onMouseUp: (e: MouseEvent) => void;
+  onMouseMove: (e: MouseEvent) => void;
+  onMouseDown: (e: MouseEvent) => void;
+  onMouseOver: (e: MouseEvent) => void;
   constructor({
     child,
     onClick,
     onMouseDown,
     onMouseMove,
     onMouseUp,
+    onMouseOver,
     key,
   }: {
     child?: Widget;
@@ -21,13 +23,15 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onMouseUp?: (e: MouseEvent) => void;
     onMouseMove?: (e: MouseEvent) => void;
     onMouseDown?: (e: MouseEvent) => void;
+    onMouseOver?: (e: MouseEvent) => void;
     key?: any;
   }) {
     super({ child, key });
-    this.onClick = onClick;
-    this.onMouseDown = onMouseDown;
-    this.onMouseMove = onMouseMove;
-    this.onMouseUp = onMouseUp;
+    this.onClick = onClick ?? emptyCallback;
+    this.onMouseDown = onMouseDown ?? emptyCallback;
+    this.onMouseMove = onMouseMove ?? emptyCallback;
+    this.onMouseUp = onMouseUp ?? emptyCallback;
+    this.onMouseOver = onMouseOver ?? emptyCallback;
   }
 
   override createRenderObject(): RenderGestureDetector {
@@ -36,11 +40,13 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
       onMouseDown: this.onMouseDown,
       onMouseMove: this.onMouseMove,
       onMouseUp: this.onMouseUp,
+      onMouseOver: this.onMouseOver,
     });
   }
 
   updateRenderObject(renderObject: RenderGestureDetector): void {
     renderObject.onClick = this.onClick;
+    renderObject.onMouseOver = this.onMouseOver;
   }
 }
 
@@ -52,7 +58,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
   set onClick(prop: (() => void) | undefined) {
     if (this.onClick === prop) return;
-    this._onClick = prop ?? function () {};
     this.markNeedsPaint();
   }
   private _onMouseDown: (e: MouseEvent) => void;
@@ -61,7 +66,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
   set onMouseDown(prop: ((e: MouseEvent) => void) | undefined) {
     if (this._onMouseDown === prop) return;
-    this._onMouseDown = prop ?? function () {};
     this.markNeedsPaint();
   }
   private _onMouseMove: (e: MouseEvent) => void;
@@ -70,7 +74,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
   set onMouseMove(prop: ((e: MouseEvent) => void) | undefined) {
     if (this._onMouseMove === prop) return;
-    this._onMouseMove = prop ?? function () {};
     this.markNeedsPaint();
   }
   private _onMouseUp: (e: MouseEvent) => void;
@@ -79,25 +82,35 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
   set onMouseUp(prop: ((e: MouseEvent) => void) | undefined) {
     if (this._onMouseUp === prop) return;
-    this._onMouseUp = prop ?? function () {};
+    this.markNeedsPaint();
+  }
+  private _onMouseOver: (e: MouseEvent) => void;
+  get onMouseOver(): (e: MouseEvent) => void {
+    return this._onMouseOver;
+  }
+  set onMouseOver(prop: ((e: MouseEvent) => void) | undefined) {
+    if (this._onMouseUp === prop) return;
     this.markNeedsPaint();
   }
   constructor({
-    onClick = () => {},
-    onMouseDown = () => {},
-    onMouseUp = () => {},
-    onMouseMove = () => {},
+    onClick,
+    onMouseDown,
+    onMouseUp,
+    onMouseMove,
+    onMouseOver,
   }: {
-    onClick?: () => void;
-    onMouseUp?: (e: MouseEvent) => void;
-    onMouseMove?: (e: MouseEvent) => void;
-    onMouseDown?: (e: MouseEvent) => void;
+    onClick: () => void;
+    onMouseUp: (e: MouseEvent) => void;
+    onMouseMove: (e: MouseEvent) => void;
+    onMouseDown: (e: MouseEvent) => void;
+    onMouseOver: (e: MouseEvent) => void;
   }) {
     super({ isPainter: true });
     this._onClick = onClick;
     this._onMouseDown = onMouseDown;
     this._onMouseMove = onMouseMove;
     this._onMouseUp = onMouseUp;
+    this._onMouseOver = onMouseOver;
   }
 
   protected performPaint(
@@ -114,6 +127,9 @@ class RenderGestureDetector extends SingleChildRenderObject {
       rect.addEventListener("mousemove", (e: MouseEvent) =>
         this.onMouseMove(e)
       );
+      rect.addEventListener("mouseover", (e: MouseEvent) =>
+        this.onMouseOver(e)
+      );
     }
     rect.setAttribute("width", `${this.size.width}`);
     rect.setAttribute("height", `${this.size.height}`);
@@ -129,5 +145,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     };
   }
 }
+
+function emptyCallback() {}
 
 export default BaseGestureDetector;
