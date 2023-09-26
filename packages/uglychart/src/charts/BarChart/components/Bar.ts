@@ -1,7 +1,12 @@
-import { BuildContext, Widget } from "@moonmoonbrothers/flutterjs";
+import {
+  BuildContext,
+  EdgeInsets,
+  ToolTipPosition,
+  Widget,
+} from "@moonmoonbrothers/flutterjs";
 import { Bar as DefaultBar } from "./default";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
-import type { Custom } from "../types";
+import type { Custom, Dependencies } from "../types";
 
 export type BarProps = {
   backgroundColor: string;
@@ -20,7 +25,7 @@ const defaultBarConfig = {
   thickness: 16,
 };
 
-export class Bar extends CartesianChartContextWidget<Custom> {
+export class Bar extends CartesianChartContextWidget<Custom, Dependencies> {
   constructor(private props: BarProps) {
     super();
   }
@@ -29,6 +34,7 @@ export class Bar extends CartesianChartContextWidget<Custom> {
     const theme = this.getTheme(context);
     const data = this.getData(context);
     const { bar } = this.getCustom(context);
+    const { Tooltip } = this.getDependencies(context);
 
     const { backgroundColor, index, label, legend, direction } = this.props;
 
@@ -48,11 +54,22 @@ export class Bar extends CartesianChartContextWidget<Custom> {
     }
 
     const { thickness = defaultBarConfig.thickness } = bar;
+    const { value } = this.props;
 
-    return DefaultBar({
-      color: backgroundColor,
-      direction,
-      thickness,
+    return Tooltip({
+      label,
+      value,
+      legend: {
+        name: legend,
+        color: "red",
+      },
+      margin: EdgeInsets.all(0),
+      position: ToolTipPosition.bottomCenter,
+      child: DefaultBar({
+        color: backgroundColor,
+        direction,
+        thickness,
+      }),
     });
   }
 }
