@@ -28,6 +28,7 @@ import Calculatable from "./_types/Caculatable";
 import Color from "./_types/Color";
 import Data from "./_types/Data";
 export * from "./_types/Borders";
+export { ToolTipPosition } from "./_types/ToolTipPosition";
 
 export {
   Calculatable,

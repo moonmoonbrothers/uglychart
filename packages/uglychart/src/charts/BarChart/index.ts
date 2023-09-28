@@ -6,7 +6,16 @@ import {
   getScale,
   getValueEdge,
 } from "../../common/CartesianChart/util";
-import { Series, XAxis, YAxis, Plot, Chart, BarGroup, Bar } from "./components";
+import {
+  Tooltip,
+  Series,
+  XAxis,
+  YAxis,
+  Plot,
+  Chart,
+  BarGroup,
+  Bar,
+} from "./components";
 
 export class BarChart extends CartesianChartContextRootWidget<
   Custom,
@@ -23,6 +32,7 @@ export class BarChart extends CartesianChartContextRootWidget<
       Chart,
       BarGroup,
       Bar,
+      Tooltip,
     };
   }
 
@@ -33,6 +43,7 @@ export class BarChart extends CartesianChartContextRootWidget<
       ...base,
       bar: custom.bar ?? { type: "config" },
       barGroup: custom.barGroup ?? { type: "config" },
+      tooltip: custom.tooltip ?? { type: "config" },
     };
   }
 

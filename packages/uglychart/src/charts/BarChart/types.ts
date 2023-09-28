@@ -7,6 +7,7 @@ import {
 } from "../../common/CartesianChart/types";
 import { Dependencies as CartesianDependencies } from "../../common/CartesianChart/types";
 import Bar, { BarConfig, BarProps } from "./components/Bar";
+import Tooltip, { TooltipProps, TooltipConfig } from "./components/Tooltip";
 import BarGroup, { BarGroupProps, BarGroupConfig } from "./components/BarGroup";
 import { ChartConfig } from "./components/Chart";
 import { SeriesConfig } from "./components/Series";
@@ -21,6 +22,7 @@ export type Custom = Omit<CartesianChartCustom, "chart"> & {
   barGroup: CustomBarGroup;
   series: CustomSeries;
   chart: CustomChart;
+  tooltip: CustomTooltip;
 };
 
 type CustomChart =
@@ -70,6 +72,7 @@ type CustomBarGroup =
         direction: "horizontal" | "vertical";
       }
     >;
+type CustomTooltip = CustomConfig<TooltipConfig> | CustomWidget<{}, {}>;
 
 export type Theme = CartesianChartTheme;
 export type Data = CartesianChartData;
@@ -79,4 +82,5 @@ export type Dependencies = Omit<CartesianDependencies, "Plot"> & {
     ...props: Parameters<typeof BarGroup>
   ) => ReturnType<typeof BarGroup>;
   Bar: (...props: Parameters<typeof Bar>) => ReturnType<typeof Bar>;
+  Tooltip: (...props: Parameters<typeof Tooltip>) => ReturnType<typeof Tooltip>;
 };

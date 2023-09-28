@@ -1,7 +1,6 @@
 import {
   Alignment,
   Axis,
-  ClipRect,
   CrossAxisAlignment,
   EdgeInsets,
   Element,
@@ -10,24 +9,20 @@ import {
   FractionallySizedBox,
   MainAxisSize,
   Matrix4,
-  Opacity,
   Padding,
-  Rect,
-  SizedBox,
   Stack,
   State,
   StatefulWidget,
   Transform,
-  VerticalDirection,
   Widget,
   Animation,
   AnimationController,
   Tween,
   CurvedAnimation,
   Curves,
+  Opacity,
 } from "@moonmoonbrothers/flutterjs";
-import { Utils, functionalizeClass } from "../../../../utils";
-import { IgnoreChildSize } from "../../../../common/components";
+import { functionalizeClass } from "../../../../utils";
 
 class BarGroup extends StatefulWidget {
   negativeAreaRatio: number;
@@ -35,8 +30,7 @@ class BarGroup extends StatefulWidget {
   direction: "vertical" | "horizontal";
   negativeBarRatios: number[];
   positiveBarRatios: number[];
-  Bars: Widget[];
-  DataLabels: Widget[];
+  children: Widget[];
   gap: number;
   constructor({
     negativeAreaRatio,
@@ -44,8 +38,7 @@ class BarGroup extends StatefulWidget {
     direction,
     negativeBarRatios,
     positiveBarRatios,
-    Bars,
-    DataLabels,
+    children,
     gap,
   }: BarGroupProps) {
     super();
@@ -54,8 +47,7 @@ class BarGroup extends StatefulWidget {
     this.direction = direction;
     this.negativeBarRatios = negativeBarRatios;
     this.positiveBarRatios = positiveBarRatios;
-    this.Bars = Bars;
-    this.DataLabels = DataLabels;
+    this.children = children;
     this.gap = gap;
   }
 
@@ -87,84 +79,26 @@ class BarGroupState extends State<BarGroup> {
       negativeAreaRatio,
       negativeBarRatios,
       positiveBarRatios,
-      Bars: _Bars,
-      DataLabels: _DataLabels,
       direction,
+      children,
       gap,
     } = this.widget;
-    const isAllNegative = positiveBarRatios.reduce(Utils.sum, 0) === 0;
-    const isAllPositive = negativeBarRatios.reduce(Utils.sum, 0) === 0;
 
     const Bars = ({ type }: { type: "negative" | "positive" }) =>
-      _Bars.map((bar, index) => {
+      children.map((child, index) => {
         const ratio =
           type === "negative"
             ? negativeBarRatios[index]
             : positiveBarRatios[index];
+        const animatedRatio = ratio * this.tweenAnimation.value;
 
         return FractionallySizedBox({
-          widthFactor: direction === "horizontal" ? ratio : undefined,
-          heightFactor: direction === "vertical" ? ratio : undefined,
-          child: bar,
-        });
-      });
-
-    const DataLabels = ({ type }: { type: "negative" | "positive" }) =>
-      _Bars.map((bar, index) => {
-        const invisible =
-          (type === "negative" && isAllPositive) ||
-          (type === "positive" && isAllNegative) ||
-          (type === "negative" && negativeBarRatios[index] === 0) ||
-          (type === "positive" &&
-            positiveBarRatios[index] === 0 &&
-            negativeBarRatios[index] !== 0);
-
-        const ratio =
-          type === "negative"
-            ? negativeBarRatios[index]
-            : positiveBarRatios[index];
-
-        return Flex({
-          direction:
-            direction === "horizontal" ? Axis.horizontal : Axis.vertical,
-          verticalDirection:
-            direction === "vertical"
-              ? VerticalDirection.up
-              : VerticalDirection.down,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Opacity({
-              opacity: 0,
-              child: FractionallySizedBox({
-                widthFactor: direction === "horizontal" ? ratio : undefined,
-                heightFactor: direction === "vertical" ? ratio : undefined,
-                child: bar,
-              }),
-            }),
-            invisible
-              ? SizedBox.shrink()
-              : Transform({
-                  alignment: Alignment.center,
-                  transform: Matrix4.diagonal3Values(
-                    direction === "horizontal" && type === "negative" ? -1 : 1,
-                    direction === "vertical" && type === "negative" ? -1 : 1,
-                    1
-                  ),
-                  child: IgnoreChildSize({
-                    ignoreWidth: true,
-                    ignoreHeight: true,
-                    alignment:
-                      direction === "horizontal" && type === "positive"
-                        ? Alignment.centerLeft
-                        : direction === "horizontal" && type === "negative"
-                        ? Alignment.centerRight
-                        : direction === "vertical" && type === "positive"
-                        ? Alignment.bottomCenter
-                        : Alignment.topCenter,
-                    child: _DataLabels[index],
-                  }),
-                }),
-          ],
+          widthFactor: direction === "horizontal" ? animatedRatio : undefined,
+          heightFactor: direction === "vertical" ? animatedRatio : undefined,
+          child: Opacity({
+            opacity: ratio !== 0 ? 1 : 0,
+            child,
+          }),
         });
       });
 
@@ -205,38 +139,16 @@ class BarGroupState extends State<BarGroup> {
               direction === "vertical" && area === "negative" ? -1 : 1,
               1
             ),
-            child: ClipRect({
-              clipped: true,
-              clipper: ({ width, height }) => {
-                const margin = 20;
-                return Rect.fromLTRB({
-                  left: 0,
-                  top:
-                    direction === "vertical"
-                      ? (height + margin) * (1 - this.tweenAnimation.value) -
-                        margin
-                      : -margin,
-                  right:
-                    direction === "horizontal"
-                      ? (width + margin) * this.tweenAnimation.value
-                      : width + margin,
-                  bottom: height,
-                });
-              },
-              child: Stack({
-                alignment:
-                  direction === "vertical"
-                    ? Alignment.bottomCenter
-                    : Alignment.centerLeft,
-                children: [
-                  Grouping({
-                    children: Bars({ type: area }),
-                  }),
-                  Grouping({
-                    children: DataLabels({ type: area }),
-                  }),
-                ],
-              }),
+            child: Stack({
+              alignment:
+                direction === "vertical"
+                  ? Alignment.bottomCenter
+                  : Alignment.centerLeft,
+              children: [
+                Grouping({
+                  children: Bars({ type: area }),
+                }),
+              ],
             }),
           }),
         })
@@ -252,7 +164,6 @@ type BarGroupProps = {
   direction: "vertical" | "horizontal";
   negativeBarRatios: number[];
   positiveBarRatios: number[];
-  Bars: Widget[];
-  DataLabels: Widget[];
+  children: Widget[];
   gap: number;
 };

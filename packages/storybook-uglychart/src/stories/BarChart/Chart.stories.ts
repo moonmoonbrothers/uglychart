@@ -347,53 +347,6 @@ export const Vertical: Story = {
 	}
 };
 
-export const WithPlotSize: Story = {
-	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
-		height: '480px',
-		widget: BarChart({
-			data: {
-				title: 'Title',
-				labels: ['label1_123_', 'label2', 'label3', 'label4', 'label5'],
-				datasets: [
-					{
-						legend: 'A',
-						data: [30, 40.5, 50.12, 30.5, 40]
-					},
-					{
-						legend: 'B',
-						data: [60, 20.5, 20.2, 22.5, 10]
-					},
-					{
-						legend: 'C',
-						data: [6, 10.5, 20.2, 12.5, 1]
-					}
-				]
-			},
-			custom: {
-				bar: {
-					type: 'config',
-					thickness: 15
-				},
-				layout: {
-					type: 'config',
-					padding: EdgeInsets.symmetric({ horizontal: 30, vertical: 30 })
-				},
-				plot: {
-					type: 'config',
-					height: 300,
-					width: 400
-				}
-			}
-		}),
-		code: dedent`
-		import { TextStyle, Text, Container, EdgeInsets } from '@moonmoonbrothers/flutterjs';
-		import { BarChart } from '@moonmoonbrothers/uglychart';
-	`
-	}
-};
-
 export const CustomBar: Story = {
 	args: Examples.CustomBar
 };

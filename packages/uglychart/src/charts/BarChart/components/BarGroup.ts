@@ -75,16 +75,7 @@ class BarGroup extends CartesianChartContextWidget<
       positiveAreaRatio: barGroupRatio.positive,
       positiveBarRatios,
       negativeBarRatios,
-      DataLabels: values.map(({ data, legend }, index) =>
-        DataLabel({
-          index,
-          legend,
-          value: data,
-          label,
-        })
-      ),
-
-      Bars: values.map(({ data, legend, color }, index) =>
+      children: values.map(({ data, legend, color }, index) =>
         Bar({
           value: data,
           direction,

@@ -1,6 +1,7 @@
 import Bar from "./Bar";
 import BarGroup from "./BarGroup";
 import Series from "./Series";
+import Tooltip from "./Tooltip";
 
 import {
   Title,
@@ -31,4 +32,5 @@ export {
   Layout,
   Chart,
   DataLabel,
+  Tooltip,
 };
