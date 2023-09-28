@@ -61,10 +61,10 @@ export class Bar extends CartesianChartContextWidget<Custom, Dependencies> {
       value,
       legend: {
         name: legend,
-        color: "red",
+        color: backgroundColor,
       },
-      margin: EdgeInsets.all(0),
-      position: ToolTipPosition.bottomCenter,
+      margin: EdgeInsets.symmetric({ horizontal: 5 }),
+      position: ToolTipPosition.topRight,
       child: DefaultBar({
         color: backgroundColor,
         direction,

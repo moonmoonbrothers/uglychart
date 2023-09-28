@@ -36,6 +36,7 @@ export class Tooltip extends CartesianChartContextWidget<Custom> {
     }
     return DefaultTooltip({
       ...this.props,
+      fontFamily: theme.text.fontFamily,
     });
   }
 }
