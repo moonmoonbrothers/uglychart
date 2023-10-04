@@ -25,6 +25,7 @@ import {
   FractionalTranslation,
   Offset,
   Container,
+  Positioned,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../../../../utils";
 import { BarProps } from "../Bar";
@@ -130,13 +131,29 @@ class BarGroupState extends State<BarGroup> {
             translation: new Offset({ x: 0, y: (1 / 2) * (data < 0 ? 1 : -1) }),
             child: FractionallySizedBox({
               heightFactor: ratio,
-              child: Bar({
-                backgroundColor: color,
-                direction,
-                index,
-                label,
-                value: data,
-                legend,
+              child: Transform({
+                child: Stack({
+                  alignment: Alignment.center,
+                  children: [
+                    Bar({
+                      backgroundColor: color,
+                      direction,
+                      index,
+                      label,
+                      value: data,
+                      legend,
+                    }),
+                    Positioned({
+                      top: 0,
+                      child: DataLabel({
+                        index,
+                        label,
+                        legend,
+                        value: data,
+                      }),
+                    }),
+                  ],
+                }),
               }),
             }),
           }),
