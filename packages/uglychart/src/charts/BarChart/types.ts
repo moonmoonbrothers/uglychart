@@ -16,6 +16,7 @@ import Plot from "./components/Plot";
 import { PlotProps } from "../../common/CartesianChart/component/Plot";
 import { XAxisProps } from "../../common/CartesianChart/component/XAxis";
 import { YAxisProps } from "./components/YAxis";
+import { DataLabelProps } from "../../common/CartesianChart/component/DataLabel";
 
 export type Custom = Omit<CartesianChartCustom, "chart"> & {
   bar: CustomBar;
@@ -66,6 +67,8 @@ type CustomBarGroup =
   | CustomWidget<
       {
         Bar: (props: BarProps) => Widget;
+        DataLabel: (props: DataLabelProps) => Widget;
+        Tooltip: (props: TooltipProps) => Widget;
       },
       {
         scale: Scale;

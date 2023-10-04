@@ -29,62 +29,36 @@ class BarGroup extends CartesianChartContextWidget<
     const data = this.getData(context);
     const { barGroup } = this.getCustom(context);
     const { scale, direction, label } = this.props;
-    const { DataLabel, Bar } = this.getDependencies(context);
+    const { DataLabel, Bar, Tooltip } = this.getDependencies(context);
 
     if (barGroup.type === "custom") {
-      return barGroup.Custom({ Bar }, { theme, data, scale, direction });
+      return barGroup.Custom(
+        { Bar, DataLabel, Tooltip },
+        { theme, data, scale, direction }
+      );
     }
 
     const { gap = 2 } = barGroup;
     const datasets = this.getDatasets(context);
 
-    const barGroupRatio = {
-      negative: scale.min > 0 ? 0 : (0 - scale.min) / (scale.max - scale.min),
-      positive: scale.max < 0 ? 0 : (scale.max - 0) / (scale.max - scale.min),
-    };
-
     const values = datasets
       .filter(({ visible }) => visible)
       .map(({ data, legend, color }) => ({
-        data: data[this.props.index],
+        data: data[this.props.index] as number,
         legend,
         color,
       }));
 
-    const negativeBarRatios = values.map(({ data }) => {
-      if (data > 0 || scale.min > 0) return 0;
-
-      const max = -1 * scale.min;
-      const min = Math.max(-1 * scale.max, 0);
-
-      return (-1 * data - min) / (max - min);
-    });
-    const positiveBarRatios = values.map(({ data }) => {
-      if (data < 0 || scale.max < 0) return 0;
-
-      const max = scale.max;
-      const min = Math.max(scale.min, 0);
-
-      return (data - min) / (max - min);
-    });
-
     return DefaultBarGroup({
       direction,
       gap,
-      negativeAreaRatio: barGroupRatio.negative,
-      positiveAreaRatio: barGroupRatio.positive,
-      positiveBarRatios,
-      negativeBarRatios,
-      children: values.map(({ data, legend, color }, index) =>
-        Bar({
-          value: data,
-          direction,
-          backgroundColor: color,
-          index,
-          label,
-          legend,
-        })
-      ),
+      values,
+      minValue: scale.min,
+      maxValue: scale.max,
+      Bar,
+      Tooltip,
+      DataLabel,
+      label,
     });
   }
 }

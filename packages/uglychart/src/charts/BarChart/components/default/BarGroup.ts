@@ -21,34 +21,50 @@ import {
   CurvedAnimation,
   Curves,
   Opacity,
+  SizedBox,
+  FractionalTranslation,
+  Offset,
+  Container,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../../../../utils";
+import { BarProps } from "../Bar";
+import { TooltipProps } from "../Tooltip";
+import { DataLabelProps } from "../../../../common/CartesianChart/component/DataLabel";
 
 class BarGroup extends StatefulWidget {
-  negativeAreaRatio: number;
-  positiveAreaRatio: number;
   direction: "vertical" | "horizontal";
-  negativeBarRatios: number[];
-  positiveBarRatios: number[];
-  children: Widget[];
   gap: number;
+  values: {
+    data: number;
+    legend: string;
+    color: string;
+  }[];
+  minValue: number;
+  maxValue: number;
+  Bar: (props: BarProps) => Widget;
+  Tooltip: (props: TooltipProps) => Widget;
+  DataLabel: (props: DataLabelProps) => Widget;
+  label: string;
   constructor({
-    negativeAreaRatio,
-    positiveAreaRatio,
     direction,
-    negativeBarRatios,
-    positiveBarRatios,
-    children,
+    values,
+    minValue,
+    maxValue,
+    Bar,
+    Tooltip,
+    DataLabel,
     gap,
+    label,
   }: BarGroupProps) {
     super();
-    this.negativeAreaRatio = negativeAreaRatio;
-    this.positiveAreaRatio = positiveAreaRatio;
     this.direction = direction;
-    this.negativeBarRatios = negativeBarRatios;
-    this.positiveBarRatios = positiveBarRatios;
-    this.children = children;
     this.gap = gap;
+    this.values = values;
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+    this.Bar = Bar;
+    this.Tooltip = Tooltip;
+    this.DataLabel = DataLabel;
   }
 
   createState(): State<StatefulWidget> {
@@ -75,45 +91,61 @@ class BarGroupState extends State<BarGroup> {
   }
   build(context: Element): Widget {
     const {
-      positiveAreaRatio,
-      negativeAreaRatio,
-      negativeBarRatios,
-      positiveBarRatios,
       direction,
-      children,
+      minValue,
+      maxValue,
+      values,
+      Bar,
+      Tooltip,
+      DataLabel,
       gap,
+      label,
     } = this.widget;
 
-    const Bars = ({ type }: { type: "negative" | "positive" }) =>
-      children.map((child, index) => {
-        const ratio =
-          type === "negative"
-            ? negativeBarRatios[index]
-            : positiveBarRatios[index];
-        const animatedRatio = ratio * this.tweenAnimation.value;
+    // const Bars = ({ type }: { type: "negative" | "positive" }) =>
+    //   children.map((child, index) => {
+    //     const ratio =
+    //       type === "negative"
+    //         ? negativeBarRatios[index]
+    //         : positiveBarRatios[index];
+    //     const animatedRatio = ratio * this.tweenAnimation.value;
 
-        return FractionallySizedBox({
-          widthFactor: direction === "horizontal" ? animatedRatio : undefined,
-          heightFactor: direction === "vertical" ? animatedRatio : undefined,
-          child: Opacity({
-            opacity: ratio !== 0 ? 1 : 0,
-            child,
+    //     return FractionallySizedBox({
+    //       widthFactor: direction === "horizontal" ? animatedRatio : undefined,
+    //       heightFactor: direction === "vertical" ? animatedRatio : undefined,
+    //       child: Opacity({
+    //         opacity: ratio !== 0 ? 1 : 0,
+    //         child,
+    //       }),
+    //     });
+    //   });
+    const total = maxValue - minValue;
+
+    const Bars = () =>
+      values.map(({ color, data, legend }, index) => {
+        const ratio = Math.abs(data / total);
+
+        return Container({
+          child: FractionalTranslation({
+            translation: new Offset({ x: 0, y: (1 / 2) * (data < 0 ? 1 : -1) }),
+            child: FractionallySizedBox({
+              heightFactor: ratio,
+              child: Bar({
+                backgroundColor: color,
+                direction,
+                index,
+                label,
+                value: data,
+                legend,
+              }),
+            }),
           }),
         });
       });
 
-    const areas: ("negative" | "positive")[] =
-      direction === "vertical"
-        ? ["positive", "negative"]
-        : ["negative", "positive"];
-
     const Grouping = ({ children }: { children: Widget[] }) =>
       Flex({
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment:
-          direction === "horizontal"
-            ? CrossAxisAlignment.start
-            : CrossAxisAlignment.end,
         direction: direction === "vertical" ? Axis.horizontal : Axis.vertical,
         children: children.map((child) =>
           Padding({
@@ -127,43 +159,28 @@ class BarGroupState extends State<BarGroup> {
         ),
       });
 
-    return Flex({
-      direction: direction === "vertical" ? Axis.vertical : Axis.horizontal,
-      children: areas.map((area) =>
-        Expanded({
-          flex: area === "negative" ? negativeAreaRatio : positiveAreaRatio,
-          child: Transform({
-            alignment: Alignment.center,
-            transform: Matrix4.diagonal3Values(
-              direction === "horizontal" && area === "negative" ? -1 : 1,
-              direction === "vertical" && area === "negative" ? -1 : 1,
-              1
-            ),
-            child: Stack({
-              alignment:
-                direction === "vertical"
-                  ? Alignment.bottomCenter
-                  : Alignment.centerLeft,
-              children: [
-                Grouping({
-                  children: Bars({ type: area }),
-                }),
-              ],
-            }),
-          }),
-        })
-      ),
+    return Container({
+      height: Infinity,
+      child: Grouping({
+        children: Bars(),
+      }),
     });
   }
 }
 export default functionalizeClass(BarGroup);
 
 type BarGroupProps = {
-  negativeAreaRatio: number;
-  positiveAreaRatio: number;
   direction: "vertical" | "horizontal";
-  negativeBarRatios: number[];
-  positiveBarRatios: number[];
-  children: Widget[];
   gap: number;
+  values: {
+    data: number;
+    legend: string;
+    color: string;
+  }[];
+  minValue: number;
+  maxValue: number;
+  Bar: (props: BarProps) => Widget;
+  Tooltip: (props: TooltipProps) => Widget;
+  DataLabel: (props: DataLabelProps) => Widget;
+  label: string;
 };
