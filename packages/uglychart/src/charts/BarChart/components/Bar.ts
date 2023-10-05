@@ -54,22 +54,11 @@ export class Bar extends CartesianChartContextWidget<Custom, Dependencies> {
     }
 
     const { thickness = defaultBarConfig.thickness } = bar;
-    const { value } = this.props;
 
-    return Tooltip({
-      label,
-      value,
-      legend: {
-        name: legend,
-        color: backgroundColor,
-      },
-      margin: EdgeInsets.symmetric({ horizontal: 5 }),
-      position: ToolTipPosition.topRight,
-      child: DefaultBar({
-        color: backgroundColor,
-        direction,
-        thickness,
-      }),
+    return DefaultBar({
+      color: backgroundColor,
+      direction,
+      thickness,
     });
   }
 }

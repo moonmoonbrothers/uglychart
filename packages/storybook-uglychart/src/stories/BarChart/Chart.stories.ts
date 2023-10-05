@@ -21,8 +21,8 @@ const meta = {
 	title: 'Widget/BarChart/Cases',
 	component: Widget,
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
+		ssrSize: { width: 600, height: 480 },
+		width: '600px',
 		height: '480px'
 	}
 } satisfies Meta<Widget>;
@@ -32,9 +32,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
-		height: '480px',
 		widget: BarChart({
 			data: {
 				title: 'Title',
@@ -83,9 +80,6 @@ export const Basic: Story = {
 
 export const HorizontalWithMinusValue: Story = {
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
-		height: '480px',
 		widget: BarChart({
 			data: {
 				title: 'Title',
@@ -152,9 +146,6 @@ export const HorizontalWithMinusValue: Story = {
 
 export const VerticalWithMinusValues: Story = {
 	args: {
-		ssrSize: { width: 800, height: 480 },
-		width: '800px',
-		height: '480px',
 		widget: BarChart({
 			data: {
 				title: 'Title',

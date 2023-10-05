@@ -1,17 +1,10 @@
-import {
-  BuildContext,
-  EdgeInsets,
-  ToolTipPosition,
-  Widget,
-} from "@moonmoonbrothers/flutterjs";
+import { BuildContext, EdgeInsets, Widget } from "@moonmoonbrothers/flutterjs";
 import { Tooltip as DefaultTooltip } from "./default";
 import CartesianChartContextWidget from "../../../common/CartesianChart/CartesianChartContextWidget";
 import type { Custom } from "../types";
 import { functionalizeClass } from "@moonmoonbrothers/flutterjs/src/utils";
 
 export type TooltipProps = {
-  child: Widget;
-  position: ToolTipPosition;
   value: number;
   label: string;
   legend: {
@@ -21,7 +14,9 @@ export type TooltipProps = {
   margin: EdgeInsets;
 };
 
-export type TooltipConfig = {};
+export type TooltipConfig = {
+  margin?: EdgeInsets;
+};
 
 export class Tooltip extends CartesianChartContextWidget<Custom> {
   constructor(protected props: TooltipProps) {
@@ -34,8 +29,10 @@ export class Tooltip extends CartesianChartContextWidget<Custom> {
     if (tooltip.type === "custom") {
       return tooltip.Custom({}, { data, theme });
     }
+    const { margin = EdgeInsets.all(0) } = tooltip;
     return DefaultTooltip({
       ...this.props,
+      margin: this.props.margin.plus(margin),
       fontFamily: theme.text.fontFamily,
     });
   }

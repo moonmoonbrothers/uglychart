@@ -21,34 +21,55 @@ import {
   CurvedAnimation,
   Curves,
   Opacity,
+  SizedBox,
+  FractionalTranslation,
+  Offset,
+  Container,
+  Positioned,
+  Color,
+  ToolTipPosition,
+  Tooltip,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../../../../utils";
+import { BarProps } from "../Bar";
+import { TooltipProps } from "../Tooltip";
+import { DataLabelProps } from "../../../../common/CartesianChart/component/DataLabel";
 
 class BarGroup extends StatefulWidget {
-  negativeAreaRatio: number;
-  positiveAreaRatio: number;
   direction: "vertical" | "horizontal";
-  negativeBarRatios: number[];
-  positiveBarRatios: number[];
-  children: Widget[];
   gap: number;
+  values: {
+    data: number;
+    legend: string;
+    color: string;
+  }[];
+  minValue: number;
+  maxValue: number;
+  Bar: (props: BarProps) => Widget;
+  Tooltip: (props: TooltipProps) => Widget;
+  DataLabel: (props: DataLabelProps) => Widget;
+  label: string;
   constructor({
-    negativeAreaRatio,
-    positiveAreaRatio,
     direction,
-    negativeBarRatios,
-    positiveBarRatios,
-    children,
+    values,
+    minValue,
+    maxValue,
+    Bar,
+    Tooltip,
+    DataLabel,
     gap,
+    label,
   }: BarGroupProps) {
     super();
-    this.negativeAreaRatio = negativeAreaRatio;
-    this.positiveAreaRatio = positiveAreaRatio;
     this.direction = direction;
-    this.negativeBarRatios = negativeBarRatios;
-    this.positiveBarRatios = positiveBarRatios;
-    this.children = children;
     this.gap = gap;
+    this.values = values;
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+    this.label = label;
+    this.Bar = Bar;
+    this.Tooltip = Tooltip;
+    this.DataLabel = DataLabel;
   }
 
   createState(): State<StatefulWidget> {
@@ -75,45 +96,119 @@ class BarGroupState extends State<BarGroup> {
   }
   build(context: Element): Widget {
     const {
-      positiveAreaRatio,
-      negativeAreaRatio,
-      negativeBarRatios,
-      positiveBarRatios,
       direction,
-      children,
+      minValue,
+      maxValue,
+      values,
+      Bar,
+      Tooltip: TooltipContent,
+      DataLabel,
       gap,
+      label,
     } = this.widget;
+    const total = maxValue - minValue;
 
-    const Bars = ({ type }: { type: "negative" | "positive" }) =>
-      children.map((child, index) => {
-        const ratio =
-          type === "negative"
-            ? negativeBarRatios[index]
-            : positiveBarRatios[index];
-        const animatedRatio = ratio * this.tweenAnimation.value;
+    const isHorizontal = direction === "horizontal" ? true : false;
+    const isVertical = direction === "vertical" ? true : false;
 
-        return FractionallySizedBox({
-          widthFactor: direction === "horizontal" ? animatedRatio : undefined,
-          heightFactor: direction === "vertical" ? animatedRatio : undefined,
-          child: Opacity({
-            opacity: ratio !== 0 ? 1 : 0,
+    const Bars = () =>
+      values.map(({ color, data, legend }, index) => {
+        const ratio = Math.abs(data / total);
+
+        const Reverse = ({ child }: { child: Widget }) =>
+          Transform({
+            transform: Matrix4.diagonal3Values(
+              isHorizontal && data < 0 ? -1 : 1,
+              isVertical && data < 0 ? -1 : 1,
+              1
+            ),
             child,
+          });
+
+        return Container({
+          width: isHorizontal ? Infinity : undefined,
+          height: isVertical ? Infinity : undefined,
+          child: FractionalTranslation({
+            translation: new Offset({
+              x: isHorizontal
+                ? (data < 0
+                    ? -1 * Math.max(0, maxValue)
+                    : Math.max(0, -minValue)) / total
+                : 0,
+              y: isVertical
+                ? (-1 *
+                    (data < 0
+                      ? -1 * Math.max(0, maxValue)
+                      : Math.max(0, -minValue))) /
+                  total
+                : 0,
+            }),
+            child: FractionallySizedBox({
+              alignment: data < 0 ? Alignment.topRight : Alignment.bottomLeft,
+              heightFactor: isVertical
+                ? ratio * this.tweenAnimation.value
+                : undefined,
+              widthFactor: isHorizontal
+                ? ratio * this.tweenAnimation.value
+                : undefined,
+              child: Reverse({
+                child: Stack({
+                  alignment: Alignment.center,
+                  children: [
+                    Tooltip({
+                      position: ToolTipPosition.topRight,
+                      tooltip: FractionalTranslation({
+                        translation: new Offset({ x: 0, y: 1 }),
+                        child: Reverse({
+                          child: TooltipContent({
+                            label,
+                            margin: EdgeInsets.symmetric({ horizontal: 5 }),
+                            legend: {
+                              name: legend,
+                              color,
+                            },
+                            value: data,
+                          }),
+                        }),
+                      }),
+                      child: Bar({
+                        backgroundColor: color,
+                        direction,
+                        index,
+                        label,
+                        value: data,
+                        legend,
+                      }),
+                    }),
+                    Positioned({
+                      top: isVertical ? 0 : undefined,
+                      right: isHorizontal ? 0 : undefined,
+                      child: FractionalTranslation({
+                        translation: new Offset({
+                          x: isHorizontal ? 1 : 0,
+                          y: isVertical ? -1 : 0,
+                        }),
+                        child: Reverse({
+                          child: DataLabel({
+                            index,
+                            label,
+                            legend,
+                            value: data,
+                          }),
+                        }),
+                      }),
+                    }),
+                  ],
+                }),
+              }),
+            }),
           }),
         });
       });
 
-    const areas: ("negative" | "positive")[] =
-      direction === "vertical"
-        ? ["positive", "negative"]
-        : ["negative", "positive"];
-
     const Grouping = ({ children }: { children: Widget[] }) =>
       Flex({
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment:
-          direction === "horizontal"
-            ? CrossAxisAlignment.start
-            : CrossAxisAlignment.end,
         direction: direction === "vertical" ? Axis.horizontal : Axis.vertical,
         children: children.map((child) =>
           Padding({
@@ -127,43 +222,27 @@ class BarGroupState extends State<BarGroup> {
         ),
       });
 
-    return Flex({
-      direction: direction === "vertical" ? Axis.vertical : Axis.horizontal,
-      children: areas.map((area) =>
-        Expanded({
-          flex: area === "negative" ? negativeAreaRatio : positiveAreaRatio,
-          child: Transform({
-            alignment: Alignment.center,
-            transform: Matrix4.diagonal3Values(
-              direction === "horizontal" && area === "negative" ? -1 : 1,
-              direction === "vertical" && area === "negative" ? -1 : 1,
-              1
-            ),
-            child: Stack({
-              alignment:
-                direction === "vertical"
-                  ? Alignment.bottomCenter
-                  : Alignment.centerLeft,
-              children: [
-                Grouping({
-                  children: Bars({ type: area }),
-                }),
-              ],
-            }),
-          }),
-        })
-      ),
+    return Container({
+      child: Grouping({
+        children: Bars(),
+      }),
     });
   }
 }
 export default functionalizeClass(BarGroup);
 
 type BarGroupProps = {
-  negativeAreaRatio: number;
-  positiveAreaRatio: number;
   direction: "vertical" | "horizontal";
-  negativeBarRatios: number[];
-  positiveBarRatios: number[];
-  children: Widget[];
   gap: number;
+  values: {
+    data: number;
+    legend: string;
+    color: string;
+  }[];
+  minValue: number;
+  maxValue: number;
+  Bar: (props: BarProps) => Widget;
+  Tooltip: (props: TooltipProps) => Widget;
+  DataLabel: (props: DataLabelProps) => Widget;
+  label: string;
 };
