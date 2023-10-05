@@ -26,6 +26,9 @@ import {
   Offset,
   Container,
   Positioned,
+  Color,
+  ToolTipPosition,
+  Tooltip,
 } from "@moonmoonbrothers/flutterjs";
 import { functionalizeClass } from "../../../../utils";
 import { BarProps } from "../Bar";
@@ -63,6 +66,7 @@ class BarGroup extends StatefulWidget {
     this.values = values;
     this.minValue = minValue;
     this.maxValue = maxValue;
+    this.label = label;
     this.Bar = Bar;
     this.Tooltip = Tooltip;
     this.DataLabel = DataLabel;
@@ -97,59 +101,101 @@ class BarGroupState extends State<BarGroup> {
       maxValue,
       values,
       Bar,
-      Tooltip,
+      Tooltip: TooltipContent,
       DataLabel,
       gap,
       label,
     } = this.widget;
-
-    // const Bars = ({ type }: { type: "negative" | "positive" }) =>
-    //   children.map((child, index) => {
-    //     const ratio =
-    //       type === "negative"
-    //         ? negativeBarRatios[index]
-    //         : positiveBarRatios[index];
-    //     const animatedRatio = ratio * this.tweenAnimation.value;
-
-    //     return FractionallySizedBox({
-    //       widthFactor: direction === "horizontal" ? animatedRatio : undefined,
-    //       heightFactor: direction === "vertical" ? animatedRatio : undefined,
-    //       child: Opacity({
-    //         opacity: ratio !== 0 ? 1 : 0,
-    //         child,
-    //       }),
-    //     });
-    //   });
     const total = maxValue - minValue;
+
+    const isHorizontal = direction === "horizontal" ? true : false;
+    const isVertical = direction === "vertical" ? true : false;
 
     const Bars = () =>
       values.map(({ color, data, legend }, index) => {
         const ratio = Math.abs(data / total);
 
+        const Reverse = ({ child }: { child: Widget }) =>
+          Transform({
+            transform: Matrix4.diagonal3Values(
+              isHorizontal && data < 0 ? -1 : 1,
+              isVertical && data < 0 ? -1 : 1,
+              1
+            ),
+            child,
+          });
+
         return Container({
+          width: isHorizontal ? Infinity : undefined,
+          height: isVertical ? Infinity : undefined,
           child: FractionalTranslation({
-            translation: new Offset({ x: 0, y: (1 / 2) * (data < 0 ? 1 : -1) }),
+            translation: new Offset({
+              x: isHorizontal
+                ? (data < 0
+                    ? -1 * Math.max(0, maxValue)
+                    : Math.max(0, -minValue)) / total
+                : 0,
+              y: isVertical
+                ? (-1 *
+                    (data < 0
+                      ? -1 * Math.max(0, maxValue)
+                      : Math.max(0, -minValue))) /
+                  total
+                : 0,
+            }),
             child: FractionallySizedBox({
-              heightFactor: ratio,
-              child: Transform({
+              alignment: data < 0 ? Alignment.topRight : Alignment.bottomLeft,
+              heightFactor: isVertical
+                ? ratio * this.tweenAnimation.value
+                : undefined,
+              widthFactor: isHorizontal
+                ? ratio * this.tweenAnimation.value
+                : undefined,
+              child: Reverse({
                 child: Stack({
                   alignment: Alignment.center,
                   children: [
-                    Bar({
-                      backgroundColor: color,
-                      direction,
-                      index,
-                      label,
-                      value: data,
-                      legend,
-                    }),
-                    Positioned({
-                      top: 0,
-                      child: DataLabel({
+                    Tooltip({
+                      position: ToolTipPosition.topRight,
+                      tooltip: FractionalTranslation({
+                        translation: new Offset({ x: 0, y: 1 }),
+                        child: Reverse({
+                          child: TooltipContent({
+                            label,
+                            margin: EdgeInsets.symmetric({ horizontal: 5 }),
+                            legend: {
+                              name: legend,
+                              color,
+                            },
+                            value: data,
+                          }),
+                        }),
+                      }),
+                      child: Bar({
+                        backgroundColor: color,
+                        direction,
                         index,
                         label,
-                        legend,
                         value: data,
+                        legend,
+                      }),
+                    }),
+                    Positioned({
+                      top: isVertical ? 0 : undefined,
+                      right: isHorizontal ? 0 : undefined,
+                      child: FractionalTranslation({
+                        translation: new Offset({
+                          x: isHorizontal ? 1 : 0,
+                          y: isVertical ? -1 : 0,
+                        }),
+                        child: Reverse({
+                          child: DataLabel({
+                            index,
+                            label,
+                            legend,
+                            value: data,
+                          }),
+                        }),
                       }),
                     }),
                   ],
@@ -177,7 +223,6 @@ class BarGroupState extends State<BarGroup> {
       });
 
     return Container({
-      height: Infinity,
       child: Grouping({
         children: Bars(),
       }),
