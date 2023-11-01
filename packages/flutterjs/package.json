@@ -1,7 +1,7 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "0.0.22",
-  "description": "",
+  "version": "1.0.0",
+  "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "main": "src/index.ts",
   "devDependencies": {
     "cp": "^0.2.0",
