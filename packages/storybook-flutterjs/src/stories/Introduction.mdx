@@ -9,21 +9,17 @@ import MoonGif from './assets/moon-animation.gif';
 
 # Flutterjs
 
-This is <b>FlutterJs</b> library which is motivated by <b>Flutter</b>.
-As you know, <b>Flutter</b> is Crossplatform framework that is usually used to make mobile app.
+Flutterjs is a framework that deals with SVG.
+Like React, it uses VDOM to manage state and optimize rendering,
+and because the library calculates the layout directly,
+it is much easier to visualize data than using D3.
+This provides a high level of control and flexibility for data visualization.
 
-<b>The Flutter</b> has ingenious own layout rule and I think Its rule can be useful to make chart library
+(FlutterJs is a library inspired by Flutter, a cross-platform framework commonly used for mobile app development.)
 
-This is made for my chart library <b>Uglychart</b> whose name imply that you can customize given chart any way and even customize it until it becomes ulgy.
-
-Here is <b>Uglychart</b> that I've been making.
+Here is an some example about what you can do with Flutterjs.
 
 <img src={UglychartImg} />
-
-<b>Uglychart</b> use provider that is context manager like Flutter's Provider. By using it, the Uglychart
-provide infinite contomizing.
-
-I believe <b>Uglychart</b> can become unprecedented library among all chart libraries.
 
 ## Examples
 
@@ -47,29 +43,58 @@ I do my best to make Flutterjs look like Flutter itself. See this.
  <script>
   import { Widget, Container } from '@moonmoonbrothers/flutterjs';
 
-  const svgElement = document.getElementById('mySvg');
-  const runner = new AppRunner({
-   // Size is automatically calculated by svgElement size.
-   view: svgElement,
-   /*
-    this is not required if javascript is running on only brower.
-    If server sider redering is needed, you should configure below props.
-    Third party libraries may be required for window, document, and svgElement running on server side.
-   */
-   /*
-    window: window,
-    document: document,
-    ssrSize: {width: 600, height: 300},
-   */
-  });
-  const widget = Container({
-   color: 'lightblue',
-  })
-  runner.runApp(widget);
+const svgElement = document.getElementById('mySvg');
+const runner = new AppRunner({
+// Size is automatically calculated by svgElement size.
+view: svgElement,
+/_
+this is not required if javascript is running on only brower.
+If server sider redering is needed, you should configure below props.
+Third party libraries may be required for window, document, and svgElement running on server side.
+_/
+/_
+window: window,
+document: document,
+ssrSize: {width: 600, height: 300},
+_/
+});
+const widget = Container({
+color: 'lightblue',
+})
+runner.runApp(widget);
 
  </script>
 
 <svg id="mySvg" style="width: 600px; height: 300px;" />
+`} />
+
+### React
+
+```
+ npm i @moonmoonbrothers/flutterjs @moonmoonbrothers/flutterjs-react
+```
+
+<Source
+ language='js'
+ dark
+ format={false}
+ code={dedent`
+import { Container } from '@moonmoonbrothers/flutterjs';
+import Widget from '@moonmoonbrothers/flutterjs-react';
+
+const App = () => {
+
+return(
+
+<Widget
+	width="600px"
+	height="300px"
+	widget={Container({
+		color: 'lightblue'
+	})}
+/>
+) }
+
 `} />
 
 ### Svelte
@@ -89,50 +114,15 @@ I do my best to make Flutterjs look like Flutter itself. See this.
  </script>
 
 <div style="width: 600px; height: 300px;">
-  <Widget
-    width="100%"
-    height="100%"
-    widget={Container({
-      color: 'lightblue'
-    })}
-  />
+	<Widget
+		width="600px"
+		height="300px"
+		widget={Container({
+			color: 'lightblue'
+		})}
+	/>
 </div>
 `} />
-
-### React
-
-not supported yet...
-
-### Solid
-
-```
- npm i @moonmoonbrothers/flutterjs @moonmoonbrothers/flutterjs-solid
-```
-
-<Source
- language='js'
- dark
- format={false}
- code={dedent`
-import { Container } from '@moonmoonbrothers/flutterjs';
-import Widget from '@moonmoonbrothers/flutterjs-solid';
-
-const MyComponent = () => {
-  return(
-  <div style={{ width: '600px', height: '300px' }}>
-    <Widget
-      width="100%"
-      height="100%"
-      widget={Container({
-      color: 'lightblue'
-      })}
-    />
-  </div>
-)}
-
-export default MyComponent
-`}
-/>
 
 ### See Result
 
@@ -162,25 +152,23 @@ createRenderObject(): RenderCustom {
 return new RenderFlexible({ flex: this.flex, fit: this.fit });
 }
 
-  updateRenderObject(renderObject: RenderCustom): void {}
-
+updateRenderObject(renderObject: RenderCustom): void {}
 }
 
 export class RenderFlexible extends SingleChildRenderObject {
-constructor({}: {}) {
-super({ isPainter: false });
-}
-
-  protected preformLayout(): void {
-   // you must call child's layout function and determine size of widget.
-   let size = Size.zero();
-   if (this.child != null) {
-    this.child.layout(childConstraint);
-    size = this.child.size;
-   }
-   this.size = this.constraint.constrain(size);
+  constructor({}: {}) {
+  super({ isPainter: false });
   }
 
+protected preformLayout(): void {
+// you must call child's layout function and determine size of widget.
+let size = Size.zero();
+if (this.child != null) {
+this.child.layout(childConstraint);
+size = this.child.size;
+}
+this.size = this.constraint.constrain(size);
+}
 }
 `}
 />
@@ -203,18 +191,17 @@ And you can also create your own component through ComponentWidget.
 
 class YoutComponent extends ComponentWidget {
 
-  build(context: BuildContext): Widget {
-   return Row({
-    mainAxisAlignment: "spaceEvenly"
-    children: [
-     Padding({
-      padding: margin,
-      child: Text('It is Component Widget example'),
-     }),
-    ],
-   })
-  }
-
+build(context: BuildContext): Widget {
+return Row({
+mainAxisAlignment: "spaceEvenly"
+children: [
+Padding({
+padding: margin,
+child: Text('It is Component Widget example'),
+}),
+],
+})
+}
 }
 `}
 />
