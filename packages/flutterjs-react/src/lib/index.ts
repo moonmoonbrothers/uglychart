@@ -1,1 +1,3 @@
-export { default as App } from "./App";
+import Widget from "./Widget";
+
+export default Widget;
