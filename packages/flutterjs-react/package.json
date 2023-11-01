@@ -1,13 +1,14 @@
 {
   "name": "@moonmoonbrothers/flutterjs-react",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist"
@@ -15,11 +16,7 @@
   "main": "dist/flutterjs-react.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "react": "^18.2.0"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
