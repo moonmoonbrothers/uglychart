@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "main": "src/index.ts",
   "devDependencies": {
@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build && tsc",
     "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\": {\"import\": \"./index.mjs\", \n \"require\": \"./index.umd.js\"}}' --json"
+    "package": "cp package.json package/package.json && cd package && cp index.mjs index.js && npm pkg delete main && npm pkg set types='./index.d.ts' &&  npm pkg set exports='{\".\":  \"./index.js\"}' --json"
   },
   "repository": {
     "type": "git",

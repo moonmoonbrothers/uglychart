@@ -200,6 +200,7 @@ class RenderParagraph extends RenderObject {
      */
     if (
       context.isOnBrowser &&
+      typeof navigator !== "undefined" &&
       /^(?!.*Chrome).*Safari.*/i.test(navigator.userAgent)
     ) {
       const newTextEl = context.createSvgEl("text") as SVGTextElement;
