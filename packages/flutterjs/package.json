@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "main": "src/index.ts",
   "devDependencies": {
@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build && tsc",
     "prepackage": "npm run build",
-    "package": "cp package.json package/package.json && cd package && cp index.mjs index.js && npm pkg delete main && npm pkg set types='./index.d.ts' && npm pkg set type='module' &&  npm pkg set exports='{\".\":  \"./index.js\"}' --json"
+    "package": "cp package.json package/package.json && cp README.md package/README.md && cd package && cp index.mjs index.js && npm pkg delete main && npm pkg set types='./index.d.ts' && npm pkg set type='module' &&  npm pkg set exports='{\".\":  \"./index.js\"}' --json"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,5 @@
   "bugs": {
     "url": "https://github.com/moonmoonbrothers/uglychart/issues"
   },
-  "homepage": "https://github.com/moonmoonbrothers/uglychart#readme"
+  "homepage": "https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs"
 }
