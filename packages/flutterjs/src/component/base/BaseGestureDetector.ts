@@ -1,3 +1,4 @@
+import { RenderObjectElement } from "../../element";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
@@ -71,7 +72,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
 }
 
 class RenderGestureDetector extends SingleChildRenderObject {
-  private mountedOnBroswer: boolean = false;
+  private mountedOnBrowser: boolean = false;
   private _cursor: Cursor;
   get cursor(): Cursor {
     return this._cursor;
@@ -90,56 +91,56 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._onClick = prop;
     this.markNeedsPaint();
   }
-  private _onMouseDown: MouseEvetCallback;
-  get onMouseDown(): MouseEvetCallback {
+  private _onMouseDown: MouseEventCallback;
+  get onMouseDown(): MouseEventCallback {
     return this._onMouseDown;
   }
-  set onMouseDown(prop: MouseEvetCallback) {
+  set onMouseDown(prop: MouseEventCallback) {
     if (this._onMouseDown === prop) return;
     this._onMouseDown = prop;
     this.markNeedsPaint();
   }
-  private _onMouseMove: MouseEvetCallback;
-  get onMouseMove(): MouseEvetCallback {
+  private _onMouseMove: MouseEventCallback;
+  get onMouseMove(): MouseEventCallback {
     return this._onMouseMove;
   }
-  set onMouseMove(prop: MouseEvetCallback) {
+  set onMouseMove(prop: MouseEventCallback) {
     if (this._onMouseMove === prop) return;
     this._onMouseMove = prop;
     this.markNeedsPaint();
   }
-  private _onMouseUp: MouseEvetCallback;
-  get onMouseUp(): MouseEvetCallback {
+  private _onMouseUp: MouseEventCallback;
+  get onMouseUp(): MouseEventCallback {
     return this._onMouseUp;
   }
-  set onMouseUp(prop: MouseEvetCallback) {
+  set onMouseUp(prop: MouseEventCallback) {
     if (this._onMouseUp === prop) return;
     this._onMouseUp = prop;
     this.markNeedsPaint();
   }
-  private _onMouseOver: MouseEvetCallback;
-  get onMouseOver(): MouseEvetCallback {
+  private _onMouseOver: MouseEventCallback;
+  get onMouseOver(): MouseEventCallback {
     return this._onMouseOver;
   }
-  set onMouseOver(prop: MouseEvetCallback) {
+  set onMouseOver(prop: MouseEventCallback) {
     if (this._onMouseOver === prop) return;
     this._onMouseOver = prop;
     this.markNeedsPaint();
   }
-  private _onMouseEnter: MouseEvetCallback;
-  get onMouseEnter(): MouseEvetCallback {
+  private _onMouseEnter: MouseEventCallback;
+  get onMouseEnter(): MouseEventCallback {
     return this._onMouseEnter;
   }
-  set onMouseEnter(prop: MouseEvetCallback) {
+  set onMouseEnter(prop: MouseEventCallback) {
     if (this._onMouseEnter === prop) return;
     this._onMouseEnter = prop;
     this.markNeedsPaint();
   }
-  private _onMouseLeave: MouseEvetCallback;
-  get onMouseLeave(): MouseEvetCallback {
+  private _onMouseLeave: MouseEventCallback;
+  get onMouseLeave(): MouseEventCallback {
     return this._onMouseLeave;
   }
-  set onMouseLeave(prop: MouseEvetCallback) {
+  set onMouseLeave(prop: MouseEventCallback) {
     if (this._onMouseLeave === prop) return;
     this._onMouseLeave = prop;
     this.markNeedsPaint();
@@ -155,12 +156,12 @@ class RenderGestureDetector extends SingleChildRenderObject {
     cursor,
   }: {
     onClick: () => void;
-    onMouseUp: MouseEvetCallback;
-    onMouseMove: MouseEvetCallback;
-    onMouseDown: MouseEvetCallback;
-    onMouseOver: MouseEvetCallback;
-    onMouseLeave: MouseEvetCallback;
-    onMouseEnter: MouseEvetCallback;
+    onMouseUp: MouseEventCallback;
+    onMouseMove: MouseEventCallback;
+    onMouseDown: MouseEventCallback;
+    onMouseOver: MouseEventCallback;
+    onMouseLeave: MouseEventCallback;
+    onMouseEnter: MouseEventCallback;
     cursor: Cursor;
   }) {
     super({ isPainter: true });
@@ -178,8 +179,8 @@ class RenderGestureDetector extends SingleChildRenderObject {
     { rect }: { rect: SVGRectElement },
     { isOnBrowser }: PaintContext
   ): void {
-    if (!this.mountedOnBroswer && isOnBrowser) {
-      this.mountedOnBroswer = true;
+    if (!this.mountedOnBrowser && isOnBrowser) {
+      this.mountedOnBrowser = true;
       rect.addEventListener("click", () => this.onClick());
       rect.addEventListener("mousedown", (e: MouseEvent) =>
         this.onMouseDown(e)
@@ -213,7 +214,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
   }
 }
 
-type MouseEvetCallback = (event: MouseEvent) => void;
+type MouseEventCallback = (event: MouseEvent) => void;
 function emptyCallback() {}
 
 export default BaseGestureDetector;

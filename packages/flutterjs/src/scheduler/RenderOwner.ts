@@ -26,7 +26,6 @@ class RenderOwner {
 
   drawFrame() {
     this.flushLayout();
-
     this.rearrangeDomOrder();
     this.flushPaint();
   }
@@ -46,10 +45,8 @@ class RenderOwner {
 
     for (let i = painterRenderObjects.length - 1; i >= 0; i--) {
       const renderObject = painterRenderObjects[i];
-      const { container: svgEl } = renderObject.findOrAppendSvgEl(
-        this.paintContext
-      );
-      this.paintContext.insertSvgEl(svgEl, i);
+      renderObject.domOrder = i;
+      renderObject.rearrangeDomOrder();
     }
   }
 

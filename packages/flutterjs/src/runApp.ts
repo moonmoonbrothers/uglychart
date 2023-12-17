@@ -177,16 +177,8 @@ export class RenderContext {
         ) as unknown as SVGElement;
         return el;
       },
-      setId(el, id) {
-        el.setAttribute("data-render-id", id);
-      },
       appendSvgEl(el) {
         view.appendChild(el);
-      },
-      findSvgEl(id: string) {
-        return view.querySelector(
-          `[data-render-id="${id}"]`
-        ) as SVGAElement | null;
       },
       insertSvgEl(el, index: number) {
         const child = view.children[index];
