@@ -3,16 +3,14 @@ import type { PaintContext } from "../utils/type";
 import ShortUniqueId from "short-unique-id";
 import { RenderObjectElement } from "../element";
 import { RenderOwner } from "../scheduler";
-
-const uid = new ShortUniqueId({ dictionary: "hex" });
+import { assert } from "../utils";
 
 /*
   It does more things than flutters' RenderObject 
   Actually, It is more like RenderShiftedBox
 */
 class RenderObject {
-  private readonly isPainter: boolean;
-  id = uid.randomUUID(6);
+  readonly isPainter: boolean;
   ownerElement!: RenderObjectElement;
   renderOwner!: RenderOwner;
   parent?: RenderObject;
@@ -22,6 +20,30 @@ class RenderObject {
   private matrix: Matrix4 = Matrix4.identity();
   opacity = 0;
   depth = 0;
+
+  #domNode!: SVGElement;
+  /**
+   * domOrder is used to rearrange dom order
+   * it will be set by RenderOwner before flushPaint
+   */
+  #domOrder!: number;
+  get domOrder() {
+    assert(this.#domOrder != null, "domOrder is not initialized");
+    return this.#domOrder;
+  }
+  set domOrder(newOrder: number) {
+    if (newOrder === this.#domOrder) return;
+    this.#domOrderChanged = true;
+    this.#domOrder = newOrder;
+  }
+  #domOrderChanged = false;
+  get domNode() {
+    assert(this.#domNode != null, "domNode is not initialized");
+    return this.#domNode;
+  }
+  protected set domNode(el: SVGElement) {
+    this.#domNode = el;
+  }
   constructor({ isPainter }: { isPainter: boolean }) {
     this.isPainter = isPainter;
   }
@@ -84,7 +106,7 @@ class RenderObject {
     this.opacity = opacity;
     const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
-      const { svgEls, container } = this.findOrAppendSvgEl(context);
+      const { svgEls, container } = this.resolveSvgEl();
       if (clipId) {
         container.setAttribute("clip-path", `url(#${clipId})`);
       }
@@ -106,7 +128,7 @@ class RenderObject {
     });
   }
 
-  paintChildren(
+  private paintChildren(
     context: PaintContext,
     {
       clipId,
@@ -123,96 +145,80 @@ class RenderObject {
     );
   }
 
-  getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
+  protected getChildMatrix4(parentMatrix: Matrix4): Matrix4 {
     return parentMatrix;
   }
 
-  getChildOpacity(parentOpacity: number): number {
+  protected getChildOpacity(parentOpacity: number): number {
     return parentOpacity;
   }
 
-  setSvgTransform(el: SVGElement, matrix: Matrix4) {
+  private setSvgTransform(el: SVGElement, matrix: Matrix4) {
     el.style.transform = `matrix3d(${matrix.storage.join(",")})`;
   }
 
   attach(ownerElement: RenderObjectElement) {
     this.ownerElement = ownerElement;
     this.depth = ownerElement.depth;
+    if (this.isPainter) {
+      this.mountSvgEl(this.renderOwner.paintContext);
+      this.renderOwner.didDomOrderChange();
+    }
   }
 
   dispose(context: PaintContext) {
     if (this.isPainter) {
-      context.findSvgEl(this.id)?.remove();
+      this.#domNode.remove();
+      this.renderOwner.didDomOrderChange();
     }
   }
 
-  //It is like computeIntrinsicMinWidth on Flutter
   getIntrinsicWidth(height: number) {
     return 0;
   }
 
-  //It is like computeIntrinsicMinHeight on Flutter
   getIntrinsicHeight(width: number) {
     return 0;
   }
 
-  private findOrAppendSvgEl(context: PaintContext) {
-    const { findSvgEl, appendSvgEl } = context;
-    const oldEl = findSvgEl(this.id);
-    let svgEls: { [key: string]: SVGElement } = {};
-    let container: SVGElement;
-    if (oldEl) {
-      container = oldEl;
-      if (oldEl.nodeName === "g") {
-        for (let i = 0; i < oldEl.children.length; i++) {
-          const child = oldEl.children[i];
-          const name = child.getAttribute("data-render-name")!;
-          svgEls[name] = child as unknown as SVGElement;
-        }
-      } else {
-        /*
-        This must be clip path element!
-        */
-        const name = oldEl.getAttribute("data-render-name")!;
-        svgEls[name] = oldEl;
-      }
-    } else {
-      svgEls = this.createDefaultSvgEl(context);
-      Object.entries(svgEls).forEach(([name, value]) => {
-        value.setAttribute("data-render-name", name);
-      });
-      const values = Object.values(svgEls);
-      /*
-       For absolute Clip coordinate, 
-       svg element should be wrapped g tag and g tags must have only one attribute clip-path="url(...)" .
-       If transform and clip-path are applied to same svg element, the clip-path is also transformed that is not expected in this library.
-       So transform should be applied to g tag's children in order not to affect clip-path. 
-       And ClipPath should not be wrapped g tag for multiple clip-path 
-       if ClipPath is wrapped g tag, parent clip-path that is applied on g tag can not affect child clipPath element. 
-       parent clipPath must be applied to clipPath element itself. 
-       I don't know it is intended behavior in svg 2.0 specification.
-      */
-      if (
-        values.length === 1 &&
-        values[0].nodeName.toUpperCase() === "CLIPPATH"
-      ) {
-        const svgEl = values[0];
-        container = svgEl;
-        context.setId(svgEl, this.id);
-        svgEl.setAttribute("data-render-type", this.type);
-        appendSvgEl(svgEl);
-      } else {
-        const svgG = context.createSvgEl("g");
-        container = svgG;
-        context.setId(svgG, this.id);
-        appendSvgEl(svgG);
-        svgG.setAttribute("data-render-type", this.type);
-        values.forEach((value) => {
-          svgG.appendChild(value);
-        });
-      }
+  mountSvgEl(context: PaintContext) {
+    const { appendSvgEl } = context;
+
+    const svgEls = this.createDefaultSvgEl(context);
+    Object.entries(svgEls).forEach(([name, value]) => {
+      value.setAttribute("data-render-name", name);
+    });
+    const values = Object.values(svgEls);
+    const svgG = context.createSvgEl("g");
+    appendSvgEl(svgG);
+    svgG.setAttribute("data-render-type", this.type);
+    values.forEach((value) => {
+      svgG.appendChild(value);
+    });
+
+    this.#domNode = svgG;
+  }
+
+  protected resolveSvgEl(): {
+    svgEls: Record<string, SVGElement>;
+    container: SVGElement;
+  } {
+    const container = this.domNode;
+    const svgEls: Record<string, SVGElement> = {};
+    for (let i = 0; i < container.children.length; i++) {
+      const child = container.children[i];
+      const name = child.getAttribute("data-render-name")!;
+      svgEls[name] = child as unknown as SVGElement;
     }
+
     return { svgEls, container };
+  }
+
+  rearrangeDomOrder() {
+    if (!this.#domOrderChanged) return;
+
+    this.renderOwner.paintContext.insertSvgEl(this.domNode, this.domOrder);
+    this.#domOrderChanged = false;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

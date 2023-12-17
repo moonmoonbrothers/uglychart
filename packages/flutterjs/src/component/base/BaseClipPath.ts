@@ -1,3 +1,4 @@
+import ShortUniqueId from "short-unique-id";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Size, Constraints, Offset } from "../../type";
 import { Path } from "../../type/_types/Path";
@@ -7,6 +8,7 @@ import type Widget from "../../widget/Widget";
 
 type Clipper = (size: Size) => Path;
 
+const uid = new ShortUniqueId({ dictionary: "hex" });
 class BaseClipPath extends SingleChildRenderObjectWidget {
   public clipper: Clipper;
   constructor({
@@ -33,6 +35,8 @@ class BaseClipPath extends SingleChildRenderObjectWidget {
 
 class RenderClipPath extends SingleChildRenderObject {
   _clipper: Clipper;
+  private id = uid.randomUUID(6);
+
   get clipper() {
     return this._clipper;
   }
@@ -46,6 +50,7 @@ class RenderClipPath extends SingleChildRenderObject {
     super({ isPainter: true });
     this._clipper = clipper;
   }
+
   protected getChildClipId(
     parentClipId?: string | undefined
   ): string | undefined {
@@ -69,6 +74,32 @@ class RenderClipPath extends SingleChildRenderObject {
     return {
       clipPath,
     };
+  }
+
+  override mountSvgEl(context: PaintContext): void {
+    const { appendSvgEl } = context;
+    const svgEls = this.createDefaultSvgEl(context);
+    Object.entries(svgEls).forEach(([name, value]) => {
+      value.setAttribute("data-render-name", name);
+    });
+    const values = Object.values(svgEls);
+    const svgEl = values[0];
+    svgEl.setAttribute("data-render-type", this.type);
+    appendSvgEl(svgEl);
+
+    this.domNode = svgEl;
+  }
+
+  override resolveSvgEl(): {
+    svgEls: Record<string, SVGElement>;
+    container: SVGElement;
+  } {
+    const container = this.domNode;
+    const svgEls: Record<string, SVGElement> = {};
+    const name = container.getAttribute("data-render-name")!;
+    svgEls[name] = container;
+
+    return { svgEls, container };
   }
 }
 

@@ -1,10 +1,14 @@
-import RenderObject from "../renderobject/RenderObject";
+import RenderView from "../renderobject/RenderObject";
 import { PaintContext } from "../utils/type";
 class RenderOwner {
   paintContext: PaintContext;
   private onNeedVisualUpdate: () => void;
-  needsPaintRenderObjects: RenderObject[] = [];
-  needsLayoutRenderObjects: RenderObject[] = [];
+  needsPaintRenderObjects: RenderView[] = [];
+  needsLayoutRenderObjects: RenderView[] = [];
+  /*
+   this will be set by RenderView
+  */
+  renderView!: RenderView;
   constructor({
     onNeedVisualUpdate,
     paintContext,
@@ -22,7 +26,42 @@ class RenderOwner {
 
   drawFrame() {
     this.flushLayout();
+    this.rearrangeDomOrder();
     this.flushPaint();
+  }
+
+  domOrderChanged: boolean = true;
+  private rearrangeDomOrder() {
+    if (!this.domOrderChanged) return;
+    this.domOrderChanged = false;
+    const painterRenderObjects: RenderView[] = [];
+
+    this.preOrderTraversePainterRenderObjects(
+      this.renderView,
+      (renderObject) => {
+        painterRenderObjects.push(renderObject);
+      }
+    );
+
+    for (let i = painterRenderObjects.length - 1; i >= 0; i--) {
+      const renderObject = painterRenderObjects[i];
+      renderObject.domOrder = i;
+      renderObject.rearrangeDomOrder();
+    }
+  }
+
+  didDomOrderChange() {
+    this.domOrderChanged = true;
+  }
+
+  private preOrderTraversePainterRenderObjects(
+    renderObject: RenderView,
+    callback: (renderObject: RenderView) => void
+  ) {
+    if (renderObject.isPainter) callback(renderObject);
+    renderObject.children.forEach((child) => {
+      this.preOrderTraversePainterRenderObjects(child, callback);
+    });
   }
 
   private flushLayout() {
