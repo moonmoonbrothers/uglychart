@@ -8,6 +8,7 @@ class RenderView extends RenderObject {
   constructor({ renderOwner }: { renderOwner: RenderOwner }) {
     super({ isPainter: false });
     this.renderOwner = renderOwner;
+    this.renderOwner.renderView = this;
     this.constraints = Constraints.tight({ width: 0, height: 0 });
   }
   preformLayout(): void {

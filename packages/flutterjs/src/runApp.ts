@@ -188,6 +188,14 @@ export class RenderContext {
           `[data-render-id="${id}"]`
         ) as SVGAElement | null;
       },
+      insertSvgEl(el, index: number) {
+        const child = view.children[index];
+        if (child == null) {
+          view.appendChild(el);
+          return;
+        }
+        view.insertBefore(el, view.children[index]);
+      },
     };
   }
 }

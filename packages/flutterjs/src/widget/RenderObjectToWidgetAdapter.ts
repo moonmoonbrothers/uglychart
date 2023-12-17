@@ -8,7 +8,7 @@ import type Widget from "./Widget";
 
 class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   renderOwner: RenderOwner;
-  buidlOwner: BuildOwner;
+  buildOwner: BuildOwner;
   renderContext: RenderContext;
   scheduler: Scheduler;
   constructor({
@@ -26,7 +26,7 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   }) {
     super({ children: [app] });
     this.renderOwner = renderOwner;
-    this.buidlOwner = buildOwner;
+    this.buildOwner = buildOwner;
     this.renderContext = renderContext;
     this.scheduler = scheduler;
   }
@@ -34,7 +34,7 @@ class RenderObjectToWidgetAdapter extends RenderObjectWidget {
   createElement(): RenderObjectElement {
     const el = super.createElement();
     el.renderContext = this.renderContext;
-    el.buildOwner = this.buidlOwner;
+    el.buildOwner = this.buildOwner;
     el.scheduler = this.scheduler;
     return el;
   }

@@ -11,7 +11,6 @@ class RenderObjectElement extends Element {
     const renderObject = (
       this.widget as RenderObjectWidget
     ).createRenderObject();
-    renderObject.attach(this);
     return renderObject;
   }
 
@@ -41,6 +40,8 @@ class RenderObjectElement extends Element {
     this.children = (this.widget as RenderObjectWidget).children.map(
       (childWidget) => this.inflateWidget(childWidget)
     );
+
+    this._renderObject.attach(this);
     this._renderObject.markNeedsParentLayout();
   }
 
@@ -49,7 +50,7 @@ class RenderObjectElement extends Element {
     this.rebuild({ force: true });
   }
 
-  updateChilren(newWidgets: Widget[]) {
+  updateChildren(newWidgets: Widget[]) {
     const updatedChildIndexes: number[] = [];
     const oldChildren = this.children;
     const newChildren = newWidgets.map((newWidget) => {
@@ -81,7 +82,7 @@ class RenderObjectElement extends Element {
   performRebuild(): void {
     (this.widget as RenderObjectWidget).updateRenderObject(this._renderObject);
     const newChildWidgets = (this.widget as RenderObjectWidget).children;
-    this.updateChilren(newChildWidgets);
+    this.updateChildren(newChildWidgets);
   }
 
   visitChildren(visitor: (child: Element) => void): void {

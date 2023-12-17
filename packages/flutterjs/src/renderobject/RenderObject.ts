@@ -11,7 +11,7 @@ const uid = new ShortUniqueId({ dictionary: "hex" });
   Actually, It is more like RenderShiftedBox
 */
 class RenderObject {
-  private readonly isPainter: boolean;
+  readonly isPainter: boolean;
   id = uid.randomUUID(6);
   ownerElement!: RenderObjectElement;
   renderOwner!: RenderOwner;
@@ -138,11 +138,16 @@ class RenderObject {
   attach(ownerElement: RenderObjectElement) {
     this.ownerElement = ownerElement;
     this.depth = ownerElement.depth;
+    if (this.isPainter) {
+      this.findOrAppendSvgEl(this.renderOwner.paintContext);
+      this.renderOwner.didDomOrderChange();
+    }
   }
 
   dispose(context: PaintContext) {
     if (this.isPainter) {
       context.findSvgEl(this.id)?.remove();
+      this.renderOwner.didDomOrderChange();
     }
   }
 
@@ -156,7 +161,7 @@ class RenderObject {
     return 0;
   }
 
-  private findOrAppendSvgEl(context: PaintContext) {
+  findOrAppendSvgEl(context: PaintContext) {
     const { findSvgEl, appendSvgEl } = context;
     const oldEl = findSvgEl(this.id);
     let svgEls: { [key: string]: SVGElement } = {};
