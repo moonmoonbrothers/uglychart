@@ -1,4 +1,7 @@
+import { RenderZIndex } from "../component/base/BaseZIndex";
+import RenderObject from "../renderobject/RenderObject";
 import RenderView from "../renderobject/RenderObject";
+import RenderObjectVisitor from "../renderobject/RenderObjectVisitor";
 import { PaintContext } from "../utils/type";
 class RenderOwner {
   paintContext: PaintContext;
@@ -34,14 +37,10 @@ class RenderOwner {
   private rearrangeDomOrder() {
     if (!this.domOrderChanged) return;
     this.domOrderChanged = false;
-    const painterRenderObjects: RenderView[] = [];
+    const domOrderVisitor = new DomOrderVisitor();
+    this.renderView.accept(domOrderVisitor);
 
-    this.preOrderTraversePainterRenderObjects(
-      this.renderView,
-      (renderObject) => {
-        painterRenderObjects.push(renderObject);
-      }
-    );
+    const painterRenderObjects = domOrderVisitor.getRenderObjectsByDomOrder();
 
     for (let i = painterRenderObjects.length - 1; i >= 0; i--) {
       const renderObject = painterRenderObjects[i];
@@ -52,16 +51,6 @@ class RenderOwner {
 
   didDomOrderChange() {
     this.domOrderChanged = true;
-  }
-
-  private preOrderTraversePainterRenderObjects(
-    renderObject: RenderView,
-    callback: (renderObject: RenderView) => void
-  ) {
-    if (renderObject.isPainter) callback(renderObject);
-    renderObject.children.forEach((child) => {
-      this.preOrderTraversePainterRenderObjects(child, callback);
-    });
   }
 
   private flushLayout() {
@@ -86,6 +75,73 @@ class RenderOwner {
         if (!renderObject.needsPaint) return;
         renderObject.paintWithoutLayout(this.paintContext);
       });
+  }
+}
+
+class DomOrderVisitor implements RenderObjectVisitor {
+  private renderObjectsWithZIndexContext: {
+    renderObject: RenderObject;
+    visitedOrder: number;
+    zIndexContext: number[];
+  }[] = [];
+  private visitedOrder = 0;
+  private currentZIndexContext: number[] = [0];
+
+  private visit(renderObject: RenderObject) {
+    this.renderObjectsWithZIndexContext.push({
+      renderObject,
+      zIndexContext: this.currentZIndexContext,
+      visitedOrder: this.visitedOrder++,
+    });
+
+    renderObject.visitChildren((child) => {
+      child.accept(this);
+    });
+  }
+
+  visitGeneral(renderObject: RenderObject): void {
+    this.visit(renderObject);
+  }
+
+  visitZIndex(renderObject: RenderZIndex) {
+    /**
+     * This is a hack to optimize memory in order to reuse currentZIndexContext until ZIndexRenderObject is visited.
+     */
+    this.currentZIndexContext = [...this.currentZIndexContext];
+    this.currentZIndexContext.push(renderObject.zIndex);
+
+    this.visit(renderObject);
+
+    this.currentZIndexContext = [...this.currentZIndexContext];
+    this.currentZIndexContext.pop();
+  }
+
+  getRenderObjectsByDomOrder(): RenderObject[] {
+    const painterRenderObjects = this.renderObjectsWithZIndexContext.filter(
+      ({ renderObject: { isPainter } }) => isPainter
+    );
+
+    const sorted = painterRenderObjects.sort((a, b) => {
+      const limit = Math.min(a.zIndexContext.length, b.zIndexContext.length);
+
+      for (let i = 0; i < limit; i++) {
+        if (a.zIndexContext[i] !== b.zIndexContext[i]) {
+          return a.zIndexContext[i] - b.zIndexContext[i];
+        }
+      }
+
+      if (a.zIndexContext.length !== b.zIndexContext.length) {
+        const aLimit = a.zIndexContext[limit] ?? 0;
+        const bLimit = b.zIndexContext[limit] ?? 0;
+        if (aLimit !== bLimit) {
+          return aLimit - bLimit;
+        }
+      }
+
+      return a.visitedOrder - b.visitedOrder;
+    });
+
+    return sorted.map(({ renderObject }) => renderObject);
   }
 }
 
