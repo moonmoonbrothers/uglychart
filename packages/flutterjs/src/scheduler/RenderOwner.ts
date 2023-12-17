@@ -90,8 +90,7 @@ class DomOrderVisitor implements RenderObjectVisitor {
   private visit(renderObject: RenderObject) {
     this.renderObjectsWithZIndexContext.push({
       renderObject,
-      //여기 개선할 수 있을듯?
-      zIndexContext: [...this.currentZIndexContext],
+      zIndexContext: this.currentZIndexContext,
       visitedOrder: this.visitedOrder++,
     });
 
@@ -105,8 +104,15 @@ class DomOrderVisitor implements RenderObjectVisitor {
   }
 
   visitZIndex(renderObject: RenderZIndex) {
+    /**
+     * This is a hack to optimize memory in order to reuse currentZIndexContext until ZIndexRenderObject is visited.
+     */
+    this.currentZIndexContext = [...this.currentZIndexContext];
     this.currentZIndexContext.push(renderObject.zIndex);
+
     this.visit(renderObject);
+
+    this.currentZIndexContext = [...this.currentZIndexContext];
     this.currentZIndexContext.pop();
   }
 
