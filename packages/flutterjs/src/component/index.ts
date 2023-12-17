@@ -47,6 +47,7 @@ import AnimatedSlide from "./AnimatedSlide";
 import AnimatedContainer from "./AnimatedContainer";
 import Draggable from "./Draggable";
 import Tooltip from "./Tooltip";
+import ZIndex from "./ZIndex";
 
 export {
   ConstrainedBox,
@@ -98,4 +99,5 @@ export {
   AnimatedContainer,
   Draggable,
   Tooltip,
+  ZIndex,
 };

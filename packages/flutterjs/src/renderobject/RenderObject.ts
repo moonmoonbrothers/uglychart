@@ -1,6 +1,6 @@
 import { Size, Offset, Constraints, Matrix4 } from "../type";
 import type { PaintContext } from "../utils/type";
-import ShortUniqueId from "short-unique-id";
+import RenderObjectVisitor from "./RenderObjectVisitor";
 import { RenderObjectElement } from "../element";
 import { RenderOwner } from "../scheduler";
 import { assert } from "../utils";
@@ -261,7 +261,7 @@ class RenderObject {
     this.parent?.markNeedsLayout();
   }
 
-  markNeedsLayout() {
+  protected markNeedsLayout() {
     this.needsLayout = true;
     if (this.parentUsesSize && this.parent != null) {
       this.markNeedsParentLayout();
@@ -271,9 +271,13 @@ class RenderObject {
     }
   }
 
-  markNeedsPaint() {
+  protected markNeedsPaint() {
     this.needsPaint = true;
     this.renderOwner.needsPaintRenderObjects.push(this);
+  }
+
+  protected didChangeDomOrder() {
+    this.renderOwner.didDomOrderChange();
   }
 
   localToGlobal(additionalOffset: Offset = Offset.zero()) {
@@ -281,6 +285,20 @@ class RenderObject {
       x: this.matrix.storage[12] + this.offset.x + additionalOffset.x,
       y: this.matrix.storage[13] + this.offset.y + additionalOffset.y,
     });
+  }
+
+  visitChildren(callback: (child: RenderObject) => void) {
+    this.children.forEach((child) => {
+      callback(child);
+    });
+  }
+
+  /**
+   *
+   * It is currently only used on ZIndexRenderObject
+   */
+  accept(visitor: RenderObjectVisitor) {
+    visitor.visitGeneral(this);
   }
 }
 
