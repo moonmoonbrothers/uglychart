@@ -3,7 +3,8 @@ import assert from "./assert";
 import lerp from "./lerp";
 import { getTextHeight, getTextWidth } from "./getTextSize";
 import functionalizeClass from "./functionalizeClass";
-import { Calculatable } from "../type";
+import { Calculable } from "../type";
+export { default as createUniqueId } from "./createUniqueId";
 
 export { assert, applyMixins, getTextHeight, getTextWidth, functionalizeClass };
 
@@ -30,14 +31,14 @@ export default class Utils {
     return a.every((value, i) => value === b[i]);
   }
 
-  static lerp<T extends Calculatable | number>(a: T, b: T, t: number): T {
+  static lerp<T extends Calculable | number>(a: T, b: T, t: number): T {
     assert(t >= 0 && t <= 1);
     if (typeof a === "number") {
       return lerp(a, b as number, t) as T;
     }
 
-    assert(b instanceof Calculatable);
+    assert(b instanceof Calculable);
 
-    return a.plus((b as Calculatable).minus(a).multiply(t)) as T;
+    return a.plus((b as Calculable).minus(a).multiply(t)) as T;
   }
 }

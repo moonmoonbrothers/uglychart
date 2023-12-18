@@ -31,7 +31,7 @@ export * from "./_types/Borders";
 export { ToolTipPosition } from "./_types/ToolTipPosition";
 
 export {
-  Calculatable,
+  Calculatable as Calculable,
   Offset,
   Alignment,
   BorderStyle,

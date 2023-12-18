@@ -1,5 +1,5 @@
 import { CalculatableTween, Curve, Tween } from "../../animation";
-import { Calculatable, Data } from "../../type";
+import { Calculable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Padding from "../Padding";

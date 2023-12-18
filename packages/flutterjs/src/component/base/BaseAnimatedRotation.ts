@@ -1,5 +1,5 @@
 import { Curve, Tween } from "../../animation";
-import { Alignment, Calculatable, Data } from "../../type";
+import { Alignment, Calculable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
 import Transform from "../Transform";

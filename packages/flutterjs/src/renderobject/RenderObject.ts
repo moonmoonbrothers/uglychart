@@ -128,7 +128,7 @@ class RenderObject {
     });
   }
 
-  private paintChildren(
+  paintChildren(
     context: PaintContext,
     {
       clipId,

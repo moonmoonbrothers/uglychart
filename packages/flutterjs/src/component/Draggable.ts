@@ -69,31 +69,14 @@ class DraggableState extends State<Draggable> {
   };
 
   build(context: BuildContext): Widget {
-    return Stack({
-      children: [
-        Transform.translate({
-          key: this.childKey,
-          offset: this.delta,
-          child: GestureDetector({
-            onMouseDown: this.handleMouseDown,
-            child: Opacity({
-              opacity: this.active ? 0 : 1,
-              child: this.widget.child,
-            }),
-          }),
-        }),
-        !this.active
-          ? SizedBox.shrink()
-          : Transform.translate({
-              offset: this.delta,
-              child: GestureDetector({
-                onMouseDown: this.handleMouseDown,
-                onMouseMove: this.handleMouseMove,
-                onMouseUp: this.handleMouseUp,
-                child: this.widget.feedback,
-              }),
-            }),
-      ],
+    return Transform.translate({
+      offset: this.delta,
+      child: GestureDetector({
+        onDragStart: this.handleMouseDown,
+        onDragMove: this.handleMouseMove,
+        onDragEnd: this.handleMouseUp,
+        child: this.widget.feedback,
+      }),
     });
   }
 }
