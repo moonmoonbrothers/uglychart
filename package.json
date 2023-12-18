@@ -37,7 +37,5 @@
     "packages/diagram"
   ],
   "type": "module",
-  "dependencies": {
-    "color-rgba": "^2.4.0"
-  }
+  "dependencies": {}
 }

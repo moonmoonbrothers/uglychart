@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "main": "src/index.ts",
   "devDependencies": {
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "popmotion": "^11.0.5",
-    "short-unique-id": "^4.4.4"
+    "short-unique-id": "^4.4.4",
+    "color-rgba": "^2.4.0"
   },
   "tsup": {
     "entry": [
