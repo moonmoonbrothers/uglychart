@@ -38,6 +38,8 @@
   ],
   "type": "module",
   "dependencies": {
-    "color-rgba": "^2.4.0"
+    "color-rgba": "^2.4.0",
+    "dnd-core": "^16.0.1",
+    "react-dnd-touch-backend": "^16.0.1"
   }
 }

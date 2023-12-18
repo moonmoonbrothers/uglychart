@@ -72,7 +72,6 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
 }
 
 class RenderGestureDetector extends SingleChildRenderObject {
-  private mountedOnBrowser: boolean = false;
   private _cursor: Cursor;
   get cursor(): Cursor {
     return this._cursor;
@@ -89,7 +88,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onClick(prop: () => void) {
     if (this.onClick === prop) return;
     this._onClick = prop;
-    this.markNeedsPaint();
   }
   private _onMouseDown: MouseEventCallback;
   get onMouseDown(): MouseEventCallback {
@@ -98,7 +96,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseDown(prop: MouseEventCallback) {
     if (this._onMouseDown === prop) return;
     this._onMouseDown = prop;
-    this.markNeedsPaint();
   }
   private _onMouseMove: MouseEventCallback;
   get onMouseMove(): MouseEventCallback {
@@ -107,7 +104,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseMove(prop: MouseEventCallback) {
     if (this._onMouseMove === prop) return;
     this._onMouseMove = prop;
-    this.markNeedsPaint();
   }
   private _onMouseUp: MouseEventCallback;
   get onMouseUp(): MouseEventCallback {
@@ -116,7 +112,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseUp(prop: MouseEventCallback) {
     if (this._onMouseUp === prop) return;
     this._onMouseUp = prop;
-    this.markNeedsPaint();
   }
   private _onMouseOver: MouseEventCallback;
   get onMouseOver(): MouseEventCallback {
@@ -125,7 +120,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseOver(prop: MouseEventCallback) {
     if (this._onMouseOver === prop) return;
     this._onMouseOver = prop;
-    this.markNeedsPaint();
   }
   private _onMouseEnter: MouseEventCallback;
   get onMouseEnter(): MouseEventCallback {
@@ -134,7 +128,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseEnter(prop: MouseEventCallback) {
     if (this._onMouseEnter === prop) return;
     this._onMouseEnter = prop;
-    this.markNeedsPaint();
   }
   private _onMouseLeave: MouseEventCallback;
   get onMouseLeave(): MouseEventCallback {
@@ -143,7 +136,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
   set onMouseLeave(prop: MouseEventCallback) {
     if (this._onMouseLeave === prop) return;
     this._onMouseLeave = prop;
-    this.markNeedsPaint();
   }
   constructor({
     onClick,
@@ -175,39 +167,42 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._cursor = cursor;
   }
 
-  protected performPaint(
-    { rect }: { rect: SVGRectElement },
-    { isOnBrowser }: PaintContext
-  ): void {
-    if (!this.mountedOnBrowser && isOnBrowser) {
-      this.mountedOnBrowser = true;
-      rect.addEventListener("click", () => this.onClick());
-      rect.addEventListener("mousedown", (e: MouseEvent) =>
-        this.onMouseDown(e)
-      );
-      rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
-      rect.addEventListener("mousemove", (e: MouseEvent) =>
-        this.onMouseMove(e)
-      );
-      rect.addEventListener("mouseover", (e: MouseEvent) =>
-        this.onMouseOver(e)
-      );
-      rect.addEventListener("mouseenter", (e: MouseEvent) =>
-        this.onMouseEnter(e)
-      );
-      rect.addEventListener("mouseleave", (e: MouseEvent) =>
-        this.onMouseLeave(e)
-      );
-    }
+  attach(ownerElement: RenderObjectElement): void {
+    super.attach(ownerElement);
+
+    this.registerEventListeners();
+  }
+
+  private registerEventListeners() {
+    const isBrowser = typeof window !== "undefined";
+    if (!isBrowser) return;
+    const {
+      svgEls: { rect },
+    } = this.resolveSvgEl();
+
+    rect.addEventListener("click", () => this.onClick());
+    rect.addEventListener("mousedown", (e: MouseEvent) => this.onMouseDown(e));
+    rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
+    rect.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
+    rect.addEventListener("mouseover", (e: MouseEvent) => this.onMouseOver(e));
+    rect.addEventListener("mouseenter", (e: MouseEvent) =>
+      this.onMouseEnter(e)
+    );
+    rect.addEventListener("mouseleave", (e: MouseEvent) =>
+      this.onMouseLeave(e)
+    );
+  }
+
+  protected performPaint({ rect }: { rect: SVGRectElement }): void {
     rect.setAttribute("width", `${this.size.width}`);
     rect.setAttribute("height", `${this.size.height}`);
+    rect.setAttribute("cursor", this.cursor);
+    rect.setAttribute("pointer-events", "auto");
+    rect.setAttribute("fill", "transparent");
   }
 
   createDefaultSvgEl({ createSvgEl }: PaintContext) {
     const rect = createSvgEl("rect");
-    rect.setAttribute("pointer-events", "auto");
-    rect.setAttribute("cursor", this.cursor);
-    rect.setAttribute("fill", "transparent");
     return {
       rect,
     };
