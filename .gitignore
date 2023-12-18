@@ -11,3 +11,4 @@ node_modules
 packages/storybook-flutterjs/build-storybook.log
 packages/storybook-flutterjs/storybook-static
 packages/storybook-uglychart/build-storybook.log
+/packages/*/dist

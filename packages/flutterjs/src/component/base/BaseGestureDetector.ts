@@ -297,6 +297,8 @@ type MouseEventCallback = (event: MouseEvent) => void;
 
 function emptyCallback(arg?: any) {}
 
+type SourceId = string;
+
 class DragBackend {
   isSetup = false;
   private activeDragSourceId: string | null = null;
@@ -307,9 +309,9 @@ class DragBackend {
     );
     return document;
   }
-  private dragStartListener: Record<string, (e: MouseEvent) => void> = {};
-  private dragMoveListener: Record<string, (e: MouseEvent) => void> = {};
-  private dragEndListener: Record<string, (e: MouseEvent) => void> = {};
+  private dragStartListener: Record<SourceId, (e: MouseEvent) => void> = {};
+  private dragMoveListener: Record<SourceId, (e: MouseEvent) => void> = {};
+  private dragEndListener: Record<SourceId, (e: MouseEvent) => void> = {};
 
   constructor() {}
 

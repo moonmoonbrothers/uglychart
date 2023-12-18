@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { parseHTML } from 'linkedom';
 	import { type Widget, Alignment, AppRunner, Container, Text } from '@moonmoonbrothers/flutterjs';
-	const browser = typeof window !== 'undefined';
 
 	export let widget: Widget = Container({
 		width: Infinity,
@@ -17,21 +15,8 @@
 
 	let svgEl: SVGSVGElement;
 	let containerEl: HTMLElement;
-	let runner: AppRunner;
-	let innerHTML: string = '';
-	if (!browser) {
-		const { document: _document, window: _window } = parseHTML(`<svg></svg>`);
-		const _svg = _document.querySelector('svg')!;
-		runner = new AppRunner({
-			view: _svg,
-			window: _window,
-			document: _document,
-			ssrSize
-		});
-		innerHTML = runner.runApp(widget);
-	}
 	onMount(() => {
-		runner = new AppRunner({
+		const runner = new AppRunner({
 			view: svgEl,
 			window: window,
 			document: document,
@@ -45,9 +30,7 @@
 </script>
 
 <div bind:this={containerEl} style="--width: {width}; --height: {height}">
-	<svg bind:this={svgEl}>
-		{@html innerHTML}
-	</svg>
+	<svg bind:this={svgEl} />
 </div>
 
 <style>

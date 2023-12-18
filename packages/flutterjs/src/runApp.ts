@@ -186,7 +186,8 @@ export class RenderContext {
           view.appendChild(el);
           return;
         }
-        view.insertBefore(el, view.children[index]);
+
+        child.insertAdjacentElement("beforebegin", el);
       },
     };
   }
