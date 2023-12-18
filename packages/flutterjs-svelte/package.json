@@ -1,6 +1,6 @@
 {
 	"name": "@moonmoonbrothers/flutterjs-svelte",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "src/lib/index.ts",
 	"scripts": {
 		"dev": "vite dev",
