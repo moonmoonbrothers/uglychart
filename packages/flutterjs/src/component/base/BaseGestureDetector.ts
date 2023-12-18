@@ -1,40 +1,33 @@
 import { RenderObjectElement } from "../../element";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { createUniqueId } from "../../utils";
+import { assert, createUniqueId } from "../../utils";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
-import { createDragDropManager, DragDropManager } from "dnd-core";
-import { TouchBackend } from "react-dnd-touch-backend";
 
 type Cursor = "pointer" | "default";
 
-const GLOBAL_CONTEXT: Record<string, DragDropManager> = {};
-const GENERAL_DRAG_DROP_MANAGER_KEY = "GENERAL_DRAG_DROP_MANAGER_KEY";
-function getDragDropManager(): DragDropManager {
-  let manager: DragDropManager = GLOBAL_CONTEXT[GENERAL_DRAG_DROP_MANAGER_KEY];
-
-  if (manager == null) {
-    manager = createDragDropManager(
-      TouchBackend,
-      GLOBAL_CONTEXT,
-      { enableMouseEvents: true },
-      undefined
-    );
-    GLOBAL_CONTEXT[GENERAL_DRAG_DROP_MANAGER_KEY] = manager;
+let globalDragBackend: DragBackend;
+let backendRefCount = 0;
+function getSingletonDragBackend(): DragBackend {
+  if (globalDragBackend == null) {
+    globalDragBackend = new DragBackend();
   }
 
-  return manager;
+  return globalDragBackend;
 }
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
-  onClick: () => void;
+  onClick: (e: MouseEvent) => void;
   onMouseUp: (e: MouseEvent) => void;
   onMouseMove: (e: MouseEvent) => void;
   onMouseDown: (e: MouseEvent) => void;
   onMouseOver: (e: MouseEvent) => void;
   onMouseEnter: (e: MouseEvent) => void;
   onMouseLeave: (e: MouseEvent) => void;
+  onDragStart: (e: MouseEvent) => void;
+  onDragMove: (e: MouseEvent) => void;
+  onDragEnd: (e: MouseEvent) => void;
   cursor: Cursor;
   constructor({
     child,
@@ -47,15 +40,21 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onMouseLeave,
     key,
     cursor,
+    onDragEnd,
+    onDragMove,
+    onDragStart,
   }: {
     child?: Widget;
-    onClick?: () => void;
+    onClick?: (e: MouseEvent) => void;
     onMouseUp?: (e: MouseEvent) => void;
     onMouseMove?: (e: MouseEvent) => void;
     onMouseDown?: (e: MouseEvent) => void;
     onMouseOver?: (e: MouseEvent) => void;
     onMouseEnter?: (e: MouseEvent) => void;
     onMouseLeave?: (e: MouseEvent) => void;
+    onDragStart?: (e: MouseEvent) => void;
+    onDragMove?: (e: MouseEvent) => void;
+    onDragEnd?: (e: MouseEvent) => void;
     cursor?: Cursor;
     key?: any;
   }) {
@@ -67,6 +66,9 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     this.onMouseOver = onMouseOver ?? emptyCallback;
     this.onMouseEnter = onMouseEnter ?? emptyCallback;
     this.onMouseLeave = onMouseLeave ?? emptyCallback;
+    this.onDragStart = onDragStart ?? emptyCallback;
+    this.onDragMove = onDragMove ?? emptyCallback;
+    this.onDragEnd = onDragEnd ?? emptyCallback;
     this.cursor = cursor ?? "pointer";
   }
 
@@ -79,6 +81,9 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
       onMouseOver: this.onMouseOver,
       onMouseEnter: this.onMouseEnter,
       onMouseLeave: this.onMouseLeave,
+      onDragStart: this.onDragStart,
+      onDragMove: this.onDragMove,
+      onDragEnd: this.onDragEnd,
       cursor: this.cursor,
     });
   }
@@ -89,6 +94,9 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     renderObject.cursor = this.cursor;
     renderObject.onMouseEnter = this.onMouseEnter;
     renderObject.onMouseLeave = this.onMouseLeave;
+    renderObject.onDragStart = this.onDragStart;
+    renderObject.onDragMove = this.onDragMove;
+    renderObject.onDragEnd = this.onDragEnd;
   }
 }
 
@@ -103,11 +111,11 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._cursor = prop;
     this.markNeedsPaint();
   }
-  private _onClick: () => void;
-  get onClick(): () => void {
+  private _onClick: MouseEventCallback;
+  get onClick() {
     return this._onClick;
   }
-  set onClick(prop: () => void) {
+  set onClick(prop) {
     if (this.onClick === prop) return;
     this._onClick = prop;
   }
@@ -159,6 +167,31 @@ class RenderGestureDetector extends SingleChildRenderObject {
     if (this._onMouseLeave === prop) return;
     this._onMouseLeave = prop;
   }
+  private _onDragStart: MouseEventCallback;
+  get onDragStart(): MouseEventCallback {
+    return this._onDragStart;
+  }
+  set onDragStart(prop: MouseEventCallback) {
+    if (this._onDragStart === prop) return;
+    this._onDragStart = prop;
+  }
+  private _onDragMove: MouseEventCallback;
+  get onDragMove(): MouseEventCallback {
+    return this._onDragMove;
+  }
+  set onDragMove(prop: MouseEventCallback) {
+    if (this._onDragMove === prop) return;
+    this._onDragMove = prop;
+  }
+  private _onDragEnd: MouseEventCallback;
+  get onDragEnd(): MouseEventCallback {
+    return this._onDragEnd;
+  }
+  set onDragEnd(prop: MouseEventCallback) {
+    if (this._onDragEnd === prop) return;
+    this._onDragEnd = prop;
+  }
+
   constructor({
     onClick,
     onMouseDown,
@@ -167,15 +200,21 @@ class RenderGestureDetector extends SingleChildRenderObject {
     onMouseOver,
     onMouseEnter,
     onMouseLeave,
+    onDragEnd,
+    onDragMove,
+    onDragStart,
     cursor,
   }: {
-    onClick: () => void;
+    onClick: MouseEventCallback;
     onMouseUp: MouseEventCallback;
     onMouseMove: MouseEventCallback;
     onMouseDown: MouseEventCallback;
     onMouseOver: MouseEventCallback;
     onMouseLeave: MouseEventCallback;
     onMouseEnter: MouseEventCallback;
+    onDragStart: MouseEventCallback;
+    onDragMove: MouseEventCallback;
+    onDragEnd: MouseEventCallback;
     cursor: Cursor;
   }) {
     super({ isPainter: true });
@@ -186,27 +225,32 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._onMouseOver = onMouseOver;
     this._onMouseEnter = onMouseEnter;
     this._onMouseLeave = onMouseLeave;
+    this._onDragEnd = onDragEnd;
+    this._onDragMove = onDragMove;
+    this._onDragStart = onDragStart;
     this._cursor = cursor;
   }
 
   attach(ownerElement: RenderObjectElement): void {
     super.attach(ownerElement);
-
-    this.registerEventListeners();
-  }
-
-  private removeEventListeners() {
-    this.unsubscribeDragDropManager();
+    this.addEventListeners();
   }
 
   dispose(context: PaintContext): void {
-    // this.removeEventListeners();
+    this.removeEventListeners();
+    backendRefCount--;
+    if (backendRefCount === 0) {
+      getSingletonDragBackend().teardown();
+      globalDragBackend = null;
+    }
     super.dispose(context);
   }
 
-  private unsubscribeDragDropManager: () => void;
+  private removeEventListeners() {
+    getSingletonDragBackend().disconnectDragSource(this.id);
+  }
 
-  private registerEventListeners() {
+  private addEventListeners() {
     const isBrowser = typeof window !== "undefined";
     if (!isBrowser) return;
 
@@ -214,35 +258,23 @@ class RenderGestureDetector extends SingleChildRenderObject {
       svgEls: { rect },
     } = this.resolveSvgEl();
 
-    const dragDropManager = getDragDropManager();
-    const backend = dragDropManager.getBackend();
-    backend.connectDragSource(`S${this.id}`, rect);
-    const monitor = dragDropManager.getMonitor();
-    const result = monitor.getSourceId();
-    const registry = (monitor as any).registry;
-    console.log(registry, monitor.canDragSource(`S${this.id}`));
-    monitor.subscribeToStateChange(() => {
-      if (monitor.isDragging()) {
-        console.log("dragging");
-      } else {
-        console.log("not dragging");
-      }
-    });
-    monitor.subscribeToOffsetChange(() => {
-      console.log("offset change");
+    const dragBackend = getSingletonDragBackend();
+    dragBackend.isSetup || dragBackend.setup();
+    backendRefCount++;
+
+    dragBackend.connectDragSource(this.id, rect, {
+      onDragStart: this.onDragStart.bind(this),
+      onDragMove: this.onDragMove.bind(this),
+      onDragEnd: this.onDragEnd.bind(this),
     });
 
-    // rect.addEventListener("click", () => this.onClick());
-    // rect.addEventListener("mousedown", (e: MouseEvent) => this.onMouseDown(e));
-    // rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
-    // rect.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
-    // rect.addEventListener("mouseover", (e: MouseEvent) => this.onMouseOver(e));
-    // rect.addEventListener("mouseenter", (e: MouseEvent) =>
-    //   this.onMouseEnter(e)
-    // );
-    // rect.addEventListener("mouseleave", (e: MouseEvent) =>
-    //   this.onMouseLeave(e)
-    // );
+    rect.addEventListener("click", this.onClick.bind(this));
+    rect.addEventListener("mousedown", this.onMouseDown.bind(this));
+    rect.addEventListener("mouseup", this.onMouseUp.bind(this));
+    rect.addEventListener("mousemove", this.onMouseMove.bind(this));
+    rect.addEventListener("mouseover", this.onMouseOver.bind(this));
+    rect.addEventListener("mouseenter", this.onMouseEnter.bind(this));
+    rect.addEventListener("mouseleave", this.onMouseLeave.bind(this));
   }
 
   protected performPaint({ rect }: { rect: SVGRectElement }): void {
@@ -262,6 +294,85 @@ class RenderGestureDetector extends SingleChildRenderObject {
 }
 
 type MouseEventCallback = (event: MouseEvent) => void;
-function emptyCallback() {}
+
+function emptyCallback(arg?: any) {}
+
+class DragBackend {
+  isSetup = false;
+  private activeDragSourceId: string | null = null;
+  get root(): Document {
+    assert(
+      typeof document !== "undefined",
+      "DragBackend requires document. please use DragBackend in browser environment."
+    );
+    return document;
+  }
+  private dragStartListener: Record<string, (e: MouseEvent) => void> = {};
+  private dragMoveListener: Record<string, (e: MouseEvent) => void> = {};
+  private dragEndListener: Record<string, (e: MouseEvent) => void> = {};
+
+  constructor() {}
+
+  setup() {
+    if (typeof window === "undefined") return;
+    if (this.isSetup) return;
+    this.root.addEventListener("mousemove", this.handleMouseMoveTop.bind(this));
+    this.root.addEventListener("mouseup", this.handleMouseUpTop.bind(this));
+  }
+
+  teardown() {
+    if (typeof window === "undefined") return;
+    this.root.removeEventListener(
+      "mousemove",
+      this.handleMouseMoveTop.bind(this)
+    );
+    this.root.removeEventListener("mouseup", this.handleMouseUpTop.bind(this));
+  }
+
+  private handleMouseMoveTop(e: MouseEvent) {
+    if (this.activeDragSourceId == null) return;
+    this.dragMoveListener[this.activeDragSourceId]?.(e);
+  }
+
+  private handleMouseUpTop(e: MouseEvent) {
+    if (this.activeDragSourceId == null) return;
+    this.dragEndListener[this.activeDragSourceId]?.(e);
+  }
+
+  public connectDragSource(
+    sourceId: string,
+    node: SVGElement,
+    {
+      onDragStart = emptyCallback,
+      onDragMove = emptyCallback,
+      onDragEnd = emptyCallback,
+    }: {
+      onDragStart?: (e: MouseEvent) => void;
+      onDragMove?: (e: MouseEvent) => void;
+      onDragEnd?: (e: MouseEvent) => void;
+    } = {}
+  ) {
+    this.dragStartListener[sourceId] = (e) => {
+      this.activeDragSourceId = sourceId;
+      onDragStart(e);
+    };
+    node.addEventListener(
+      "mousedown",
+      this.dragStartListener[sourceId].bind(this)
+    );
+    this.dragMoveListener[sourceId] = (e) => {
+      onDragMove(e);
+    };
+    this.dragEndListener[sourceId] = (e) => {
+      this.activeDragSourceId = null;
+      onDragEnd(e);
+    };
+  }
+
+  public disconnectDragSource(sourceId: string) {
+    delete this.dragMoveListener[sourceId];
+    delete this.dragEndListener[sourceId];
+  }
+}
 
 export default BaseGestureDetector;
