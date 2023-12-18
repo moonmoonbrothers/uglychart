@@ -6,6 +6,7 @@
     "lerp",
     "linkedom",
     "LTWH",
-    "renderobject"
+    "renderobject",
+    "tsup"
   ]
 }
