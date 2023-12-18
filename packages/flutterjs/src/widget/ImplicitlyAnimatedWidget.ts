@@ -6,7 +6,7 @@ import {
   Tween,
 } from "../animation";
 import { State, type BuildContext } from "../element";
-import { Calculatable, Data } from "../type";
+import { Calculable, Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
@@ -115,7 +115,7 @@ export class ImplicitlyAnimatedWidgetState<
       const target = targetValue as number;
       return end !== target;
     } else {
-      const target = targetValue as Calculatable;
+      const target = targetValue as Calculable;
       return !end.equals(target);
     }
   }

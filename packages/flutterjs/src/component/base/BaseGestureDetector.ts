@@ -1,10 +1,31 @@
 import { RenderObjectElement } from "../../element";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
+import { createUniqueId } from "../../utils";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
+import { createDragDropManager, DragDropManager } from "dnd-core";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 type Cursor = "pointer" | "default";
+
+const GLOBAL_CONTEXT: Record<string, DragDropManager> = {};
+const GENERAL_DRAG_DROP_MANAGER_KEY = "GENERAL_DRAG_DROP_MANAGER_KEY";
+function getDragDropManager(): DragDropManager {
+  let manager: DragDropManager = GLOBAL_CONTEXT[GENERAL_DRAG_DROP_MANAGER_KEY];
+
+  if (manager == null) {
+    manager = createDragDropManager(
+      TouchBackend,
+      GLOBAL_CONTEXT,
+      { enableMouseEvents: true },
+      undefined
+    );
+    GLOBAL_CONTEXT[GENERAL_DRAG_DROP_MANAGER_KEY] = manager;
+  }
+
+  return manager;
+}
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onClick: () => void;
@@ -72,6 +93,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
 }
 
 class RenderGestureDetector extends SingleChildRenderObject {
+  private id = createUniqueId();
   private _cursor: Cursor;
   get cursor(): Cursor {
     return this._cursor;
@@ -173,24 +195,54 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this.registerEventListeners();
   }
 
+  private removeEventListeners() {
+    this.unsubscribeDragDropManager();
+  }
+
+  dispose(context: PaintContext): void {
+    // this.removeEventListeners();
+    super.dispose(context);
+  }
+
+  private unsubscribeDragDropManager: () => void;
+
   private registerEventListeners() {
     const isBrowser = typeof window !== "undefined";
     if (!isBrowser) return;
+
     const {
       svgEls: { rect },
     } = this.resolveSvgEl();
 
-    rect.addEventListener("click", () => this.onClick());
-    rect.addEventListener("mousedown", (e: MouseEvent) => this.onMouseDown(e));
-    rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
-    rect.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
-    rect.addEventListener("mouseover", (e: MouseEvent) => this.onMouseOver(e));
-    rect.addEventListener("mouseenter", (e: MouseEvent) =>
-      this.onMouseEnter(e)
-    );
-    rect.addEventListener("mouseleave", (e: MouseEvent) =>
-      this.onMouseLeave(e)
-    );
+    const dragDropManager = getDragDropManager();
+    const backend = dragDropManager.getBackend();
+    backend.connectDragSource(`S${this.id}`, rect);
+    const monitor = dragDropManager.getMonitor();
+    const result = monitor.getSourceId();
+    const registry = (monitor as any).registry;
+    console.log(registry, monitor.canDragSource(`S${this.id}`));
+    monitor.subscribeToStateChange(() => {
+      if (monitor.isDragging()) {
+        console.log("dragging");
+      } else {
+        console.log("not dragging");
+      }
+    });
+    monitor.subscribeToOffsetChange(() => {
+      console.log("offset change");
+    });
+
+    // rect.addEventListener("click", () => this.onClick());
+    // rect.addEventListener("mousedown", (e: MouseEvent) => this.onMouseDown(e));
+    // rect.addEventListener("mouseup", (e: MouseEvent) => this.onMouseUp(e));
+    // rect.addEventListener("mousemove", (e: MouseEvent) => this.onMouseMove(e));
+    // rect.addEventListener("mouseover", (e: MouseEvent) => this.onMouseOver(e));
+    // rect.addEventListener("mouseenter", (e: MouseEvent) =>
+    //   this.onMouseEnter(e)
+    // );
+    // rect.addEventListener("mouseleave", (e: MouseEvent) =>
+    //   this.onMouseLeave(e)
+    // );
   }
 
   protected performPaint({ rect }: { rect: SVGRectElement }): void {
