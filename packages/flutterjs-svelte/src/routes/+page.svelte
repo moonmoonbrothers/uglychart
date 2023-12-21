@@ -19,6 +19,14 @@
 		TextStyle
 	} from '@moonmoonbrothers/flutterjs';
 	import DomOrderTestWidget from './temp/DomOrderTestWidget';
+	import { writable } from 'svelte/store';
+
+	const text = writable('');
 </script>
 
-<Widget height="300px" width="300px" widget={DomOrderTestWidget()} />
+<input type="text" bind:value={$text} />
+<Widget
+	height="300px"
+	width="300px"
+	widget={new DomOrderTestWidget({ subscribe: text.subscribe })}
+/>

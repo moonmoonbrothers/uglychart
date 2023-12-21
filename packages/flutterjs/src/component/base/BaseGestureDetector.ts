@@ -5,7 +5,33 @@ import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 
-type Cursor = "pointer" | "default";
+type Cursor =
+  | "pointer"
+  | "default"
+  | "move"
+  | "text"
+  | "wait"
+  | "help"
+  | "progress"
+  | "not-allowed"
+  | "crosshair"
+  | "grab"
+  | "grabbing"
+  | "e-resize"
+  | "ne-resize"
+  | "nw-resize"
+  | "n-resize"
+  | "se-resize"
+  | "sw-resize"
+  | "s-resize"
+  | "w-resize"
+  | "ew-resize"
+  | "ns-resize"
+  | "nesw-resize"
+  | "nwse-resize"
+  | "col-resize"
+  | "row-resize"
+  | "all-scroll";
 
 let globalDragBackend: DragBackend;
 let backendRefCount = 0;
@@ -16,6 +42,16 @@ function getSingletonDragBackend(): DragBackend {
 
   return globalDragBackend;
 }
+
+type Bubble = {
+  click: boolean;
+  mousedown: boolean;
+  mouseup: boolean;
+  mousemove: boolean;
+  mouseover: boolean;
+  mouseenter: boolean;
+  mouseleave: boolean;
+};
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onClick: (e: MouseEvent) => void;
@@ -29,6 +65,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onDragMove: (e: MouseEvent) => void;
   onDragEnd: (e: MouseEvent) => void;
   cursor: Cursor;
+  bubble: Bubble;
   constructor({
     child,
     onClick,
@@ -43,6 +80,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onDragEnd,
     onDragMove,
     onDragStart,
+    bubble = {},
   }: {
     child?: Widget;
     onClick?: (e: MouseEvent) => void;
@@ -57,6 +95,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onDragEnd?: (e: MouseEvent) => void;
     cursor?: Cursor;
     key?: any;
+    bubble?: Partial<Bubble>;
   }) {
     super({ child, key });
     this.onClick = onClick ?? emptyCallback;
@@ -70,6 +109,16 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     this.onDragMove = onDragMove ?? emptyCallback;
     this.onDragEnd = onDragEnd ?? emptyCallback;
     this.cursor = cursor ?? "pointer";
+    this.bubble = {
+      mousedown: false,
+      mouseenter: false,
+      mouseleave: false,
+      mousemove: false,
+      mouseover: false,
+      mouseup: false,
+      click: false,
+      ...bubble,
+    };
   }
 
   override createRenderObject(): RenderGestureDetector {
@@ -85,6 +134,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
       onDragMove: this.onDragMove,
       onDragEnd: this.onDragEnd,
       cursor: this.cursor,
+      bubble: this.bubble,
     });
   }
 
@@ -97,11 +147,19 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     renderObject.onDragStart = this.onDragStart;
     renderObject.onDragMove = this.onDragMove;
     renderObject.onDragEnd = this.onDragEnd;
+    renderObject.bubble = this.bubble;
   }
 }
 
 class RenderGestureDetector extends SingleChildRenderObject {
   private id = createUniqueId();
+  private _bubble: Bubble;
+  get bubble(): Bubble {
+    return this._bubble;
+  }
+  set bubble(prop: Bubble) {
+    this._bubble = prop;
+  }
   private _cursor: Cursor;
   get cursor(): Cursor {
     return this._cursor;
@@ -204,6 +262,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     onDragMove,
     onDragStart,
     cursor,
+    bubble,
   }: {
     onClick: MouseEventCallback;
     onMouseUp: MouseEventCallback;
@@ -216,6 +275,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     onDragMove: MouseEventCallback;
     onDragEnd: MouseEventCallback;
     cursor: Cursor;
+    bubble: Bubble;
   }) {
     super({ isPainter: true });
     this._onClick = onClick;
@@ -229,11 +289,24 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._onDragMove = onDragMove;
     this._onDragStart = onDragStart;
     this._cursor = cursor;
+    this._bubble = bubble;
+  }
+  private get listeners() {
+    return {
+      click: this.onClick,
+      mousedown: this.onMouseDown,
+      mousemove: this.onMouseMove,
+      mouseup: this.onMouseUp,
+      mouseover: this.onMouseOver,
+      mouseenter: this.onMouseEnter,
+      mouseleave: this.onMouseLeave,
+    };
   }
 
   attach(ownerElement: RenderObjectElement): void {
     super.attach(ownerElement);
     this.addEventListeners();
+    this.addEventBubbleListeners();
   }
 
   dispose(context: PaintContext): void {
@@ -263,18 +336,18 @@ class RenderGestureDetector extends SingleChildRenderObject {
     backendRefCount++;
 
     dragBackend.connectDragSource(this.id, rect, {
-      onDragStart: this.onDragStart.bind(this),
-      onDragMove: this.onDragMove.bind(this),
-      onDragEnd: this.onDragEnd.bind(this),
+      onDragStart: this.onDragStart,
+      onDragMove: this.onDragMove,
+      onDragEnd: this.onDragEnd,
     });
 
-    rect.addEventListener("click", this.onClick.bind(this));
-    rect.addEventListener("mousedown", this.onMouseDown.bind(this));
-    rect.addEventListener("mouseup", this.onMouseUp.bind(this));
-    rect.addEventListener("mousemove", this.onMouseMove.bind(this));
-    rect.addEventListener("mouseover", this.onMouseOver.bind(this));
-    rect.addEventListener("mouseenter", this.onMouseEnter.bind(this));
-    rect.addEventListener("mouseleave", this.onMouseLeave.bind(this));
+    rect.addEventListener("click", this.onClick);
+    rect.addEventListener("mousedown", this.onMouseDown);
+    rect.addEventListener("mouseup", this.onMouseUp);
+    rect.addEventListener("mousemove", this.onMouseMove);
+    rect.addEventListener("mouseover", this.onMouseOver);
+    rect.addEventListener("mouseenter", this.onMouseEnter);
+    rect.addEventListener("mouseleave", this.onMouseLeave);
   }
 
   protected performPaint({ rect }: { rect: SVGRectElement }): void {
@@ -290,6 +363,56 @@ class RenderGestureDetector extends SingleChildRenderObject {
     return {
       rect,
     };
+  }
+
+  dispatch(e: Event) {
+    this.listeners[e.type]?.(e);
+  }
+
+  dispatchParent(e: Event) {
+    let parent = this.parent;
+
+    while (parent != null) {
+      if (parent instanceof RenderGestureDetector) {
+        parent.dispatch(e);
+      }
+      parent = parent.parent;
+    }
+  }
+
+  private addEventBubbleListeners() {
+    const {
+      svgEls: { rect },
+    } = this.resolveSvgEl();
+
+    rect.addEventListener("click", (e) => {
+      if (!this.bubble.click) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mousedown", (e) => {
+      if (!this.bubble.mousedown) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mouseup", (e) => {
+      if (!this.bubble.mouseup) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mousemove", (e) => {
+      if (!this.bubble.mousemove) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mouseover", (e) => {
+      if (!this.bubble.mouseover) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mouseenter", (e) => {
+      if (!this.bubble.mouseenter) return;
+      this.dispatchParent(e);
+    });
+    rect.addEventListener("mouseleave", (e) => {
+      if (!this.bubble.mouseleave) return;
+      this.dispatchParent(e);
+    });
   }
 }
 
@@ -324,11 +447,8 @@ class DragBackend {
 
   teardown() {
     if (typeof window === "undefined") return;
-    this.root.removeEventListener(
-      "mousemove",
-      this.handleMouseMoveTop.bind(this)
-    );
-    this.root.removeEventListener("mouseup", this.handleMouseUpTop.bind(this));
+    this.root.removeEventListener("mousemove", this.handleMouseMoveTop);
+    this.root.removeEventListener("mouseup", this.handleMouseUpTop);
   }
 
   private handleMouseMoveTop(e: MouseEvent) {

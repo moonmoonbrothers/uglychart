@@ -1,16 +1,25 @@
 import {
 	Container,
+	Element,
 	GestureDetector,
+	MainAxisSize,
 	Positioned,
+	Row,
 	Size,
 	SizedBox,
 	Stack,
 	State,
 	StatefulWidget,
-	Text
+	Text,
+	ZIndex
 } from '@moonmoonbrothers/flutterjs';
 
 class DomOrderTestWidget extends StatefulWidget {
+	subscribe: (callback: (text: string) => void) => void;
+	constructor({ subscribe }: { subscribe: (callback: (text: string) => void) => void }) {
+		super();
+		this.subscribe = subscribe;
+	}
 	createState() {
 		return new DomOrderTestWidgetState();
 	}
@@ -18,48 +27,28 @@ class DomOrderTestWidget extends StatefulWidget {
 
 class DomOrderTestWidgetState extends State<DomOrderTestWidget> {
 	visible = true;
+	text = '';
 
-	handleClick() {
-		this.setState(() => {
-			this.visible = !this.visible;
-			console.log(this.visible);
+	initState(context: Element): void {
+		this.widget.subscribe((text: string) => {
+			this.setState(() => {
+				this.text = text;
+			});
 		});
 	}
 
 	build() {
-		return Stack({
+		return Row({
+			mainAxisSize: MainAxisSize.min,
 			children: [
-				Positioned({
-					right: 0,
-					top: 0,
-					child: GestureDetector({
-						onClick: () => {
-							this.handleClick();
-						},
-						child: Container({
-							color: 'green',
-							child: Text('click')
-						})
-					})
-				}),
-				Positioned({
-					top: 0,
-					left: 0,
-					child: this.visible
-						? Container({
-								width: 100,
-								height: 100,
-								color: 'red'
-						  })
-						: SizedBox.shrink()
-				}),
-				Positioned({
-					top: 0,
-					left: 50,
+				Text(this.text),
+				SizedBox({ width: 10 }),
+				ZIndex({
+					zIndex: 0,
 					child: Container({
 						width: 100,
 						height: 100,
-						color: 'blue'
+						color: 'red'
 					})
 				})
 			]
@@ -67,4 +56,4 @@ class DomOrderTestWidgetState extends State<DomOrderTestWidget> {
 	}
 }
 
-export default () => new DomOrderTestWidget();
+export default DomOrderTestWidget;

@@ -93,18 +93,18 @@ class RenderObject {
     matrix4: Matrix4 = Matrix4.identity(),
     opacity: number = 1
   ) {
+    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (
       this.clipId === clipId &&
-      this.matrix.equals(matrix4) &&
+      this.matrix.equals(translatedMatrix4) &&
       this.opacity === opacity &&
       !this.needsPaint
     ) {
       return;
     }
-    this.matrix = matrix4;
+    this.matrix = translatedMatrix4;
     this.clipId = clipId;
     this.opacity = opacity;
-    const translatedMatrix4 = matrix4.translated(this.offset.x, this.offset.y);
     if (this.isPainter) {
       const { svgEls, container } = this.resolveSvgEl();
       if (clipId) {
@@ -113,13 +113,13 @@ class RenderObject {
       container.setAttribute("opacity", `${opacity}`);
       container.setAttribute("pointer-events", "none");
       Object.values(svgEls).forEach((el) =>
-        this.setSvgTransform(el, translatedMatrix4)
+        this.setSvgTransform(el, this.matrix)
       );
       this.performPaint(svgEls, context);
     }
     this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);
-    const childMatrix4 = this.getChildMatrix4(translatedMatrix4);
+    const childMatrix4 = this.getChildMatrix4(this.matrix);
     const childOpacity = this.getChildOpacity(opacity);
     this.paintChildren(context, {
       clipId: childClipId,
@@ -282,8 +282,8 @@ class RenderObject {
 
   localToGlobal(additionalOffset: Offset = Offset.zero()) {
     return new Offset({
-      x: this.matrix.storage[12] + this.offset.x + additionalOffset.x,
-      y: this.matrix.storage[13] + this.offset.y + additionalOffset.y,
+      x: this.matrix.storage[12] + additionalOffset.x,
+      y: this.matrix.storage[13] + additionalOffset.y,
     });
   }
 
