@@ -40,6 +40,9 @@ class CustomState extends State<CustomWidget> {
 				color: this.widget.colors[this.index],
 				alignment: Alignment.center,
 				child: GestureDetector({
+					bubble: {
+						click: true
+					},
 					onClick: () => {
 						alert('nested click!');
 					},
