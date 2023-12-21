@@ -5,7 +5,8 @@ import {
 	ColorChangeStory,
 	DynamicallyExistsStory,
 	SizeChangeStory,
-	TestStatefulWidgetStory
+	TestStatefulWidgetStory,
+	EventBubbleStory
 } from './examples';
 
 const meta = {
@@ -42,4 +43,8 @@ export const TestStatefulWidget: Story = {
 
 export const DynamicallyExists: Story = {
 	args: DynamicallyExistsStory
+};
+
+export const EventBubble: Story = {
+	args: EventBubbleStory
 };

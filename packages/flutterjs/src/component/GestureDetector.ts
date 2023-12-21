@@ -1,4 +1,4 @@
 import { functionalizeClass } from "../utils";
-import BaseGuestureDetector from "./base/BaseGestureDetector";
+import GestureDetector from "./base/BaseGestureDetector";
 
-export default functionalizeClass(BaseGuestureDetector);
+export default functionalizeClass(GestureDetector);
