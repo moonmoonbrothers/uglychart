@@ -1,5 +1,5 @@
 import Utils from "../../utils";
-import Calculatable from "./Caculatable";
+import Calculatable from "./Calculable";
 import Color from "./Color";
 import Offset from "./Offset";
 

@@ -1,4 +1,4 @@
-import Calculatable from "./Caculatable";
+import Calculatable from "./Calculable";
 import Data from "./Data";
 import Matrix2 from "./Matrix2";
 import Matrix3 from "./Matrix3";

@@ -24,14 +24,14 @@ import TextWidthBasis from "./_types/TextWidthBasis";
 import TextBaseline from "./_types/TextBaseline";
 import TextStyle from "./_types/TextStyle";
 import TextSpan from "./_types/TextSpan";
-import Calculatable from "./_types/Caculatable";
+import Calculable from "./_types/Calculable";
 import Color from "./_types/Color";
 import Data from "./_types/Data";
 export * from "./_types/Borders";
 export { ToolTipPosition } from "./_types/ToolTipPosition";
 
 export {
-  Calculatable as Calculable,
+  Calculable as Calculable,
   Offset,
   Alignment,
   BorderStyle,

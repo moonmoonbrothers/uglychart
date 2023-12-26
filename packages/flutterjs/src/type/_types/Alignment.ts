@@ -1,10 +1,10 @@
-import Calculatable from "./Caculatable";
+import Calculable from "./Calculable";
 import Offset from "./Offset";
 import Rect from "./Rect";
 import Size from "./Size";
 import TextDirection from "./TextDirection";
 
-class Alignment extends Calculatable {
+class Alignment extends Calculable {
   x: number; // -1 ~ 1
   y: number; // -1 ~ 1
 
