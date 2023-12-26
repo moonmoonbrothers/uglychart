@@ -2,7 +2,12 @@
   "name": "@moonmoonbrothers/flutterjs",
   "version": "1.1.10",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
-  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup",
+    "prepackage": "npm run build",
+    "package": "cp package.json dist/package.json && cp README.md dist/README.md && cd dist && npm pkg delete main && npm pkg set types='./index.d.ts' && npm pkg set type='module' &&  npm pkg set exports='{\".\":  \"./index.mjs\"}' --json"
+  },
   "devDependencies": {
     "cp": "^0.2.0",
     "tsup": "^8.0.1",
@@ -13,22 +18,6 @@
     "short-unique-id": "^4.4.4",
     "color-rgba": "^2.4.0"
   },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "splitting": false,
-    "clean": true,
-    "format": [
-      "esm"
-    ]
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup --dts",
-    "prepackage": "npm run build",
-    "package": "cp package.json dist/package.json && cp README.md dist/README.md && cd dist && npm pkg delete main && npm pkg set types='./index.d.ts' && npm pkg set type='module' &&  npm pkg set exports='{\".\":  \"./index.mjs\"}' --json"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moonmoonbrothers/uglychart.git"
@@ -38,5 +27,19 @@
   "bugs": {
     "url": "https://github.com/moonmoonbrothers/uglychart/issues"
   },
-  "homepage": "https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs"
+  "homepage": "https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs",
+  "main": "src/index.ts",
+  "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "type": "module",
+    "exports": {
+      "default": "./dist/index.cjs",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "node": "./dist/index.cjs"
+    }
+  }
 }
