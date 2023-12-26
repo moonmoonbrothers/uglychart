@@ -1,12 +1,12 @@
-import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./Borders";
-import EdgeInsets, { EdgeInsetsGeometry } from "./EdgeInsets";
-import Path from "./Path";
-import Rect from "./Rect";
-import BorderRadius from "./BorderRadius";
+import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./borders";
+import EdgeInsets, { EdgeInsetsGeometry } from "./edge-insets";
+import Path from "./path";
+import Rect from "./rect";
+import BorderRadius from "./border-radius";
 import { assert } from "../../utils";
-import { BoxShape } from "./BoxDecoration";
-import BorderRadiusGeometry from "./BorderRadiusGeometry";
-import Data from "./Data";
+import { BoxShape } from "./box-decoration";
+import BorderRadiusGeometry from "./border-radius-geometry";
+import Data from "./data";
 
 class _BoxBorder extends Data implements ShapeBorder {
   get dimensions(): EdgeInsetsGeometry {

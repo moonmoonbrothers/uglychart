@@ -1,5 +1,5 @@
-import TextStyle from "./TextStyle";
-import { Paragraph } from "./TextPainter";
+import TextStyle from "./text-style";
+import { Paragraph } from "./text-painter";
 
 class InlineSpan {
   style?: TextStyle;

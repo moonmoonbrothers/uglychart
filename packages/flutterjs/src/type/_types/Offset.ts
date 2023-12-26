@@ -1,4 +1,4 @@
-import Calculatable from "./Calculable";
+import Calculatable from "./calculable";
 
 type OffsetProps = {
   x: number;

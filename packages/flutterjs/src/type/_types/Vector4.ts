@@ -1,18 +1,18 @@
-import Vector from "./Vector";
-import Vector2 from "./Vector2";
-import Vector3 from "./Vector3";
+import Vector from "./vector";
+import Vector2 from "./vector2";
+import Vector3 from "./vector3";
 
 export class Vector4 implements Vector {
   _v4storage: [number, number, number, number];
   get storage() {
-    return this._v4storage
+    return this._v4storage;
   }
   constructor(arg0: number, arg1: number, arg2: number, arg3: number) {
     this._v4storage = [arg0, arg1, arg2, arg3];
   }
 
   static zero() {
-    return new Vector4(0,0,0,0)
+    return new Vector4(0, 0, 0, 0);
   }
 
   set xy(arg: Vector2) {

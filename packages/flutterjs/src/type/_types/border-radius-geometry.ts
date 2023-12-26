@@ -1,7 +1,7 @@
-import Radius from "./Radius";
-import RRect from "./RRect";
-import Rect from "./Rect";
-import Calculatable from "./Calculable";
+import Radius from "./radius";
+import RRect from "./r-rect";
+import Rect from "./rect";
+import Calculatable from "./calculable";
 import Utils from "../../utils";
 
 class BorderRadiusGeometry extends Calculatable {

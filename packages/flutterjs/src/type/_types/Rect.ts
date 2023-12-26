@@ -1,4 +1,4 @@
-import Offset from "./Offset";
+import Offset from "./offset";
 
 export class Rect {
   private constructor(

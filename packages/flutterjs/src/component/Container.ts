@@ -14,7 +14,7 @@ import ColoredBox from "./ColoredBox";
 import DecoratedBox from "./DecoratedBox";
 import LimitedBox from "./LimitedBox";
 import Padding from "./Padding";
-import { EdgeInsetsGeometry } from "../type/_types/EdgeInsets";
+import { EdgeInsetsGeometry } from "../type/_types/edge-insets";
 import Transform from "./Transform";
 import ClipPath from "./ClipPath";
 import { StatelessWidget } from "../widget";

@@ -1,17 +1,17 @@
-import Border, { BoxBorder } from "./Border";
-import BorderRadiusGeometry from "./BorderRadiusGeometry";
-import { EdgeInsetsGeometry } from "./EdgeInsets";
-import Path from "./Path";
-import Rect from "./Rect";
-import Size from "./Size";
-import RRect from "./RRect";
-import Color from "./Color";
-import BoxShadow from "./BoxShadow";
+import Border, { BoxBorder } from "./border";
+import BorderRadiusGeometry from "./border-radius-geometry";
+import { EdgeInsetsGeometry } from "./edge-insets";
+import Path from "./path";
+import Rect from "./rect";
+import Size from "./size";
+import RRect from "./r-rect";
+import Color from "./color";
+import BoxShadow from "./box-shadow";
 import Utils, { assert } from "../../utils";
-import { BorderSide } from "./Borders";
-import BorderRadius from "./BorderRadius";
-import Radius from "./Radius";
-import Data from "./Data";
+import { BorderSide } from "./borders";
+import BorderRadius from "./border-radius";
+import Radius from "./radius";
+import Data from "./data";
 
 export type Decoration = BoxDecoration;
 

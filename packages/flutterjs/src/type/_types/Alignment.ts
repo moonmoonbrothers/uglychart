@@ -1,8 +1,8 @@
-import Calculable from "./Calculable";
-import Offset from "./Offset";
-import Rect from "./Rect";
-import Size from "./Size";
-import TextDirection from "./TextDirection";
+import Calculable from "./calculable";
+import Offset from "./offset";
+import Rect from "./rect";
+import Size from "./size";
+import TextDirection from "./text-direction";
 
 class Alignment extends Calculable {
   x: number; // -1 ~ 1
