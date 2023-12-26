@@ -1,8 +1,8 @@
-import { RenderObjectElement } from "../element";
+import type { RenderObjectElement } from "../element";
 import type RenderObject from "../renderobject/RenderObject";
+import type { RenderContext } from "../runApp";
+import type { BuildOwner, RenderOwner, Scheduler } from "../scheduler";
 import RenderView from "../renderobject/RenderView";
-import { RenderContext } from "../runApp";
-import { BuildOwner, RenderOwner, Scheduler } from "../scheduler";
 import RenderObjectWidget from "./RenderObjectWidget";
 import type Widget from "./Widget";
 
