@@ -1,8 +1,7 @@
 import type RenderObject from "../renderobject/RenderObject";
 import type { RenderContext } from "../runApp";
-import { BuildOwner, GlobalKey, RenderOwner, Scheduler } from "../scheduler";
+import { BuildOwner, GlobalKey, Scheduler } from "../scheduler";
 import Widget from "../widget/Widget";
-import RenderObjectElement from "./RenderObjectElement";
 
 class Element {
   scheduler: Scheduler;
@@ -23,14 +22,10 @@ class Element {
 
   get renderObject(): RenderObject {
     let result: RenderObject | null = null;
-    const visitor = (child: Element) => {
-      if (child instanceof RenderObjectElement) {
-        result = child._renderObject;
-      } else {
-        child.visitChildren(visitor);
-      }
-    };
-    visitor(this);
+
+    this.visitChildren((child) => {
+      result = child.renderObject;
+    });
 
     if (result == null) throw { message: "can not find render object" };
     return result;

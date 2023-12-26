@@ -14,7 +14,7 @@ import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
 } from "../../widget/ImplicitlyAnimatedWidget";
-import { EdgeInsetsGeometry } from "../../type/_types/EdgeInsets";
+import { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
 import { assert } from "../../utils";
 
 class BaseAnimatedContainer extends ImplicitlyAnimatedWidget {

@@ -1,37 +1,37 @@
-import Offset from "./_types/Offset";
-import Alignment from "./_types/Alignment";
-import Constraints from "./_types/Constraints";
-import EdgeInsets from "./_types/EdgeInsets";
-import Gap from "./_types/Gap";
-import BorderRadiusGeometry from "./_types/BorderRadiusGeometry";
-import Size from "./_types/Size";
-import Path from "./_types/Path";
-import Rect from "./_types/Rect";
-import RRect from "./_types/RRect";
-import TextDirection from "./_types/TextDirection";
+import Offset from "./_types/offset";
+import Alignment from "./_types/alignment";
+import Constraints from "./_types/constraints";
+import EdgeInsets from "./_types/edge-insets";
+import Gap from "./_types/gap";
+import BorderRadiusGeometry from "./_types/border-radius-geometry";
+import Size from "./_types/size";
+import Path from "./_types/path";
+import Rect from "./_types/rect";
+import RRect from "./_types/r-rect";
+import TextDirection from "./_types/text-direction";
 export * from "./_types/etc";
-import Matrix4 from "./_types/Matrix4";
-import StackFit from "./_types/StackFit";
-import BorderRadius from "./_types/BorderRadius";
-import Radius from "./_types/Radius";
-import BorderStyle from "./_types/BorderStyle";
-import Border, { type BoxBorder } from "./_types/Border";
-import BoxDecoration, { type Decoration } from "./_types/BoxDecoration";
-import BoxShadow from "./_types/BoxShadow";
-import TextAlign from "./_types/TextAlign";
-import TextOverflow from "./_types/TextOverflow";
-import TextWidthBasis from "./_types/TextWidthBasis";
-import TextBaseline from "./_types/TextBaseline";
-import TextStyle from "./_types/TextStyle";
-import TextSpan from "./_types/TextSpan";
-import Calculatable from "./_types/Caculatable";
-import Color from "./_types/Color";
-import Data from "./_types/Data";
-export * from "./_types/Borders";
-export { ToolTipPosition } from "./_types/ToolTipPosition";
+import Matrix4 from "./_types/matrix4";
+import StackFit from "./_types/stack-fit";
+import BorderRadius from "./_types/border-radius";
+import Radius from "./_types/radius";
+import BorderStyle from "./_types/border-style";
+import Border, { type BoxBorder } from "./_types/border";
+import BoxDecoration, { type Decoration } from "./_types/box-decoration";
+import BoxShadow from "./_types/box-shadow";
+import TextAlign from "./_types/text-align";
+import TextOverflow from "./_types/text-overflow";
+import TextWidthBasis from "./_types/text-width-basis";
+import TextBaseline from "./_types/text-baseline";
+import TextStyle from "./_types/text-style";
+import TextSpan from "./_types/text-span";
+import Calculable from "./_types/calculable";
+import Color from "./_types/color";
+import Data from "./_types/data";
+export * from "./_types/borders";
+export { ToolTipPosition } from "./_types/tool-tip-position";
 
 export {
-  Calculatable as Calculable,
+  Calculable as Calculable,
   Offset,
   Alignment,
   BorderStyle,

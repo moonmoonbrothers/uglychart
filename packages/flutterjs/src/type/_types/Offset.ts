@@ -1,4 +1,4 @@
-import Calculatable from "./Caculatable";
+import Calculatable from "./calculable";
 
 type OffsetProps = {
   x: number;
@@ -6,8 +6,8 @@ type OffsetProps = {
 };
 
 class Offset extends Calculatable {
- readonly x: number;
- readonly y: number;
+  readonly x: number;
+  readonly y: number;
   constructor({ x, y }: OffsetProps) {
     super();
     this.x = x;

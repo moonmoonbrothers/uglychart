@@ -1,4 +1,4 @@
-import Offset from "./Offset";
+import Offset from "./offset";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 type SizeProps = {

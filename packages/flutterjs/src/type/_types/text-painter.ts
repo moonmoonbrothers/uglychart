@@ -1,4 +1,4 @@
-import InlineSpan from "./InlineSpan";
+import InlineSpan from "./Inline-span";
 import Utils, { assert, getTextWidth } from "../../utils";
 import { PaintContext } from "../../utils/type";
 
@@ -6,8 +6,8 @@ function getTextHeight({ fontSize }: { fontSize: number }) {
   return fontSize;
 }
 
-import { TextDirection, TextAlign, TextWidthBasis } from "../../type";
-import { FontStyle } from "./TextStyle";
+import { TextDirection, TextAlign, TextWidthBasis } from "..";
+import { FontStyle } from "./text-style";
 
 const defaultTextStyle = {
   fontFamily: "serif",

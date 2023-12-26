@@ -1,6 +1,6 @@
-import InlineSpan from "./InlineSpan";
-import { Paragraph } from "./TextPainter";
-import TextStyle from "./TextStyle";
+import InlineSpan from "./Inline-span";
+import { Paragraph } from "./text-painter";
+import TextStyle from "./text-style";
 
 class TextSpan extends InlineSpan {
   text?: string;

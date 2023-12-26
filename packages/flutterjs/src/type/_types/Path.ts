@@ -1,5 +1,5 @@
-import type Rect from "./Rect";
-import { RRect } from "./RRect";
+import type Rect from "./rect";
+import { RRect } from "./r-rect";
 
 export class Path {
   private _d: string = "";

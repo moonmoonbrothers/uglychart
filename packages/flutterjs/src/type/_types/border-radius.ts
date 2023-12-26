@@ -1,7 +1,7 @@
-import Radius from "./Radius";
-import RRect from "./RRect";
-import Rect from "./Rect";
-import BorderRadiusGeometry from "./BorderRadiusGeometry";
+import Radius from "./radius";
+import RRect from "./r-rect";
+import Rect from "./rect";
+import BorderRadiusGeometry from "./border-radius-geometry";
 
 export default class BorderRadius extends BorderRadiusGeometry {
   static all(radius: Radius) {

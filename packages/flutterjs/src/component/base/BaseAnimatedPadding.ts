@@ -7,7 +7,7 @@ import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
 } from "../../widget/ImplicitlyAnimatedWidget";
-import EdgeInsets, { EdgeInsetsGeometry } from "../../type/_types/EdgeInsets";
+import EdgeInsets, { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
 
 class BaseAnimatedPadding extends ImplicitlyAnimatedWidget {
   opacity: number;

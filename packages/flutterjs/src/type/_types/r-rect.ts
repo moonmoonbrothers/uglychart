@@ -1,5 +1,5 @@
-import Radius from "./Radius";
-import Rect from "./Rect";
+import Radius from "./radius";
+import Rect from "./rect";
 type RRectProps = {
   top: number;
   left: number;

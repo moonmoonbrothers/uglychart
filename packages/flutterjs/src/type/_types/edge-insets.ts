@@ -1,5 +1,5 @@
-import Calculatable from "./Caculatable";
-import Rect from "./Rect";
+import Calculable from "./calculable";
+import Rect from "./rect";
 
 type EdgeInsetsProps = {
   top: number;
@@ -8,7 +8,7 @@ type EdgeInsetsProps = {
   right: number;
 };
 
-export class EdgeInsetsGeometry extends Calculatable {
+export class EdgeInsetsGeometry extends Calculable {
   readonly top: number;
   readonly bottom: number;
   readonly left: number;

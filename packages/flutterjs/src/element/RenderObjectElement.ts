@@ -14,6 +14,10 @@ class RenderObjectElement extends Element {
     return renderObject;
   }
 
+  override get renderObject(): RenderObject {
+    return this._renderObject;
+  }
+
   constructor(widget: RenderObjectWidget) {
     super(widget);
   }

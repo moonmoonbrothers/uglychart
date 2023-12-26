@@ -6,7 +6,7 @@ import {
   TextStyle,
   TextWidthBasis,
 } from "../type";
-import InlineSpan from "../type/_types/InlineSpan";
+import InlineSpan from "../type/_types/Inline-span";
 import { BuildContext, StatelessWidget } from "../widget";
 import Widget from "../widget/Widget";
 import RichText from "./RichText";
