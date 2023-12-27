@@ -1,2 +1,3 @@
 export { default as Basic } from './Basic';
-export { default as ZIndexLocalContext } from './ZIndexLocalContext';
+import * as StackingContext from './StackingContext';
+export { StackingContext };

@@ -78,21 +78,31 @@ class RenderOwner {
   }
 }
 
+type StackingContext = {
+  zIndex: number;
+  visitedOrder: number;
+};
+
 class DomOrderVisitor implements RenderObjectVisitor {
-  private renderObjectsWithZIndexContext: {
+  private collectedRenderObjects: {
     renderObject: RenderObject;
     visitedOrder: number;
-    zIndexContext: number[];
+    contexts: StackingContext[];
   }[] = [];
-  private visitedOrder = 0;
-  private currentZIndexContext: number[] = [0];
+  private currentVisitedOrder = 0;
+  private currentStackingContext: StackingContext[] = [];
 
-  private visit(renderObject: RenderObject) {
-    this.renderObjectsWithZIndexContext.push({
-      renderObject,
-      zIndexContext: this.currentZIndexContext,
-      visitedOrder: this.visitedOrder++,
-    });
+  private visit(
+    renderObject: RenderObject,
+    { willCollect }: { willCollect: boolean }
+  ) {
+    if (willCollect) {
+      this.collectedRenderObjects.push({
+        renderObject,
+        contexts: [...this.currentStackingContext],
+        visitedOrder: this.currentVisitedOrder++,
+      });
+    }
 
     renderObject.visitChildren((child) => {
       child.accept(this);
@@ -100,41 +110,65 @@ class DomOrderVisitor implements RenderObjectVisitor {
   }
 
   visitGeneral(renderObject: RenderObject): void {
-    this.visit(renderObject);
+    this.visit(renderObject, { willCollect: renderObject.isPainter });
   }
 
   visitZIndex(renderObject: RenderZIndex) {
     /**
      * This is a hack to optimize memory in order to reuse currentZIndexContext until ZIndexRenderObject is visited.
      */
-    this.currentZIndexContext = [...this.currentZIndexContext];
-    this.currentZIndexContext.push(renderObject.zIndex);
+    this.currentStackingContext = [...this.currentStackingContext];
+    this.currentStackingContext.push({
+      visitedOrder: this.currentVisitedOrder,
+      zIndex: renderObject.zIndex,
+    });
 
-    this.visit(renderObject);
+    this.visit(renderObject, { willCollect: false });
 
-    this.currentZIndexContext = [...this.currentZIndexContext];
-    this.currentZIndexContext.pop();
+    this.currentStackingContext = [...this.currentStackingContext];
+    this.currentStackingContext.pop();
   }
 
   getRenderObjectsByDomOrder(): RenderObject[] {
-    const painterRenderObjects = this.renderObjectsWithZIndexContext.filter(
-      ({ renderObject: { isPainter } }) => isPainter
-    );
-
-    const sorted = painterRenderObjects.sort((a, b) => {
-      const limit = Math.min(a.zIndexContext.length, b.zIndexContext.length);
+    const sorted = this.collectedRenderObjects.sort((a, b) => {
+      const limit = Math.min(a.contexts.length, b.contexts.length);
 
       for (let i = 0; i < limit; i++) {
-        if (a.zIndexContext[i] !== b.zIndexContext[i]) {
-          return a.zIndexContext[i] - b.zIndexContext[i];
+        const aContext = a.contexts[i];
+        const bContext = b.contexts[i];
+
+        if (aContext.zIndex !== bContext.zIndex) {
+          return aContext.zIndex - bContext.zIndex;
+        } else if (aContext.visitedOrder !== bContext.visitedOrder) {
+          return aContext.visitedOrder - bContext.visitedOrder;
         }
       }
 
-      if (a.zIndexContext.length !== b.zIndexContext.length) {
-        const aLimit = a.zIndexContext[limit] ?? 0;
-        const bLimit = b.zIndexContext[limit] ?? 0;
-        if (aLimit !== bLimit) {
-          return aLimit - bLimit;
+      if (limit > 0) {
+        const lastContext = a.contexts[limit - 1];
+
+        if (
+          lastContext.visitedOrder === a.visitedOrder ||
+          lastContext.visitedOrder === b.visitedOrder
+        ) {
+          return a.visitedOrder - b.visitedOrder;
+        }
+      }
+
+      if (a.contexts.length !== b.contexts.length) {
+        const aContext = a.contexts[limit] ?? {
+          visitedOrder: a.visitedOrder,
+          zIndex: 0,
+        };
+        const bContext = b.contexts[limit] ?? {
+          visitedOrder: b.visitedOrder,
+          zIndex: 0,
+        };
+
+        if (aContext.zIndex !== bContext.zIndex) {
+          return aContext.zIndex - bContext.zIndex;
+        } else if (aContext.visitedOrder !== bContext.visitedOrder) {
+          return aContext.visitedOrder - bContext.visitedOrder;
         }
       }
 

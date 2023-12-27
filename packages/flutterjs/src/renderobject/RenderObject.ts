@@ -217,7 +217,8 @@ class RenderObject {
   rearrangeDomOrder() {
     if (!this.#domOrderChanged) return;
 
-    this.renderOwner.paintContext.insertSvgEl(this.domNode, this.domOrder);
+    this.isPainter &&
+      this.renderOwner.paintContext.insertSvgEl(this.domNode, this.domOrder);
     this.#domOrderChanged = false;
   }
 
