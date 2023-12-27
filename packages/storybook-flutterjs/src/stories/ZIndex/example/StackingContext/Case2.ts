@@ -55,7 +55,7 @@ Stack({
 					height: 100,
 					color: 'lightblue',
 					child: ZIndex({
-						zIndex: 9999,
+						zIndex: -1,
 						child: Container({
 							width: 100,
 							height: 100,
@@ -66,15 +66,6 @@ Stack({
 						})
 					})
 				})
-			})
-		}),
-		Positioned({
-			top: 50,
-			left: 0,
-			child: Container({
-				width: 100,
-				height: 100,
-				color: 'orange'
 			})
 		})
 	]
