@@ -115,7 +115,9 @@ class RenderObject {
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, this.matrix)
       );
-      this.performPaint(svgEls, context);
+      if (this.needsPaint) {
+        this.performPaint(svgEls, context);
+      }
     }
     this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);

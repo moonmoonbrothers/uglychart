@@ -148,7 +148,7 @@ class Alignment extends Calculable {
   static bottomCenter = Alignment.of({ x: 0, y: 1 });
   static bottomRight = Alignment.of({ x: 1, y: 1 });
 
-  resolve(direction?: TextDirection) {
+  resolve(_?: TextDirection) {
     return this;
   }
 }

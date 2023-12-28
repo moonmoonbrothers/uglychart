@@ -28,7 +28,7 @@ class _BoxBorder extends Data implements ShapeBorder {
   /**
    * @deprecated The method should not be used
    */
-  equal(other: BoxBorder): boolean {
+  equal(_: BoxBorder): boolean {
     throw new Error("Method not implemented.");
   }
 

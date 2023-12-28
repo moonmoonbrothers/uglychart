@@ -99,7 +99,7 @@ class DomOrderVisitor implements RenderObjectVisitor {
     if (willCollect) {
       this.collectedRenderObjects.push({
         renderObject,
-        contexts: [...this.currentStackingContext],
+        contexts: this.currentStackingContext,
         visitedOrder: this.currentVisitedOrder++,
       });
     }
