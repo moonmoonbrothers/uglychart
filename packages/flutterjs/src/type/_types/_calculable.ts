@@ -1,4 +1,4 @@
-import Data from "./data";
+import Data from "./_data";
 abstract class Calculatable extends Data {
   plus(other: Calculatable): Calculatable {
     throw Error("plus is not implemented");

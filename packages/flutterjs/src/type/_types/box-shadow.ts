@@ -1,7 +1,7 @@
 import Utils from "../../utils";
-import Calculatable from "./calculable";
-import Color from "./color";
-import Offset from "./offset";
+import Calculatable from "./_calculable";
+import Color from "./_color";
+import Offset from "./_offset";
 
 class BoxShadow extends Calculatable {
   readonly color: Color;

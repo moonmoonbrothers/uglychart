@@ -1,5 +1,5 @@
-import Calculable from "./calculable";
-import Rect from "./rect";
+import Calculable from "./_calculable";
+import Rect from "./_rect";
 
 type EdgeInsetsProps = {
   top: number;

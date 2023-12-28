@@ -1,4 +1,4 @@
-import Calculatable from "./calculable";
+import Calculatable from "./_calculable";
 import rgba from "color-rgba";
 
 class Color extends Calculatable {

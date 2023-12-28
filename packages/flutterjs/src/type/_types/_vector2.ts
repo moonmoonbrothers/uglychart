@@ -1,6 +1,6 @@
-import Vector from "./vector";
-import Vector3 from "./vector3";
-import Vector4 from "./vector4";
+import Vector from "./_vector";
+import Vector3 from "./_vector3";
+import Vector4 from "./_vector4";
 
 export class Vector2 implements Vector {
   _v2storage: [number, number];

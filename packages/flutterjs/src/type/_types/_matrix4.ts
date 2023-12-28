@@ -1,10 +1,10 @@
-import Calculatable from "./calculable";
-import Data from "./data";
-import Matrix2 from "./matrix2";
-import Matrix3 from "./matrix3";
-import Vector2 from "./vector2";
-import Vector3 from "./vector3";
-import Vector4 from "./vector4";
+import Calculatable from "./_calculable";
+import Data from "./_data";
+import Matrix2 from "./_matrix2";
+import Matrix3 from "./_matrix3";
+import Vector2 from "./_vector2";
+import Vector3 from "./_vector3";
+import Vector4 from "./_vector4";
 
 type Array16 = [
   number,

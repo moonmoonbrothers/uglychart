@@ -1,7 +1,7 @@
 import Utils, { assert } from "../../utils";
-import Data from "./data";
+import Data from "./_data";
 import EdgeInsets from "./edge-insets";
-import Size from "./size";
+import Size from "./_size";
 
 type ConstraintsProps = {
   minWidth?: number;

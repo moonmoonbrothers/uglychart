@@ -1,4 +1,4 @@
-import Vector from "./vector";
+import Vector from "./_vector";
 import Vector2 from "./vector2";
 import Vector3 from "./vector3";
 

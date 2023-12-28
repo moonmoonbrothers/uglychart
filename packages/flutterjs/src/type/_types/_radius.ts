@@ -1,5 +1,5 @@
 import Utils from "../../utils";
-import Calculatable from "./calculable";
+import Calculatable from "./_calculable";
 
 export class Radius extends Calculatable {
   readonly x: number;
