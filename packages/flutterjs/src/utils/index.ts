@@ -5,6 +5,7 @@ import { getTextHeight, getTextWidth } from "./getTextSize";
 import functionalizeClass from "./functionalizeClass";
 import { Calculable } from "../type";
 export { default as createUniqueId } from "./createUniqueId";
+export { default as TypedObject } from "./TypedObject";
 
 export { assert, applyMixins, getTextHeight, getTextWidth, functionalizeClass };
 

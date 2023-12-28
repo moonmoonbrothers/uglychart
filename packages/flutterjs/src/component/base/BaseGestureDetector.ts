@@ -1,6 +1,6 @@
 import { RenderObjectElement } from "../../element";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { assert, createUniqueId } from "../../utils";
+import { TypedObject, assert, createUniqueId } from "../../utils";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
@@ -43,15 +43,20 @@ function getSingletonDragBackend(): DragBackend {
   return globalDragBackend;
 }
 
-type Bubble = {
-  click: boolean;
-  mousedown: boolean;
-  mouseup: boolean;
-  mousemove: boolean;
-  mouseover: boolean;
-  mouseenter: boolean;
-  mouseleave: boolean;
-};
+type EventType =
+  | "click"
+  | "mousedown"
+  | "mouseup"
+  | "mousemove"
+  | "wheel"
+  | "mouseover"
+  | "mouseenter"
+  | "mouseleave"
+  | "dragstart"
+  | "dragend"
+  | "drag";
+
+type Bubble = Record<EventType, boolean>;
 
 class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onClick: (e: MouseEvent) => void;
@@ -64,6 +69,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
   onDragStart: (e: MouseEvent) => void;
   onDragMove: (e: MouseEvent) => void;
   onDragEnd: (e: MouseEvent) => void;
+  onWheel: (e: WheelEvent) => void;
   cursor: Cursor;
   bubble: Bubble;
   constructor({
@@ -81,6 +87,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onDragMove,
     onDragStart,
     bubble = {},
+    onWheel,
   }: {
     child?: Widget;
     onClick?: (e: MouseEvent) => void;
@@ -93,6 +100,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     onDragStart?: (e: MouseEvent) => void;
     onDragMove?: (e: MouseEvent) => void;
     onDragEnd?: (e: MouseEvent) => void;
+    onWheel?: (e: WheelEvent) => void;
     cursor?: Cursor;
     key?: any;
     bubble?: Partial<Bubble>;
@@ -108,6 +116,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     this.onDragStart = onDragStart ?? emptyCallback;
     this.onDragMove = onDragMove ?? emptyCallback;
     this.onDragEnd = onDragEnd ?? emptyCallback;
+    this.onWheel = onWheel ?? emptyCallback;
     this.cursor = cursor ?? "pointer";
     this.bubble = {
       mousedown: false,
@@ -117,6 +126,10 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
       mouseover: false,
       mouseup: false,
       click: false,
+      wheel: false,
+      dragstart: false,
+      dragend: false,
+      drag: false,
       ...bubble,
     };
   }
@@ -133,6 +146,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
       onDragStart: this.onDragStart,
       onDragMove: this.onDragMove,
       onDragEnd: this.onDragEnd,
+      onWheel: this.onWheel,
       cursor: this.cursor,
       bubble: this.bubble,
     });
@@ -148,6 +162,7 @@ class BaseGestureDetector extends SingleChildRenderObjectWidget {
     renderObject.onDragMove = this.onDragMove;
     renderObject.onDragEnd = this.onDragEnd;
     renderObject.bubble = this.bubble;
+    renderObject.onWheel = this.onWheel;
   }
 }
 
@@ -249,6 +264,14 @@ class RenderGestureDetector extends SingleChildRenderObject {
     if (this._onDragEnd === prop) return;
     this._onDragEnd = prop;
   }
+  private _onWheel: (e: WheelEvent) => void;
+  get onWheel(): (e: WheelEvent) => void {
+    return this._onWheel;
+  }
+  set onWheel(prop: (e: WheelEvent) => void) {
+    if (this._onWheel === prop) return;
+    this._onWheel = prop;
+  }
 
   constructor({
     onClick,
@@ -263,6 +286,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     onDragStart,
     cursor,
     bubble,
+    onWheel,
   }: {
     onClick: MouseEventCallback;
     onMouseUp: MouseEventCallback;
@@ -274,6 +298,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     onDragStart: MouseEventCallback;
     onDragMove: MouseEventCallback;
     onDragEnd: MouseEventCallback;
+    onWheel: (e: WheelEvent) => void;
     cursor: Cursor;
     bubble: Bubble;
   }) {
@@ -288,10 +313,14 @@ class RenderGestureDetector extends SingleChildRenderObject {
     this._onDragEnd = onDragEnd;
     this._onDragMove = onDragMove;
     this._onDragStart = onDragStart;
+    this._onWheel = onWheel;
     this._cursor = cursor;
     this._bubble = bubble;
   }
-  private get listeners() {
+  private get listeners(): Record<
+    EventType,
+    MouseEventCallback | ((e: WheelEvent) => void)
+  > {
     return {
       click: this.onClick,
       mousedown: this.onMouseDown,
@@ -300,13 +329,16 @@ class RenderGestureDetector extends SingleChildRenderObject {
       mouseover: this.onMouseOver,
       mouseenter: this.onMouseEnter,
       mouseleave: this.onMouseLeave,
+      wheel: this.onWheel,
+      dragstart: this.onDragStart,
+      drag: this.onDragMove,
+      dragend: this.onDragEnd,
     };
   }
 
   attach(ownerElement: RenderObjectElement): void {
     super.attach(ownerElement);
     this.addEventListeners();
-    this.addEventBubbleListeners();
   }
 
   dispose(context: PaintContext): void {
@@ -335,19 +367,20 @@ class RenderGestureDetector extends SingleChildRenderObject {
     dragBackend.isSetup || dragBackend.setup();
     backendRefCount++;
 
+    const { drag, dragend, dragstart, ...restListeners } = this.listeners;
+
     dragBackend.connectDragSource(this.id, rect, {
-      onDragStart: this.onDragStart,
-      onDragMove: this.onDragMove,
-      onDragEnd: this.onDragEnd,
+      onDragStart: dragstart,
+      onDragMove: drag,
+      onDragEnd: dragend,
     });
 
-    rect.addEventListener("click", this.onClick);
-    rect.addEventListener("mousedown", this.onMouseDown);
-    rect.addEventListener("mouseup", this.onMouseUp);
-    rect.addEventListener("mousemove", this.onMouseMove);
-    rect.addEventListener("mouseover", this.onMouseOver);
-    rect.addEventListener("mouseenter", this.onMouseEnter);
-    rect.addEventListener("mouseleave", this.onMouseLeave);
+    TypedObject.entries(restListeners).forEach(([type, listener]) => {
+      rect.addEventListener(type, (e: any) => {
+        listener(e);
+        this.bubble[type] && this.dispatchParent(e);
+      });
+    });
   }
 
   protected performPaint({ rect }: { rect: SVGRectElement }): void {
@@ -375,44 +408,10 @@ class RenderGestureDetector extends SingleChildRenderObject {
     while (parent != null) {
       if (parent instanceof RenderGestureDetector) {
         parent.dispatch(e);
+        break;
       }
       parent = parent.parent;
     }
-  }
-
-  private addEventBubbleListeners() {
-    const {
-      svgEls: { rect },
-    } = this.resolveSvgEl();
-
-    rect.addEventListener("click", (e) => {
-      if (!this.bubble.click) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mousedown", (e) => {
-      if (!this.bubble.mousedown) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mouseup", (e) => {
-      if (!this.bubble.mouseup) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mousemove", (e) => {
-      if (!this.bubble.mousemove) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mouseover", (e) => {
-      if (!this.bubble.mouseover) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mouseenter", (e) => {
-      if (!this.bubble.mouseenter) return;
-      this.dispatchParent(e);
-    });
-    rect.addEventListener("mouseleave", (e) => {
-      if (!this.bubble.mouseleave) return;
-      this.dispatchParent(e);
-    });
   }
 }
 

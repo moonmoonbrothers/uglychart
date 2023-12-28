@@ -1,7 +1,7 @@
 import ShortUniqueId from "short-unique-id";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Size, Constraints, Offset } from "../../type";
-import { Path } from "../../type/_types/path";
+import { Path } from "../../type/_types/_path";
 import { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";

@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.1.20",
+  "version": "1.1.24",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "keywords": [
     "flutterjs",
@@ -12,8 +12,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup",
-    "prepublishOnly": "npm version patch && npm run build"
+    "build": "tsup"
   },
   "devDependencies": {
     "cp": "^0.2.0",
@@ -21,9 +20,9 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "color-rgba": "^3.0.0",
     "popmotion": "^11.0.5",
-    "short-unique-id": "^4.4.4",
-    "color-rgba": "^2.4.0"
+    "short-unique-id": "^5.0.3"
   },
   "repository": {
     "type": "git",
