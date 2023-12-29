@@ -440,25 +440,28 @@ class DragBackend {
   setup() {
     if (typeof window === "undefined") return;
     if (this.isSetup) return;
-    this.root.addEventListener("mousemove", this.handleMouseMoveTop.bind(this));
-    this.root.addEventListener("mouseup", this.handleMouseUpTop.bind(this));
+    this.root.addEventListener("mousemove", this.handleMouseMoveTop);
+    this.root.addEventListener("mouseup", this.handleMouseUpTop);
+    this.isSetup = true;
   }
 
   teardown() {
     if (typeof window === "undefined") return;
     this.root.removeEventListener("mousemove", this.handleMouseMoveTop);
     this.root.removeEventListener("mouseup", this.handleMouseUpTop);
+    this.isSetup = false;
   }
 
-  private handleMouseMoveTop(e: MouseEvent) {
+  private handleMouseMoveTop = (e: MouseEvent) => {
     if (this.activeDragSourceId == null) return;
     this.dragMoveListener[this.activeDragSourceId]?.(e);
-  }
+  };
 
-  private handleMouseUpTop(e: MouseEvent) {
+  private handleMouseUpTop = (e: MouseEvent) => {
     if (this.activeDragSourceId == null) return;
     this.dragEndListener[this.activeDragSourceId]?.(e);
-  }
+    this.activeDragSourceId = null;
+  };
 
   public connectDragSource(
     sourceId: string,

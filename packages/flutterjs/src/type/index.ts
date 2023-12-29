@@ -27,6 +27,11 @@ import TextSpan from "./_types/text-span";
 import Calculable from "./_types/_calculable";
 import Color from "./_types/_color";
 import Data from "./_types/_data";
+import Vector4 from "./_types/_vector4";
+import Vector3 from "./_types/_vector3";
+import Vector2 from "./_types/_vector2";
+import Matrix3 from "./_types/_matrix3";
+
 export * from "./_types/_borders";
 export { ToolTipPosition } from "./_types/tool-tip-position";
 
@@ -61,4 +66,8 @@ export {
   TextSpan,
   Color,
   Data,
+  Vector2,
+  Vector3,
+  Vector4,
+  Matrix3,
 };

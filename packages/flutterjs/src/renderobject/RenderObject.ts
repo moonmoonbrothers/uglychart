@@ -16,8 +16,8 @@ class RenderObject {
   parent?: RenderObject;
   needsPaint = true;
   needsLayout = true;
-  private clipId?: string;
-  private matrix: Matrix4 = Matrix4.identity();
+  clipId?: string;
+  matrix: Matrix4 = Matrix4.identity();
   opacity = 0;
   depth = 0;
 
