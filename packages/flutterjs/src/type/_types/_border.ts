@@ -269,7 +269,7 @@ class Border extends _BoxBorder {
           The following is not uniform: `;
 
           if (!this._colorIsUniform) {
-            new Error(errorMessage + "BorderSide.color");
+            throw new Error(errorMessage + "BorderSide.color");
           }
           if (!this._widthIsUniform) {
             throw new Error(errorMessage + "BorderSide.width");
