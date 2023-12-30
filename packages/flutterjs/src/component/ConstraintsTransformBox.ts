@@ -1,5 +1,6 @@
-import { Alignment, Constraints, Rect, TextDirection } from "../type";
-import Widget from "../widget/Widget";
+import type { Constraints} from "../type";
+import { Alignment, Rect, TextDirection } from "../type";
+import type Widget from "../widget/Widget";
 import BaseConstraintsTransformBox from "./base/BaseConstraintsTransformBox";
 import ClipRect from "./ClipRect";
 

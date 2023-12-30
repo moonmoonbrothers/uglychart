@@ -1,14 +1,16 @@
-import {
-  TextAlign,
+import type {
   TextDirection,
   TextOverflow,
-  TextSpan,
   TextStyle,
-  TextWidthBasis,
+  TextWidthBasis} from "../type";
+import {
+  TextAlign,
+  TextSpan
 } from "../type";
-import InlineSpan from "../type/_types/Inline-span";
-import { BuildContext, StatelessWidget } from "../widget";
-import Widget from "../widget/Widget";
+import type InlineSpan from "../type/_types/Inline-span";
+import type { BuildContext} from "../widget";
+import { StatelessWidget } from "../widget";
+import type Widget from "../widget/Widget";
 import RichText from "./RichText";
 
 function Text(text: string, props: TextProps = {}) {

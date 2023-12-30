@@ -1,10 +1,10 @@
-import Radius from "./_radius";
-import RRect from "./r-rect";
-import Rect from "./_rect";
-import Calculatable from "./_calculable";
+import type Radius from "./_radius";
+import type RRect from "./r-rect";
+import type Rect from "./_rect";
+import Calculable from "./_calculable";
 import Utils from "../../utils";
 
-class BorderRadiusGeometry extends Calculatable {
+class BorderRadiusGeometry extends Calculable {
   topLeft: Radius;
   topRight: Radius;
   bottomLeft: Radius;
@@ -50,7 +50,7 @@ class BorderRadiusGeometry extends Calculatable {
     return this.equals(other);
   }
 
-  toRRect(rect: Rect): RRect {
+  toRRect(_rect: Rect): RRect {
     throw new Error("Not implemented");
   }
 }

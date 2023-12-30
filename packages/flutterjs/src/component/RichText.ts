@@ -2,7 +2,8 @@ import { Rect, TextOverflow } from "../type";
 import { functionalizeClass } from "../utils";
 import { StatelessWidget } from "../widget";
 import ClipRect from "./ClipRect";
-import _RichText, { RichTextProps } from "./base/BaseRichText";
+import type { RichTextProps } from "./base/BaseRichText";
+import _RichText from "./base/BaseRichText";
 
 class RichText extends StatelessWidget {
   private overflow: TextOverflow;

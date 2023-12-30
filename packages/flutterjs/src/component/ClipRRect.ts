@@ -1,5 +1,6 @@
-import { BorderRadius, Path, Rect, RRect, Size } from "../type";
-import Widget from "../widget/Widget";
+import type { RRect, Size } from "../type";
+import { BorderRadius, Path, Rect } from "../type";
+import type Widget from "../widget/Widget";
 import ClipPath from "./ClipPath";
 
 export default function ClipOval({

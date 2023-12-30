@@ -1,6 +1,7 @@
 import { SingleChildRenderObject } from "../../renderobject";
-import RenderObjectVisitor from "../../renderobject/RenderObjectVisitor";
-import { SingleChildRenderObjectWidget, Widget } from "../../widget";
+import type RenderObjectVisitor from "../../renderobject/RenderObjectVisitor";
+import type { Widget } from "../../widget";
+import { SingleChildRenderObjectWidget } from "../../widget";
 
 export default class BaseZIndex extends SingleChildRenderObjectWidget {
   zIndex: number;

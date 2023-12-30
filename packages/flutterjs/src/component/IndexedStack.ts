@@ -1,4 +1,5 @@
-import { Alignment, Rect, StackFit } from "../type";
+import type { Alignment} from "../type";
+import { Rect, StackFit } from "../type";
 import type Widget from "../widget/Widget";
 import BaseIndexedStack from "./base/BaseIndexedStack";
 import ClipRect from "./ClipRect";

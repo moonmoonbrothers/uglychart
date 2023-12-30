@@ -1,12 +1,14 @@
 /* eslint-disable no-case-declarations */
-import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./_borders";
-import EdgeInsets, { EdgeInsetsGeometry } from "./edge-insets";
+import type { BorderStyle, ShapeBorder, StrokeAlign } from "./_borders";
+import { BorderSide } from "./_borders";
+import type { EdgeInsetsGeometry } from "./edge-insets";
+import EdgeInsets from "./edge-insets";
 import Path from "./_path";
 import Rect from "./_rect";
 import BorderRadius from "./border-radius";
 import { assert } from "../../utils";
-import { BoxShape } from "./box-decoration";
-import BorderRadiusGeometry from "./border-radius-geometry";
+import type { BoxShape } from "./box-decoration";
+import type BorderRadiusGeometry from "./border-radius-geometry";
 import Data from "./_data";
 
 class _BoxBorder extends Data implements ShapeBorder {
@@ -20,8 +22,8 @@ class _BoxBorder extends Data implements ShapeBorder {
     return new Path().addRect(rect);
   }
   paint(
-    svgEls: BorderPathEls,
-    _: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
+    _: BorderPathEls,
+    __: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
   ): void {
     throw new Error("Method not implemented.");
   }

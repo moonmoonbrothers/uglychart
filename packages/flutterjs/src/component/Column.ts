@@ -1,10 +1,11 @@
 import type Widget from "../widget/Widget";
 import Flex from "./Flex";
-import {
+import type {
   MainAxisAlignment,
   CrossAxisAlignment,
   VerticalDirection,
-  MainAxisSize,
+  MainAxisSize} from "../type";
+import {
   Axis,
 } from "../type";
 

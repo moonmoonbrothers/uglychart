@@ -1,5 +1,6 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Alignment, Matrix4, Offset, TextDirection } from "../../type";
+import type { Offset} from "../../type";
+import { Alignment, Matrix4, TextDirection } from "../../type";
 import { assert } from "../../utils";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";

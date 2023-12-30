@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RenderOwner } from "../scheduler";
-import { Size, Constraints, Matrix4 } from "../type";
-import { PaintContext } from "../utils/type";
+import type { RenderOwner } from "../scheduler";
+import type { Matrix4 } from "../type";
+import { Size, Constraints } from "../type";
+import type { PaintContext } from "../utils/type";
 import RenderObject from "./RenderObject";
 
 class RenderView extends RenderObject {

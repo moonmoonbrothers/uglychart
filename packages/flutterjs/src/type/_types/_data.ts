@@ -1,5 +1,5 @@
 abstract class Data {
-  equals(other: Data): boolean {
+  equals(_other: Data): boolean {
     throw new Error("equals not implemented");
   }
 }

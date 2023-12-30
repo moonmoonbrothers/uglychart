@@ -1,33 +1,33 @@
 import Animation from "./Animation";
-abstract class Animitable<T> {
-  transform(value: number): T {
+abstract class Animatable<T> {
+  transform(_value: number): T {
     throw new Error("transform must be implemented");
   }
   evaluate(animation: Animation<number>): T {
     return this.transform(animation.value);
   }
   animated(animation: Animation<number>): Animation<T> {
-    return new AnimatedEvaludation({ parent: animation, animitable: this });
+    return new AnimatedEvaluation({ parent: animation, animatable: this });
   }
 }
 
-class AnimatedEvaludation<T> extends Animation<T> {
+class AnimatedEvaluation<T> extends Animation<T> {
   parent: Animation<number>;
-  animitable: Animitable<T>;
+  animatable: Animatable<T>;
   constructor({
-    animitable,
+    animatable: animatable,
     parent,
   }: {
-    animitable: Animitable<T>;
+    animatable: Animatable<T>;
     parent: Animation<number>;
   }) {
     super();
     this.parent = parent;
-    this.animitable = animitable;
+    this.animatable = animatable;
   }
   get value(): T {
-    return this.animitable.evaluate(this.parent);
+    return this.animatable.evaluate(this.parent);
   }
 }
 
-export default Animitable;
+export default Animatable;

@@ -1,4 +1,4 @@
-import { Alignment, Matrix4, Offset } from "../type";
+import type { Alignment, Matrix4, Offset } from "../type";
 import type Widget from "../widget/Widget";
 import BaseTransform from "./base/BaseTransform";
 

@@ -1,4 +1,4 @@
-import { StatelessWidget, Widget } from "../widget";
+import type { StatelessWidget, Widget } from "../widget";
 import ComponentElement from "./ComponentElement";
 class StatelessElement extends ComponentElement {
   initState(): void {

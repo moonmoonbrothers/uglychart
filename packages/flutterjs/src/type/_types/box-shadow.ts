@@ -1,9 +1,9 @@
 import Utils from "../../utils";
-import Calculatable from "./_calculable";
+import Calculable from "./_calculable";
 import Color from "./_color";
 import Offset from "./_offset";
 
-class BoxShadow extends Calculatable {
+class BoxShadow extends Calculable {
   readonly color: Color;
   readonly offset: Offset;
   readonly blurRadius: number;

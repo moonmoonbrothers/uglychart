@@ -1,9 +1,8 @@
 /* eslint-disable prefer-const */
-import Calculatable from "./_calculable";
-import Data from "./_data";
-import Matrix2 from "./_matrix2";
+import Calculable from "./_calculable";
+import type Matrix2 from "./_matrix2";
 import Matrix3 from "./_matrix3";
-import Vector2 from "./_vector2";
+import type Vector2 from "./_vector2";
 import Vector3 from "./_vector3";
 import Vector4 from "./_vector4";
 
@@ -26,7 +25,7 @@ type Array16 = [
   number
 ];
 
-class Matrix4 extends Calculatable {
+class Matrix4 extends Calculable {
   // 4 x 4 matrix
   _m4storage: Array16;
   get storage() {

@@ -1,9 +1,9 @@
 import Utils, { assert } from "../../utils";
 import Color from "./_color";
 import Data from "./_data";
-import { EdgeInsetsGeometry } from "./edge-insets";
-import Path from "./_path";
-import Rect from "./_rect";
+import type { EdgeInsetsGeometry } from "./edge-insets";
+import type Path from "./_path";
+import type Rect from "./_rect";
 
 export type StrokeAlign = -1 | 0 | 1;
 

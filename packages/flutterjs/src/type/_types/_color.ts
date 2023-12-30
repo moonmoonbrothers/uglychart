@@ -1,7 +1,7 @@
-import Calculatable from "./_calculable";
+import Calculable from "./_calculable";
 import rgba from "color-rgba";
 
-class Color extends Calculatable {
+class Color extends Calculable {
   private readonly r: number;
   private readonly g: number;
   private readonly b: number;

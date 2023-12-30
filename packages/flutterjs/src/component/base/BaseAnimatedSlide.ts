@@ -1,6 +1,7 @@
-import { CalculableTween, Curve, Tween } from "../../animation";
-import { Alignment, Data, Offset } from "../../type";
-import { Widget } from "../../widget";
+import type { Curve, Tween } from "../../animation";
+import { CalculableTween } from "../../animation";
+import type { Alignment, Data, Offset } from "../../type";
+import type { Widget } from "../../widget";
 import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,

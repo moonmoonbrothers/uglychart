@@ -1,4 +1,4 @@
-import { VoidCallback } from "../utils/type";
+import type { VoidCallback } from "../utils/type";
 import ChangeNotifier from "./ChangeNotifier";
 
 function ReactiveChangeNotifier<V>(value: V) {

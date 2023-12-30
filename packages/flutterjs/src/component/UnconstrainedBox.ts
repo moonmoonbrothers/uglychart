@@ -1,5 +1,6 @@
-import { Alignment, TextDirection } from "../type";
-import Widget from "../widget/Widget";
+import type { TextDirection } from "../type";
+import { Alignment } from "../type";
+import type Widget from "../widget/Widget";
 import ConstraintsTransformBox from "./ConstraintsTransformBox";
 
 function UnconstrainedBox({

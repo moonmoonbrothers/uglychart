@@ -1,10 +1,11 @@
 /* eslint-disable no-case-declarations */
-import Border, { BoxBorder } from "./_border";
-import BorderRadiusGeometry from "./border-radius-geometry";
-import { EdgeInsetsGeometry } from "./edge-insets";
+import type { BoxBorder } from "./_border";
+import Border from "./_border";
+import type BorderRadiusGeometry from "./border-radius-geometry";
+import type { EdgeInsetsGeometry } from "./edge-insets";
 import Path from "./_path";
 import Rect from "./_rect";
-import Size from "./_size";
+import type Size from "./_size";
 import RRect from "./r-rect";
 import Color from "./_color";
 import BoxShadow from "./box-shadow";

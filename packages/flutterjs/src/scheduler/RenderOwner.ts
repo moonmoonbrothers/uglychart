@@ -1,8 +1,8 @@
-import { RenderZIndex } from "../component/base/BaseZIndex";
-import RenderObject from "../renderobject/RenderObject";
-import RenderView from "../renderobject/RenderObject";
-import RenderObjectVisitor from "../renderobject/RenderObjectVisitor";
-import { PaintContext } from "../utils/type";
+import type { RenderZIndex } from "../component/base/BaseZIndex";
+import type RenderObject from "../renderobject/RenderObject";
+import type RenderView from "../renderobject/RenderObject";
+import type RenderObjectVisitor from "../renderobject/RenderObjectVisitor";
+import type { PaintContext } from "../utils/type";
 class RenderOwner {
   paintContext: PaintContext;
   private onNeedVisualUpdate: () => void;

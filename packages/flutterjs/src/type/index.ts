@@ -32,7 +32,7 @@ import Vector3 from "./_types/_vector3";
 import Vector2 from "./_types/_vector2";
 import Matrix3 from "./_types/_matrix3";
 
-import { BorderSide, StrokeAlign } from "./_types/_borders";
+import { BorderSide } from "./_types/_borders";
 export { ToolTipPosition } from "./_types/tool-tip-position";
 
 export {

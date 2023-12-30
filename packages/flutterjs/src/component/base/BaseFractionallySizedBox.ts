@@ -1,6 +1,7 @@
 import { RenderAligningShiftedBox } from "../../renderobject";
 import { Alignment, Constraints, Size, TextDirection } from "../../type";
-import { SingleChildRenderObjectWidget, Widget } from "../../widget";
+import type { Widget } from "../../widget";
+import { SingleChildRenderObjectWidget } from "../../widget";
 
 class BaseFractionallySizedBox extends SingleChildRenderObjectWidget {
   widthFactor?: number;

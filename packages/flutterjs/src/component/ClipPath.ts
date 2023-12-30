@@ -1,8 +1,8 @@
-import { Element } from "../element";
-import { Path, Size } from "../type";
+import type { Element } from "../element";
+import type { Path, Size } from "../type";
 import { functionalizeClass } from "../utils";
 import { StatelessWidget } from "../widget";
-import Widget from "../widget/Widget";
+import type Widget from "../widget/Widget";
 import BaseClipPath from "./base/BaseClipPath";
 
 class ClipPath extends StatelessWidget {
@@ -26,7 +26,7 @@ class ClipPath extends StatelessWidget {
     this.clipped = clipped;
   }
 
-  build(context: Element): Widget {
+  build(_: Element): Widget {
     if (!this.clipped) return this.child;
     return new BaseClipPath({ child: this.child, clipper: this.clipper });
   }

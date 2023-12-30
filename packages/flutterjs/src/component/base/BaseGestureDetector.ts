@@ -1,4 +1,4 @@
-import { RenderObjectElement } from "../../element";
+import type { RenderObjectElement } from "../../element";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { TypedObject, assert, createUniqueId } from "../../utils";
 import type { PaintContext } from "../../utils/type";
@@ -417,7 +417,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
 
 type MouseEventCallback = (event: MouseEvent) => void;
 
-function emptyCallback(arg?: any) {}
+function emptyCallback(_arg?: any) {}
 
 type SourceId = string;
 

@@ -1,20 +1,22 @@
-import { CalculableTween, Curve, Tween } from "../../animation";
-import {
+import type { Curve} from "../../animation";
+import { CalculableTween, Tween } from "../../animation";
+import type {
   Alignment,
-  Constraints,
   Decoration,
   Matrix4,
-  Data,
+  Data} from "../../type";
+import {
+  Constraints,
   BoxDecoration,
 } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import Container from "../Container";
 import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
 } from "../../widget/ImplicitlyAnimatedWidget";
-import { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
+import type { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
 import { assert } from "../../utils";
 
 class BaseAnimatedContainer extends ImplicitlyAnimatedWidget {

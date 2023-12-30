@@ -1,7 +1,7 @@
 import Utils from "../../utils";
-import Calculatable from "./_calculable";
+import Calculable from "./_calculable";
 
-export class Radius extends Calculatable {
+export class Radius extends Calculable {
   readonly x: number;
   readonly y: number;
   constructor(x: number, y: number) {

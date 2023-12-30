@@ -1,6 +1,6 @@
-import Matrix4 from "./_matrix4";
-import Matrix3 from "./_matrix3";
-import Vector from "./_vector";
+import type Matrix4 from "./_matrix4";
+import type Matrix3 from "./_matrix3";
+import type Vector from "./_vector";
 import Vector2 from "./_vector2";
 import Vector4 from "./_vector4";
 

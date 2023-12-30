@@ -1,4 +1,5 @@
-import { Constraints, Size } from "../type";
+import type { Size } from "../type";
+import { Constraints } from "../type";
 import type Widget from "../widget/Widget";
 import ConstrainedBox from "./ConstrainedBox";
 
@@ -32,7 +33,7 @@ SizedBox.expand = ({
   width = Infinity,
   height = Infinity,
 }: { child?: Widget; width?: number; height?: number } = {}) =>
-  SizedBox({ width: Infinity, height: Infinity, child });
+  SizedBox({ width, height, child });
 
 SizedBox.fromSize = ({ child, size }: { child?: Widget; size?: Size } = {}) =>
   SizedBox({ width: size?.width, height: size?.height, child });

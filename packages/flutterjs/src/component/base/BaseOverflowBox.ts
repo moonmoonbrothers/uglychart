@@ -1,7 +1,7 @@
 import RenderAligningShiftedBox from "../../renderobject/RenderAligningShiftedBox";
 import { Alignment, Constraints, TextDirection } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
-import Widget from "../../widget/Widget";
+import type Widget from "../../widget/Widget";
 
 class BaseOverflowBox extends SingleChildRenderObjectWidget {
   minWidth?: number;

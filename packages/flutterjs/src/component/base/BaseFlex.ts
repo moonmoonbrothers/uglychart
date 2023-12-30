@@ -1,6 +1,7 @@
 import MultiChildRenderObject from "../../renderobject/MultiChildRenderObject";
+import type {
+  Axis} from "../../type";
 import {
-  Axis,
   Constraints,
   CrossAxisAlignment,
   MainAxisAlignment,

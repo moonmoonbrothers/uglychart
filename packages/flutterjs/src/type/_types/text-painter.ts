@@ -1,6 +1,6 @@
-import InlineSpan from "./Inline-span";
+import type InlineSpan from "./Inline-span";
 import Utils, { assert, getTextWidth } from "../../utils";
-import { PaintContext } from "../../utils/type";
+import type { PaintContext } from "../../utils/type";
 
 function getTextHeight({ fontSize }: { fontSize: number }) {
   return fontSize;

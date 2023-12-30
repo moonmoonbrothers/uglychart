@@ -1,6 +1,6 @@
 import Utils, { assert } from "../../utils";
 import Data from "./_data";
-import EdgeInsets from "./edge-insets";
+import type EdgeInsets from "./edge-insets";
 import Size from "./_size";
 
 type ConstraintsProps = {

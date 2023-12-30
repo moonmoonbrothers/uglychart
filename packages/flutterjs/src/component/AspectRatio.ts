@@ -1,4 +1,3 @@
-import type Widget from "../widget/Widget";
 import _AspectRatio from "./base/BaseAspectRatio";
 function AspectRatio(...props: ConstructorParameters<typeof _AspectRatio>) {
   return new _AspectRatio(...props);

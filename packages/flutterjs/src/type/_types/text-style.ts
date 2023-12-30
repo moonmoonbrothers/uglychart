@@ -1,6 +1,5 @@
-import TextOverflow from "./text-overflow";
-import TextAlign from "./text-align";
-import TextDirection from "./text-direction";
+import type TextAlign from "./text-align";
+import type TextDirection from "./text-direction";
 
 class TextStyle {
   inherit: boolean;

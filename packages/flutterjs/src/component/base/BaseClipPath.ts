@@ -1,8 +1,8 @@
 import ShortUniqueId from "short-unique-id";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Size, Constraints, Offset } from "../../type";
-import { Path } from "../../type/_types/_path";
-import { PaintContext } from "../../utils/type";
+import type { Size } from "../../type";
+import type { Path } from "../../type/_types/_path";
+import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 
@@ -51,9 +51,7 @@ class RenderClipPath extends SingleChildRenderObject {
     this._clipper = clipper;
   }
 
-  protected getChildClipId(
-    parentClipId?: string | undefined
-  ): string | undefined {
+  protected getChildClipId(_parentId?: string | undefined): string | undefined {
     return this.id;
   }
 

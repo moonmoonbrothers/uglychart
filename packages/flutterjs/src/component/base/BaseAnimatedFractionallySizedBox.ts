@@ -1,7 +1,9 @@
-import { CalculableTween, Curve, Tween } from "../../animation";
-import { Alignment, Calculable, Data } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Curve } from "../../animation";
+import { CalculableTween, Tween } from "../../animation";
+import type { Data } from "../../type";
+import { Alignment } from "../../type";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import FractionallySizedBox from "../FractionallySizedBox";
 import {
   ImplicitlyAnimatedWidget,

@@ -1,6 +1,7 @@
 import type RenderObject from "../renderobject/RenderObject";
 import type { RenderContext } from "../runApp";
-import { BuildOwner, GlobalKey, Scheduler } from "../scheduler";
+import type { BuildOwner, Scheduler } from "../scheduler";
+import { GlobalKey } from "../scheduler";
 import Widget from "../widget/Widget";
 
 class Element {
