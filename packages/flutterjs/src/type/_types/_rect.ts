@@ -116,7 +116,7 @@ export class Rect {
   }
 
   deflate(delta: number) {
-    return this, this.inflate(-delta);
+    return this.inflate(-delta);
   }
 }
 
