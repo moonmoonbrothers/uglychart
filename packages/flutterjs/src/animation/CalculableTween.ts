@@ -1,4 +1,4 @@
-import { Calculable, Data } from "../type";
+import { Calculable } from "../type";
 import Tween from "./Tween";
 
 class CalculatableTween<T extends Calculable> extends Tween<T> {

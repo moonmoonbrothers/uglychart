@@ -1,4 +1,4 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
+import { CalculableTween, Curve, Tween } from "../../animation";
 import {
   Alignment,
   Constraints,
@@ -107,8 +107,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.alignment = visitor({
       tween: this.alignment,
       targetValue: this.widget.alignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.width = visitor({
       tween: this.width,
@@ -123,20 +122,17 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.padding = visitor({
       tween: this.padding,
       targetValue: this.widget.padding,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.margin = visitor({
       tween: this.margin,
       targetValue: this.widget.margin,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.transformAlignment = visitor({
       tween: this.transformAlignment,
       targetValue: this.widget.transformAlignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.decoration = visitor({
       tween: this.decoration,
@@ -146,8 +142,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.transform = visitor({
       tween: this.transform,
       targetValue: this.widget.transform,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.constraints = visitor({
       tween: this.constraints,

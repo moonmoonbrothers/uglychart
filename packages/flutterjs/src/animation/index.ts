@@ -3,7 +3,7 @@ import Curves from "./Curves";
 import Tween from "./Tween";
 import Curve from "./Curve";
 import CurvedAnimation from "./CurvedAnimation";
-import CalculatableTween from "./CalculatableTween";
+import CalculableTween from "./CalculableTween";
 import Animation from "./Animation";
 
 export {
@@ -12,6 +12,6 @@ export {
   Tween,
   Curve,
   CurvedAnimation,
-  CalculatableTween,
+  CalculableTween,
   Animation,
 };

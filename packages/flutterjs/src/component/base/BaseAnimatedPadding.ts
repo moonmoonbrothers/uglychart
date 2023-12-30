@@ -1,4 +1,4 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
+import { CalculableTween, Curve, Tween } from "../../animation";
 import { Calculable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
@@ -49,8 +49,7 @@ class BaseAnimatedPaddingState extends AnimatedBaseWidgetState<BaseAnimatedPaddi
     this.paddingTween = visitor({
       tween: this.paddingTween,
       targetValue: this.widget.padding,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
   }
 

@@ -3,10 +3,10 @@ import {
   Curve,
   CurvedAnimation,
   Curves,
-  Tween,
+  type Tween,
 } from "../animation";
 import { State, type BuildContext } from "../element";
-import { Calculable, Data } from "../type";
+import type { Calculable, Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 

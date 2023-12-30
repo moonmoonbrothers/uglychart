@@ -1,6 +1,6 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.1.32",
+  "version": "1.1.35",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
   "keywords": [
     "flutterjs",
@@ -38,14 +38,13 @@
   "type": "module",
   "publishConfig": {
     "access": "public",
-    "main": "./dist/index.mjs",
-    "module": "./dist/index.mjs",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "type": "module",
     "exports": {
       "default": "./dist/index.cjs",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "node": "./dist/index.cjs"
+      "import": "./dist/index.js"
     }
   }
 }

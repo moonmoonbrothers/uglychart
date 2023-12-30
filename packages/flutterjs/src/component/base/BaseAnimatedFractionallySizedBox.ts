@@ -1,4 +1,4 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
+import { CalculableTween, Curve, Tween } from "../../animation";
 import { Alignment, Calculable, Data } from "../../type";
 import { Nullable } from "../../utils/type";
 import { Widget } from "../../widget";
@@ -57,8 +57,7 @@ class BaseAnimatedFractionallySizedBoxState extends AnimatedBaseWidgetState<Base
     this.alignment = visitor({
       tween: this.alignment,
       targetValue: this.widget.alignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.heightFactor = visitor({
       tween: this.heightFactor,
