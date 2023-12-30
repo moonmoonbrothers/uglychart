@@ -5,7 +5,8 @@ import {
   Curves,
   type Tween,
 } from "../animation";
-import { State, type BuildContext } from "../element";
+import { State } from "../element/StatefulElement";
+import type { BuildContext } from "../element";
 import type { Calculable, Data } from "../type";
 import { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
