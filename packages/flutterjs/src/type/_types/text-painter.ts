@@ -226,7 +226,7 @@ export class Paragraph {
         const currentHeight = getTextHeight({ fontSize });
         const font = `${fontWeight} ${fontSize}px ${fontFamily}`;
         words.forEach((word) => {
-          let wordWidth = getTextWidth({
+          const wordWidth = getTextWidth({
             text: word,
             font,
           });

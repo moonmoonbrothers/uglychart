@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import Border, { BoxBorder } from "./_border";
 import BorderRadiusGeometry from "./border-radius-geometry";
 import { EdgeInsetsGeometry } from "./edge-insets";

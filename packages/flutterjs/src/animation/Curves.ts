@@ -33,21 +33,19 @@ const transforms = {
   bounceOut,
 };
 
-namespace Curves {
-  export const linear = new Curve(transforms.linear);
-  export const easeIn = new Curve(transforms.easeIn);
-  export const easeInOut = new Curve(transforms.easeInOut);
-  export const easeOut = new Curve(transforms.easeOut);
-  export const circIn = new Curve(transforms.circIn);
-  export const circInOut = new Curve(transforms.circInOut);
-  export const circOut = new Curve(transforms.circInOut);
-  export const backIn = new Curve(transforms.backIn);
-  export const backInOut = new Curve(transforms.backInOut);
-  export const backOut = new Curve(transforms.backOut);
-  export const anticipate = new Curve(transforms.anticipate);
-  export const bounceIn = new Curve(transforms.bounceIn);
-  export const bounceInOut = new Curve(transforms.bounceInOut);
-  export const bounceOut = new Curve(transforms.bounceOut);
-}
-
-export default Curves;
+export default {
+  linear: new Curve(transforms.linear),
+  easeIn: new Curve(transforms.easeIn),
+  easeInOut: new Curve(transforms.easeInOut),
+  easeOut: new Curve(transforms.easeOut),
+  circIn: new Curve(transforms.circIn),
+  circInOut: new Curve(transforms.circInOut),
+  circOut: new Curve(transforms.circInOut),
+  backIn: new Curve(transforms.backIn),
+  backInOut: new Curve(transforms.backInOut),
+  backOut: new Curve(transforms.backOut),
+  anticipate: new Curve(transforms.anticipate),
+  bounceIn: new Curve(transforms.bounceIn),
+  bounceInOut: new Curve(transforms.bounceInOut),
+  bounceOut: new Curve(transforms.bounceOut),
+};

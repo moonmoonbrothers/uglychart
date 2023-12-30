@@ -31,7 +31,7 @@ class IndexedStack extends Stack {
   }
 
   updateRenderObject(renderObject: RenderIndexedStack): void {
-    renderObject.index = renderObject.index;
+    renderObject.index = this.index;
     renderObject.fit = this.fit;
     renderObject.alignment = this.alignment;
   }

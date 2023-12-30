@@ -79,8 +79,7 @@ class _Container extends StatelessWidget {
     this.transformAlignment = transformAlignment;
   }
   build(context: Element): Widget {
-    let {
-      constraints,
+    const {
       padding,
       margin,
       width,
@@ -93,6 +92,7 @@ class _Container extends StatelessWidget {
       transform,
       transformAlignment,
     } = this;
+    let constraints = this.constraints;
     constraints =
       width != null || height != null
         ? constraints?.tighten({ width, height }) ??

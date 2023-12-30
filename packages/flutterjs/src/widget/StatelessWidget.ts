@@ -7,9 +7,9 @@ class StatelessWidget extends Widget {
     return new StatelessElement(this);
   }
 
-  initState(context: BuildContext): void {}
+  initState(_: BuildContext): void {}
 
-  build(context: BuildContext): Widget {
+  build(_: BuildContext): Widget {
     throw { message: "not implemented build on ComponentWidget" };
   }
 }

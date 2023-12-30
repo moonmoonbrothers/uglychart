@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./_borders";
 import EdgeInsets, { EdgeInsetsGeometry } from "./edge-insets";
 import Path from "./_path";

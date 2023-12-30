@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import Calculatable from "./_calculable";
 import Data from "./_data";
 import Matrix2 from "./_matrix2";
@@ -175,7 +176,7 @@ class Matrix4 extends Calculatable {
     const bZ = b.storage[2];
     const bW = b.storage[3];
 
-    var det =
+    let det =
       b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
     if (det != 0.0) {
