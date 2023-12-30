@@ -1,5 +1,5 @@
-import TextStyle from "./text-style";
-import { Paragraph } from "./text-painter";
+import type TextStyle from "./text-style";
+import type { Paragraph } from "./text-painter";
 
 class InlineSpan {
   style?: TextStyle;
@@ -26,11 +26,11 @@ class InlineSpan {
     throw new Error("Not implemented: computeToPlainText");
   }
 
-  build(paragraph: Paragraph, inheritedStyle?: TextStyle) {
+  build(_paragraph: Paragraph, _inheritedStyle?: TextStyle) {
     throw new Error("Not implemented: build");
   }
 
-  visitChildren(visitor: (span: InlineSpan) => void) {
+  visitChildren(_visitor: (span: InlineSpan) => void) {
     throw new Error("Not implemented: visitChildren");
   }
 

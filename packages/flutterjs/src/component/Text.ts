@@ -1,14 +1,16 @@
-import {
-  TextAlign,
+import type {
   TextDirection,
   TextOverflow,
-  TextSpan,
   TextStyle,
-  TextWidthBasis,
+  TextWidthBasis} from "../type";
+import {
+  TextAlign,
+  TextSpan
 } from "../type";
-import InlineSpan from "../type/_types/Inline-span";
-import { BuildContext, StatelessWidget } from "../widget";
-import Widget from "../widget/Widget";
+import type InlineSpan from "../type/_types/Inline-span";
+import type { BuildContext} from "../widget";
+import { StatelessWidget } from "../widget";
+import type Widget from "../widget/Widget";
 import RichText from "./RichText";
 
 function Text(text: string, props: TextProps = {}) {
@@ -54,9 +56,7 @@ class _Text extends StatelessWidget {
     this.textSpan = textSpan;
   }
 
-  //DefaultTextSTyle.of(context) 추가할 예정
-  build(context: BuildContext): Widget {
-    //const defaultTextStyle = DefaultTExtStyle.of(context);
+  build(_: BuildContext): Widget {
     return RichText({
       textAlign: this.textAlign ?? TextAlign.start,
       textDirection: this.textDirection,

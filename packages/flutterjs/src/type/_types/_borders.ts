@@ -1,9 +1,9 @@
 import Utils, { assert } from "../../utils";
-import Color from "./color";
-import Data from "./data";
-import { EdgeInsetsGeometry } from "./edge-insets";
-import Path from "./path";
-import Rect from "./rect";
+import Color from "./_color";
+import Data from "./_data";
+import type { EdgeInsetsGeometry } from "./edge-insets";
+import type Path from "./_path";
+import type Rect from "./_rect";
 
 export type StrokeAlign = -1 | 0 | 1;
 
@@ -71,7 +71,9 @@ export class BorderSide extends Data {
   static strokeAlignInside = -1 as const;
   static strokeAlignCenter = 0 as const;
   static strokeAlignOutside = 1 as const;
-  static none = new BorderSide({ width: 0, style: "none" });
+  static get none() {
+    return new BorderSide({ width: 0, style: "none" });
+  }
 
   get strokeInset(): number {
     return this.width * (1 - (1 + this.strokeAlign) / 2);

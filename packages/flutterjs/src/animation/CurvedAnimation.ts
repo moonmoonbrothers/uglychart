@@ -1,5 +1,5 @@
 import Animation from "./Animation";
-import Curve from "./Curve";
+import type Curve from "./Curve";
 import Curves from "./Curves";
 
 class CurvedAnimation extends Animation<number> {

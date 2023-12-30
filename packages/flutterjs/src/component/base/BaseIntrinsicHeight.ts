@@ -1,4 +1,4 @@
-import RenderObject from "../../renderobject/RenderObject";
+import type RenderObject from "../../renderobject/RenderObject";
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Constraints } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
@@ -7,7 +7,7 @@ export default class BaseIntrinsicHeight extends SingleChildRenderObjectWidget {
   createRenderObject(): SingleChildRenderObject {
     return new RenderIntrinsicHeight({ isPainter: false });
   }
-  updateRenderObject(renderObject: RenderObject): void {}
+  updateRenderObject(_: RenderObject): void {}
 }
 
 class RenderIntrinsicHeight extends SingleChildRenderObject {

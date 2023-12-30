@@ -1,4 +1,4 @@
-import Offset from "./offset";
+import Offset from "./_offset";
 
 export class Rect {
   private constructor(
@@ -116,7 +116,7 @@ export class Rect {
   }
 
   deflate(delta: number) {
-    return this, this.inflate(-delta);
+    return this.inflate(-delta);
   }
 }
 

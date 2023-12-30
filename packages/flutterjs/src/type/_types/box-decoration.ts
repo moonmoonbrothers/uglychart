@@ -1,17 +1,19 @@
-import Border, { BoxBorder } from "./border";
-import BorderRadiusGeometry from "./border-radius-geometry";
-import { EdgeInsetsGeometry } from "./edge-insets";
-import Path from "./path";
-import Rect from "./rect";
-import Size from "./size";
+/* eslint-disable no-case-declarations */
+import type { BoxBorder } from "./_border";
+import Border from "./_border";
+import type BorderRadiusGeometry from "./border-radius-geometry";
+import type { EdgeInsetsGeometry } from "./edge-insets";
+import Path from "./_path";
+import Rect from "./_rect";
+import type Size from "./_size";
 import RRect from "./r-rect";
-import Color from "./color";
+import Color from "./_color";
 import BoxShadow from "./box-shadow";
 import Utils, { assert } from "../../utils";
-import { BorderSide } from "./borders";
+import { BorderSide } from "./_borders";
 import BorderRadius from "./border-radius";
-import Radius from "./radius";
-import Data from "./data";
+import Radius from "./_radius";
+import Data from "./_data";
 
 export type Decoration = BoxDecoration;
 

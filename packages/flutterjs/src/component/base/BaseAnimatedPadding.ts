@@ -1,13 +1,15 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
-import { Calculable, Data } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Curve, Tween } from "../../animation";
+import { CalculableTween } from "../../animation";
+import type { Data } from "../../type";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import Padding from "../Padding";
 import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
 } from "../../widget/ImplicitlyAnimatedWidget";
-import EdgeInsets, { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
+import type { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
+import EdgeInsets from "../../type/_types/edge-insets";
 
 class BaseAnimatedPadding extends ImplicitlyAnimatedWidget {
   opacity: number;
@@ -49,8 +51,7 @@ class BaseAnimatedPaddingState extends AnimatedBaseWidgetState<BaseAnimatedPaddi
     this.paddingTween = visitor({
       tween: this.paddingTween,
       targetValue: this.widget.padding,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
   }
 

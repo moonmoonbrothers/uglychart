@@ -1,5 +1,6 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Alignment, Matrix4, Offset, TextDirection } from "../../type";
+import type { Offset} from "../../type";
+import { Alignment, Matrix4, TextDirection } from "../../type";
 import { assert } from "../../utils";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
@@ -33,13 +34,16 @@ class Transform extends SingleChildRenderObjectWidget {
     origin,
     alignment = Alignment.center,
     child,
+    key,
   }: {
     origin?: Offset;
     alignment?: Alignment;
     child?: Widget;
     angle: number;
+    key?: any;
   }) {
     return new Transform({
+      key,
       child,
       origin,
       alignment,
@@ -72,6 +76,7 @@ class Transform extends SingleChildRenderObjectWidget {
     scaleY,
     origin,
     alignment = Alignment.center,
+    key,
   }: {
     child?: Widget;
     alignment?: Alignment;
@@ -79,6 +84,7 @@ class Transform extends SingleChildRenderObjectWidget {
     scale?: number;
     scaleX?: number;
     scaleY?: number;
+    key?: any;
   }) {
     assert(
       !(scale == null && scaleX == null && scaleY == null),
@@ -89,6 +95,7 @@ class Transform extends SingleChildRenderObjectWidget {
       "If 'scale' is non-null then 'scaleX' and 'scaleY' must be left null"
     );
     return new Transform({
+      key,
       child,
       origin,
       alignment,
@@ -154,15 +161,15 @@ class RenderTransform extends SingleChildRenderObject {
     return this._origin;
   }
   set origin(value: Offset | undefined | null) {
-    if (value == null && this.origin == null) return;
+    if (value == null && this._origin == null) return;
     if (
       value != null &&
-      this.origin != null &&
-      this.origin.x === value.x &&
-      this.origin.y === value.y
+      this._origin != null &&
+      this._origin.x === value.x &&
+      this._origin.y === value.y
     )
       return;
-    this.origin = value;
+    this._origin = value;
     this.markNeedsLayout();
   }
   _alignment?: Alignment;

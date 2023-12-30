@@ -1,8 +1,9 @@
 import { assert } from "../../utils";
 import Stack, { RenderStack } from "./BaseStack";
 import type Widget from "../../widget/Widget";
-import { Alignment, Matrix4, Offset, StackFit } from "../../type";
-import { PaintContext } from "../../utils/type";
+import type { Alignment, Matrix4 } from "../../type";
+import { StackFit } from "../../type";
+import type { PaintContext } from "../../utils/type";
 
 class IndexedStack extends Stack {
   index: number;
@@ -31,7 +32,7 @@ class IndexedStack extends Stack {
   }
 
   updateRenderObject(renderObject: RenderIndexedStack): void {
-    renderObject.index = renderObject.index;
+    renderObject.index = this.index;
     renderObject.fit = this.fit;
     renderObject.alignment = this.alignment;
   }

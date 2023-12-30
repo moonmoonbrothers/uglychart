@@ -1,5 +1,4 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Size } from "../../type";
 import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";

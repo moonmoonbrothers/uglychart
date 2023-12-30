@@ -1,4 +1,4 @@
-import { BuildContext } from "../element";
+import type { BuildContext } from "../element";
 import { assert } from "../utils";
 import type BuildOwner from "./BuildOwner";
 class GlobalKey {

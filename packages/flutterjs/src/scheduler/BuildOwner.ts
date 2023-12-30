@@ -1,5 +1,5 @@
-import Element from "../element/Element";
-import GlobalKey from "./Globalkey";
+import type Element from "../element/Element";
+import type GlobalKey from "./Globalkey";
 
 class BuildOwner {
   private onNeedVisualUpdate: () => void;

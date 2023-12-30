@@ -1,8 +1,7 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
-import { Alignment, Calculable, Data, Offset } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
-import Transform from "../Transform";
+import type { Curve, Tween } from "../../animation";
+import { CalculableTween } from "../../animation";
+import type { Alignment, Data, Offset } from "../../type";
+import type { Widget } from "../../widget";
 import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
@@ -49,7 +48,7 @@ class BaseAnimatedSlideState extends AnimatedBaseWidgetState<BaseAnimatedSlide> 
     this.offset = visitor({
       tween: this.offset,
       targetValue: this.widget.offset,
-      constructor: (value) => new CalculatableTween({ begin: value }),
+      constructor: (value) => new CalculableTween({ begin: value }),
     })!;
   }
 

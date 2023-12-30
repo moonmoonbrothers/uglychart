@@ -1,7 +1,7 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Constraints, Size } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
-import Widget from "../../widget/Widget";
+import type Widget from "../../widget/Widget";
 
 class BaseLimitedBox extends SingleChildRenderObjectWidget {
   maxWidth: number;

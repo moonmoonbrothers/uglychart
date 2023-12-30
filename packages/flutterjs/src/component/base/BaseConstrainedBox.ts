@@ -1,5 +1,6 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Size, Constraints } from "../../type";
+import type { Constraints } from "../../type";
+import { Size } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 

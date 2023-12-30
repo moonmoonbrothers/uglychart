@@ -8,7 +8,7 @@ import {
 } from "../../type";
 import type { PaintContext } from "../../utils/type";
 import RenderObjectWidget from "../../widget/RenderObjectWidget";
-import InlineSpan from "../../type/_types/Inline-span";
+import type InlineSpan from "../../type/_types/Inline-span";
 import TextPainter from "../../type/_types/text-painter";
 
 export type RichTextProps = {

@@ -1,7 +1,7 @@
-import Widget from "../widget/Widget";
+import type Widget from "../widget/Widget";
 import ComponentElement from "./ComponentElement";
-import StatefulWidget from "../widget/StatefulWidget";
-import { BuildContext } from "../widget";
+import type StatefulWidget from "../widget/StatefulWidget";
+import type { BuildContext } from "../widget";
 
 export class StatefulElement extends ComponentElement {
   state: State<StatefulWidget>;
@@ -36,8 +36,8 @@ export class StatefulElement extends ComponentElement {
 export class State<T extends StatefulWidget> {
   widget: T;
   element: StatefulElement;
-  initState(context: BuildContext) {}
-  build(context: BuildContext): Widget {
+  initState(_context: BuildContext) {}
+  build(_context: BuildContext): Widget {
     throw Error("not implemented state build");
   }
   setState(callback?: () => any) {
@@ -45,5 +45,5 @@ export class State<T extends StatefulWidget> {
     this.element.markNeedsBuild();
   }
   dispose() {}
-  didUpdateWidget(oldWidget: T) {}
+  didUpdateWidget(_oldWidget: T) {}
 }

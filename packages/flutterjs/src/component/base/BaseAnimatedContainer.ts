@@ -1,20 +1,22 @@
-import { CalculatableTween, Curve, Tween } from "../../animation";
-import {
+import type { Curve} from "../../animation";
+import { CalculableTween, Tween } from "../../animation";
+import type {
   Alignment,
-  Constraints,
   Decoration,
   Matrix4,
-  Data,
+  Data} from "../../type";
+import {
+  Constraints,
   BoxDecoration,
 } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import Container from "../Container";
 import {
   ImplicitlyAnimatedWidget,
   AnimatedBaseWidgetState,
 } from "../../widget/ImplicitlyAnimatedWidget";
-import { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
+import type { EdgeInsetsGeometry } from "../../type/_types/edge-insets";
 import { assert } from "../../utils";
 
 class BaseAnimatedContainer extends ImplicitlyAnimatedWidget {
@@ -107,8 +109,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.alignment = visitor({
       tween: this.alignment,
       targetValue: this.widget.alignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.width = visitor({
       tween: this.width,
@@ -123,20 +124,17 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.padding = visitor({
       tween: this.padding,
       targetValue: this.widget.padding,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.margin = visitor({
       tween: this.margin,
       targetValue: this.widget.margin,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.transformAlignment = visitor({
       tween: this.transformAlignment,
       targetValue: this.widget.transformAlignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.decoration = visitor({
       tween: this.decoration,
@@ -146,8 +144,7 @@ class BaseAnimatedContainerState extends AnimatedBaseWidgetState<BaseAnimatedCon
     this.transform = visitor({
       tween: this.transform,
       targetValue: this.widget.transform,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.constraints = visitor({
       tween: this.constraints,

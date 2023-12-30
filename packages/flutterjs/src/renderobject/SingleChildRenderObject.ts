@@ -1,4 +1,5 @@
-import { Constraints, Size } from "../type";
+import type { Constraints} from "../type";
+import { Size } from "../type";
 import RenderObject from "./RenderObject";
 
 /*

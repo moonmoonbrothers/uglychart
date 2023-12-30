@@ -1,22 +1,35 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.1.18",
+  "version": "1.1.37",
   "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
+  "keywords": [
+    "flutterjs",
+    "flutter",
+    "svg",
+    "virtual dom",
+    "state management",
+    "layout"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
-    "prepackage": "npm run build",
-    "package": "cp package.json dist/package.json && cp README.md dist/README.md && cd dist && npm pkg delete main && npm pkg set types='./index.d.ts' && npm pkg set type='module' &&  npm pkg set exports='{\".\":  \"./index.mjs\"}' --json"
+    "lint": "eslint src/**"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
     "cp": "^0.2.0",
+    "eslint": "^8.56.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.0",
+    "eslint-plugin-promise": "^6.1.1",
     "tsup": "^8.0.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
+    "color-rgba": "^3.0.0",
     "popmotion": "^11.0.5",
-    "short-unique-id": "^4.4.4",
-    "color-rgba": "^2.4.0"
+    "short-unique-id": "^5.0.3"
   },
   "repository": {
     "type": "git",
@@ -32,14 +45,13 @@
   "type": "module",
   "publishConfig": {
     "access": "public",
-    "main": "./dist/index.mjs",
-    "module": "./dist/index.mjs",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
     "type": "module",
     "exports": {
       "default": "./dist/index.cjs",
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "node": "./dist/index.cjs"
+      "import": "./dist/index.js"
     }
   }
 }

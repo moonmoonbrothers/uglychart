@@ -1,13 +1,14 @@
 import {
   AnimationController,
-  Curve,
+  type Curve,
   CurvedAnimation,
   Curves,
-  Tween,
+  type Tween,
 } from "../animation";
-import { State, type BuildContext } from "../element";
-import { Calculable, Data } from "../type";
-import { Nullable } from "../utils/type";
+import { State } from "../element/StatefulElement";
+import type { BuildContext } from "../element";
+import type { Calculable, Data } from "../type";
+import type { Nullable } from "../utils/type";
 import StatefulWidget from "./StatefulWidget";
 
 export class ImplicitlyAnimatedWidget extends StatefulWidget {
@@ -123,7 +124,7 @@ export class ImplicitlyAnimatedWidgetState<
   didUpdateTweens() {}
 
   forEachTween(
-    visitor: <V extends Data | number, T extends Tween<V>>(props: {
+    _: <V extends Data | number, T extends Tween<V>>(props: {
       tween: T | Nullable;
       targetValue: V | Nullable;
       constructor: (value: V) => T;

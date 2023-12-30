@@ -1,4 +1,4 @@
-import { Widget } from "../widget";
+import type { Widget } from "../widget";
 import BasePositioned from "./base/BasePositioned";
 
 function Positioned(...props: ConstructorParameters<typeof BasePositioned>) {

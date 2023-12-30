@@ -1,7 +1,7 @@
-import { Data } from "../type";
-import Animitable from "./Animitable";
+import type { Data } from "../type";
+import Animatable from "./Animatable";
 
-class Tween<T extends number | Data = number | Data> extends Animitable<T> {
+class Tween<T extends number | Data = number | Data> extends Animatable<T> {
   begin: T;
   end: T;
   constructor({ begin, end }: { begin: T; end?: T }) {

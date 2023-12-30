@@ -8,7 +8,7 @@ import {
   StackFit,
 } from "../../type";
 import Utils, { assert } from "../../utils";
-import { Widget } from "../../widget";
+import type { Widget } from "../../widget";
 import MultiChildRenderObjectWidget from "../../widget/MultiChildRenderObjectWidget";
 import { RenderPositioned } from "./BasePositioned";
 

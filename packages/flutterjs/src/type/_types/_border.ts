@@ -1,16 +1,19 @@
-import { BorderSide, BorderStyle, ShapeBorder, StrokeAlign } from "./borders";
-import EdgeInsets, { EdgeInsetsGeometry } from "./edge-insets";
-import Path from "./path";
-import Rect from "./rect";
+/* eslint-disable no-case-declarations */
+import type { BorderStyle, ShapeBorder, StrokeAlign } from "./_borders";
+import { BorderSide } from "./_borders";
+import type { EdgeInsetsGeometry } from "./edge-insets";
+import EdgeInsets from "./edge-insets";
+import Path from "./_path";
+import Rect from "./_rect";
 import BorderRadius from "./border-radius";
 import { assert } from "../../utils";
-import { BoxShape } from "./box-decoration";
-import BorderRadiusGeometry from "./border-radius-geometry";
-import Data from "./data";
+import type { BoxShape } from "./box-decoration";
+import type BorderRadiusGeometry from "./border-radius-geometry";
+import Data from "./_data";
 
 class _BoxBorder extends Data implements ShapeBorder {
   get dimensions(): EdgeInsetsGeometry {
-    throw new Error("Method not implemented.");
+    throw new Error("dimensions is not implemented.");
   }
   getInnerPath(rect: Rect): Path {
     return new Path().addRect(this.dimensions.deflateRect(rect));
@@ -19,17 +22,17 @@ class _BoxBorder extends Data implements ShapeBorder {
     return new Path().addRect(rect);
   }
   paint(
-    svgEls: BorderPathEls,
-    _: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
+    _: BorderPathEls,
+    __: { rect: Rect; borderRadius?: BorderRadiusGeometry; shape?: BoxShape }
   ): void {
-    throw new Error("Method not implemented.");
+    throw new Error("paint is not implemented.");
   }
 
   /**
    * @deprecated The method should not be used
    */
-  equal(other: BoxBorder): boolean {
-    throw new Error("Method not implemented.");
+  equal(_: BoxBorder): boolean {
+    throw new Error("equal is not implemented.");
   }
 
   protected static paintUniformBorderWidthRadius(
@@ -265,11 +268,18 @@ class Border extends _BoxBorder {
           A borderRadius can only be given for a uniform Border.
           The following is not uniform: `;
 
-          this._colorIsUniform || new Error(errorMessage + "BorderSide.color");
-          this._widthIsUniform || new Error(errorMessage + "BorderSide.width");
-          this._styleIsUniform || new Error(errorMessage + "BorderSide.style");
-          this._strokeAlignIsUniform ||
-            new Error(errorMessage + "BorderSide.strokeAlign");
+          if (!this._colorIsUniform) {
+            throw new Error(errorMessage + "BorderSide.color");
+          }
+          if (!this._widthIsUniform) {
+            throw new Error(errorMessage + "BorderSide.width");
+          }
+          if (!this._styleIsUniform) {
+            throw new Error(errorMessage + "BorderSide.style");
+          }
+          if (!this._strokeAlignIsUniform) {
+            throw new Error(errorMessage + "BorderSide.strokeAlign");
+          }
         }
         return true;
       })()
@@ -282,11 +292,18 @@ class Border extends _BoxBorder {
           A Border can only be drawn as a circle if it is uniform.
           The following is not uniform: `;
 
-          this._colorIsUniform || new Error(errorMessage + "BorderSide.color");
-          this._widthIsUniform || new Error(errorMessage + "BorderSide.width");
-          this._styleIsUniform || new Error(errorMessage + "BorderSide.style");
-          this._strokeAlignIsUniform ||
-            new Error(errorMessage + "BorderSide.strokeAlign");
+          if (!this._colorIsUniform) {
+            throw new Error(errorMessage + "BorderSide.color");
+          }
+          if (!this._widthIsUniform) {
+            throw new Error(errorMessage + "BorderSide.width");
+          }
+          if (!this._styleIsUniform) {
+            throw new Error(errorMessage + "BorderSide.style");
+          }
+          if (!this._strokeAlignIsUniform) {
+            throw new Error(errorMessage + "BorderSide.strokeAlign");
+          }
         }
         return true;
       })()
@@ -294,11 +311,14 @@ class Border extends _BoxBorder {
 
     assert(
       (() => {
-        this._strokeAlignIsUniform ||
-          this.top.strokeAlign != BorderSide.strokeAlignInside;
-        new Error(
-          "A Border can only draw strokeAlign different than BorderSide.strokeAlignInside on uniform borders."
-        );
+        if (
+          !this._strokeAlignIsUniform &&
+          this.top.strokeAlign !== BorderSide.strokeAlignInside
+        ) {
+          throw new Error(
+            "A Border can only have different strokeAlign when BorderSide.strokeAlignInside is used on uniform borders."
+          );
+        }
         return true;
       })()
     );

@@ -1,12 +1,11 @@
+import type { BuildContext, Widget } from "@moonmoonbrothers/flutterjs";
 import {
   ConstraintsTransformBox,
-  Element,
   GestureDetector,
   Stack,
   StackFit,
   State,
   StatefulWidget,
-  Widget,
   Positioned,
   FractionalTranslation,
   Offset,
@@ -79,7 +78,7 @@ class ToolTipState extends State<ToolTip> {
     });
   }
 
-  build(context: Element): Widget {
+  build(_: BuildContext): Widget {
     return Stack({
       fit: StackFit.passthrough,
       clipped: false,
@@ -92,6 +91,11 @@ class ToolTipState extends State<ToolTip> {
             mousemove: true,
             mouseover: true,
             mouseup: true,
+            click: true,
+            drag: true,
+            dragend: true,
+            dragstart: true,
+            wheel: true,
           },
           cursor: "default",
           child: this.widget.child,

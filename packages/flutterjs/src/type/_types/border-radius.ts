@@ -1,6 +1,6 @@
-import Radius from "./radius";
+import Radius from "./_radius";
 import RRect from "./r-rect";
-import Rect from "./rect";
+import type Rect from "./_rect";
 import BorderRadiusGeometry from "./border-radius-geometry";
 
 export default class BorderRadius extends BorderRadiusGeometry {

@@ -1,8 +1,8 @@
-import Calculable from "./calculable";
-import Offset from "./offset";
-import Rect from "./rect";
-import Size from "./size";
-import TextDirection from "./text-direction";
+import Calculable from "./_calculable";
+import Offset from "./_offset";
+import Rect from "./_rect";
+import type Size from "./_size";
+import type TextDirection from "./text-direction";
 
 class Alignment extends Calculable {
   x: number; // -1 ~ 1
@@ -148,7 +148,7 @@ class Alignment extends Calculable {
   static bottomCenter = Alignment.of({ x: 0, y: 1 });
   static bottomRight = Alignment.of({ x: 1, y: 1 });
 
-  resolve(direction?: TextDirection) {
+  resolve(_?: TextDirection) {
     return this;
   }
 }

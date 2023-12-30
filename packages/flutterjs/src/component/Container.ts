@@ -1,11 +1,5 @@
-import {
-  type EdgeInsets,
-  type Alignment,
-  Constraints,
-  Decoration,
-  Matrix4,
-  Rect,
-} from "../type";
+import type { Decoration, Matrix4 } from "../type";
+import { type EdgeInsets, type Alignment, Constraints, Rect } from "../type";
 import { assert, functionalizeClass } from "../utils";
 import type Widget from "../widget/Widget";
 import Align from "./Align";
@@ -14,11 +8,11 @@ import ColoredBox from "./ColoredBox";
 import DecoratedBox from "./DecoratedBox";
 import LimitedBox from "./LimitedBox";
 import Padding from "./Padding";
-import { EdgeInsetsGeometry } from "../type/_types/edge-insets";
+import type { EdgeInsetsGeometry } from "../type/_types/edge-insets";
 import Transform from "./Transform";
 import ClipPath from "./ClipPath";
 import { StatelessWidget } from "../widget";
-import { Element } from "../element";
+import type { BuildContext } from "../element";
 
 type ContainerProps = {
   padding?: EdgeInsets;
@@ -78,9 +72,8 @@ class _Container extends StatelessWidget {
     this.transform = transform;
     this.transformAlignment = transformAlignment;
   }
-  build(context: Element): Widget {
-    let {
-      constraints,
+  build(_: BuildContext): Widget {
+    const {
       padding,
       margin,
       width,
@@ -93,6 +86,7 @@ class _Container extends StatelessWidget {
       transform,
       transformAlignment,
     } = this;
+    let constraints = this.constraints;
     constraints =
       width != null || height != null
         ? constraints?.tighten({ width, height }) ??

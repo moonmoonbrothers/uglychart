@@ -1,8 +1,8 @@
 import { Size, Offset, Constraints, Matrix4 } from "../type";
 import type { PaintContext } from "../utils/type";
-import RenderObjectVisitor from "./RenderObjectVisitor";
-import { RenderObjectElement } from "../element";
-import { RenderOwner } from "../scheduler";
+import type RenderObjectVisitor from "./RenderObjectVisitor";
+import type { RenderObjectElement } from "../element";
+import type { RenderOwner } from "../scheduler";
 import { assert } from "../utils";
 
 /*
@@ -16,8 +16,8 @@ class RenderObject {
   parent?: RenderObject;
   needsPaint = true;
   needsLayout = true;
-  private clipId?: string;
-  private matrix: Matrix4 = Matrix4.identity();
+  clipId?: string;
+  matrix: Matrix4 = Matrix4.identity();
   opacity = 0;
   depth = 0;
 
@@ -115,7 +115,9 @@ class RenderObject {
       Object.values(svgEls).forEach((el) =>
         this.setSvgTransform(el, this.matrix)
       );
-      this.performPaint(svgEls, context);
+      if (this.needsPaint) {
+        this.performPaint(svgEls, context);
+      }
     }
     this.needsPaint = false;
     const childClipId = this.getChildClipId(clipId);
@@ -166,18 +168,18 @@ class RenderObject {
     }
   }
 
-  dispose(context: PaintContext) {
+  dispose(_: PaintContext) {
     if (this.isPainter) {
       this.#domNode.remove();
       this.renderOwner.didDomOrderChange();
     }
   }
 
-  getIntrinsicWidth(height: number) {
+  getIntrinsicWidth(_height: number) {
     return 0;
   }
 
-  getIntrinsicHeight(width: number) {
+  getIntrinsicHeight(_width: number) {
     return 0;
   }
 
@@ -242,8 +244,8 @@ class RenderObject {
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   protected performPaint(
-    svgEls: { [key: string]: SVGElement },
-    context: PaintContext
+    _svgEls: { [key: string]: SVGElement },
+    _context: PaintContext
   ): void {}
 
   protected getChildClipId(parentClipId?: string) {

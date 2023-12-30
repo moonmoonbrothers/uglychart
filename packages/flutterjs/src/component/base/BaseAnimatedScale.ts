@@ -1,7 +1,9 @@
-import { Curve, Tween } from "../../animation";
-import { Alignment, Calculable, Data } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Curve } from "../../animation";
+import { Tween } from "../../animation";
+import type { Data } from "../../type";
+import { Alignment } from "../../type";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import Transform from "../Transform";
 import {
   ImplicitlyAnimatedWidget,
@@ -11,7 +13,7 @@ import {
 class BaseAnimatedScale extends ImplicitlyAnimatedWidget {
   scale: number;
   child?: Widget;
-  alignement: Alignment;
+  alignment: Alignment;
 
   constructor({
     child,
@@ -31,7 +33,7 @@ class BaseAnimatedScale extends ImplicitlyAnimatedWidget {
     super({ key, curve, duration });
     this.child = child;
     this.scale = scale;
-    this.alignement = alignment;
+    this.alignment = alignment;
   }
   createState(): AnimatedBaseWidgetState<BaseAnimatedScale> {
     return new BaseAnimatedScaleState();
@@ -58,7 +60,7 @@ class BaseAnimatedScaleState extends AnimatedBaseWidgetState<BaseAnimatedScale> 
   build(): Widget {
     return Transform.scale({
       scale: this.scaleTween?.evaluate(this.animation),
-      alignment: this.widget.alignement,
+      alignment: this.widget.alignment,
       child: this.widget.child,
     });
   }

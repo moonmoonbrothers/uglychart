@@ -1,7 +1,8 @@
-import { Curve, Tween, CalculatableTween } from "../../animation";
-import { Alignment, Data } from "../../type";
-import { Nullable } from "../../utils/type";
-import { Widget } from "../../widget";
+import type { Curve} from "../../animation";
+import { Tween, CalculableTween } from "../../animation";
+import type { Alignment, Data } from "../../type";
+import type { Nullable } from "../../utils/type";
+import type { Widget } from "../../widget";
 import Align from "../Align";
 import {
   ImplicitlyAnimatedWidget,
@@ -61,8 +62,7 @@ class BaseAnimatedAlignWidgetState extends AnimatedBaseWidgetState<BaseAnimatedA
     this.alignmentTween = visitor({
       tween: this.alignmentTween,
       targetValue: this.widget.alignment,
-      constructor: (value) =>
-        new CalculatableTween({ begin: value, end: value }),
+      constructor: (value) => new CalculableTween({ begin: value, end: value }),
     });
     this.widthFactorTween = visitor({
       tween: this.widthFactorTween,

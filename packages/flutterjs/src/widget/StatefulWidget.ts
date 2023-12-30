@@ -1,4 +1,4 @@
-import { State, StatefulElement } from "../element";
+import { type State, StatefulElement } from "../element";
 import Widget from "./Widget";
 
 class StatefulWidget extends Widget {

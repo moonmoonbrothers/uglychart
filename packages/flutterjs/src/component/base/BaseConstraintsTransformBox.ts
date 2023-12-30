@@ -1,9 +1,8 @@
 import RenderAligningShiftedBox from "../../renderobject/RenderAligningShiftedBox";
-import RenderObject from "../../renderobject/RenderObject";
-import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
+import type SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
 import { Alignment, Constraints, TextDirection } from "../../type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
-import Widget from "../../widget/Widget";
+import type Widget from "../../widget/Widget";
 
 class BaseConstraintsTransformBox extends SingleChildRenderObjectWidget {
   alignment: Alignment;
@@ -32,7 +31,7 @@ class BaseConstraintsTransformBox extends SingleChildRenderObjectWidget {
   }
 
   static unmodified = (constraints: Constraints) => constraints;
-  static unconstrained = (constraints: Constraints) => new Constraints();
+  static unconstrained = (_constraints: Constraints) => new Constraints();
   static widthUnconstrained = (constraints: Constraints) =>
     constraints.heightConstraints();
   static heightUnconstrained = (constraints: Constraints) =>

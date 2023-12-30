@@ -1,8 +1,8 @@
-import Matrix4 from "./matrix4";
-import Matrix3 from "./matrix3";
-import Vector from "./vector";
-import Vector2 from "./vector2";
-import Vector4 from "./vector4";
+import type Matrix4 from "./_matrix4";
+import type Matrix3 from "./_matrix3";
+import type Vector from "./_vector";
+import Vector2 from "./_vector2";
+import Vector4 from "./_vector4";
 
 export class Vector3 implements Vector {
   get storage() {

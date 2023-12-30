@@ -1,6 +1,7 @@
 import SingleChildRenderObject from "../../renderobject/SingleChildRenderObject";
-import { Constraints, Size } from "../../type";
-import { PaintContext } from "../../utils/type";
+import type { Constraints } from "../../type";
+import { Size } from "../../type";
+import type { PaintContext } from "../../utils/type";
 import SingleChildRenderObjectWidget from "../../widget/SingleChildRenderObjectWidget";
 import type Widget from "../../widget/Widget";
 
@@ -91,7 +92,7 @@ export class RenderCustomPaint<
     return constraints.constrain(this.preferredSize);
   }
 
-  protected performPaint(svgEls: T, context: PaintContext): void {
+  protected performPaint(svgEls: T, _: PaintContext): void {
     this.painter.paint(svgEls, this.size);
   }
 

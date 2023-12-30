@@ -1,6 +1,8 @@
-import { BuildContext, State } from "../element";
-import { StatefulWidget, Widget } from "../widget";
-import ChangeNotifier from "./ChangeNotifier";
+import type { BuildContext } from "../element";
+import { State } from "../element";
+import type { Widget } from "../widget";
+import { StatefulWidget } from "../widget";
+import type ChangeNotifier from "./ChangeNotifier";
 import Provider from "./Provider";
 
 class ChangeNotifierProvider extends StatefulWidget {
@@ -31,14 +33,14 @@ class ChangeNotifierProvider extends StatefulWidget {
 
 class ChangeNotifierProviderState extends State<ChangeNotifierProvider> {
   value: ChangeNotifier;
-  initState(context: BuildContext): void {
+  initState(_: BuildContext): void {
     this.value = this.widget.create();
     this.value.addListener(() => {
       this.setState();
     });
   }
 
-  build(context: BuildContext): Widget {
+  build(_: BuildContext): Widget {
     return Provider({
       child: this.widget.child,
       value: this.value,
@@ -50,7 +52,3 @@ class ChangeNotifierProviderState extends State<ChangeNotifierProvider> {
 export default (
   ...props: ConstructorParameters<typeof ChangeNotifierProvider>
 ) => new ChangeNotifierProvider(...props);
-
-class A<T> {
-  constructor(public args: T) {}
-}

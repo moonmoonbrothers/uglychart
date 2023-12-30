@@ -1,12 +1,11 @@
 import { functionalizeClass } from "../utils";
-import { Widget, StatefulWidget } from "../widget";
-import { BuildContext, State } from "../element";
+import type { Widget } from "../widget";
+import { StatefulWidget } from "../widget";
+import type { BuildContext } from "../element";
+import { State } from "../element";
 import { Offset } from "../type";
 import Transform from "./Transform";
 import GestureDetector from "./GestureDetector";
-import Stack from "./Stack";
-import Opacity from "./Opacity";
-import SizedBox from "./SizedBox";
 
 class Draggable extends StatefulWidget {
   onDragUpdate?: (detail: { delta: Offset }) => void;
@@ -60,7 +59,7 @@ class DraggableState extends State<Draggable> {
     });
   };
 
-  handleMouseUp = (event: MouseEvent): void => {
+  handleMouseUp = (_: MouseEvent): void => {
     this.setState(() => {
       this.origin = undefined;
       this.lastDelta = this.delta;
@@ -68,7 +67,7 @@ class DraggableState extends State<Draggable> {
     });
   };
 
-  build(context: BuildContext): Widget {
+  build(_: BuildContext): Widget {
     return Transform.translate({
       offset: this.delta,
       child: GestureDetector({

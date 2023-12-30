@@ -1,10 +1,10 @@
-import Calculatable from "./calculable";
-import Data from "./data";
-import Matrix2 from "./matrix2";
-import Matrix3 from "./matrix3";
-import Vector2 from "./vector2";
-import Vector3 from "./vector3";
-import Vector4 from "./vector4";
+/* eslint-disable prefer-const */
+import Calculable from "./_calculable";
+import type Matrix2 from "./_matrix2";
+import Matrix3 from "./_matrix3";
+import type Vector2 from "./_vector2";
+import Vector3 from "./_vector3";
+import Vector4 from "./_vector4";
 
 type Array16 = [
   number,
@@ -25,7 +25,7 @@ type Array16 = [
   number
 ];
 
-class Matrix4 extends Calculatable {
+class Matrix4 extends Calculable {
   // 4 x 4 matrix
   _m4storage: Array16;
   get storage() {
@@ -175,7 +175,7 @@ class Matrix4 extends Calculatable {
     const bZ = b.storage[2];
     const bW = b.storage[3];
 
-    var det =
+    let det =
       b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
     if (det != 0.0) {

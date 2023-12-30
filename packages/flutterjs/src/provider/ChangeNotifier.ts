@@ -1,5 +1,5 @@
 import { Listenable } from "../listenable";
-import { VoidCallback } from "../utils/type";
+import type { VoidCallback } from "../utils/type";
 
 class ChangeNotifier extends Listenable {
   private listners: VoidCallback[] = [];
