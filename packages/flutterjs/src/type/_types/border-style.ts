@@ -1,5 +1,5 @@
 enum BorderStyle {
-  normal= "normal",
+  normal = "normal",
 }
 
-export default BorderStyle
+export default BorderStyle;

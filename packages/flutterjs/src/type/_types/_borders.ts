@@ -71,7 +71,9 @@ export class BorderSide extends Data {
   static strokeAlignInside = -1 as const;
   static strokeAlignCenter = 0 as const;
   static strokeAlignOutside = 1 as const;
-  static none = new BorderSide({ width: 0, style: "none" });
+  static get none() {
+    return new BorderSide({ width: 0, style: "none" });
+  }
 
   get strokeInset(): number {
     return this.width * (1 - (1 + this.strokeAlign) / 2);
