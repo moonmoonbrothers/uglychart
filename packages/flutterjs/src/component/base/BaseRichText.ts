@@ -212,7 +212,7 @@ class RenderParagraph extends RenderObject {
       return;
     }
 
-    if (!this.needsPaint && !this.chagnedLayout) return;
+    if (!this.needsPaint && !this.changedLayout) return;
     this.textPainter.paint(textEl, context);
   }
 
@@ -232,7 +232,7 @@ class RenderParagraph extends RenderObject {
 
   previousWidth: number;
   previousHeight: number;
-  chagnedLayout: boolean;
+  changedLayout: boolean;
 
   private layoutText({
     maxWidth = Infinity,
@@ -252,7 +252,7 @@ class RenderParagraph extends RenderObject {
       maxWidth: widthMatters ? maxWidth : Infinity,
     });
 
-    this.chagnedLayout =
+    this.changedLayout =
       this.textPainter.width !== this.previousWidth ||
       this.textPainter.height !== this.previousHeight;
   }

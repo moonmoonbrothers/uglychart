@@ -321,7 +321,7 @@ class RenderGestureDetector extends SingleChildRenderObject {
     EventType,
     MouseEventCallback | ((e: WheelEvent) => void)
   > {
-    return {
+    const listeners = {
       click: this.onClick,
       mousedown: this.onMouseDown,
       mousemove: this.onMouseMove,
@@ -334,6 +334,17 @@ class RenderGestureDetector extends SingleChildRenderObject {
       drag: this.onDragMove,
       dragend: this.onDragEnd,
     };
+
+    return TypedObject.keys(listeners).reduce((acc, key) => {
+      acc[key] = (e: any) => {
+        if (this.bubble[key]) {
+          this.dispatchParent(e);
+        }
+        listeners[key]?.(e);
+      };
+
+      return acc;
+    }, {} as Record<EventType, MouseEventCallback | ((e: WheelEvent) => void)>);
   }
 
   attach(ownerElement: RenderObjectElement): void {
@@ -378,7 +389,6 @@ class RenderGestureDetector extends SingleChildRenderObject {
     TypedObject.entries(restListeners).forEach(([type, listener]) => {
       rect.addEventListener(type, (e: any) => {
         listener(e);
-        this.bubble[type] && this.dispatchParent(e);
       });
     });
   }
