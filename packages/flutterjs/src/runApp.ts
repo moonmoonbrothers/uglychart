@@ -20,7 +20,7 @@ type AppRunnerProps = {
 export class AppRunner {
   private root!: RenderObjectElement;
   private renderContext: RenderContext;
-  private viewSize: { width: number; height: number };
+  private viewSize?: { width: number; height: number };
   private buildOwner: BuildOwner;
   private renderOwner: RenderOwner;
   private scheduler: Scheduler;
@@ -30,7 +30,7 @@ export class AppRunner {
     view,
     document: _document = document,
     window: _window = window,
-    ssrSize = Size.zero,
+    ssrSize,
   }: AppRunnerProps) {
     this.viewSize = ssrSize;
     const renderContext = new RenderContext({
@@ -56,8 +56,13 @@ export class AppRunner {
     this.renderDispatcher = renderDispatcher;
     this.renderContext = renderContext;
   }
+  private didRun = false;
 
+  private widget!: Widget;
   runApp(widget: Widget): string {
+    this.widget = widget;
+    if (this.viewSize == null) return ``;
+
     this.root = new RenderObjectToWidgetAdapter({
       app: widget,
       buildOwner: this.buildOwner,
@@ -67,6 +72,8 @@ export class AppRunner {
     }).createElement();
     this.root.mount(undefined);
     this.root.renderObject.constraints = Constraints.tight(this.viewSize);
+    this.didRun = true;
+    this.draw();
     return this.renderContext.view.innerHTML;
   }
 
@@ -110,7 +117,11 @@ export class AppRunner {
     const resizeObserver = new ResizeObserver((entries) => {
       const child = entries[0];
       resize(child);
-      this.draw();
+      if (this.didRun) {
+        this.draw();
+      } else {
+        this.runApp(this.widget);
+      }
     });
     resizeObserver.observe(target);
   }
