@@ -129,7 +129,7 @@ export class AppRunner {
   draw() {
     this.layout();
     this.paint();
-    this.scheduler.resolvePostCallbacks();
+    this.scheduler.schedule();
   }
 
   rebuild() {
