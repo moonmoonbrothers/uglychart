@@ -25,10 +25,7 @@ class Scheduler {
       callback();
     });
     this.phase = SchedulerPhase.postFrameCallbacks;
-    this.postFrameCallbacks.forEach((callback) => {
-      callback();
-    });
-    this.postFrameCallbacks = [];
+    this.resolvePostCallbacks()
     this.phase = SchedulerPhase.idle;
   }
 
@@ -38,6 +35,13 @@ class Scheduler {
 
   addPostFrameCallbacks(callback: () => void) {
     this.postFrameCallbacks.push(() => callback());
+  }
+
+  resolvePostCallbacks() {
+    this.postFrameCallbacks.forEach((callback) => {
+      callback();
+    });
+    this.postFrameCallbacks = [];
   }
 }
 

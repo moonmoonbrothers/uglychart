@@ -11,7 +11,7 @@ import {
   Offset,
   SizedBox,
   Alignment,
-} from "@moonmoonbrothers/flutterjs";
+} from "../";
 import { functionalizeClass } from "../utils";
 
 type TooltipPosition =

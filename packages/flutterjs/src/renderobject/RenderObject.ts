@@ -264,7 +264,7 @@ class RenderObject {
     this.parent?.markNeedsLayout();
   }
 
-  protected markNeedsLayout() {
+  markNeedsLayout() {
     this.needsLayout = true;
     if (this.parentUsesSize && this.parent != null) {
       this.markNeedsParentLayout();
@@ -274,7 +274,7 @@ class RenderObject {
     }
   }
 
-  protected markNeedsPaint() {
+  markNeedsPaint() {
     this.needsPaint = true;
     this.renderOwner.needsPaintRenderObjects.push(this);
   }
