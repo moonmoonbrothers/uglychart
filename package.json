@@ -34,7 +34,8 @@
     "packages/flutterjs-solid",
     "packages/storybook-flutterjs",
     "packages/storybook-diagram",
-    "packages/diagram"
+    "packages/diagram",
+    "packages/flutterjs-docs"
   ],
   "type": "module",
   "dependencies": {}
