@@ -1,11 +1,25 @@
-# Flutterjs
+# FlutterJs is Deprecated
 
-Flutterjs is a framework that deals with SVG.
-Like React, it uses VDOM to manage state and optimize rendering,
-and because the library calculates the layout directly,
-it is much easier to visualize data than using D3.
-This provides a high level of control and flexibility for data visualization.
+This library is no longer maintained and has been replaced by `@meursyphus/flitter`. Please use `@meursyphus/flitter` for new projects.
 
-(FlutterJs is a library inspired by Flutter, a cross-platform framework commonly used for mobile app development.)
+## Migrating to `@meursyphus/flitter`
 
-See more: [(https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs](https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs)
+`@meursyphus/flitter` is a framework for handling SVG with a VDOM approach similar to React, allowing for state management and rendering optimization. It calculates layouts directly, making data visualization significantly easier than using D3, offering high levels of control and flexibility over data visualization.
+
+### Installation
+
+To use `@meursyphus/flitter` in your React or Svelte projects, follow the installation instructions below.
+
+#### For React
+
+```bash
+npm i @meursyphus/flitter @meursyphus/flitter-react
+```
+
+### For Svelte
+
+```bash
+npm i @meursyphus/flitter @meursyphus/flitter-svelte
+```
+
+For detailed usage and documentation, please refer to the [`@meursyphus/flitter` official documentation](https://flitter.pages.dev).

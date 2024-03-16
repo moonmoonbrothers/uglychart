@@ -1,38 +1,25 @@
-# create-svelte
+# FlutterJs is Deprecated
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This library is no longer maintained and has been replaced by `@meursyphus/flitter`. Please use `@meursyphus/flitter` for new projects.
 
-## Creating a project
+## Migrating to `@meursyphus/flitter`
 
-If you're seeing this, you've probably already done this step. Congrats!
+`@meursyphus/flitter` is a framework for handling SVG with a VDOM approach similar to React, allowing for state management and rendering optimization. It calculates layouts directly, making data visualization significantly easier than using D3, offering high levels of control and flexibility over data visualization.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Installation
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+To use `@meursyphus/flitter` in your React or Svelte projects, follow the installation instructions below.
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+#### For React
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm i @meursyphus/flitter @meursyphus/flitter-react
 ```
 
-## Building
-
-To create a production version of your app:
+### For Svelte
 
 ```bash
-npm run build
+npm i @meursyphus/flitter @meursyphus/flitter-svelte
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+For detailed usage and documentation, please refer to the [`@meursyphus/flitter` official documentation](https://flitter.pages.dev).

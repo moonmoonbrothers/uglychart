@@ -1,7 +1,7 @@
 {
   "name": "@moonmoonbrothers/flutterjs",
-  "version": "1.2.1",
-  "description": "this is svg framework(virtual dom, state management, even calculation of layout)",
+  "version": "1.3.3",
+  "description": "deprecated. use @meursyphus/flitter instead",
   "keywords": [
     "flutterjs",
     "flutter",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup && cp package.json dist/package.json && cd dist && npm run fix-package",
+    "build": "tsup && cp package.json dist/package.json && cp README.md dist/README.md && cd dist && npm run fix-package",
     "fix-package": "npm pkg set main=./index.cjs module=./index.js exports.default=./index.js exports.import=./index.js",
     "lint": "eslint src/**"
   },
@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/moonmoonbrothers/uglychart/issues"
   },
-  "homepage": "https://637c944f61fbd5154eb3e034-esfdvuwvfq.chromatic.com/?path=/docs/introduction--docs",
+  "homepage": "https://flitter.pages.dev",
   "main": "src/index.ts",
   "type": "module",
   "publishConfig": {
